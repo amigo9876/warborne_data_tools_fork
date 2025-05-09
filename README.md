@@ -1,3 +1,10 @@
+Warborne Above Ashes data
+
+This project is a fan-made project. All game content is the property of Warborne Above Ashes.
+This is not affiliated with or endorsed by QOOLAND
+
+
+
 This is a Kotlin Multiplatform project targeting Android, Web, Desktop.
 
 * `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
