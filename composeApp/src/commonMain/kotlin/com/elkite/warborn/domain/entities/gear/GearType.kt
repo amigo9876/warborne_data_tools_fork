@@ -10,6 +10,17 @@ enum class GearType {
     SWORD,
     GUN,
     AXE,
-    MACE
+    MACE,
+    WEAPON
+}
 
+@Serializable
+enum class LoadoutType {
+    HEAD,
+    CHEST,
+    BOOTS,
+    WEAPON,
+    PASSIVE,
+    BASIC_ATTACK,
+    COMMON_SKILL,
 }

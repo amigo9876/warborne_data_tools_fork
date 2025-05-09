@@ -76,6 +76,11 @@ object DataRepository {
             val range = json["castingRange"]?.jsonPrimitive?.content ?: return null
             val manaCost = json["manaCost"]?.jsonPrimitive?.content ?: return null
             val desc = json["description"]?.jsonPrimitive?.content ?: return null
+            val gearName = json["gearName"]?.jsonPrimitive?.content?.let {
+                it.ifEmpty {
+                    null
+                }
+            }
 
             val typeStr = json["type"]?.jsonPrimitive?.content
                 ?.uppercase() ?: return null
@@ -94,7 +99,8 @@ object DataRepository {
                 cooldown = cooldown,
                 manaCost = manaCost,
                 requiredGearLevel = gearLevel,
-                associatedGearType = gearType
+                associatedGearType = gearType,
+                gearName = gearName,
             )
         } catch (e: Exception) {
             println("Error parsing spell: ${e.message}")

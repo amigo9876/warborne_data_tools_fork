@@ -12,6 +12,12 @@ plugins {
     alias(libs.plugins.kotlinxSerialization)
 }
 
+compose.resources {
+    publicResClass = false
+    packageOfResClass = "com.elkite.warborn.resources"
+    generateResClass = auto
+}
+
 kotlin {
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
@@ -19,6 +25,9 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
+
+
+
 
     jvm("desktop")
 
