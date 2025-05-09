@@ -16,8 +16,8 @@ import kotlinx.coroutines.launch
 
 class BuildScreenModel : ScreenModel {
 
-    private val _spellsState = MutableStateFlow<SpellsState>(SpellsState.Loading)
-    val spellsState: StateFlow<SpellsState> = _spellsState
+    private val _screenState = MutableStateFlow<SpellsState>(SpellsState.Loading)
+    val spellsState: StateFlow<SpellsState> = _screenState
 
     private val _loadout = MutableStateFlow(Loadout())
     val loadout: StateFlow<Loadout> = _loadout
@@ -36,7 +36,7 @@ class BuildScreenModel : ScreenModel {
     }
 
     fun updateSpellsList(gearType: GearType, spellType: SpellType? = null) {
-        _currentSpells.value = when (val state = _spellsState.value) {
+        _currentSpells.value = when (val state = _screenState.value) {
             is SpellsState.Success -> {
                 when (gearType) {
                     GearType.HEAD -> state.head
@@ -61,7 +61,7 @@ class BuildScreenModel : ScreenModel {
     }
 
     fun updatePassive(gearType: GearType) {
-        val passive = when (val state = _spellsState.value) {
+        val passive = when (val state = _screenState.value) {
             is SpellsState.Success -> {
                 when (gearType) {
                     GearType.SWORD -> state.sword.first { it.type == SpellType.PASSIVE }
@@ -95,17 +95,11 @@ class BuildScreenModel : ScreenModel {
         }
     }
 
-    //TODO SET SPELLS FROM THIS
-    // HEAD LOADOUT CARD ONCLICK (UPDATE SPELL LIST -> IF LIST NOT EMPTY SHOW SPELLS
-    // CHEST ``
-    // BOOTS``
-    // WEAPON (SHOW WEAPON -> LOADOUT CARD) ONCLICK (UPDATE SPELL LIST -> IF LIST NOT EMPTY SHOW SPELLS
-
     private fun loadSpells() {
         coroutineScope.launch {
             try {
                 val spells = DataRepository.getData()
-                _spellsState.update {
+                _screenState.update {
                     SpellsState.Success(
                         head = spells.filter { it.associatedGearType == GearType.HEAD },
                         chest = spells.filter { it.associatedGearType == GearType.CHEST },
@@ -117,7 +111,7 @@ class BuildScreenModel : ScreenModel {
                     )
                 }
             } catch (e: Exception) {
-                _spellsState.update { SpellsState.Error(e.message ?: "Unknown error") }
+                _screenState.update { SpellsState.Error(e.message ?: "Unknown error") }
             }
         }
     }

@@ -10,4 +10,13 @@ data class Loadout(
     val passive: Spell? = null,
     val commonSkill: Spell? = null,
     val basicAttack: Spell? = null,
-)
+) {
+
+    fun isEmpty(): Boolean {
+        return head == null && chest == null && boots == null && weapon == null && passive == null && commonSkill == null && basicAttack == null
+    }
+
+    fun getSpells(): List<Spell> {
+        return listOfNotNull(head, chest, boots, weapon, passive, commonSkill, basicAttack)
+    }
+}
