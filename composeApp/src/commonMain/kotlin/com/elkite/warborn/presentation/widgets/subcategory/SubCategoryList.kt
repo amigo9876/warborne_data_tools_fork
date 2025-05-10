@@ -18,12 +18,13 @@ import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun SubCategoryList(
+    modifier: Modifier = Modifier,
     entries: List<GearType>,
     onClick: (GearType) -> Unit,
 ) {
     Column {
         Card {
-            Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+            Column(modifier = modifier.verticalScroll(rememberScrollState())) {
                 entries
                     .forEach { gearType ->
                         Card(

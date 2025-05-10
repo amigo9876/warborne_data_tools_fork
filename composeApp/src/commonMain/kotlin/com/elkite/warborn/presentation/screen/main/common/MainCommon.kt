@@ -78,11 +78,11 @@ fun MainContentWeb() {
                     TabNavigationRailItem(SecondTab)
                 }
                 Column(
-                    modifier = Modifier.fillMaxWidth().padding(paddingValues).statusBarsPadding()
+                    modifier = Modifier.fillMaxWidth()
                         .paint(
                             painterResource(Res.drawable.CommonBg_New_Black),
                             contentScale = androidx.compose.ui.layout.ContentScale.FillBounds
-                        )
+                        ).padding(paddingValues).statusBarsPadding()
                 ) {
                     CurrentTab()
                 }
@@ -101,11 +101,11 @@ fun MainContentMobile() {
 
             BottomSheetNavigator {
                 Column(
-                    modifier = Modifier.fillMaxWidth().padding(paddingValues).statusBarsPadding()
+                    modifier = Modifier.fillMaxWidth()
                         .paint(
                             painterResource(Res.drawable.CommonBg_New_Black),
                             contentScale = androidx.compose.ui.layout.ContentScale.FillBounds
-                        )
+                        ).padding(paddingValues).statusBarsPadding()
                 ) {
                     CurrentTab()
                 }

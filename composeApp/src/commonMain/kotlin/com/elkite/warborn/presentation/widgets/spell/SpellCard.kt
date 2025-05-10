@@ -66,6 +66,71 @@ fun SpellCardListGrid(
 }
 
 @Composable
+fun SpellCardListSmall(
+    modifier: Modifier = Modifier,
+    spells: List<Spell>,
+    onSpellClick: (Spell) -> Unit,
+) {
+    LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+        modifier = modifier.background(color = Color.Transparent).padding(16.dp),
+    ) {
+        items(spells) { spell ->
+            SpellCardSmall(onSpellClick = onSpellClick, spell = spell)
+        }
+    }
+}
+
+@Composable
+fun SpellCardSmall(
+    modifier: Modifier = Modifier,
+    spell: Spell,
+    onSpellClick: (Spell) -> Unit,
+) {
+    Card(
+        modifier = modifier
+            .border(
+                2.dp,
+                color = Color.LightGray,
+                shape = MaterialTheme.shapes.small
+            ).clickable {
+                onSpellClick(spell)
+            },
+        backgroundColor = Color.Transparent,
+    ) {
+        Column(modifier = Modifier.wrapContentSize()) {
+            Row(modifier = Modifier.padding(8.dp)) {
+                SpellIcon(Modifier.size(64.dp), spell = spell)
+                Spacer(modifier = Modifier.size(12.dp))
+                Column(
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    SpellDescriptionSmall(spell)
+                    if (spell.manaCost != "0" || spell.cooldown != "0" || spell.castingRange != "0") {
+                        Spacer(modifier = Modifier.size(8.dp))
+                        Divider(
+                            modifier = Modifier.height(1.dp),
+                            color = Color.LightGray
+                        )
+                    }
+                    Row {
+                        if (spell.manaCost != "0") {
+                            SpellAttributeRow(label = "Mana", value = spell.manaCost)
+                        }
+                        if (spell.cooldown != "0") {
+                            SpellAttributeRow(label = "Cd", value = "${spell.cooldown}s")
+                        }
+                        if (spell.castingRange != "0") {
+                            SpellAttributeRow(label = "Range", value = "${spell.castingRange}m")
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
 fun SpellCard(
     onSpellClick: (Spell) -> Unit,
     spell: Spell
@@ -96,8 +161,39 @@ fun SpellCard(
 }
 
 @Composable
+fun SpellDescriptionSmall(
+    spell: Spell
+) {
+    Column(
+        modifier = Modifier
+            .padding(0.dp)
+            .fillMaxWidth()
+            .background(Color.Transparent),
+    ) {
+        MultiPatternHighlightedText(
+            baseTextStyle = MaterialTheme.typography.body2.copy(color = Color.LightGray),
+            text = spell.description,
+            patternsWithStyles = listOf(
+                Regex("""\[Damage Rate: [^\]]+]""") to SpanStyle(
+                    color = Color.Red,
+                    fontWeight = FontWeight.Bold
+                ),
+                Regex("""\[Healing Rate: [^\]]+]""") to SpanStyle(
+                    color = Color.Green,
+                    fontWeight = FontWeight.Bold
+                ),
+                Regex("""\[Target-based Max HP [^\]]+]""") to SpanStyle(
+                    color = Color.Blue,
+                    fontWeight = FontWeight.Bold
+                )
+            )
+        )
+    }
+}
+
+@Composable
 fun SpellDescription(spell: Spell) {
-     Column(
+    Column(
         modifier = Modifier
             .padding(8.dp),
     ) {

@@ -132,6 +132,39 @@ class BuildScreenModel : ScreenModel {
         }
     }
 
+    fun updateLoadoutFromUrl(url: String?) {
+        val queryParams = parseQueryParams(url)
+
+        coroutineScope.launch {
+            val spells = DataRepository.getData()
+            val drifters = DataRepository.getDrifters()
+
+            val newLoadout = Loadout(
+                head = queryParams["head"]?.let { gameId -> spells.find { it.id == gameId } },
+                chest = queryParams["chest"]?.let { gameId -> spells.find { it.id == gameId } },
+                boots = queryParams["boots"]?.let { gameId -> spells.find { it.id == gameId } },
+                weapon = queryParams["weapon"]?.let { gameId -> spells.find { it.id == gameId } },
+                passive = queryParams["passive"]?.let { gameId -> spells.find { it.id == gameId } },
+                commonSkill = queryParams["commonSkill"]?.let { gameId -> spells.find { it.id == gameId } },
+                basicAttack = queryParams["basicAttack"]?.let { gameId -> spells.find { it.id == gameId } },
+                drifter = queryParams["drifter"]?.let { gameId -> drifters.find { it.gameId == gameId } }
+            )
+
+            if (_loadout.value != newLoadout) {
+                _loadout.value = newLoadout
+            }
+        }
+    }
+
+    private fun parseQueryParams(url: String?): Map<String, String> {
+        return url?.substringAfter("?")
+            ?.split("&")
+            ?.mapNotNull {
+                val parts = it.split("=")
+                if (parts.size == 2) parts[0] to parts[1] else null
+            }?.toMap() ?: emptyMap()
+    }
+
     sealed class SpellsState {
         data object Loading : SpellsState()
         data class Success(

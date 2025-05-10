@@ -18,7 +18,9 @@ import com.elkite.warborn.domain.entities.spell.SpellType
 import com.elkite.warborn.presentation.screen.build_loadout.BuildScreenModel
 import com.elkite.warborn.presentation.widgets.drifter.DrifterCardList
 import com.elkite.warborn.presentation.widgets.loadout.LoadoutCardList
+import com.elkite.warborn.presentation.widgets.loadout_from_url.LoadoutFromUrl
 import com.elkite.warborn.presentation.widgets.spell.SpellCardListGrid
+import com.elkite.warborn.presentation.widgets.spell.SpellCardListSmall
 import com.elkite.warborn.presentation.widgets.subcategory.SubCategoryList
 
 @Composable
@@ -37,6 +39,9 @@ fun BuildScreenContentLarge(
     val showSubWeaponList = remember { mutableStateOf(false) }
     val currentWeaponType = remember { mutableStateOf(GearType.WEAPON) }
     val showDrifters = remember { mutableStateOf(false) }
+
+    LoadoutFromUrl(screenModel, loadout)
+
 
     Column {
         Row(modifier = Modifier.fillMaxSize()) {
@@ -92,11 +97,12 @@ fun BuildScreenContentLarge(
                 )
             Spacer(modifier = Modifier.size(16.dp))
             if (!showSubWeaponList.value  && !showDrifters.value && currentSpells.isEmpty()) {
-                SpellCardListGrid(
-                    modifier = Modifier.weight(2f),
+                SpellCardListSmall(
+                    modifier = Modifier.weight(1f),
                     spells = loadout.getSpells(),
                     onSpellClick = { }
                 )
+                Spacer(Modifier.weight(1f))
             }
             else if (showDrifters.value) {
                 DrifterCardList(

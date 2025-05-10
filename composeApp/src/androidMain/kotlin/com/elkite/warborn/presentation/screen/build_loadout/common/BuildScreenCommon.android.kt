@@ -5,8 +5,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -48,7 +48,7 @@ actual fun BuildScreenContent(screenModel: BuildScreenModel) {
 
     LaunchedEffect(shouldShowBottomSheet.value) {
         if (shouldShowBottomSheet.value) {
-            if (showSubWeaponList.value)
+            if (showSubWeaponList.value) {
                 showWeaponBottom(
                     bottomSheetNavigator,
                     GearType.entries.filter {
@@ -65,9 +65,8 @@ actual fun BuildScreenContent(screenModel: BuildScreenModel) {
                     screenModel.updateSpellsList(gearType, SpellType.SKILL)
                     screenModel.updatePassive(gearType)
                     shouldShowBottomSheet.value = true
-
                 }
-            else if (shouldShowDrifters.value)
+            } else if (shouldShowDrifters.value)
                 showDriftersBottom(bottomSheetNavigator, drifters.value, screenModel)
             else
                 showSpellBottom(bottomSheetNavigator, currentSpells, screenModel)
@@ -78,7 +77,6 @@ actual fun BuildScreenContent(screenModel: BuildScreenModel) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .statusBarsPadding()
             .paint(
                 painterResource(Res.drawable.CommonBg_New_Black),
                 contentScale = androidx.compose.ui.layout.ContentScale.FillBounds
@@ -96,25 +94,6 @@ actual fun BuildScreenContent(screenModel: BuildScreenModel) {
                 )
             }
             Spacer(modifier = Modifier.size(16.dp))
-            if (showSubWeaponList.value) {
-                SubCategoryList(
-                    entries = GearType.entries.filter {
-                        it !in listOf(
-                            GearType.HEAD,
-                            GearType.CHEST,
-                            GearType.BOOTS,
-                            GearType.WEAPON
-                        )
-                    },
-                    onClick = { gearType ->
-                        showSubWeaponList.value = false
-                        currentWeaponType.value = gearType
-                        screenModel.updateSpellsList(gearType, SpellType.SKILL)
-                        screenModel.updatePassive(gearType)
-                        shouldShowBottomSheet.value = true
-                    }
-                )
-            }
         }
     }
 }
@@ -131,9 +110,24 @@ private fun handleLoadoutClick(
     showSubWeaponList.value = false
 
     when (loadoutType) {
-        LoadoutType.HEAD -> updateAndShowBottomSheet(screenModel, GearType.HEAD, shouldShowBottomSheet)
-        LoadoutType.CHEST -> updateAndShowBottomSheet(screenModel, GearType.CHEST, shouldShowBottomSheet)
-        LoadoutType.BOOTS -> updateAndShowBottomSheet(screenModel, GearType.BOOTS, shouldShowBottomSheet)
+        LoadoutType.HEAD -> updateAndShowBottomSheet(
+            screenModel,
+            GearType.HEAD,
+            shouldShowBottomSheet
+        )
+
+        LoadoutType.CHEST -> updateAndShowBottomSheet(
+            screenModel,
+            GearType.CHEST,
+            shouldShowBottomSheet
+        )
+
+        LoadoutType.BOOTS -> updateAndShowBottomSheet(
+            screenModel,
+            GearType.BOOTS,
+            shouldShowBottomSheet
+        )
+
         LoadoutType.WEAPON -> {
             showSubWeaponList.value = true
             updateAndShowBottomSheet(
@@ -142,18 +136,21 @@ private fun handleLoadoutClick(
                 shouldShowBottomSheet
             )
         }
+
         LoadoutType.PASSIVE -> updateAndShowBottomSheet(
             screenModel,
             currentWeaponType.value,
             shouldShowBottomSheet,
             SpellType.PASSIVE
         )
+
         LoadoutType.COMMON_SKILL -> updateAndShowBottomSheet(
             screenModel,
             currentWeaponType.value,
             shouldShowBottomSheet,
             SpellType.COMMON_SKILL
         )
+
         LoadoutType.BASIC_ATTACK -> updateAndShowBottomSheet(
             screenModel,
             currentWeaponType.value,
@@ -202,7 +199,7 @@ private fun showWeaponBottom(
     bottomSheetNavigator: BottomSheetNavigator,
     entries: List<GearType>,
     onClick: (GearType) -> Unit,
-    ) {
+) {
     bottomSheetNavigator.show(
         SubCategoryListScreen(
             entries = entries,
@@ -234,10 +231,20 @@ private class SubCategoryListScreen(
 
     @Composable
     override fun Content() {
-        SubCategoryList(
-            entries = entries,
-            onClick = onClick
-        )
+        Column(
+            modifier = Modifier
+                .paint(
+                    painterResource(Res.drawable.CommonBg_New_Black),
+                    contentScale = androidx.compose.ui.layout.ContentScale.FillBounds
+                )
+                .padding(bottom = 150.dp)
+                .padding(bottom = 150.dp, top = 32.dp)
+        ) {
+            SubCategoryList(
+                entries = entries,
+                onClick = onClick
+            )
+        }
     }
 }
 
@@ -248,11 +255,21 @@ private class DriftersScreen(
 
     @Composable
     override fun Content() {
-        DrifterCardList(
-            drifters = drifters,
-            onDrifterClick = onDrifterClick,
-            columnCount = 1
-        )
+        Column(
+            modifier = Modifier
+                .paint(
+                    painterResource(Res.drawable.CommonBg_New_Black),
+                    contentScale = androidx.compose.ui.layout.ContentScale.FillBounds
+                )
+                .padding(bottom = 150.dp)
+                .padding(bottom = 150.dp, top = 32.dp)
+        ) {
+            DrifterCardList(
+                drifters = drifters,
+                onDrifterClick = onDrifterClick,
+                columnCount = 1
+            )
+        }
     }
 }
 
@@ -263,9 +280,18 @@ private class SpellsScreen(
 
     @Composable
     override fun Content() {
-        SpellCardList(
-            spells = spells,
-            onSpellClick = onSpellClick
-        )
+        Column(
+            modifier = Modifier
+                .paint(
+                    painterResource(Res.drawable.CommonBg_New_Black),
+                    contentScale = androidx.compose.ui.layout.ContentScale.FillBounds
+                )
+                .padding(bottom = 150.dp, top = 32.dp)
+        ) {
+            SpellCardList(
+                spells = spells,
+                onSpellClick = onSpellClick
+            )
+        }
     }
 }

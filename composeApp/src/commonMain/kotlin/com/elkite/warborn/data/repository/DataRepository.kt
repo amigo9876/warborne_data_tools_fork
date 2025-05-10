@@ -121,7 +121,7 @@ object DataRepository {
         for ((_, drifterJson) in drifterSection) {
             try {
                 val obj = drifterJson.jsonObject
-                val gameId = obj["gameid"]?.jsonPrimitive?.content ?: continue
+                val gameId = obj["gameId"]?.jsonPrimitive?.content ?: continue
                 val name = obj["name"]?.jsonPrimitive?.content ?: continue
                 val spells = obj["spells"]?.jsonArray ?: continue
                 if (spells.size < 2) continue
