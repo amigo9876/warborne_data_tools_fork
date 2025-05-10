@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.elkite.warborn.domain.entities.gear.Drifter
 import com.elkite.warborn.domain.entities.spell.Spell
 import com.elkite.warborn.util.IconMap
 import org.jetbrains.compose.resources.painterResource
@@ -19,6 +20,38 @@ fun SpellIcon(
             IconMap.getSkillIcon(
                 spell.associatedGearType,
                 spell.id
+            )
+        ),
+        contentDescription = "Spell's Icon",
+        modifier = modifier,
+    )
+}
+
+@Composable
+fun SpellIconDrifter(
+    modifier: Modifier = Modifier.size(48.dp),
+    drifter: Drifter
+) {
+    Image(
+        painter = painterResource(
+            IconMap.getDrifterSpell(
+                drifter
+            )
+        ),
+        contentDescription = "Spell's Icon",
+        modifier = modifier,
+    )
+}
+
+@Composable
+fun SpellPassiveDrifter(
+    modifier: Modifier = Modifier.size(48.dp),
+    drifter: Drifter
+) {
+    Image(
+        painter = painterResource(
+            IconMap.getDrifterPassive(
+                drifter
             )
         ),
         contentDescription = "Spell's Icon",

@@ -1,11 +1,11 @@
 package com.elkite.warborn.data.repository
 
 import com.elkite.warborn.data.network.httpClient
+import com.elkite.warborn.domain.entities.gear.Drifter
 import com.elkite.warborn.domain.entities.gear.GearLevel
 import com.elkite.warborn.domain.entities.gear.GearType
 import com.elkite.warborn.domain.entities.spell.Spell
 import com.elkite.warborn.domain.entities.spell.SpellType
-import io.github.aakira.napier.Napier
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
 import kotlinx.serialization.json.Json
@@ -16,18 +16,22 @@ import kotlinx.serialization.json.jsonPrimitive
 
 object DataRepository {
 
+    const val url = "https://elkite.github.io/warborne_data/data.json"
+
     suspend fun getData() : List<Spell> {
-        val url = "https://elkite.github.io/warborne_data/data.json"
         val body = httpClient.get(url).bodyAsText()
 
         val spells = parseJsonToSpells(body)
 
-        spells.map {
-            Napier.e { "Spell: $it" }
-
-        }
-
         return spells
+    }
+
+    suspend fun getDrifters(): List<Drifter> {
+        val body = httpClient.get(url).bodyAsText()
+
+        val drifters = parseDrifters(body)
+
+        return drifters
     }
 
 
@@ -108,5 +112,30 @@ object DataRepository {
         }
     }
 
+    private fun parseDrifters(json: String): List<Drifter> {
+        val drifters = mutableListOf<Drifter>()
+        val jsonElement = Json.parseToJsonElement(json)
+        val data = jsonElement.jsonObject["data"]?.jsonObject ?: return emptyList()
+        val drifterSection = data["drifters"]?.jsonObject.orEmpty()
+
+        for ((_, drifterJson) in drifterSection) {
+            try {
+                val obj = drifterJson.jsonObject
+                val gameId = obj["gameid"]?.jsonPrimitive?.content ?: continue
+                val name = obj["name"]?.jsonPrimitive?.content ?: continue
+                val spells = obj["spells"]?.jsonArray ?: continue
+                if (spells.size < 2) continue
+
+                val activeSpell = parseSpell(spells[0].jsonObject, GearType.DRIFTER) ?: continue
+                val passiveSpell = parseSpell(spells[1].jsonObject, GearType.DRIFTER) ?: continue
+
+                drifters.add(Drifter(gameId, name, activeSpell, passiveSpell))
+            } catch (e: Exception) {
+                println("Error parsing drifter: ${e.message}")
+            }
+        }
+
+        return drifters
+    }
 
 }

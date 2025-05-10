@@ -2,11 +2,13 @@ package com.elkite.warborn.presentation.screen.build_loadout
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import com.elkite.warborn.data.repository.DataRepository
+import com.elkite.warborn.domain.entities.gear.Drifter
 import com.elkite.warborn.domain.entities.gear.GearType
 import com.elkite.warborn.domain.entities.gear.Loadout
 import com.elkite.warborn.domain.entities.gear.LoadoutType
 import com.elkite.warborn.domain.entities.spell.Spell
 import com.elkite.warborn.domain.entities.spell.SpellType
+import io.github.aakira.napier.Napier
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,6 +26,9 @@ class BuildScreenModel : ScreenModel {
 
     private val _currentSpells = MutableStateFlow<List<Spell>>(emptyList())
     val currentSpells: StateFlow<List<Spell>> = _currentSpells
+
+    private val _drifters = MutableStateFlow<List<Drifter>>(emptyList())
+    val drifters: StateFlow<List<Drifter>> = _drifters
 
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
@@ -92,13 +97,22 @@ class BuildScreenModel : ScreenModel {
             LoadoutType.PASSIVE -> _loadout.value.copy(passive = newSpell)
             LoadoutType.COMMON_SKILL -> _loadout.value.copy(commonSkill = newSpell)
             LoadoutType.BASIC_ATTACK -> _loadout.value.copy(basicAttack = newSpell)
+            LoadoutType.DRIFTER -> {
+                Napier.e { "SHOULD NOT HAPPEN $newSpell" }
+                _loadout.value
+            }
         }
+    }
+
+    fun updateDrifter(drifter: Drifter) {
+        _loadout.value = _loadout.value.copy(drifter = drifter)
     }
 
     private fun loadSpells() {
         coroutineScope.launch {
             try {
                 val spells = DataRepository.getData()
+                val drifters = DataRepository.getDrifters()
                 _screenState.update {
                     SpellsState.Success(
                         head = spells.filter { it.associatedGearType == GearType.HEAD },
@@ -107,9 +121,11 @@ class BuildScreenModel : ScreenModel {
                         sword = spells.filter { it.associatedGearType == GearType.SWORD },
                         gun = spells.filter { it.associatedGearType == GearType.GUN },
                         axe = spells.filter { it.associatedGearType == GearType.AXE },
-                        mace = spells.filter { it.associatedGearType == GearType.MACE }
+                        mace = spells.filter { it.associatedGearType == GearType.MACE },
+                        drifters = drifters
                     )
                 }
+                _drifters.update {  drifters }
             } catch (e: Exception) {
                 _screenState.update { SpellsState.Error(e.message ?: "Unknown error") }
             }
@@ -126,6 +142,7 @@ class BuildScreenModel : ScreenModel {
             val gun: List<Spell>,
             val axe: List<Spell>,
             val mace: List<Spell>,
+            val drifters: List<Drifter>,
         ) : SpellsState()
 
         data class Error(val message: String) : SpellsState()

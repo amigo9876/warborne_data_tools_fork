@@ -3,7 +3,9 @@ package com.elkite.warborn.presentation.screen.main.common
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.ExperimentalMaterialApi
@@ -13,12 +15,17 @@ import androidx.compose.material.NavigationRailItem
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.paint
+import androidx.compose.ui.graphics.Color
 import cafe.adriel.voyager.navigator.bottomSheet.BottomSheetNavigator
 import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import com.elkite.warborn.presentation.tab.HomeTab
 import com.elkite.warborn.presentation.tab.SecondTab
+import com.elkite.warborn.resources.CommonBg_New_Black
+import com.elkite.warborn.resources.Res
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 private fun RowScope.TabNavigationItem(tab: Tab) {
@@ -64,13 +71,23 @@ fun MainContentWeb() {
     Scaffold(
         content = { paddingValues ->
             Row(Modifier.padding(paddingValues)) {
-                NavigationRail {
+                NavigationRail(
+                    backgroundColor = Color.LightGray
+                ) {
                     TabNavigationRailItem(HomeTab)
                     TabNavigationRailItem(SecondTab)
                 }
-                Column(Modifier.weight(1f)) {
+                Column(
+                    modifier = Modifier.fillMaxWidth().padding(paddingValues).statusBarsPadding()
+                        .paint(
+                            painterResource(Res.drawable.CommonBg_New_Black),
+                            contentScale = androidx.compose.ui.layout.ContentScale.FillBounds
+                        )
+                ) {
                     CurrentTab()
                 }
+
+
             }
         }
     )
@@ -83,7 +100,13 @@ fun MainContentMobile() {
         content = { paddingValues ->
 
             BottomSheetNavigator {
-                Column(Modifier.padding(paddingValues)) {
+                Column(
+                    modifier = Modifier.fillMaxWidth().padding(paddingValues).statusBarsPadding()
+                        .paint(
+                            painterResource(Res.drawable.CommonBg_New_Black),
+                            contentScale = androidx.compose.ui.layout.ContentScale.FillBounds
+                        )
+                ) {
                     CurrentTab()
                 }
             }

@@ -1,5 +1,6 @@
 package com.elkite.warborn.util
 
+import com.elkite.warborn.domain.entities.gear.Drifter
 import com.elkite.warborn.domain.entities.gear.GearType
 import com.elkite.warborn.resources.Avatar_TotemPower
 import com.elkite.warborn.resources.Axe_Common_Attack_SP_1
@@ -112,6 +113,26 @@ import com.elkite.warborn.resources.Mace_Hook
 import com.elkite.warborn.resources.Mace_Passive
 import com.elkite.warborn.resources.Mace_ShieldMace_2
 import com.elkite.warborn.resources.Mace_ThunderMace
+import com.elkite.warborn.resources.ParagonFullBody_None
+import com.elkite.warborn.resources.ParagonFullBody_Str_1
+import com.elkite.warborn.resources.ParagonFullBody_Str_2
+import com.elkite.warborn.resources.ParagonFullBody_Str_3
+import com.elkite.warborn.resources.ParagonFullBody_Str_4
+import com.elkite.warborn.resources.ParagonFullBody_Str_5
+import com.elkite.warborn.resources.ParagonFullBody_Str_6
+import com.elkite.warborn.resources.ParagonFullBody_Str_7
+import com.elkite.warborn.resources.ParagonFullBody_Str_8
+import com.elkite.warborn.resources.ParagonFullBody_Str_9
+import com.elkite.warborn.resources.ParagonPortrait_None
+import com.elkite.warborn.resources.ParagonPortrait_Str_1
+import com.elkite.warborn.resources.ParagonPortrait_Str_2
+import com.elkite.warborn.resources.ParagonPortrait_Str_3
+import com.elkite.warborn.resources.ParagonPortrait_Str_4
+import com.elkite.warborn.resources.ParagonPortrait_Str_5
+import com.elkite.warborn.resources.ParagonPortrait_Str_6
+import com.elkite.warborn.resources.ParagonPortrait_Str_7
+import com.elkite.warborn.resources.ParagonPortrait_Str_8
+import com.elkite.warborn.resources.ParagonPortrait_Str_9
 import com.elkite.warborn.resources.Res
 import com.elkite.warborn.resources.Shoes_Str_1
 import com.elkite.warborn.resources.Shoes_Str_2
@@ -136,9 +157,73 @@ import com.elkite.warborn.resources.Sword_Knight
 import com.elkite.warborn.resources.Sword_Passive
 import com.elkite.warborn.resources.Sword_ThousandBlade
 import com.elkite.warborn.resources.Sword_ZeroSlash
+import com.elkite.warborn.resources.error_emoji
+import com.elkite.warborn.resources.*
 import org.jetbrains.compose.resources.DrawableResource
 
 object IconMap {
+
+    fun getDrifterIcon(drifter: Drifter?) : DrawableResource {
+        return when (drifter?.gameId) {
+            "paragon_str_1" -> Res.drawable.ParagonPortrait_Str_1
+            "paragon_str_2" -> Res.drawable.ParagonPortrait_Str_2
+            "paragon_str_3" -> Res.drawable.ParagonPortrait_Str_3
+            "paragon_str_4" -> Res.drawable.ParagonPortrait_Str_4
+            "paragon_str_5" -> Res.drawable.ParagonPortrait_Str_5
+            "paragon_str_6" -> Res.drawable.ParagonPortrait_Str_6
+            "paragon_str_7" -> Res.drawable.ParagonPortrait_Str_7
+            "paragon_str_8" -> Res.drawable.ParagonPortrait_Str_8
+            "paragon_str_9" -> Res.drawable.ParagonPortrait_Str_9
+            null -> Res.drawable.ParagonPortrait_None
+            else -> Res.drawable.error_emoji
+        }
+    }
+
+    fun getDrifterFullBody(drifter: Drifter?) : DrawableResource {
+        return when (drifter?.gameId) {
+            "paragon_str_1" -> Res.drawable.ParagonFullBody_Str_1
+            "paragon_str_2" -> Res.drawable.ParagonFullBody_Str_2
+            "paragon_str_3" -> Res.drawable.ParagonFullBody_Str_3
+            "paragon_str_4" -> Res.drawable.ParagonFullBody_Str_4
+            "paragon_str_5" -> Res.drawable.ParagonFullBody_Str_5
+            "paragon_str_6" -> Res.drawable.ParagonFullBody_Str_6
+            "paragon_str_7" -> Res.drawable.ParagonFullBody_Str_7
+            "paragon_str_8" -> Res.drawable.ParagonFullBody_Str_8
+            "paragon_str_9" -> Res.drawable.ParagonFullBody_Str_9
+            null -> Res.drawable.ParagonFullBody_None
+            else -> Res.drawable.error_emoji
+        }
+    }
+
+    fun getDrifterSpell(drifter: Drifter) : DrawableResource {
+        return when (drifter.gameId) {
+            "paragon_str_1" -> Res.drawable.Paragon_Skill_Str_1
+            "paragon_str_2" -> Res.drawable.Paragon_Skill_Str_2
+            "paragon_str_3" -> Res.drawable.Paragon_Skill_Str_3
+            "paragon_str_4" -> Res.drawable.Paragon_Skill_Str_4
+            "paragon_str_5" -> Res.drawable.Paragon_Skill_Str_5
+            "paragon_str_6" -> Res.drawable.Paragon_Skill_Str_6
+            "paragon_str_7" -> Res.drawable.Paragon_Skill_Str_7
+            "paragon_str_8" -> Res.drawable.Paragon_Skill_Str_8
+            "paragon_str_9" -> Res.drawable.Paragon_Skill_Str_9
+            else -> Res.drawable.error_emoji
+        }
+    }
+
+    fun getDrifterPassive(drifter: Drifter) : DrawableResource {
+        return when (drifter.gameId) {
+            "paragon_str_1" -> Res.drawable.Paragon_Skill_Str_1_Passive
+            "paragon_str_2" -> Res.drawable.Paragon_Skill_Str_2_Passive
+            "paragon_str_3" -> Res.drawable.Paragon_Skill_Str_3_Passive
+            "paragon_str_4" -> Res.drawable.Paragon_Skill_Str_4_Passive
+            "paragon_str_5" -> Res.drawable.Paragon_Skill_Str_5_Passive
+            "paragon_str_6" -> Res.drawable.Paragon_Skill_Str_6_Passive
+            "paragon_str_7" -> Res.drawable.Paragon_Skill_Str_7_Passive
+            "paragon_str_8" -> Res.drawable.Paragon_Skill_Str_8_Passive
+            "paragon_str_9" -> Res.drawable.Paragon_Skill_Str_9_Passive
+            else -> Res.drawable.error_emoji
+        }
+    }
 
     fun getSkillIcon(gearType: GearType, id: String) : DrawableResource {
         return when (gearType) {
@@ -149,7 +234,7 @@ object IconMap {
             GearType.GUN -> getSkillGunIcon(id)
             GearType.AXE -> getSkillAxeIcon(id)
             GearType.MACE -> getSkillMaceIcon(id)
-            else -> Res.drawable.Cloth_Str_1
+            else -> Res.drawable.error_emoji
         }
     }
 
@@ -159,7 +244,7 @@ object IconMap {
             GearType.GUN -> Res.drawable.EnhancementItem_GUN1
             GearType.AXE -> Res.drawable.EnhancementItem_AXE2
             GearType.MACE -> Res.drawable.EnhancementItem_MACE1
-            else -> Res.drawable.Cloth_Str_1
+            else -> Res.drawable.error_emoji
         }
     }
 
@@ -172,7 +257,7 @@ object IconMap {
             GearType.GUN -> getArmorGunIcon(id)
             GearType.AXE -> getArmorAxeIcon(id)
             GearType.MACE -> getArmorMaceIcon(id)
-            else -> Res.drawable.Cloth_Str_1
+            else -> Res.drawable.error_emoji
         }
     }
 
@@ -185,7 +270,7 @@ object IconMap {
             "Savage Helm" -> Res.drawable.EnhancementItem_HELMET1
             "Stormveil Mask" -> Res.drawable.EnhancementItem_HELMET5
             "Warden's Gaze" -> Res.drawable.EnhancementItem_HELMET7
-            else -> Res.drawable.Cloth_Str_1
+            else -> Res.drawable.error_emoji
         }
     }
 
@@ -198,7 +283,7 @@ object IconMap {
             "Tangle Guard" -> Res.drawable.EnhancementItem_ARMOR7
             "Warden's Shell" -> Res.drawable.EnhancementItem_ARMOR3
             "Magsurge Armor" -> Res.drawable.EnhancementItem_ARMOR5
-            else -> Res.drawable.Cloth_Str_1
+            else -> Res.drawable.error_emoji
         }
     }
 
@@ -211,7 +296,7 @@ object IconMap {
             "Vanguard's March" -> Res.drawable.EnhancementItem_BOOTS6
             "Impact Heavy Boots" -> Res.drawable.EnhancementItem_BOOTS3
             "Avalanche Boots" -> Res.drawable.EnhancementItem_BOOTS7
-            else -> Res.drawable.Cloth_Str_1
+            else -> Res.drawable.error_emoji
         }
     }
 
@@ -224,7 +309,7 @@ object IconMap {
             "Titan's Spineblade" -> Res.drawable.EnhancementItem_SWORD6
             "Judicator" -> Res.drawable.EnhancementItem_SWORD2
             "Sovereign's Radiance" -> Res.drawable.EnhancementItem_SWORD7
-            else -> Res.drawable.Cloth_Str_1
+            else -> Res.drawable.error_emoji
         }
     }
 
@@ -237,7 +322,7 @@ object IconMap {
             "Luminet Cannon" -> Res.drawable.EnhancementItem_GUN6
             "Voideye" -> Res.drawable.EnhancementItem_GUN5
             "Prism Cloak" -> Res.drawable.EnhancementItem_GUN7
-            else -> Res.drawable.Cloth_Str_1
+            else -> Res.drawable.error_emoji
         }
     }
 
@@ -250,7 +335,7 @@ object IconMap {
             "Cyclone Cleave" -> Res.drawable.EnhancementItem_AXE4
             "Wreckingsaw" -> Res.drawable.EnhancementItem_AXE5
             "Wingblade" -> Res.drawable.EnhancementItem_AXE3
-            else -> Res.drawable.Cloth_Str_1
+            else -> Res.drawable.error_emoji
         }
     }
 
@@ -263,7 +348,7 @@ object IconMap {
             "Bulwark Core" -> Res.drawable.EnhancementItem_MACE6
             "Abyssal Conduit" -> Res.drawable.EnhancementItem_MACE5
             "Thunderlord's Wrath" -> Res.drawable.EnhancementItem_MACE7
-            else -> Res.drawable.Cloth_Str_1
+            else -> Res.drawable.error_emoji
         }
     }
 
@@ -338,7 +423,7 @@ object IconMap {
             "Mace_CamlannMace" -> Res.drawable.Mace_CamlannMace
             "Mace_ThunderMace" -> Res.drawable.Mace_ThunderMace
 
-            else -> Res.drawable.Cloth_Str_1
+            else -> Res.drawable.error_emoji
         }
     }
 
@@ -351,7 +436,7 @@ object IconMap {
             "Helm_Str_4" -> Res.drawable.Helm_Str_4
             "Helm_Str_3" -> Res.drawable.Helm_Str_3
             "Helm_Str_1" -> Res.drawable.Helm_Str_1
-            else -> Res.drawable.Cloth_Str_1
+            else -> Res.drawable.error_emoji
         }
     }
 
@@ -364,7 +449,7 @@ object IconMap {
             "Cloth_Str_3" -> Res.drawable.Cloth_Str_3
             "Cloth_Str_2" -> Res.drawable.Cloth_Str_2
             "Cloth_Str_1" -> Res.drawable.Cloth_Str_1
-            else -> Res.drawable.Cloth_Str_1
+            else -> Res.drawable.error_emoji
         }
     }
 
@@ -377,7 +462,7 @@ object IconMap {
             "Shoes_Str_3" -> Res.drawable.Shoes_Str_3
             "Shoes_Str_2" -> Res.drawable.Shoes_Str_2
             "Shoes_Str_1" -> Res.drawable.Shoes_Str_1
-            else -> Res.drawable.Cloth_Str_1
+            else -> Res.drawable.error_emoji
         }
     }
 
@@ -399,7 +484,7 @@ object IconMap {
             "Sword_Knight" -> Res.drawable.Sword_Knight
             "Sword_Carving" -> Res.drawable.Sword_Carving
             "Sword_ThousandBlade" -> Res.drawable.Sword_ThousandBlade
-            else -> Res.drawable.Cloth_Str_1
+            else -> Res.drawable.error_emoji
         }
     }
 
@@ -421,7 +506,7 @@ object IconMap {
             "Gun_Common_Skill_5" -> Res.drawable.Gun_Common_Skill_5
             "Gun_RifleGun" -> Res.drawable.Gun_RifleGun
             "Gun_PrismGun" -> Res.drawable.Gun_PrismGun
-            else -> Res.drawable.Cloth_Str_1
+            else -> Res.drawable.error_emoji
         }
     }
 
@@ -443,7 +528,7 @@ object IconMap {
             "Axe_GiantSwing" -> Res.drawable.Axe_GiantSwing
             "Axe_Flywheel" -> Res.drawable.Axe_Flywheel
             "Axe_DoubleWhirl" -> Res.drawable.Axe_DoubleWhirl
-            else -> Res.drawable.Cloth_Str_1
+            else -> Res.drawable.error_emoji
         }
     }
 
@@ -465,7 +550,7 @@ object IconMap {
             "Mace_ShieldMace_2" -> Res.drawable.Mace_ShieldMace_2
             "Mace_CamlannMace" -> Res.drawable.Mace_CamlannMace
             "Mace_ThunderMace" -> Res.drawable.Mace_ThunderMace
-            else -> Res.drawable.Cloth_Str_1
+            else -> Res.drawable.error_emoji
         }
     }
 

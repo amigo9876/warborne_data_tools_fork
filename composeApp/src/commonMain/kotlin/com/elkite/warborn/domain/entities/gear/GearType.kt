@@ -11,7 +11,8 @@ enum class GearType {
     GUN,
     AXE,
     MACE,
-    WEAPON
+    WEAPON,
+    DRIFTER
 }
 
 @Serializable
@@ -23,4 +24,5 @@ enum class LoadoutType {
     PASSIVE,
     BASIC_ATTACK,
     COMMON_SKILL,
+    DRIFTER
 }

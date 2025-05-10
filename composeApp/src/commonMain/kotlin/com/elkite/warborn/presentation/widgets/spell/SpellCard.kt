@@ -89,54 +89,59 @@ fun SpellCard(
                     ArmorImage(Modifier.size(80.dp), spell = spell)
                 }
                 Spacer(modifier = Modifier.size(16.dp))
-                Column(
-                    modifier = Modifier
-                        .padding(8.dp),
-                ) {
-                    Text(
-                        spell.name,
-                        style = MaterialTheme.typography.h6,
-                        color = Color.LightGray
-                    )
-                    Spacer(modifier = Modifier.size(8.dp))
-                    MultiPatternHighlightedText(
-                        baseTextStyle = MaterialTheme.typography.body1.copy(color = Color.LightGray),
-                        text = spell.description,
-                        patternsWithStyles = listOf(
-                            Regex("""\[Damage Rate: [^\]]+]""") to SpanStyle(
-                                color = Color.Red,
-                                fontWeight = FontWeight.Bold
-                            ),
-                            Regex("""\[Healing Rate: [^\]]+]""") to SpanStyle(
-                                color = Color.Green,
-                                fontWeight = FontWeight.Bold
-                            ),
-                            Regex("""\[Target-based Max HP [^\]]+]""") to SpanStyle(
-                                color = Color.Blue,
-                                fontWeight = FontWeight.Bold
-                            )
-                        )
-                    )
-                    Spacer(modifier = Modifier.size(8.dp))
-                    Divider(
-                        Modifier.fillMaxWidth().height(1.dp),
-                        color = Color.LightGray
-                    )
-                    Row {
-                        if (spell.manaCost != "0") {
-                            SpellAttributeRow(label = "Mana Cost", value = spell.manaCost)
-                        }
-                        if (spell.cooldown != "0") {
-                            SpellAttributeRow(label = "Cooldown", value = "${spell.cooldown}s")
-                        }
-                        SpellAttributeRow(label = "Range", value = "${spell.castingRange}m")
-                        SpellAttributeRow(
-                            label = "Gear Level",
-                            value = spell.requiredGearLevel.textValue
-                        )
-                    }
-                }
+                SpellDescription(spell)
             }
+        }
+    }
+}
+
+@Composable
+fun SpellDescription(spell: Spell) {
+     Column(
+        modifier = Modifier
+            .padding(8.dp),
+    ) {
+        Text(
+            spell.name,
+            style = MaterialTheme.typography.h6,
+            color = Color.LightGray
+        )
+        Spacer(modifier = Modifier.size(8.dp))
+        MultiPatternHighlightedText(
+            baseTextStyle = MaterialTheme.typography.body1.copy(color = Color.LightGray),
+            text = spell.description,
+            patternsWithStyles = listOf(
+                Regex("""\[Damage Rate: [^\]]+]""") to SpanStyle(
+                    color = Color.Red,
+                    fontWeight = FontWeight.Bold
+                ),
+                Regex("""\[Healing Rate: [^\]]+]""") to SpanStyle(
+                    color = Color.Green,
+                    fontWeight = FontWeight.Bold
+                ),
+                Regex("""\[Target-based Max HP [^\]]+]""") to SpanStyle(
+                    color = Color.Blue,
+                    fontWeight = FontWeight.Bold
+                )
+            )
+        )
+        Spacer(modifier = Modifier.size(8.dp))
+        Divider(
+            Modifier.fillMaxWidth().height(1.dp),
+            color = Color.LightGray
+        )
+        Row {
+            if (spell.manaCost != "0") {
+                SpellAttributeRow(label = "Mana Cost", value = spell.manaCost)
+            }
+            if (spell.cooldown != "0") {
+                SpellAttributeRow(label = "Cooldown", value = "${spell.cooldown}s")
+            }
+            SpellAttributeRow(label = "Range", value = "${spell.castingRange}m")
+            SpellAttributeRow(
+                label = "",
+                value = spell.requiredGearLevel.textValue
+            )
         }
     }
 }
