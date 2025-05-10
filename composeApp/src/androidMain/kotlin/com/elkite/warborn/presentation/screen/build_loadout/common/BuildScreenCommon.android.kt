@@ -20,11 +20,13 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.bottomSheet.BottomSheetNavigator
 import cafe.adriel.voyager.navigator.bottomSheet.LocalBottomSheetNavigator
+import com.elkite.warborn.domain.entities.gear.Drifter
 import com.elkite.warborn.domain.entities.gear.GearType
 import com.elkite.warborn.domain.entities.gear.LoadoutType
 import com.elkite.warborn.domain.entities.spell.Spell
 import com.elkite.warborn.domain.entities.spell.SpellType
 import com.elkite.warborn.presentation.screen.build_loadout.BuildScreenModel
+import com.elkite.warborn.presentation.widgets.drifter.DrifterCardList
 import com.elkite.warborn.presentation.widgets.loadout.LoadoutCardList
 import com.elkite.warborn.presentation.widgets.spell.SpellCardList
 import com.elkite.warborn.presentation.widgets.subcategory.SubCategoryList
@@ -37,14 +39,38 @@ actual fun BuildScreenContent(screenModel: BuildScreenModel) {
     val currentSpells by screenModel.currentSpells.collectAsState()
     val loadout by screenModel.loadout.collectAsState()
     val bottomSheetNavigator = LocalBottomSheetNavigator.current
+    val drifters = screenModel.drifters.collectAsState()
 
     val showSubWeaponList = remember { mutableStateOf(false) }
     val currentWeaponType = remember { mutableStateOf(GearType.WEAPON) }
     val shouldShowBottomSheet = remember { mutableStateOf(false) }
+    val shouldShowDrifters = remember { mutableStateOf(false) }
 
-    LaunchedEffect(currentSpells, shouldShowBottomSheet.value) {
+    LaunchedEffect(shouldShowBottomSheet.value) {
         if (shouldShowBottomSheet.value) {
-            showBottomSheet(bottomSheetNavigator, currentSpells, screenModel)
+            if (showSubWeaponList.value)
+                showWeaponBottom(
+                    bottomSheetNavigator,
+                    GearType.entries.filter {
+                        it !in listOf(
+                            GearType.HEAD,
+                            GearType.CHEST,
+                            GearType.BOOTS,
+                            GearType.WEAPON
+                        )
+                    }
+                ) { gearType ->
+                    showSubWeaponList.value = false
+                    currentWeaponType.value = gearType
+                    screenModel.updateSpellsList(gearType, SpellType.SKILL)
+                    screenModel.updatePassive(gearType)
+                    shouldShowBottomSheet.value = true
+
+                }
+            else if (shouldShowDrifters.value)
+                showDriftersBottom(bottomSheetNavigator, drifters.value, screenModel)
+            else
+                showSpellBottom(bottomSheetNavigator, currentSpells, screenModel)
             shouldShowBottomSheet.value = false
         }
     }
@@ -65,7 +91,8 @@ actual fun BuildScreenContent(screenModel: BuildScreenModel) {
                     screenModel = screenModel,
                     currentWeaponType = currentWeaponType,
                     showSubWeaponList = showSubWeaponList,
-                    shouldShowBottomSheet = shouldShowBottomSheet
+                    shouldShowBottomSheet = shouldShowBottomSheet,
+                    shouldShowDrifters = shouldShowDrifters
                 )
             }
             Spacer(modifier = Modifier.size(16.dp))
@@ -97,13 +124,24 @@ private fun handleLoadoutClick(
     screenModel: BuildScreenModel,
     currentWeaponType: MutableState<GearType>,
     showSubWeaponList: MutableState<Boolean>,
-    shouldShowBottomSheet: MutableState<Boolean>
+    shouldShowBottomSheet: MutableState<Boolean>,
+    shouldShowDrifters: MutableState<Boolean>
 ) {
+    shouldShowDrifters.value = false
+    showSubWeaponList.value = false
+
     when (loadoutType) {
         LoadoutType.HEAD -> updateAndShowBottomSheet(screenModel, GearType.HEAD, shouldShowBottomSheet)
         LoadoutType.CHEST -> updateAndShowBottomSheet(screenModel, GearType.CHEST, shouldShowBottomSheet)
         LoadoutType.BOOTS -> updateAndShowBottomSheet(screenModel, GearType.BOOTS, shouldShowBottomSheet)
-        LoadoutType.WEAPON -> showSubWeaponList.value = true
+        LoadoutType.WEAPON -> {
+            showSubWeaponList.value = true
+            updateAndShowBottomSheet(
+                screenModel,
+                GearType.WEAPON,
+                shouldShowBottomSheet
+            )
+        }
         LoadoutType.PASSIVE -> updateAndShowBottomSheet(
             screenModel,
             currentWeaponType.value,
@@ -122,6 +160,15 @@ private fun handleLoadoutClick(
             shouldShowBottomSheet,
             SpellType.BASIC_ATTACK
         )
+
+        LoadoutType.DRIFTER -> {
+            shouldShowDrifters.value = true
+            updateAndShowBottomSheet(
+                screenModel,
+                GearType.DRIFTER,
+                shouldShowBottomSheet
+            )
+        }
     }
 }
 
@@ -135,7 +182,7 @@ private fun updateAndShowBottomSheet(
     shouldShowBottomSheet.value = true
 }
 
-private fun showBottomSheet(
+private fun showSpellBottom(
     bottomSheetNavigator: BottomSheetNavigator,
     currentSpells: List<Spell>,
     screenModel: BuildScreenModel
@@ -149,6 +196,64 @@ private fun showBottomSheet(
             }
         )
     )
+}
+
+private fun showWeaponBottom(
+    bottomSheetNavigator: BottomSheetNavigator,
+    entries: List<GearType>,
+    onClick: (GearType) -> Unit,
+    ) {
+    bottomSheetNavigator.show(
+        SubCategoryListScreen(
+            entries = entries,
+            onClick = onClick
+        )
+    )
+}
+
+private fun showDriftersBottom(
+    bottomSheetNavigator: BottomSheetNavigator,
+    drifters: List<Drifter>,
+    screenModel: BuildScreenModel
+) {
+    bottomSheetNavigator.show(
+        DriftersScreen(
+            drifters = drifters,
+            onDrifterClick = { drifter ->
+                screenModel.updateDrifter(drifter)
+                bottomSheetNavigator.hide()
+            }
+        )
+    )
+}
+
+private class SubCategoryListScreen(
+    private val entries: List<GearType>,
+    private val onClick: (GearType) -> Unit,
+) : Screen {
+
+    @Composable
+    override fun Content() {
+        SubCategoryList(
+            entries = entries,
+            onClick = onClick
+        )
+    }
+}
+
+private class DriftersScreen(
+    private val drifters: List<Drifter>,
+    private val onDrifterClick: (Drifter) -> Unit,
+) : Screen {
+
+    @Composable
+    override fun Content() {
+        DrifterCardList(
+            drifters = drifters,
+            onDrifterClick = onDrifterClick,
+            columnCount = 1
+        )
+    }
 }
 
 private class SpellsScreen(

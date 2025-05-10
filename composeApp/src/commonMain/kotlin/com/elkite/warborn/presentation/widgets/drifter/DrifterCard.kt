@@ -29,10 +29,11 @@ fun DrifterCardList(
     modifier: Modifier = Modifier,
     drifters: List<Drifter>,
     onDrifterClick: (Drifter) -> Unit,
+    columnCount: Int = 2,
 ) {
 
     LazyVerticalStaggeredGrid(
-        columns = StaggeredGridCells.Fixed(2),
+        columns = StaggeredGridCells.Fixed(columnCount),
         verticalItemSpacing = 4.dp,
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         modifier = modifier.background(color = Color.Transparent),
