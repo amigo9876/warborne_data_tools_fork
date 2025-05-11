@@ -1,14 +1,15 @@
-package com.elkite.warborn.domain.entities.spell
+package com.elkite.warborn.domain.entities.gear.spell
 
+import com.elkite.warborn.domain.entities.gear.Gear
 import com.elkite.warborn.domain.entities.gear.GearLevel
+import com.elkite.warborn.domain.entities.gear.GearStats
 import com.elkite.warborn.domain.entities.gear.GearType
 import com.elkite.warborn.domain.entities.gear.LoadoutType
-import kotlinx.serialization.Serializable
 
-@Serializable
 data class Spell(
-    val id: String,
-    val name: String,
+    override val gameId: String,
+    override val name: String,
+    override val gearStats: GearStats,
     val description: String,
     val type: SpellType,
     val castingRange: String,
@@ -17,12 +18,12 @@ data class Spell(
     val requiredGearLevel: GearLevel,
     val associatedGearType: GearType,
     val gearName: String? = null,
-) {
+) : Gear(gameId, name, gearStats) {
     override fun toString(): String {
-        return "Spell(id='$id',\\\n name='$name',\\\n description='$description',\\\n type=$type," +
+        return "Spell(id='${gameId}',\\\n name='$name',\\\n description='$description',\\\n type=$type," +
                 "\\\n castingRange='$castingRange',\\\n cooldown='$cooldown',\\\n " +
                 "manaCost='$manaCost',\\\n requiredGearLevel=$requiredGearLevel,\\\n " +
-                "associatedGearType=$associatedGearType)\\\n gearName=$gearName"
+                "associatedGearType=$associatedGearType)\\\n gearName=$gearName \\\n gearStat=$gearStats"
     }
 
     fun getLoadoutType(): LoadoutType {

@@ -86,8 +86,6 @@ fun MainContentWeb() {
                 ) {
                     CurrentTab()
                 }
-
-
             }
         }
     )
@@ -98,7 +96,6 @@ fun MainContentWeb() {
 fun MainContentMobile() {
     Scaffold(
         content = { paddingValues ->
-
             BottomSheetNavigator {
                 Column(
                     modifier = Modifier.fillMaxWidth()

@@ -1,11 +1,12 @@
 package com.elkite.warborn.data.repository
 
 import com.elkite.warborn.data.network.httpClient
-import com.elkite.warborn.domain.entities.gear.Drifter
 import com.elkite.warborn.domain.entities.gear.GearLevel
+import com.elkite.warborn.domain.entities.gear.GearStats
 import com.elkite.warborn.domain.entities.gear.GearType
-import com.elkite.warborn.domain.entities.spell.Spell
-import com.elkite.warborn.domain.entities.spell.SpellType
+import com.elkite.warborn.domain.entities.gear.drifter.Drifter
+import com.elkite.warborn.domain.entities.gear.spell.Spell
+import com.elkite.warborn.domain.entities.gear.spell.SpellType
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
 import kotlinx.serialization.json.Json
@@ -46,9 +47,28 @@ object DataRepository {
         // --- Weapon: map keys to WeaponType enums ---
         for ((weaponKey, spellsJsonArray) in weaponSection) {
 
+            val gearStats = when {
+                "sword" in weaponKey -> GearStats.STR
+                "mace" in weaponKey -> GearStats.STR
+                "axe" in weaponKey -> GearStats.STR
+                "gun" in weaponKey -> GearStats.STR
+                "bow" in weaponKey -> GearStats.AGI
+                "spear" in weaponKey -> GearStats.AGI
+                "dagger" in weaponKey -> GearStats.AGI
+                "nature" in weaponKey -> GearStats.AGI
+                "fire" in weaponKey -> GearStats.INT
+                "frost" in weaponKey -> GearStats.INT
+                "holy" in weaponKey -> GearStats.INT
+                "curse" in weaponKey -> GearStats.INT
+                else -> {
+                    println("Unknown armor type: $weaponKey")
+                    continue
+                }
+            }
+
 
             for (entry in spellsJsonArray.jsonArray) {
-                parseSpell(entry.jsonObject, GearType.valueOf(weaponKey.uppercase()))?.let { result.add(it) }
+                parseSpell(entry.jsonObject, GearType.valueOf(weaponKey.uppercase()), gearStats)?.let { result.add(it) }
             }
         }
 
@@ -64,15 +84,25 @@ object DataRepository {
                 }
             }
 
+            val gearStats = when {
+                armorKey.contains("strength") -> GearStats.STR
+                armorKey.contains("intelligence") -> GearStats.INT
+                armorKey.contains("dexterity") -> GearStats.AGI
+                else -> {
+                    println("Unknown gear level: $armorKey")
+                    continue
+                }
+            }
+
             for (entry in spellsJsonArray.jsonArray) {
-                parseSpell(entry.jsonObject, gearType)?.let { result.add(it) }
+                parseSpell(entry.jsonObject, gearType, gearStats)?.let { result.add(it) }
             }
         }
 
         return result
     }
 
-    private fun parseSpell(json: JsonObject, gearType: GearType): Spell? {
+    private fun parseSpell(json: JsonObject, gearType: GearType, gearStats: GearStats): Spell? {
         return try {
             val id = json["gameId"]?.jsonPrimitive?.content ?: return null
             val name = json["skillName"]?.jsonPrimitive?.content ?: return null
@@ -80,11 +110,7 @@ object DataRepository {
             val range = json["castingRange"]?.jsonPrimitive?.content ?: return null
             val manaCost = json["manaCost"]?.jsonPrimitive?.content ?: return null
             val desc = json["description"]?.jsonPrimitive?.content ?: return null
-            val gearName = json["gearName"]?.jsonPrimitive?.content?.let {
-                it.ifEmpty {
-                    null
-                }
-            }
+            val gearName = json["gearName"]?.jsonPrimitive?.content ?: return null
 
             val typeStr = json["type"]?.jsonPrimitive?.content
                 ?.uppercase() ?: return null
@@ -95,7 +121,7 @@ object DataRepository {
             val gearLevel = GearLevel.valueOf(unlockStr)
 
             Spell(
-                id = id,
+                gameId = id,
                 name = name,
                 description = desc,
                 type = type,
@@ -105,6 +131,7 @@ object DataRepository {
                 requiredGearLevel = gearLevel,
                 associatedGearType = gearType,
                 gearName = gearName,
+                gearStats = gearStats
             )
         } catch (e: Exception) {
             println("Error parsing spell: ${e.message}")
@@ -118,7 +145,7 @@ object DataRepository {
         val data = jsonElement.jsonObject["data"]?.jsonObject ?: return emptyList()
         val drifterSection = data["drifters"]?.jsonObject.orEmpty()
 
-        for ((_, drifterJson) in drifterSection) {
+        for ((drifterKey, drifterJson) in drifterSection) {
             try {
                 val obj = drifterJson.jsonObject
                 val gameId = obj["gameId"]?.jsonPrimitive?.content ?: continue
@@ -126,10 +153,19 @@ object DataRepository {
                 val spells = obj["spells"]?.jsonArray ?: continue
                 if (spells.size < 2) continue
 
-                val activeSpell = parseSpell(spells[0].jsonObject, GearType.DRIFTER) ?: continue
-                val passiveSpell = parseSpell(spells[1].jsonObject, GearType.DRIFTER) ?: continue
+                val gearStats = when {
+                    drifterKey.contains("str") -> GearStats.STR
+                    drifterKey.contains("int") -> GearStats.INT
+                    drifterKey.contains("dex") -> GearStats.AGI
+                    else -> {
+                        println("Unknown gear level: $drifterKey")
+                        continue
+                    }
+                }
+                val activeSpell = parseSpell(spells[0].jsonObject, GearType.DRIFTER, gearStats) ?: continue
+                val passiveSpell = parseSpell(spells[1].jsonObject, GearType.DRIFTER, gearStats) ?: continue
 
-                drifters.add(Drifter(gameId, name, activeSpell, passiveSpell))
+                drifters.add(Drifter(gameId, name, gearStats, activeSpell, passiveSpell))
             } catch (e: Exception) {
                 println("Error parsing drifter: ${e.message}")
             }

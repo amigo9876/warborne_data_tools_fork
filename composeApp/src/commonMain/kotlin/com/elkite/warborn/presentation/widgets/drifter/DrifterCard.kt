@@ -19,19 +19,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.elkite.warborn.domain.entities.gear.Drifter
+import com.elkite.warborn.domain.entities.gear.drifter.Drifter
 import com.elkite.warborn.presentation.widgets.spell.SpellDescription
 import com.elkite.warborn.presentation.widgets.spell.SpellIconDrifter
 import com.elkite.warborn.presentation.widgets.spell.SpellPassiveDrifter
 
 @Composable
-fun DrifterCardList(
+expect fun DrifterCardList(
+    modifier: Modifier,
+    drifters: List<Drifter>,
+    onDrifterClick: (Drifter) -> Unit,
+    columnCount: Int
+)
+
+@Composable
+fun DrifterCardListCommon(
     modifier: Modifier = Modifier,
     drifters: List<Drifter>,
     onDrifterClick: (Drifter) -> Unit,
-    columnCount: Int = 2,
+    columnCount: Int = 1,
 ) {
-
     LazyVerticalStaggeredGrid(
         columns = StaggeredGridCells.Fixed(columnCount),
         verticalItemSpacing = 4.dp,

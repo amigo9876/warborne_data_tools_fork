@@ -21,11 +21,12 @@ import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
-import com.elkite.warborn.domain.entities.gear.Drifter
 import com.elkite.warborn.domain.entities.gear.Loadout
 import com.elkite.warborn.domain.entities.gear.LoadoutType
-import com.elkite.warborn.domain.entities.spell.Spell
+import com.elkite.warborn.domain.entities.gear.drifter.Drifter
+import com.elkite.warborn.domain.entities.gear.spell.Spell
 import com.elkite.warborn.presentation.widgets.drifter.DrifterIcon
+import com.elkite.warborn.presentation.widgets.gear.ArmorImage
 import com.elkite.warborn.presentation.widgets.spell.SpellIcon
 import com.elkite.warborn.resources.Com_Clothes_Armor
 import com.elkite.warborn.resources.Com_Head_Helmet
@@ -50,25 +51,24 @@ fun LoadoutCardList(
             .verticalScroll(rememberScrollState())
             .paint(
                 painterResource(IconMap.getDrifterFullBody(drifter = loadout.drifter)),
-            contentScale = androidx.compose.ui.layout.ContentScale.Fit,
+                contentScale = androidx.compose.ui.layout.ContentScale.Fit,
                 alignment = Alignment.BottomCenter
-    )
+            )
     ) {
         LoadoutDrifterCard(LoadoutType.DRIFTER, loadout.drifter, onClick)
-        Spacer(modifier = Modifier.size(16.dp))
+        Spacer(Modifier.size(16.dp))
         LoadoutSpellCard(LoadoutType.HEAD, loadout.head, onClick)
-        Spacer(modifier = Modifier.size(16.dp))
+        Spacer(Modifier.size(16.dp))
         LoadoutSpellCard(LoadoutType.CHEST, loadout.chest, onClick)
-        Spacer(modifier = Modifier.size(16.dp))
+        Spacer(Modifier.size(16.dp))
         LoadoutSpellCard(LoadoutType.BOOTS, loadout.boots, onClick)
-        Spacer(modifier = Modifier.size(16.dp))
-        LoadoutSpellCard(LoadoutType.WEAPON, loadout.weapon, onClick)
-        Spacer(modifier = Modifier.size(16.dp))
-        LoadoutSpellCard(LoadoutType.BASIC_ATTACK, loadout.basicAttack, onClick)
-        Spacer(modifier = Modifier.size(16.dp))
-        LoadoutSpellCard(LoadoutType.COMMON_SKILL, loadout.commonSkill, onClick)
-        Spacer(modifier = Modifier.size(16.dp))
-        LoadoutSpellCard(LoadoutType.PASSIVE, loadout.passive, onClick)
+        Spacer(Modifier.size(16.dp))
+        Row {
+            LoadoutSpellCard(LoadoutType.WEAPON, loadout.weapon, onClick)
+            LoadoutSpellCard(LoadoutType.BASIC_ATTACK, loadout.basicAttack, onClick)
+            LoadoutSpellCard(LoadoutType.COMMON_SKILL, loadout.commonSkill, onClick)
+            LoadoutSpellCard(LoadoutType.PASSIVE, loadout.passive, onClick)
+        }
     }
 }
 
@@ -84,8 +84,9 @@ fun LoadoutDrifterCard(
                 .size(64.dp)
                 .border(
                     width = 2.dp,
-                    color = Color.LightGray,
+                    color = Color.DarkGray,
                 )
+                .background(Color.Black)
                 .clickable {
                     onClick(loadoutType)
                 }) {
@@ -100,7 +101,6 @@ fun LoadoutDrifterCard(
                 modifier = Modifier.size(64.dp)
                     .clip(CutCornerShape(16.dp))
             )
-            Spacer(modifier = Modifier.size(16.dp))
         }
     }
 }
@@ -112,31 +112,34 @@ fun LoadoutSpellCard(
     onClick: (LoadoutType) -> Unit,
 ) {
     Row {
+        ArmorIcon(loadoutType, spell, onClick)
+        Spacer(Modifier.size(16.dp))
         SpellIconTransform(loadoutType, onClick, spell)
-        Spacer(modifier = Modifier.size(16.dp))
-        ArmorIcon(loadoutType, spell ?: return@Row, onClick)
     }
 }
-
 
 
 @Composable
 private fun ArmorIcon(
     loadoutType: LoadoutType,
-    spell: Spell,
+    spell: Spell?,
     onClick: (LoadoutType) -> Unit
 ) {
     when (loadoutType) {
         LoadoutType.HEAD,
         LoadoutType.CHEST,
         LoadoutType.BOOTS,
-        LoadoutType.WEAPON -> spell.gearName?.let {
-            Box(modifier = Modifier.size(64.dp).clickable {
-                onClick(loadoutType)
-            }) {
+        LoadoutType.WEAPON -> spell?.gearName?.let {
+            Box(
+                modifier = Modifier.size(64.dp).border(
+                    width = 2.dp,
+                    color = Color.DarkGray,
+                ).clickable {
+                    onClick(loadoutType)
+                }) {
                 ArmorImage(modifier = Modifier.size(64.dp), spell = spell)
             }
-        }
+        } ?: EmptyLoadout(loadoutType, onClick)
 
         else -> {}
     }
@@ -148,43 +151,56 @@ private fun SpellIconTransform(
     onClick: (LoadoutType) -> Unit,
     spell: Spell?
 ) {
-    Box(
-        modifier = Modifier
+
+    val modifier = when (loadoutType) {
+        LoadoutType.PASSIVE -> Modifier
             .size(64.dp)
-            .let {
-                if (loadoutType == LoadoutType.PASSIVE)
-                    return@let Modifier.clip(
-                        CutCornerShape(16.dp)
-                    )
-                it
-            }
+            .clip(CutCornerShape(16.dp))
             .border(
                 width = 2.dp,
-                color = Color.LightGray,
-                shape = if (loadoutType == LoadoutType.PASSIVE)
-                    CutCornerShape(16.dp) else RectangleShape
+                color = Color.DarkGray,
+                shape = CutCornerShape(16.dp)
             )
+            .background(Color.Black)
             .clickable {
                 onClick(loadoutType)
-            }) {
+            }
+
+        else -> Modifier.size(64.dp)
+            .background(Color.Black)
+            .border(
+                width = 2.dp,
+                color = Color.DarkGray,
+            ).clickable {
+                onClick(loadoutType)
+            }
+    }
+
+    Box(
+        modifier = modifier
+    ) {
         spell?.let {
-           SpellIcon(modifier = Modifier.size(64.dp), it)
-        } ?: EmptyLoadout(loadoutType)
+            SpellIcon(modifier = Modifier.size(64.dp), it)
+        }
     }
 }
 
 @Composable
-private fun EmptyLoadout(loadoutType: LoadoutType) {
+private fun EmptyLoadout(
+    loadoutType: LoadoutType,
+    onClick: (LoadoutType) -> Unit
+) {
     Box(
         modifier = Modifier
             .size(64.dp)
-            .background(Color.LightGray)
+            .background(Color.Black)
             .border(
                 width = 2.dp,
-                color = Color.LightGray,
+                color = Color.DarkGray,
                 shape = if (loadoutType == LoadoutType.PASSIVE)
                     CutCornerShape(16.dp) else RectangleShape
-            ),
+            )
+            .clickable { onClick(loadoutType) },
         contentAlignment = Alignment.Center
     ) {
         Image(

@@ -1,6 +1,6 @@
 package com.elkite.warborn.util
 
-import com.elkite.warborn.domain.entities.gear.Drifter
+import com.elkite.warborn.domain.entities.gear.drifter.Drifter
 import com.elkite.warborn.domain.entities.gear.GearType
 import com.elkite.warborn.resources.Avatar_TotemPower
 import com.elkite.warborn.resources.Axe_Common_Attack_SP_1

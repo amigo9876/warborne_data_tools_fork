@@ -1,6 +1,7 @@
 package com.elkite.warborn.domain.entities.gear
 
-import com.elkite.warborn.domain.entities.spell.Spell
+import com.elkite.warborn.domain.entities.gear.drifter.Drifter
+import com.elkite.warborn.domain.entities.gear.spell.Spell
 
 data class Loadout(
     val head: Spell? = null,
@@ -15,13 +16,13 @@ data class Loadout(
 
     fun toQueryParams(): String {
         return listOfNotNull(
-            head?.let { "head=${it.id}" },
-            chest?.let { "chest=${it.id}" },
-            boots?.let { "boots=${it.id}" },
-            weapon?.let { "weapon=${it.id}" },
-            passive?.let { "passive=${it.id}" },
-            commonSkill?.let { "commonSkill=${it.id}" },
-            basicAttack?.let { "basicAttack=${it.id}" },
+            head?.let { "head=${it.gameId}" },
+            chest?.let { "chest=${it.gameId}" },
+            boots?.let { "boots=${it.gameId}" },
+            weapon?.let { "weapon=${it.gameId}" },
+            passive?.let { "passive=${it.gameId}" },
+            commonSkill?.let { "commonSkill=${it.gameId}" },
+            basicAttack?.let { "basicAttack=${it.gameId}" },
             drifter?.let { "drifter=${it.gameId}" }
         ).joinToString("&")
     }

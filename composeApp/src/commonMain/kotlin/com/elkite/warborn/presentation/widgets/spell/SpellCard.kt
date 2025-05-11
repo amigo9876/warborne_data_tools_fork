@@ -29,8 +29,9 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import com.elkite.warborn.domain.entities.spell.Spell
-import com.elkite.warborn.presentation.widgets.loadout.ArmorImage
+import com.elkite.warborn.domain.entities.gear.spell.Spell
+import com.elkite.warborn.domain.entities.gear.spell.SpellType
+import com.elkite.warborn.presentation.widgets.gear.ArmorImage
 import com.elkite.warborn.presentation.widgets.utils.MultiPatternHighlightedText
 
 @Composable
@@ -54,7 +55,7 @@ fun SpellCardListGrid(
 ) {
 
     LazyVerticalStaggeredGrid(
-        columns = StaggeredGridCells.Fixed(2),
+        columns = StaggeredGridCells.Fixed(1),
         verticalItemSpacing = 4.dp,
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         modifier = modifier.background(color = Color.Transparent),
@@ -150,8 +151,10 @@ fun SpellCard(
             Row {
                 Column(Modifier.padding(top = 2.dp, bottom = 2.dp, start = 2.dp)) {
                     SpellIcon(Modifier.size(80.dp), spell = spell)
-                    Spacer(modifier = Modifier.size(8.dp))
-                    ArmorImage(Modifier.size(80.dp), spell = spell)
+                    if (spell.type == SpellType.SKILL) {
+                        Spacer(modifier = Modifier.size(8.dp))
+                        ArmorImage(Modifier.size(80.dp), spell = spell)
+                    }
                 }
                 Spacer(modifier = Modifier.size(16.dp))
                 SpellDescription(spell)
