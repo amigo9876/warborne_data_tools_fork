@@ -94,7 +94,7 @@ fun SpellCardSmall(
         modifier = modifier
             .border(
                 2.dp,
-                color = Color.LightGray,
+                color =WarborneTheme.borderSkillColor,
                 shape = MaterialTheme.shapes.small
             ).clickable {
                 onSpellClick(spell)
@@ -143,7 +143,7 @@ fun SpellCard(
             .defaultMinSize(minWidth = 200.dp)
             .border(
                 2.dp,
-                color = Color.LightGray,
+                color = WarborneTheme.borderSkillColor,
                 shape = MaterialTheme.shapes.small
             ).clickable {
                 onSpellClick(spell)
@@ -239,7 +239,9 @@ fun SpellDescription(spell: Spell) {
             if (spell.cooldown != "0") {
                 SpellAttributeRow(label = "Cooldown", value = "${spell.cooldown}s")
             }
-            SpellAttributeRow(label = "Range", value = "${spell.castingRange}m")
+            if (spell.castingRange != "0") {
+                SpellAttributeRow(label = "Range", value = "${spell.castingRange}m")
+            }
             SpellAttributeRow(
                 label = "",
                 value = spell.requiredGearLevel.textValue

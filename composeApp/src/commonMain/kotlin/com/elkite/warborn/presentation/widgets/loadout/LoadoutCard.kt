@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.paint
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
@@ -32,7 +33,6 @@ import com.elkite.warborn.domain.entities.gear.spell.Spell
 import com.elkite.warborn.presentation.theme.WarborneTheme
 import com.elkite.warborn.presentation.theme.WarborneTheme.borderSkillColor
 import com.elkite.warborn.presentation.theme.WarborneTheme.textBackgroundColor
-import com.elkite.warborn.presentation.theme.WarborneTheme.textDescriptionColor
 import com.elkite.warborn.presentation.widgets.drifter.DrifterIcon
 import com.elkite.warborn.presentation.widgets.gear.ArmorImage
 import com.elkite.warborn.presentation.widgets.spell.SpellIcon
@@ -54,23 +54,39 @@ fun LoadoutCardList(
     onClick: (LoadoutType) -> Unit,
 ) {
     Column(
-        modifier = modifier.fillMaxSize().defaultMinSize(
+        modifier = modifier.fillMaxSize().padding(16.dp).defaultMinSize(
             minWidth = 500.dp
-        )
-            .padding(16.dp)
-            .verticalScroll(rememberScrollState()),
+        ).verticalScroll(rememberScrollState()),
     ) {
-        Column(modifier = Modifier.fillMaxSize().paint(
-                painterResource(IconMap.getDrifterFullBody(drifter = loadout.drifter)),
-                contentScale = ContentScale.Fit,
-                alignment = Alignment.BottomEnd,
-            )
-            .border(
-                width = 2.dp,
-                color = WarborneTheme.drifterBorderStartColor,
-                shape = MaterialTheme.shapes.medium
-            )
-            .padding(16.dp))
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .weight(1f)
+                .background(Color.Black)
+                .clip(MaterialTheme.shapes.small) // Clip to the border shape
+                .border(
+                    width = 3.dp,
+                    brush = Brush.linearGradient(
+                        colors = listOf(
+                            WarborneTheme.drifterBorderStartColor,
+                            WarborneTheme.drifterBorderMiddleColor,
+                            WarborneTheme.drifterBorderEndColor
+                        )
+                    ),
+                    shape = MaterialTheme.shapes.small
+                )
+                .paint(
+                    painterResource(IconMap.getDrifterFullBodyBg(drifter = loadout.drifter)),
+                    contentScale = ContentScale.None,
+                    alignment = Alignment.BottomCenter,
+                )
+                .paint(
+                    painterResource(IconMap.getDrifterFullBody(drifter = loadout.drifter)),
+                    contentScale = ContentScale.Crop,
+                    alignment = Alignment.BottomCenter,
+                )
+                .padding(16.dp)
+        )
         {
             LoadoutDrifterCard(LoadoutType.DRIFTER, loadout.drifter, onClick)
             Spacer(Modifier.size(16.dp))
@@ -105,9 +121,16 @@ fun LoadoutDrifterCard(
                 .size(64.dp)
                 .border(
                     width = 2.dp,
-                    color = Color.Black,
+                    brush = Brush.linearGradient(
+                        colors = listOf(
+                            WarborneTheme.drifterBorderStartColor,
+                            WarborneTheme.drifterBorderMiddleColor,
+                            WarborneTheme.drifterBorderEndColor
+                        )
+                    ),
+                    shape = RectangleShape // You can change this to a different shape if needed
                 )
-                .background(textDescriptionColor)
+                .background(Color.Black)
                 .clickable {
                     onClick(loadoutType)
                 }) {
@@ -182,7 +205,7 @@ private fun SpellIconTransform(
                 color = borderSkillColor,
                 shape = CutCornerShape(16.dp)
             )
-            .background(WarborneTheme.textBackgroundColor)
+            .background(Color.Black)
             .clickable {
                 onClick(loadoutType)
             }
@@ -217,7 +240,7 @@ private fun EmptyLoadout(
             .background(textBackgroundColor)
             .border(
                 width = 2.dp,
-                color = WarborneTheme.borderSkillColor,
+                color = borderSkillColor,
                 shape = if (loadoutType == LoadoutType.PASSIVE)
                     CutCornerShape(16.dp) else RectangleShape
             )

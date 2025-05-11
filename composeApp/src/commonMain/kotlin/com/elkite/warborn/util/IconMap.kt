@@ -1,7 +1,7 @@
 package com.elkite.warborn.util
 
-import com.elkite.warborn.domain.entities.gear.drifter.Drifter
 import com.elkite.warborn.domain.entities.gear.GearType
+import com.elkite.warborn.domain.entities.gear.drifter.Drifter
 import com.elkite.warborn.resources.Avatar_TotemPower
 import com.elkite.warborn.resources.Axe_Common_Attack_SP_1
 import com.elkite.warborn.resources.Axe_Common_Attack_SP_2
@@ -113,6 +113,34 @@ import com.elkite.warborn.resources.Mace_Hook
 import com.elkite.warborn.resources.Mace_Passive
 import com.elkite.warborn.resources.Mace_ShieldMace_2
 import com.elkite.warborn.resources.Mace_ThunderMace
+import com.elkite.warborn.resources.ParagonFullBodyBg_Dex_1
+import com.elkite.warborn.resources.ParagonFullBodyBg_Dex_2
+import com.elkite.warborn.resources.ParagonFullBodyBg_Dex_3
+import com.elkite.warborn.resources.ParagonFullBodyBg_Dex_4
+import com.elkite.warborn.resources.ParagonFullBodyBg_Dex_5
+import com.elkite.warborn.resources.ParagonFullBodyBg_Dex_6
+import com.elkite.warborn.resources.ParagonFullBodyBg_Dex_7
+import com.elkite.warborn.resources.ParagonFullBodyBg_Dex_8
+import com.elkite.warborn.resources.ParagonFullBodyBg_Dex_9
+import com.elkite.warborn.resources.ParagonFullBodyBg_Int_1
+import com.elkite.warborn.resources.ParagonFullBodyBg_Int_10
+import com.elkite.warborn.resources.ParagonFullBodyBg_Int_11
+import com.elkite.warborn.resources.ParagonFullBodyBg_Int_2
+import com.elkite.warborn.resources.ParagonFullBodyBg_Int_3
+import com.elkite.warborn.resources.ParagonFullBodyBg_Int_4
+import com.elkite.warborn.resources.ParagonFullBodyBg_Int_6
+import com.elkite.warborn.resources.ParagonFullBodyBg_Int_7
+import com.elkite.warborn.resources.ParagonFullBodyBg_Int_9
+import com.elkite.warborn.resources.ParagonFullBodyBg_None
+import com.elkite.warborn.resources.ParagonFullBodyBg_Str_1
+import com.elkite.warborn.resources.ParagonFullBodyBg_Str_2
+import com.elkite.warborn.resources.ParagonFullBodyBg_Str_3
+import com.elkite.warborn.resources.ParagonFullBodyBg_Str_4
+import com.elkite.warborn.resources.ParagonFullBodyBg_Str_5
+import com.elkite.warborn.resources.ParagonFullBodyBg_Str_6
+import com.elkite.warborn.resources.ParagonFullBodyBg_Str_7
+import com.elkite.warborn.resources.ParagonFullBodyBg_Str_8
+import com.elkite.warborn.resources.ParagonFullBodyBg_Str_9
 import com.elkite.warborn.resources.ParagonFullBody_Dex_1
 import com.elkite.warborn.resources.ParagonFullBody_Dex_2
 import com.elkite.warborn.resources.ParagonFullBody_Dex_3
@@ -250,9 +278,10 @@ import com.elkite.warborn.resources.Sword_ZeroSlash
 import com.elkite.warborn.resources.error_emoji
 import org.jetbrains.compose.resources.DrawableResource
 
+
 object IconMap {
 
-    fun getDrifterIcon(drifter: Drifter?) : DrawableResource {
+    fun getDrifterIcon(drifter: Drifter?): DrawableResource {
         return when (drifter?.gameId) {
             "paragon_str_1" -> Res.drawable.ParagonPortrait_Str_1
             "paragon_str_2" -> Res.drawable.ParagonPortrait_Str_2
@@ -286,7 +315,42 @@ object IconMap {
         }
     }
 
-    fun getDrifterFullBody(drifter: Drifter?) : DrawableResource {
+    fun getDrifterFullBodyBg(drifter: Drifter?): DrawableResource {
+        return when (drifter?.gameId) {
+            "paragon_str_1" -> Res.drawable.ParagonFullBodyBg_Str_1
+            "paragon_str_2" -> Res.drawable.ParagonFullBodyBg_Str_2
+            "paragon_str_3" -> Res.drawable.ParagonFullBodyBg_Str_3
+            "paragon_str_4" -> Res.drawable.ParagonFullBodyBg_Str_4
+            "paragon_str_5" -> Res.drawable.ParagonFullBodyBg_Str_5
+            "paragon_str_6" -> Res.drawable.ParagonFullBodyBg_Str_6
+            "paragon_str_7" -> Res.drawable.ParagonFullBodyBg_Str_7
+            "paragon_str_8" -> Res.drawable.ParagonFullBodyBg_Str_8
+            "paragon_str_9" -> Res.drawable.ParagonFullBodyBg_Str_9
+            "paragon_int_1" -> Res.drawable.ParagonFullBodyBg_Int_1
+            "paragon_int_2" -> Res.drawable.ParagonFullBodyBg_Int_2
+            "paragon_int_3" -> Res.drawable.ParagonFullBodyBg_Int_3
+            "paragon_int_4" -> Res.drawable.ParagonFullBodyBg_Int_4
+            "paragon_int_10" -> Res.drawable.ParagonFullBodyBg_Int_10
+            "paragon_int_6" -> Res.drawable.ParagonFullBodyBg_Int_6
+            "paragon_int_7" -> Res.drawable.ParagonFullBodyBg_Int_7
+            "paragon_int_11" -> Res.drawable.ParagonFullBodyBg_Int_11
+            "paragon_int_9" -> Res.drawable.ParagonFullBodyBg_Int_9
+            "paragon_dex_1" -> Res.drawable.ParagonFullBodyBg_Dex_1
+            "paragon_dex_2" -> Res.drawable.ParagonFullBodyBg_Dex_2
+            "paragon_dex_3" -> Res.drawable.ParagonFullBodyBg_Dex_3
+            "paragon_dex_4" -> Res.drawable.ParagonFullBodyBg_Dex_4
+            "paragon_dex_5" -> Res.drawable.ParagonFullBodyBg_Dex_5
+            "paragon_dex_6" -> Res.drawable.ParagonFullBodyBg_Dex_6
+            "paragon_dex_7" -> Res.drawable.ParagonFullBodyBg_Dex_7
+            "paragon_dex_8" -> Res.drawable.ParagonFullBodyBg_Dex_8
+            "paragon_dex_9" -> Res.drawable.ParagonFullBodyBg_Dex_9
+            null -> Res.drawable.ParagonFullBodyBg_None
+            else -> Res.drawable.error_emoji
+        }
+    }
+
+
+    fun getDrifterFullBody(drifter: Drifter?): DrawableResource {
         return when (drifter?.gameId) {
             "paragon_str_1" -> Res.drawable.ParagonFullBody_Str_1
             "paragon_str_2" -> Res.drawable.ParagonFullBody_Str_2
@@ -320,7 +384,7 @@ object IconMap {
         }
     }
 
-    fun getDrifterSpell(drifter: Drifter) : DrawableResource {
+    fun getDrifterSpell(drifter: Drifter): DrawableResource {
         return when (drifter.gameId) {
             "paragon_str_1" -> Res.drawable.Paragon_Skill_Str_1
             "paragon_str_2" -> Res.drawable.Paragon_Skill_Str_2
@@ -353,7 +417,7 @@ object IconMap {
         }
     }
 
-    fun getDrifterPassive(drifter: Drifter) : DrawableResource {
+    fun getDrifterPassive(drifter: Drifter): DrawableResource {
         return when (drifter.gameId) {
             "paragon_str_1" -> Res.drawable.Paragon_Skill_Str_1_Passive
             "paragon_str_2" -> Res.drawable.Paragon_Skill_Str_2_Passive
@@ -386,7 +450,7 @@ object IconMap {
         }
     }
 
-    fun getSkillIcon(gearType: GearType, id: String) : DrawableResource {
+    fun getSkillIcon(gearType: GearType, id: String): DrawableResource {
         return when (gearType) {
             GearType.HEAD -> getSkillHeadIcon(id)
             GearType.CHEST -> getSkillChestIcon(id)
@@ -399,7 +463,7 @@ object IconMap {
         }
     }
 
-    fun getWeaponIcon(gearType: GearType) : DrawableResource {
+    fun getWeaponIcon(gearType: GearType): DrawableResource {
         return when (gearType) {
             GearType.SWORD -> Res.drawable.EnhancementItem_SWORD4
             GearType.GUN -> Res.drawable.EnhancementItem_GUN1
@@ -714,5 +778,5 @@ object IconMap {
             else -> Res.drawable.error_emoji
         }
     }
-
 }
+
