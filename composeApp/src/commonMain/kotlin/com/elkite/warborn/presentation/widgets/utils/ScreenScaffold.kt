@@ -3,6 +3,7 @@ package com.elkite.warborn.presentation.widgets.utils
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -18,15 +19,15 @@ fun ScreenScaffoldSplitLarge(
     third: @Composable () -> Unit
 ) {
     Row(modifier = modifier) {
-        Column(modifier = Modifier.weight(1f)) {
+        Column(modifier = Modifier.defaultMinSize(400.dp).weight(1f)) {
             first()
         }
         Spacer(modifier = Modifier.size(16.dp))
-        Column(modifier = Modifier.weight(1f)) {
+        Column(modifier = Modifier.defaultMinSize(400.dp).weight(1f)) {
             second()
         }
         Spacer(modifier = Modifier.size(16.dp))
-        Column(modifier = Modifier.weight(1f)) {
+        Column(modifier = Modifier.defaultMinSize(400.dp).weight(1f)) {
             third()
         }
     }

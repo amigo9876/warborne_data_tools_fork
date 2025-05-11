@@ -8,11 +8,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,11 +23,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.gear.Loadout
 import com.elkite.warborn.domain.entities.gear.LoadoutType
 import com.elkite.warborn.domain.entities.gear.drifter.Drifter
 import com.elkite.warborn.domain.entities.gear.spell.Spell
+import com.elkite.warborn.presentation.theme.WarborneTheme
+import com.elkite.warborn.presentation.theme.WarborneTheme.borderSkillColor
+import com.elkite.warborn.presentation.theme.WarborneTheme.textBackgroundColor
+import com.elkite.warborn.presentation.theme.WarborneTheme.textDescriptionColor
 import com.elkite.warborn.presentation.widgets.drifter.DrifterIcon
 import com.elkite.warborn.presentation.widgets.gear.ArmorImage
 import com.elkite.warborn.presentation.widgets.spell.SpellIcon
@@ -46,28 +54,41 @@ fun LoadoutCardList(
     onClick: (LoadoutType) -> Unit,
 ) {
     Column(
-        modifier = modifier
+        modifier = modifier.fillMaxSize().defaultMinSize(
+            minWidth = 500.dp
+        )
             .padding(16.dp)
-            .verticalScroll(rememberScrollState())
-            .paint(
-                painterResource(IconMap.getDrifterFullBody(drifter = loadout.drifter)),
-                contentScale = androidx.compose.ui.layout.ContentScale.Fit,
-                alignment = Alignment.BottomCenter
-            )
+            .verticalScroll(rememberScrollState()),
     ) {
-        LoadoutDrifterCard(LoadoutType.DRIFTER, loadout.drifter, onClick)
-        Spacer(Modifier.size(16.dp))
-        LoadoutSpellCard(LoadoutType.HEAD, loadout.head, onClick)
-        Spacer(Modifier.size(16.dp))
-        LoadoutSpellCard(LoadoutType.CHEST, loadout.chest, onClick)
-        Spacer(Modifier.size(16.dp))
-        LoadoutSpellCard(LoadoutType.BOOTS, loadout.boots, onClick)
-        Spacer(Modifier.size(16.dp))
-        Row {
-            LoadoutSpellCard(LoadoutType.WEAPON, loadout.weapon, onClick)
-            LoadoutSpellCard(LoadoutType.BASIC_ATTACK, loadout.basicAttack, onClick)
-            LoadoutSpellCard(LoadoutType.COMMON_SKILL, loadout.commonSkill, onClick)
-            LoadoutSpellCard(LoadoutType.PASSIVE, loadout.passive, onClick)
+        Column(modifier = Modifier.fillMaxSize().paint(
+                painterResource(IconMap.getDrifterFullBody(drifter = loadout.drifter)),
+                contentScale = ContentScale.Fit,
+                alignment = Alignment.BottomEnd,
+            )
+            .border(
+                width = 2.dp,
+                color = WarborneTheme.drifterBorderStartColor,
+                shape = MaterialTheme.shapes.medium
+            )
+            .padding(16.dp))
+        {
+            LoadoutDrifterCard(LoadoutType.DRIFTER, loadout.drifter, onClick)
+            Spacer(Modifier.size(16.dp))
+            LoadoutSpellCard(LoadoutType.HEAD, loadout.head, onClick)
+            Spacer(Modifier.size(16.dp))
+            LoadoutSpellCard(LoadoutType.CHEST, loadout.chest, onClick)
+            Spacer(Modifier.size(16.dp))
+            LoadoutSpellCard(LoadoutType.BOOTS, loadout.boots, onClick)
+            Spacer(Modifier.size(16.dp))
+            Row {
+                LoadoutSpellCard(LoadoutType.WEAPON, loadout.weapon, onClick)
+                LoadoutSpellCard(LoadoutType.BASIC_ATTACK, loadout.basicAttack, onClick)
+                LoadoutSpellCard(LoadoutType.COMMON_SKILL, loadout.commonSkill, onClick)
+                LoadoutSpellCard(LoadoutType.PASSIVE, loadout.passive, onClick)
+            }
+        }
+        Column(modifier = Modifier.weight(1f)) {
+
         }
     }
 }
@@ -84,9 +105,9 @@ fun LoadoutDrifterCard(
                 .size(64.dp)
                 .border(
                     width = 2.dp,
-                    color = Color.DarkGray,
+                    color = Color.Black,
                 )
-                .background(Color.Black)
+                .background(textDescriptionColor)
                 .clickable {
                     onClick(loadoutType)
                 }) {
@@ -133,7 +154,7 @@ private fun ArmorIcon(
             Box(
                 modifier = Modifier.size(64.dp).border(
                     width = 2.dp,
-                    color = Color.DarkGray,
+                    color = borderSkillColor,
                 ).clickable {
                     onClick(loadoutType)
                 }) {
@@ -158,10 +179,10 @@ private fun SpellIconTransform(
             .clip(CutCornerShape(16.dp))
             .border(
                 width = 2.dp,
-                color = Color.DarkGray,
+                color = borderSkillColor,
                 shape = CutCornerShape(16.dp)
             )
-            .background(Color.Black)
+            .background(WarborneTheme.textBackgroundColor)
             .clickable {
                 onClick(loadoutType)
             }
@@ -170,7 +191,7 @@ private fun SpellIconTransform(
             .background(Color.Black)
             .border(
                 width = 2.dp,
-                color = Color.DarkGray,
+                color = borderSkillColor,
             ).clickable {
                 onClick(loadoutType)
             }
@@ -193,10 +214,10 @@ private fun EmptyLoadout(
     Box(
         modifier = Modifier
             .size(64.dp)
-            .background(Color.Black)
+            .background(textBackgroundColor)
             .border(
                 width = 2.dp,
-                color = Color.DarkGray,
+                color = WarborneTheme.borderSkillColor,
                 shape = if (loadoutType == LoadoutType.PASSIVE)
                     CutCornerShape(16.dp) else RectangleShape
             )

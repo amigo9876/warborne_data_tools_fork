@@ -13,7 +13,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.elkite.warborn.presentation.theme.WarborneTheme
 
 @Composable
 fun GearStylizedRow(
@@ -27,7 +29,7 @@ fun GearStylizedRow(
             .background(Color.Transparent)
             .border(
                 width = 2.dp,
-                color = Color.LightGray,
+                color = WarborneTheme.borderSkillColor,
                 shape = MaterialTheme.shapes.small
             ).clickable {
                 rowOnClick()
@@ -51,7 +53,9 @@ fun GearStylizedText(
     Text(
         modifier = modifier,
         text = text,
-        color = Color.LightGray,
-        style = MaterialTheme.typography.h6,
+        color = WarborneTheme.textDescriptionColor,
+        style = MaterialTheme.typography.body1,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis,
     )
 }

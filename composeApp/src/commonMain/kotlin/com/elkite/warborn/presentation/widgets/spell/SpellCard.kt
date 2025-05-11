@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -31,6 +32,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.gear.spell.Spell
 import com.elkite.warborn.domain.entities.gear.spell.SpellType
+import com.elkite.warborn.presentation.theme.WarborneTheme
 import com.elkite.warborn.presentation.widgets.gear.ArmorImage
 import com.elkite.warborn.presentation.widgets.utils.MultiPatternHighlightedText
 
@@ -58,7 +60,7 @@ fun SpellCardListGrid(
         columns = StaggeredGridCells.Fixed(1),
         verticalItemSpacing = 4.dp,
         horizontalArrangement = Arrangement.spacedBy(4.dp),
-        modifier = modifier.background(color = Color.Transparent),
+        modifier = modifier.background(color = Color.Transparent).padding(16.dp),
     ) {
         items(spells) { spell ->
             SpellCard(onSpellClick, spell)
@@ -138,6 +140,7 @@ fun SpellCard(
 ) {
     Card(
         modifier = Modifier.padding(8.dp)
+            .defaultMinSize(minWidth = 200.dp)
             .border(
                 2.dp,
                 color = Color.LightGray,
@@ -174,19 +177,19 @@ fun SpellDescriptionSmall(
             .background(Color.Transparent),
     ) {
         MultiPatternHighlightedText(
-            baseTextStyle = MaterialTheme.typography.body2.copy(color = Color.LightGray),
+            baseTextStyle = MaterialTheme.typography.body2.copy(color = WarborneTheme.borderSkillColor),
             text = spell.description,
             patternsWithStyles = listOf(
                 Regex("""\[Damage Rate: [^\]]+]""") to SpanStyle(
-                    color = Color.Red,
+                    color = WarborneTheme.textDamageColor,
                     fontWeight = FontWeight.Bold
                 ),
                 Regex("""\[Healing Rate: [^\]]+]""") to SpanStyle(
-                    color = Color.Green,
+                    color = WarborneTheme.textHealColor,
                     fontWeight = FontWeight.Bold
                 ),
                 Regex("""\[Target-based Max HP [^\]]+]""") to SpanStyle(
-                    color = Color.Blue,
+                    color = WarborneTheme.textShieldColor,
                     fontWeight = FontWeight.Bold
                 )
             )
@@ -203,23 +206,23 @@ fun SpellDescription(spell: Spell) {
         Text(
             spell.name,
             style = MaterialTheme.typography.h6,
-            color = Color.LightGray
+            color = WarborneTheme.textDescriptionColor
         )
         Spacer(modifier = Modifier.size(8.dp))
         MultiPatternHighlightedText(
-            baseTextStyle = MaterialTheme.typography.body1.copy(color = Color.LightGray),
+            baseTextStyle = MaterialTheme.typography.body1.copy(color = WarborneTheme.textDescriptionColor),
             text = spell.description,
             patternsWithStyles = listOf(
                 Regex("""\[Damage Rate: [^\]]+]""") to SpanStyle(
-                    color = Color.Red,
+                    color = WarborneTheme.textDamageColor,
                     fontWeight = FontWeight.Bold
                 ),
                 Regex("""\[Healing Rate: [^\]]+]""") to SpanStyle(
-                    color = Color.Green,
+                    color = WarborneTheme.textHealColor,
                     fontWeight = FontWeight.Bold
                 ),
                 Regex("""\[Target-based Max HP [^\]]+]""") to SpanStyle(
-                    color = Color.Blue,
+                    color = WarborneTheme.textShieldColor,
                     fontWeight = FontWeight.Bold
                 )
             )
@@ -227,7 +230,7 @@ fun SpellDescription(spell: Spell) {
         Spacer(modifier = Modifier.size(8.dp))
         Divider(
             Modifier.fillMaxWidth().height(1.dp),
-            color = Color.LightGray
+            color = WarborneTheme.textDescriptionColor
         )
         Row {
             if (spell.manaCost != "0") {
@@ -246,7 +249,7 @@ fun SpellDescription(spell: Spell) {
 }
 
 @Composable
-private fun SpellAttributeRow(label: String, value: String, color: Color = Color.LightGray) {
+private fun SpellAttributeRow(label: String, value: String, color: Color = WarborneTheme.textDescriptionColor) {
     Row {
         Text(
             buildAnnotatedString {

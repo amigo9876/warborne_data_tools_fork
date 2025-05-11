@@ -3,6 +3,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -29,7 +30,7 @@ fun ArmorSmallList(
     val selectedGearStats = remember { mutableStateOf(GearStats.STR) }
 
     Row(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize().padding(16.dp)
     ) {
         LazyVerticalGrid(
             modifier = modifier.weight(1f),

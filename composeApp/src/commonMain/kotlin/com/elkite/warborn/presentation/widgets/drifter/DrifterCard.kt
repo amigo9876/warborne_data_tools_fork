@@ -58,7 +58,7 @@ fun DrifterCard(
     onDrifterClick: (Drifter) -> Unit,
 ) {
     Card(
-        modifier = modifier.padding(8.dp)
+        modifier = modifier.padding(16.dp)
             .border(
                 2.dp,
                 color = Color.LightGray,

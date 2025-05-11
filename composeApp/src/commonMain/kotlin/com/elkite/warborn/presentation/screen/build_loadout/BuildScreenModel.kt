@@ -50,7 +50,18 @@ class BuildScreenModel : ScreenModel {
             LoadoutType.HEAD -> _loadout.value.copy(head = newSpell)
             LoadoutType.CHEST -> _loadout.value.copy(chest = newSpell)
             LoadoutType.BOOTS -> _loadout.value.copy(boots = newSpell)
-            LoadoutType.WEAPON -> _loadout.value.copy(weapon = newSpell, basicAttack = null, commonSkill = null, passive = null)
+            LoadoutType.WEAPON -> if (_loadout.value.weapon?.associatedGearType == newSpell.associatedGearType) {
+                _loadout.value.copy(
+                    weapon = newSpell,
+                )
+            } else {
+                _loadout.value.copy(
+                    weapon = newSpell,
+                    basicAttack = null,
+                    commonSkill = null,
+                    passive = null
+                )
+            }
             LoadoutType.PASSIVE -> _loadout.value.copy(passive = newSpell)
             LoadoutType.COMMON_SKILL -> _loadout.value.copy(commonSkill = newSpell)
             LoadoutType.BASIC_ATTACK -> _loadout.value.copy(basicAttack = newSpell)

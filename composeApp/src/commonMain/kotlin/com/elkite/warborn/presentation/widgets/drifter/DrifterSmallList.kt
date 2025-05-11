@@ -1,6 +1,7 @@
 package com.elkite.warborn.presentation.widgets.drifter
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -19,7 +20,7 @@ fun DrifterSmallList(
     modifier: Modifier = Modifier,
 ) {
     LazyVerticalGrid(
-        modifier = modifier,
+        modifier = modifier.padding(16.dp),
         columns = GridCells.Fixed(columnCount),
         verticalArrangement = Arrangement.spacedBy(4.dp),
         horizontalArrangement = Arrangement.spacedBy(4.dp),
