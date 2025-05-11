@@ -59,7 +59,7 @@ private fun LoadoutColumn(
 
     LoadoutCardList(
         modifier = Modifier.fillMaxSize(),
-        loadout = loadout
+        loadout = loadout,
     ) { type ->
         loadoutType.value = type
         when (type) {
