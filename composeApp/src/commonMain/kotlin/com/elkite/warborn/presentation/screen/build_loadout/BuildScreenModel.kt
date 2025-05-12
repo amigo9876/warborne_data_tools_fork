@@ -114,7 +114,8 @@ class BuildScreenModel : ScreenModel {
                                 GearType.SWORD to spells.filter { it.associatedGearType == GearType.SWORD },
                                 GearType.GUN to spells.filter { it.associatedGearType == GearType.GUN },
                                 GearType.AXE to spells.filter { it.associatedGearType == GearType.AXE },
-                                GearType.MACE to spells.filter { it.associatedGearType == GearType.MACE }
+                                GearType.MACE to spells.filter { it.associatedGearType == GearType.MACE },
+                                GearType.BOW to spells.filter { it.associatedGearType == GearType.BOW }
                             )
                         ),
                         drifters = drifters

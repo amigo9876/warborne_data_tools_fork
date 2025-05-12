@@ -26,7 +26,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import com.elkite.warborn.domain.entities.gear.GearType
 import com.elkite.warborn.domain.entities.gear.Loadout
 import com.elkite.warborn.domain.entities.gear.LoadoutType
 import com.elkite.warborn.domain.entities.gear.drifter.Drifter
@@ -52,7 +51,6 @@ import org.jetbrains.compose.resources.painterResource
 fun LoadoutCardList(
     modifier: Modifier = Modifier,
     loadout: Loadout,
-    gearType: GearType,
     onClick: (LoadoutType) -> Unit,
 ) {
     Column(
@@ -105,9 +103,9 @@ fun LoadoutCardList(
                 LoadoutSpellCard(LoadoutType.PASSIVE, loadout.passive, onClick)
             }
         }
-        Column(modifier = Modifier.weight(1f)) {
-
-        }
+//        Column(modifier = Modifier.weight(1f)) {
+//
+//        }
     }
 }
 

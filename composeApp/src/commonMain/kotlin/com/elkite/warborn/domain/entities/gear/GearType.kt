@@ -11,6 +11,14 @@ enum class GearType {
     GUN,
     AXE,
     MACE,
+    BOW,
+    SPEAR,
+    NATURE,
+    DAGGER,
+    FIRE,
+    FROST,
+    CURSE,
+    HOLY,
     WEAPON,
     DRIFTER
 }
