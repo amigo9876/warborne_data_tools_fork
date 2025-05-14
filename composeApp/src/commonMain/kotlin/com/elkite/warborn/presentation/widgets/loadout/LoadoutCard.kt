@@ -8,14 +8,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,7 +32,6 @@ import com.elkite.warborn.domain.entities.gear.drifter.Drifter
 import com.elkite.warborn.domain.entities.gear.spell.Spell
 import com.elkite.warborn.presentation.theme.WarborneTheme
 import com.elkite.warborn.presentation.theme.WarborneTheme.borderSkillColor
-import com.elkite.warborn.presentation.theme.WarborneTheme.textBackgroundColor
 import com.elkite.warborn.presentation.widgets.drifter.DrifterIcon
 import com.elkite.warborn.presentation.widgets.gear.ArmorImage
 import com.elkite.warborn.presentation.widgets.spell.SpellIcon
@@ -54,16 +53,14 @@ fun LoadoutCardList(
     onClick: (LoadoutType) -> Unit,
 ) {
     Column(
-        modifier = modifier.fillMaxSize().padding(16.dp).defaultMinSize(
-            minWidth = 500.dp
-        ).verticalScroll(rememberScrollState()),
+        modifier = modifier.fillMaxSize().padding(16.dp)
+            .verticalScroll(rememberScrollState()),
     ) {
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .weight(1f)
+                .height(416.dp)
                 .background(Color.Black)
-                .clip(MaterialTheme.shapes.small) // Clip to the border shape
+                .clip(RectangleShape) // Clip to the border shape
                 .border(
                     width = 3.dp,
                     brush = Brush.linearGradient(
@@ -73,7 +70,7 @@ fun LoadoutCardList(
                             WarborneTheme.drifterBorderEndColor
                         )
                     ),
-                    shape = MaterialTheme.shapes.small
+                    shape = RectangleShape
                 )
                 .paint(
                     painterResource(IconMap.getDrifterFullBodyBg(drifter = loadout.drifter)),
@@ -103,9 +100,9 @@ fun LoadoutCardList(
                 LoadoutSpellCard(LoadoutType.PASSIVE, loadout.passive, onClick)
             }
         }
-//        Column(modifier = Modifier.weight(1f)) {
-//
-//        }
+        Column(modifier = Modifier.weight(1f)) {
+
+        }
     }
 }
 
@@ -178,6 +175,7 @@ private fun ArmorIcon(
                 modifier = Modifier.size(64.dp).border(
                     width = 2.dp,
                     color = borderSkillColor,
+                    shape = CircleShape
                 ).clickable {
                     onClick(loadoutType)
                 }) {
@@ -224,7 +222,12 @@ private fun SpellIconTransform(
         modifier = modifier
     ) {
         spell?.let {
-            SpellIcon(modifier = Modifier.size(64.dp), it)
+            SpellIcon(
+                modifier = Modifier.size(64.dp),
+                gearType = spell.associatedGearType,
+                spellType = spell.type,
+                id = spell.gameId
+            )
         }
     }
 }
@@ -237,13 +240,27 @@ private fun EmptyLoadout(
     Box(
         modifier = Modifier
             .size(64.dp)
-            .background(textBackgroundColor)
             .border(
                 width = 2.dp,
                 color = borderSkillColor,
-                shape = if (loadoutType == LoadoutType.PASSIVE)
-                    CutCornerShape(16.dp) else RectangleShape
+                shape = when (loadoutType) {
+                    LoadoutType.PASSIVE -> CutCornerShape(16.dp)
+                    LoadoutType.HEAD,
+                    LoadoutType.CHEST,
+                    LoadoutType.BOOTS,
+                    LoadoutType.WEAPON-> CircleShape
+                    else -> RectangleShape
+                }
             )
+            .clip(when (loadoutType) {
+                LoadoutType.PASSIVE -> CutCornerShape(16.dp)
+                LoadoutType.HEAD,
+                LoadoutType.CHEST,
+                LoadoutType.BOOTS,
+                LoadoutType.WEAPON-> CircleShape
+                else -> RectangleShape
+            })
+            .background(Color.Black)
             .clickable { onClick(loadoutType) },
         contentAlignment = Alignment.Center
     ) {
@@ -257,14 +274,18 @@ private fun EmptyLoadout(
                     else -> Res.drawable.Nature_Common_Attack
                 }
             ),
+
             contentDescription = null,
-            modifier = Modifier.size(64.dp)
+            modifier = Modifier.size(48.dp)
                 .let {
-                    if (loadoutType == LoadoutType.PASSIVE)
-                        return@let Modifier.clip(
-                            CutCornerShape(16.dp)
-                        )
-                    it
+                    when (loadoutType) {
+                        LoadoutType.PASSIVE -> return@let it.clip(CutCornerShape(16.dp))
+                        LoadoutType.HEAD,
+                        LoadoutType.CHEST,
+                        LoadoutType.BOOTS,
+                        LoadoutType.WEAPON -> return@let it.clip(CircleShape)
+                        else -> it
+                    }
                 },
         )
     }

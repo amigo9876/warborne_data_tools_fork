@@ -111,6 +111,13 @@ import com.elkite.warborn.resources.EnhancementItem_COWL4
 import com.elkite.warborn.resources.EnhancementItem_COWL5
 import com.elkite.warborn.resources.EnhancementItem_COWL6
 import com.elkite.warborn.resources.EnhancementItem_COWL7
+import com.elkite.warborn.resources.EnhancementItem_DAGGER1
+import com.elkite.warborn.resources.EnhancementItem_DAGGER2
+import com.elkite.warborn.resources.EnhancementItem_DAGGER3
+import com.elkite.warborn.resources.EnhancementItem_DAGGER4
+import com.elkite.warborn.resources.EnhancementItem_DAGGER5
+import com.elkite.warborn.resources.EnhancementItem_DAGGER6
+import com.elkite.warborn.resources.EnhancementItem_DAGGER7
 import com.elkite.warborn.resources.EnhancementItem_GUN1
 import com.elkite.warborn.resources.EnhancementItem_GUN2
 import com.elkite.warborn.resources.EnhancementItem_GUN3
@@ -146,6 +153,13 @@ import com.elkite.warborn.resources.EnhancementItem_MACE4
 import com.elkite.warborn.resources.EnhancementItem_MACE5
 import com.elkite.warborn.resources.EnhancementItem_MACE6
 import com.elkite.warborn.resources.EnhancementItem_MACE7
+import com.elkite.warborn.resources.EnhancementItem_NATURE1
+import com.elkite.warborn.resources.EnhancementItem_NATURE2
+import com.elkite.warborn.resources.EnhancementItem_NATURE3
+import com.elkite.warborn.resources.EnhancementItem_NATURE4
+import com.elkite.warborn.resources.EnhancementItem_NATURE5
+import com.elkite.warborn.resources.EnhancementItem_NATURE6
+import com.elkite.warborn.resources.EnhancementItem_NATURE7
 import com.elkite.warborn.resources.EnhancementItem_ROBE1
 import com.elkite.warborn.resources.EnhancementItem_ROBE2
 import com.elkite.warborn.resources.EnhancementItem_ROBE3
@@ -166,6 +180,13 @@ import com.elkite.warborn.resources.EnhancementItem_SHOES3
 import com.elkite.warborn.resources.EnhancementItem_SHOES4
 import com.elkite.warborn.resources.EnhancementItem_SHOES5
 import com.elkite.warborn.resources.EnhancementItem_SHOES6
+import com.elkite.warborn.resources.EnhancementItem_SPEAR1
+import com.elkite.warborn.resources.EnhancementItem_SPEAR2
+import com.elkite.warborn.resources.EnhancementItem_SPEAR3
+import com.elkite.warborn.resources.EnhancementItem_SPEAR4
+import com.elkite.warborn.resources.EnhancementItem_SPEAR6
+import com.elkite.warborn.resources.EnhancementItem_SPEAR7
+import com.elkite.warborn.resources.EnhancementItem_SPEAR8
 import com.elkite.warborn.resources.EnhancementItem_SWORD1
 import com.elkite.warborn.resources.EnhancementItem_SWORD2
 import com.elkite.warborn.resources.EnhancementItem_SWORD3
@@ -544,68 +565,68 @@ object IconMap {
         }
     }
 
-    fun getDrifterSpell(drifter: Drifter): DrawableResource {
-        return when (drifter.gameId) {
-            "paragon_str_1" -> Res.drawable.Paragon_Skill_Str_1
-            "paragon_str_2" -> Res.drawable.Paragon_Skill_Str_2
-            "paragon_str_3" -> Res.drawable.Paragon_Skill_Str_3
-            "paragon_str_4" -> Res.drawable.Paragon_Skill_Str_4
-            "paragon_str_5" -> Res.drawable.Paragon_Skill_Str_5
-            "paragon_str_6" -> Res.drawable.Paragon_Skill_Str_6
-            "paragon_str_7" -> Res.drawable.Paragon_Skill_Str_7
-            "paragon_str_8" -> Res.drawable.Paragon_Skill_Str_8
-            "paragon_str_9" -> Res.drawable.Paragon_Skill_Str_9
-            "paragon_dex_1" -> Res.drawable.Paragon_Skill_Dex_1
-            "paragon_dex_2" -> Res.drawable.Paragon_Skill_Dex_2
-            "paragon_dex_3" -> Res.drawable.Paragon_Skill_Dex_3
-            "paragon_dex_4" -> Res.drawable.Paragon_Skill_Dex_4
-            "paragon_dex_5" -> Res.drawable.Paragon_Skill_Dex_5
-            "paragon_dex_6" -> Res.drawable.Paragon_Skill_Dex_6
-            "paragon_dex_7" -> Res.drawable.Paragon_Skill_Dex_7
-            "paragon_dex_8" -> Res.drawable.Paragon_Skill_Dex_8
-            "paragon_dex_9" -> Res.drawable.Paragon_Skill_Dex_9
-            "paragon_int_1" -> Res.drawable.Paragon_Skill_Int_1
-            "paragon_int_2" -> Res.drawable.Paragon_Skill_Int_2
-            "paragon_int_3" -> Res.drawable.Paragon_Skill_Int_3
-            "paragon_int_4" -> Res.drawable.Paragon_Skill_Int_4
-            "paragon_int_10" -> Res.drawable.Paragon_Skill_Int_10
-            "paragon_int_6" -> Res.drawable.Paragon_Skill_Int_6
-            "paragon_int_7" -> Res.drawable.Paragon_Skill_Int_7
-            "paragon_int_11" -> Res.drawable.Paragon_Skill_Int_11
-            "paragon_int_9" -> Res.drawable.Paragon_Skill_Int_9
+    fun getDrifterSpell(drifterId: String): DrawableResource {
+        return when (drifterId) {
+            "Paragon_Skill_Str_1" -> Res.drawable.Paragon_Skill_Str_1
+            "Paragon_Skill_Str_2" -> Res.drawable.Paragon_Skill_Str_2
+            "Paragon_Skill_Str_3" -> Res.drawable.Paragon_Skill_Str_3
+            "Paragon_Skill_Str_4" -> Res.drawable.Paragon_Skill_Str_4
+            "Paragon_Skill_Str_5" -> Res.drawable.Paragon_Skill_Str_5
+            "Paragon_Skill_Str_6" -> Res.drawable.Paragon_Skill_Str_6
+            "Paragon_Skill_Str_7" -> Res.drawable.Paragon_Skill_Str_7
+            "Paragon_Skill_Str_8" -> Res.drawable.Paragon_Skill_Str_8
+            "Paragon_Skill_Str_9" -> Res.drawable.Paragon_Skill_Str_9
+            "Paragon_Skill_Dex_1" -> Res.drawable.Paragon_Skill_Dex_1
+            "Paragon_Skill_Dex_2" -> Res.drawable.Paragon_Skill_Dex_2
+            "Paragon_Skill_Dex_3" -> Res.drawable.Paragon_Skill_Dex_3
+            "Paragon_Skill_Dex_4" -> Res.drawable.Paragon_Skill_Dex_4
+            "Paragon_Skill_Dex_5" -> Res.drawable.Paragon_Skill_Dex_5
+            "Paragon_Skill_Dex_6" -> Res.drawable.Paragon_Skill_Dex_6
+            "Paragon_Skill_Dex_7" -> Res.drawable.Paragon_Skill_Dex_7
+            "Paragon_Skill_Dex_8" -> Res.drawable.Paragon_Skill_Dex_8
+            "Paragon_Skill_Dex_9" -> Res.drawable.Paragon_Skill_Dex_9
+            "Paragon_Skill_Int_1" -> Res.drawable.Paragon_Skill_Int_1
+            "Paragon_Skill_Int_2" -> Res.drawable.Paragon_Skill_Int_2
+            "Paragon_Skill_Int_3" -> Res.drawable.Paragon_Skill_Int_3
+            "Paragon_Skill_Int_4" -> Res.drawable.Paragon_Skill_Int_4
+            "Paragon_Skill_Int_10" -> Res.drawable.Paragon_Skill_Int_10
+            "Paragon_Skill_Int_6" -> Res.drawable.Paragon_Skill_Int_6
+            "Paragon_Skill_Int_7" -> Res.drawable.Paragon_Skill_Int_7
+            "Paragon_Skill_Int_11" -> Res.drawable.Paragon_Skill_Int_11
+            "Paragon_Skill_Int_9" -> Res.drawable.Paragon_Skill_Int_9
             else -> Res.drawable.error_emoji
         }
     }
 
-    fun getDrifterPassive(drifter: Drifter): DrawableResource {
-        return when (drifter.gameId) {
-            "paragon_str_1" -> Res.drawable.Paragon_Skill_Str_1_Passive
-            "paragon_str_2" -> Res.drawable.Paragon_Skill_Str_2_Passive
-            "paragon_str_3" -> Res.drawable.Paragon_Skill_Str_3_Passive
-            "paragon_str_4" -> Res.drawable.Paragon_Skill_Str_4_Passive
-            "paragon_str_5" -> Res.drawable.Paragon_Skill_Str_5_Passive
-            "paragon_str_6" -> Res.drawable.Paragon_Skill_Str_6_Passive
-            "paragon_str_7" -> Res.drawable.Paragon_Skill_Str_7_Passive
-            "paragon_str_8" -> Res.drawable.Paragon_Skill_Str_8_Passive
-            "paragon_str_9" -> Res.drawable.Paragon_Skill_Str_9_Passive
-            "paragon_dex_1" -> Res.drawable.Paragon_Skill_Dex_1_Passive
-            "paragon_dex_2" -> Res.drawable.Paragon_Skill_Dex_2_Passive
-            "paragon_dex_3" -> Res.drawable.Paragon_Skill_Dex_3_Passive
-            "paragon_dex_4" -> Res.drawable.Paragon_Skill_Dex_4_Passive
-            "paragon_dex_5" -> Res.drawable.Paragon_Skill_Dex_5_Passive
-            "paragon_dex_6" -> Res.drawable.Paragon_Skill_Dex_6_Passive
-            "paragon_dex_7" -> Res.drawable.Paragon_Skill_Dex_7_Passive
-            "paragon_dex_8" -> Res.drawable.Paragon_Skill_Dex_8_Passive
-            "paragon_dex_9" -> Res.drawable.Paragon_Skill_Dex_9_Passive
-            "paragon_int_1" -> Res.drawable.Paragon_Skill_Int_1_Passive
-            "paragon_int_2" -> Res.drawable.Paragon_Skill_Int_2_Passive
-            "paragon_int_3" -> Res.drawable.Paragon_Skill_Int_3_Passive
-            "paragon_int_4" -> Res.drawable.Paragon_Skill_Int_4_Passive
-            "paragon_int_10" -> Res.drawable.Paragon_Skill_Int_10_Passive
-            "paragon_int_6" -> Res.drawable.Paragon_Skill_Int_6_Passive
-            "paragon_int_7" -> Res.drawable.Paragon_Skill_Int_7_Passive
-            "paragon_int_11" -> Res.drawable.Paragon_Skill_Int_11_Passive
-            "paragon_int_9" -> Res.drawable.Paragon_Skill_Int_9_Passive
+    fun getDrifterPassive(drifterId: String): DrawableResource {
+        return when (drifterId) {
+            "Paragon_Skill_Str_1_Passive" -> Res.drawable.Paragon_Skill_Str_1_Passive
+            "Paragon_Skill_Str_2_Passive" -> Res.drawable.Paragon_Skill_Str_2_Passive
+            "Paragon_Skill_Str_3_Passive" -> Res.drawable.Paragon_Skill_Str_3_Passive
+            "Paragon_Skill_Str_4_Passive" -> Res.drawable.Paragon_Skill_Str_4_Passive
+            "Paragon_Skill_Str_5_Passive" -> Res.drawable.Paragon_Skill_Str_5_Passive
+            "Paragon_Skill_Str_6_Passive" -> Res.drawable.Paragon_Skill_Str_6_Passive
+            "Paragon_Skill_Str_7_Passive" -> Res.drawable.Paragon_Skill_Str_7_Passive
+            "Paragon_Skill_Str_8_Passive" -> Res.drawable.Paragon_Skill_Str_8_Passive
+            "Paragon_Skill_Str_9_Passive" -> Res.drawable.Paragon_Skill_Str_9_Passive
+            "Paragon_Skill_Dex_1_Passive" -> Res.drawable.Paragon_Skill_Dex_1_Passive
+            "Paragon_Skill_Dex_2_Passive" -> Res.drawable.Paragon_Skill_Dex_2_Passive
+            "Paragon_Skill_Dex_3_Passive" -> Res.drawable.Paragon_Skill_Dex_3_Passive
+            "Paragon_Skill_Dex_4_Passive" -> Res.drawable.Paragon_Skill_Dex_4_Passive
+            "Paragon_Skill_Dex_5_Passive" -> Res.drawable.Paragon_Skill_Dex_5_Passive
+            "Paragon_Skill_Dex_6_Passive" -> Res.drawable.Paragon_Skill_Dex_6_Passive
+            "Paragon_Skill_Dex_7_Passive" -> Res.drawable.Paragon_Skill_Dex_7_Passive
+            "Paragon_Skill_Dex_8_Passive" -> Res.drawable.Paragon_Skill_Dex_8_Passive
+            "Paragon_Skill_Dex_9_Passive" -> Res.drawable.Paragon_Skill_Dex_9_Passive
+            "Paragon_Skill_Int_1_Passive" -> Res.drawable.Paragon_Skill_Int_1_Passive
+            "Paragon_Skill_Int_2_Passive" -> Res.drawable.Paragon_Skill_Int_2_Passive
+            "Paragon_Skill_Int_3_Passive" -> Res.drawable.Paragon_Skill_Int_3_Passive
+            "Paragon_Skill_Int_4_Passive" -> Res.drawable.Paragon_Skill_Int_4_Passive
+            "Paragon_Skill_Int_10_Passive" -> Res.drawable.Paragon_Skill_Int_10_Passive
+            "Paragon_Skill_Int_6_Passive" -> Res.drawable.Paragon_Skill_Int_6_Passive
+            "Paragon_Skill_Int_7_Passive" -> Res.drawable.Paragon_Skill_Int_7_Passive
+            "Paragon_Skill_Int_11_Passive" -> Res.drawable.Paragon_Skill_Int_11_Passive
+            "Paragon_Skill_Int_9_Passive" -> Res.drawable.Paragon_Skill_Int_9_Passive
             else -> Res.drawable.error_emoji
         }
     }
@@ -651,6 +672,9 @@ object IconMap {
             GearType.AXE -> getArmorAxeIcon(id)
             GearType.MACE -> getArmorMaceIcon(id)
             GearType.BOW -> getArmorBowIcon(id)
+            GearType.NATURE -> getArmorNatureIcon(id)
+            GearType.DAGGER -> getArmorDaggerIcon(id)
+            GearType.SPEAR -> getArmorSpearIcon(id)
             else -> Res.drawable.error_emoji
         }
     }
@@ -751,6 +775,45 @@ object IconMap {
             "Titan's Spineblade" -> Res.drawable.EnhancementItem_SWORD6
             "Judicator" -> Res.drawable.EnhancementItem_SWORD2
             "Sovereign's Radiance" -> Res.drawable.EnhancementItem_SWORD7
+            else -> Res.drawable.error_emoji
+        }
+    }
+
+    private fun getArmorSpearIcon(id: String): DrawableResource {
+        return when (id) {
+            "Sharspike" -> Res.drawable.EnhancementItem_SPEAR6
+            "Sentinel's Lance" -> Res.drawable.EnhancementItem_SPEAR3
+            "Stormfang Lance" -> Res.drawable.EnhancementItem_SPEAR1
+            "Storm Spear" -> Res.drawable.EnhancementItem_SPEAR7
+            "Drakespike" -> Res.drawable.EnhancementItem_SPEAR8
+            "Corrosive Piercer" -> Res.drawable.EnhancementItem_SPEAR4
+            "Phantom Spear" -> Res.drawable.EnhancementItem_SPEAR2
+            else -> Res.drawable.error_emoji
+        }
+    }
+
+    private fun getArmorDaggerIcon(id: String): DrawableResource {
+        return when (id) {
+            "Hemoblades" -> Res.drawable.EnhancementItem_DAGGER7
+            "Twilight Blades" -> Res.drawable.EnhancementItem_DAGGER1
+            "Soulfangs" -> Res.drawable.EnhancementItem_DAGGER2
+            "Bloodpiercers" -> Res.drawable.EnhancementItem_DAGGER5
+            "Bloodfury Blades" -> Res.drawable.EnhancementItem_DAGGER4
+            "Bloodthirst" -> Res.drawable.EnhancementItem_DAGGER6
+            "Scarlet Hunger" -> Res.drawable.EnhancementItem_DAGGER3
+            else -> Res.drawable.error_emoji
+        }
+    }
+
+    private fun getArmorNatureIcon(id: String): DrawableResource {
+        return when (id) {
+            "Eclipse Conduit" -> Res.drawable.EnhancementItem_NATURE1
+            "Thornward Staff" -> Res.drawable.EnhancementItem_NATURE2
+            "Harmony's Staff" -> Res.drawable.EnhancementItem_NATURE3
+            "Verdant Embrace" -> Res.drawable.EnhancementItem_NATURE4
+            "Tendril's Grasp" -> Res.drawable.EnhancementItem_NATURE6
+            "Spirit's Call" -> Res.drawable.EnhancementItem_NATURE5
+            "Sanctuary of Growth" -> Res.drawable.EnhancementItem_NATURE7
             else -> Res.drawable.error_emoji
         }
     }

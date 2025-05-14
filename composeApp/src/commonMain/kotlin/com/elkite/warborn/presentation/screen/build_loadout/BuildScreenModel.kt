@@ -19,8 +19,8 @@ import kotlinx.coroutines.launch
 
 class BuildScreenModel : ScreenModel {
 
-    private val _screenState = MutableStateFlow<SpellsState>(SpellsState.Loading)
-    val spellsState: StateFlow<SpellsState> = _screenState
+    private val _screenState = MutableStateFlow<BuildScreenState>(BuildScreenState.Loading)
+    val buildScreenState: StateFlow<BuildScreenState> = _screenState
 
     private val _loadout = MutableStateFlow(Loadout())
     val loadout: StateFlow<Loadout> = _loadout
@@ -33,7 +33,7 @@ class BuildScreenModel : ScreenModel {
 
     fun updatePassive(gearType: GearType) {
         val passive = when (val state = _screenState.value) {
-            is SpellsState.Success -> {
+            is BuildScreenState.Success -> {
                 state.weapons[gearType]?.first { it.type == SpellType.PASSIVE }
             }
 
@@ -81,13 +81,11 @@ class BuildScreenModel : ScreenModel {
             try {
                 val spells = DataRepository.getData()
                 val drifters = DataRepository.getDrifters()
-
-                Napier.e {
-                    drifters.size.toString()
-                }
+                val lastDataUpdate = DataRepository.getLastUpdateData()
 
                 _screenState.update {
-                    SpellsState.Success(
+                    BuildScreenState.Success(
+                        lastDataUpdate = lastDataUpdate,
                         head = HashMap(
                             mapOf(
                                 GearStats.STR to spells.filter { it.associatedGearType == GearType.HEAD && it.gearStats == GearStats.STR },
@@ -115,14 +113,21 @@ class BuildScreenModel : ScreenModel {
                                 GearType.GUN to spells.filter { it.associatedGearType == GearType.GUN },
                                 GearType.AXE to spells.filter { it.associatedGearType == GearType.AXE },
                                 GearType.MACE to spells.filter { it.associatedGearType == GearType.MACE },
-                                GearType.BOW to spells.filter { it.associatedGearType == GearType.BOW }
+                                GearType.BOW to spells.filter { it.associatedGearType == GearType.BOW },
+                                GearType.SPEAR to spells.filter { it.associatedGearType == GearType.SPEAR },
+                                GearType.NATURE to spells.filter { it.associatedGearType == GearType.NATURE },
+                                GearType.DAGGER to spells.filter { it.associatedGearType == GearType.DAGGER },
+                                GearType.FIRE to spells.filter { it.associatedGearType == GearType.FIRE },
+                                GearType.FROST to spells.filter { it.associatedGearType == GearType.FROST },
+                                GearType.CURSE to spells.filter { it.associatedGearType == GearType.CURSE },
+                                GearType.HOLY to spells.filter { it.associatedGearType == GearType.HOLY }
                             )
                         ),
                         drifters = drifters
                     )
                 }
             } catch (e: Exception) {
-                _screenState.update { SpellsState.Error(e.message ?: "Unknown error") }
+                _screenState.update { BuildScreenState.Error(e.message ?: "Unknown error") }
             }
         }
     }
@@ -160,16 +165,17 @@ class BuildScreenModel : ScreenModel {
             }?.toMap() ?: emptyMap()
     }
 
-    sealed class SpellsState {
-        data object Loading : SpellsState()
+    sealed class BuildScreenState {
+        data object Loading : BuildScreenState()
         data class Success(
+            val lastDataUpdate: String,
             val head: HashMap<GearStats, List<Spell>>,
             val chest: HashMap<GearStats, List<Spell>>,
             val boots: HashMap<GearStats, List<Spell>>,
             val weapons: HashMap<GearType, List<Spell>>,
             val drifters: List<Drifter>,
-        ) : SpellsState()
+        ) : BuildScreenState()
 
-        data class Error(val message: String) : SpellsState()
+        data class Error(val message: String) : BuildScreenState()
     }
 }

@@ -16,7 +16,7 @@ import com.elkite.warborn.domain.entities.gear.drifter.Drifter
 import com.elkite.warborn.domain.entities.gear.spell.Spell
 import com.elkite.warborn.domain.entities.gear.spell.SpellType
 import com.elkite.warborn.presentation.screen.build_loadout.BuildScreenModel
-import com.elkite.warborn.presentation.widgets.drifter.DrifterCard
+import com.elkite.warborn.presentation.widgets.drifter.DrifterCardScrollable
 import com.elkite.warborn.presentation.widgets.drifter.DrifterSmallList
 import com.elkite.warborn.presentation.widgets.gear.WeaponSmallList
 import com.elkite.warborn.presentation.widgets.loadout.LoadoutCardList
@@ -25,7 +25,7 @@ import com.elkite.warborn.presentation.widgets.spell.SpellCardListGrid
 import com.elkite.warborn.presentation.widgets.utils.ScreenScaffoldCommon
 
 @Composable
-fun BuildScreenContent(screenModel: BuildScreenModel, state: BuildScreenModel.SpellsState.Success) {
+fun BuildScreenContent(screenModel: BuildScreenModel, state: BuildScreenModel.BuildScreenState.Success) {
 
     val gearType = remember { mutableStateOf(GearType.DRIFTER) }
     val gear = remember { mutableStateOf<Gear>(state.drifters.first()) }
@@ -51,7 +51,7 @@ private fun LoadoutColumn(
     loadoutType: MutableState<LoadoutType>,
     gearType: MutableState<GearType>,
     gear: MutableState<Gear>,
-    state: BuildScreenModel.SpellsState.Success
+    state: BuildScreenModel.BuildScreenState.Success
 ) {
     val loadout by screenModel.loadout.collectAsState()
 
@@ -107,7 +107,7 @@ private fun LoadoutColumn(
 @Composable
 private fun ItemListColumn(
     gearType: MutableState<GearType>,
-    state: BuildScreenModel.SpellsState.Success,
+    state: BuildScreenModel.BuildScreenState.Success,
     gear: MutableState<Gear>,
     screenModel: BuildScreenModel
 ) {
@@ -155,7 +155,7 @@ private fun DescriptionColumn(
     gear: MutableState<Gear>,
     loadoutType: MutableState<LoadoutType>,
     screenModel: BuildScreenModel,
-    state: BuildScreenModel.SpellsState.Success
+    state: BuildScreenModel.BuildScreenState.Success
 ) {
     if (gear.value is Spell) {
         val spells = filterSpells(loadoutType, screenModel, state, gear)
@@ -168,7 +168,7 @@ private fun DescriptionColumn(
             }
         )
     } else if (gear.value is Drifter) {
-        DrifterCard(
+        DrifterCardScrollable(
             drifter = gear.value as Drifter,
             onDrifterClick = { drifter ->
                 screenModel.updateDrifter(drifter)
@@ -180,7 +180,7 @@ private fun DescriptionColumn(
 private fun filterSpells(
     loadoutType: MutableState<LoadoutType>,
     screenModel: BuildScreenModel,
-    state: BuildScreenModel.SpellsState.Success,
+    state: BuildScreenModel.BuildScreenState.Success,
     gear: MutableState<Gear>
 ): List<Spell> {
     val spells = when (loadoutType.value) {

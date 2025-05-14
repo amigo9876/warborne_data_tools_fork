@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.gear.GearType
 import com.elkite.warborn.domain.entities.gear.spell.Spell
 import com.elkite.warborn.domain.entities.gear.spell.SpellType
+import com.elkite.warborn.presentation.widgets.utils.GearStylizedCardRow
 
 @Composable
 fun WeaponSmallList(
@@ -83,8 +84,8 @@ private fun WeaponCategorySmallListItem(
     gearType: GearType,
     onCategoryClick: (GearType) -> Unit,
 ) {
-    GearStylizedRow(
-        rowOnClick = {
+    GearStylizedCardRow(
+        onClick = {
             onCategoryClick(gearType)
         },
         text = gearType.name,
@@ -102,11 +103,11 @@ private fun WeaponSmallListItem(
     spell: Spell,
     onSpellClick: (Spell) -> Unit,
 ) {
-    GearStylizedRow(
-        rowOnClick = {
+    GearStylizedCardRow(
+        onClick = {
             onSpellClick(spell)
         },
-        text = spell.name,
+        text = spell.gearName ?: "",
         composable = {
             ArmorImage(
                 spell = spell,

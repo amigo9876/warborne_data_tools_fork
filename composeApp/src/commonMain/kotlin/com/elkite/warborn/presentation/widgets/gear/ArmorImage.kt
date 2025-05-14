@@ -1,11 +1,12 @@
 package com.elkite.warborn.presentation.widgets.gear
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.gear.GearStats
 import com.elkite.warborn.domain.entities.gear.GearType
@@ -25,16 +26,20 @@ fun ArmorImage(
     spell: Spell
 ) {
     spell.gearName?.let {
-        Image(
-            painter = painterResource(
-                IconMap.getArmorIcon(
-                    spell.associatedGearType,
-                    spell.gearName
-                )
-            ),
-            contentDescription = "Gear's Icon",
-            modifier = modifier,
-        )
+
+        if (spell.associatedGearType != GearType.DRIFTER)
+            Image(
+                modifier = modifier.clip(
+                    shape = CircleShape
+                ),
+                painter = painterResource(
+                    IconMap.getArmorIcon(
+                        spell.associatedGearType,
+                        spell.gearName
+                    )
+                ),
+                contentDescription = "Gear's Icon",
+            )
     }
 }
 
@@ -59,14 +64,10 @@ fun ArmorImage(
             GearStats.INT -> WarborneTheme.intelligenceColor
         },
         contentDescription = null,
-        modifier = modifier.border(
-            width = 2.dp,
-            color = when (gearStats) {
-                GearStats.STR -> WarborneTheme.strengthColor
-                GearStats.AGI -> WarborneTheme.dexterityColor
-                GearStats.INT -> WarborneTheme.intelligenceColor
-            }
-        ),
+        modifier = modifier
+            .clip(
+                shape = CircleShape
+            ),
     )
 }
 

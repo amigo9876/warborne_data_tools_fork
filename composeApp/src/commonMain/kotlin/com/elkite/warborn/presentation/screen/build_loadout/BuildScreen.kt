@@ -34,28 +34,28 @@ class BuildScreen : Screen {
         screenModel: BuildScreenModel,
         navigator: Navigator,
     ) {
-        val pageState by screenModel.spellsState.collectAsState()
+        val pageState by screenModel.buildScreenState.collectAsState()
 
         when (pageState) {
-            is BuildScreenModel.SpellsState.Loading -> {
+            is BuildScreenModel.BuildScreenState.Loading -> {
                 Column {
                     CircularProgressIndicator()
                 }
             }
 
-            is BuildScreenModel.SpellsState.Success -> {
+            is BuildScreenModel.BuildScreenState.Success -> {
 //                BuildScreenContent(
 //                    screenModel,
 //                )
 
                 BuildScreenContent(
                     screenModel,
-                    pageState as BuildScreenModel.SpellsState.Success,
+                    pageState as BuildScreenModel.BuildScreenState.Success,
                 )
             }
 
-            is BuildScreenModel.SpellsState.Error -> {
-                val errorMessage = (pageState as BuildScreenModel.SpellsState.Error).message
+            is BuildScreenModel.BuildScreenState.Error -> {
+                val errorMessage = (pageState as BuildScreenModel.BuildScreenState.Error).message
                 Napier.e { errorMessage }
                 // Show an error message
                 Column {

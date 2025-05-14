@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.gear.drifter.Drifter
-import com.elkite.warborn.presentation.widgets.gear.GearStylizedRow
+import com.elkite.warborn.presentation.widgets.utils.GearStylizedCardRow
 
 @Composable
 fun DrifterSmallList(
@@ -40,8 +40,8 @@ private fun DrifterSmallListItem(
     onDrifterClick: (Drifter) -> Unit,
 ) {
 
-    GearStylizedRow(
-        rowOnClick = {
+    GearStylizedCardRow(
+        onClick = {
             onDrifterClick(drifter)
         },
         text = drifter.name,

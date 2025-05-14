@@ -16,14 +16,14 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
-import androidx.compose.ui.graphics.Color
 import cafe.adriel.voyager.navigator.bottomSheet.BottomSheetNavigator
 import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import com.elkite.warborn.presentation.tab.HomeTab
 import com.elkite.warborn.presentation.tab.SecondTab
-import com.elkite.warborn.resources.CommonBg_New_Black
+import com.elkite.warborn.presentation.theme.WarborneTheme
+import com.elkite.warborn.resources.Enhancement_img_bg_2
 import com.elkite.warborn.resources.Res
 import org.jetbrains.compose.resources.painterResource
 
@@ -53,7 +53,9 @@ private fun TabNavigationRailItem(tab: Tab) {
             tab.options.icon?.let { icon ->
                 Icon(painter = icon, contentDescription = tab.options.title)
             }
-        }
+        },
+        unselectedContentColor = WarborneTheme.textDescriptionColor,
+        selectedContentColor = WarborneTheme.textShieldColor
     )
 }
 
@@ -72,7 +74,7 @@ fun MainContentWeb() {
         content = { paddingValues ->
             Row(Modifier.padding(paddingValues)) {
                 NavigationRail(
-                    backgroundColor = Color.LightGray
+                    backgroundColor = WarborneTheme.textBackgroundColor
                 ) {
                     TabNavigationRailItem(HomeTab)
                     TabNavigationRailItem(SecondTab)
@@ -80,7 +82,7 @@ fun MainContentWeb() {
                 Column(
                     modifier = Modifier.fillMaxWidth()
                         .paint(
-                            painterResource(Res.drawable.CommonBg_New_Black),
+                            painterResource(Res.drawable.Enhancement_img_bg_2),
                             contentScale = androidx.compose.ui.layout.ContentScale.FillBounds
                         ).padding(paddingValues).statusBarsPadding()
                 ) {
@@ -100,7 +102,7 @@ fun MainContentMobile() {
                 Column(
                     modifier = Modifier.fillMaxWidth()
                         .paint(
-                            painterResource(Res.drawable.CommonBg_New_Black),
+                            painterResource(Res.drawable.Enhancement_img_bg_2),
                             contentScale = androidx.compose.ui.layout.ContentScale.FillBounds
                         ).padding(paddingValues).statusBarsPadding()
                 ) {

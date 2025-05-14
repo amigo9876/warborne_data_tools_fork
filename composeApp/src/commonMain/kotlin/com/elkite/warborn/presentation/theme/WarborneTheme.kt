@@ -14,7 +14,9 @@ object WarborneTheme {
     val textDescriptionColor: Color
         get() = Color(0xFFc5dadf)
     val textBackgroundColor: Color
-        get() = Color(0xFF1d2121)
+        get() = Color(0xFF1c2121)
+    val textBorderColor: Color
+        get()= Color(0xFF323736)
 
     val textDamageColor: Color
         get() = Color(0xFFed6757)

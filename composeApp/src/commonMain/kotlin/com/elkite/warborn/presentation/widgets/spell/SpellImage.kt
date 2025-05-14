@@ -5,37 +5,47 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.elkite.warborn.domain.entities.gear.drifter.Drifter
-import com.elkite.warborn.domain.entities.gear.spell.Spell
+import com.elkite.warborn.domain.entities.gear.GearType
+import com.elkite.warborn.domain.entities.gear.spell.SpellType
 import com.elkite.warborn.util.IconMap
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun SpellIcon(
     modifier: Modifier = Modifier.size(48.dp),
-    spell: Spell
+    gearType: GearType,
+    spellType: SpellType,
+    id: String
 ) {
-    Image(
-        painter = painterResource(
-            IconMap.getSkillIcon(
-                spell.associatedGearType,
-                spell.gameId
-            )
-        ),
-        contentDescription = "Spell's Icon",
-        modifier = modifier,
-    )
+    if (gearType == GearType.DRIFTER) {
+        return if (spellType == SpellType.PASSIVE) {
+            SpellPassiveDrifter(modifier, id)
+        } else {
+            SpellIconDrifter(modifier, id)
+        }
+    } else {
+        Image(
+            painter = painterResource(
+                IconMap.getSkillIcon(
+                    gearType,
+                    id
+                )
+            ),
+            contentDescription = "Spell's Icon",
+            modifier = modifier,
+        )
+    }
 }
 
 @Composable
 fun SpellIconDrifter(
     modifier: Modifier = Modifier.size(48.dp),
-    drifter: Drifter
+    id: String
 ) {
     Image(
         painter = painterResource(
             IconMap.getDrifterSpell(
-                drifter
+                id
             )
         ),
         contentDescription = "Spell's Icon",
@@ -46,12 +56,12 @@ fun SpellIconDrifter(
 @Composable
 fun SpellPassiveDrifter(
     modifier: Modifier = Modifier.size(48.dp),
-    drifter: Drifter
+    id: String
 ) {
     Image(
         painter = painterResource(
             IconMap.getDrifterPassive(
-                drifter
+                id
             )
         ),
         contentDescription = "Spell's Icon",

@@ -2,52 +2,37 @@ package com.elkite.warborn.presentation.widgets.spell
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
-import androidx.compose.material.Card
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import com.elkite.warborn.domain.entities.gear.GearType
 import com.elkite.warborn.domain.entities.gear.spell.Spell
-import com.elkite.warborn.domain.entities.gear.spell.SpellType
 import com.elkite.warborn.presentation.theme.WarborneTheme
 import com.elkite.warborn.presentation.widgets.gear.ArmorImage
+import com.elkite.warborn.presentation.widgets.utils.GearStylizedCard
+import com.elkite.warborn.presentation.widgets.utils.GearStylizedText
+import com.elkite.warborn.presentation.widgets.utils.GearStylizedTextTitle
 import com.elkite.warborn.presentation.widgets.utils.MultiPatternHighlightedText
 
-@Composable
-fun SpellCardList(
-    modifier: Modifier = Modifier,
-    spells: List<Spell>,
-    onSpellClick: (Spell) -> Unit,
-) {
-    LazyColumn(modifier) {
-        items(spells) { spell ->
-            SpellCard(onSpellClick, spell)
-        }
-    }
-}
 
 @Composable
 fun SpellCardListGrid(
@@ -60,75 +45,16 @@ fun SpellCardListGrid(
         columns = StaggeredGridCells.Fixed(1),
         verticalItemSpacing = 4.dp,
         horizontalArrangement = Arrangement.spacedBy(4.dp),
-        modifier = modifier.background(color = Color.Transparent).padding(16.dp),
+        modifier = modifier.background(color = Color.Transparent),
     ) {
+        item {
+            Spacer(Modifier.size(12.dp))
+        }
         items(spells) { spell ->
             SpellCard(onSpellClick, spell)
         }
-    }
-}
-
-@Composable
-fun SpellCardListSmall(
-    modifier: Modifier = Modifier,
-    spells: List<Spell>,
-    onSpellClick: (Spell) -> Unit,
-) {
-    LazyColumn(
-        verticalArrangement = Arrangement.spacedBy(4.dp),
-        modifier = modifier.background(color = Color.Transparent).padding(16.dp),
-    ) {
-        items(spells) { spell ->
-            SpellCardSmall(onSpellClick = onSpellClick, spell = spell)
-        }
-    }
-}
-
-@Composable
-fun SpellCardSmall(
-    modifier: Modifier = Modifier,
-    spell: Spell,
-    onSpellClick: (Spell) -> Unit,
-) {
-    Card(
-        modifier = modifier
-            .border(
-                2.dp,
-                color =WarborneTheme.borderSkillColor,
-                shape = MaterialTheme.shapes.small
-            ).clickable {
-                onSpellClick(spell)
-            },
-        backgroundColor = Color.Transparent,
-    ) {
-        Column(modifier = Modifier.wrapContentSize()) {
-            Row(modifier = Modifier.padding(8.dp)) {
-                SpellIcon(Modifier.size(64.dp), spell = spell)
-                Spacer(modifier = Modifier.size(12.dp))
-                Column(
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    SpellDescriptionSmall(spell)
-                    if (spell.manaCost != "0" || spell.cooldown != "0" || spell.castingRange != "0") {
-                        Spacer(modifier = Modifier.size(8.dp))
-                        Divider(
-                            modifier = Modifier.height(1.dp),
-                            color = Color.LightGray
-                        )
-                    }
-                    Row {
-                        if (spell.manaCost != "0") {
-                            SpellAttributeRow(label = "Mana", value = spell.manaCost)
-                        }
-                        if (spell.cooldown != "0") {
-                            SpellAttributeRow(label = "Cd", value = "${spell.cooldown}s")
-                        }
-                        if (spell.castingRange != "0") {
-                            SpellAttributeRow(label = "Range", value = "${spell.castingRange}m")
-                        }
-                    }
-                }
-            }
+        item {
+            Spacer(Modifier.size(16.dp))
         }
     }
 }
@@ -138,77 +64,67 @@ fun SpellCard(
     onSpellClick: (Spell) -> Unit,
     spell: Spell
 ) {
-    Card(
-        modifier = Modifier.padding(8.dp)
-            .defaultMinSize(minWidth = 200.dp)
-            .border(
-                2.dp,
-                color = WarborneTheme.borderSkillColor,
-                shape = MaterialTheme.shapes.small
-            ).clickable {
-                onSpellClick(spell)
-            },
-        backgroundColor = Color.Transparent
-    ) {
-        Column(modifier = Modifier.wrapContentSize()) {
-            Row {
-                Column(Modifier.padding(top = 2.dp, bottom = 2.dp, start = 2.dp)) {
-                    SpellIcon(Modifier.size(80.dp), spell = spell)
-                    if (spell.type == SpellType.SKILL) {
-                        Spacer(modifier = Modifier.size(8.dp))
-                        ArmorImage(Modifier.size(80.dp), spell = spell)
-                    }
-                }
-                Spacer(modifier = Modifier.size(16.dp))
-                SpellDescription(spell)
-            }
+    GearStylizedCard(
+        modifier = Modifier,
+        composable = @Composable { SpellCardContent(spell) },
+        onClick = {
+            onSpellClick(spell)
         }
-    }
+    )
+
+
+//    Card(
+//        modifier = Modifier
+//            .border(
+//                1.dp,
+//                color = WarborneTheme.borderSkillColor,
+//            )
+//            .clickable {
+//                onSpellClick(spell)
+//            },
+//    ) {
+//        Box(
+//            modifier = Modifier
+//                .background(color = WarborneTheme.textBackgroundColor) // Background color
+//                .paint(
+//                    painter = painterResource(Res.drawable.skin_image_tabBg),
+//                    contentScale = ContentScale.FillBounds, // Ensures the vector scales proportionally to fill the area
+//                    alignment = Alignment.Center,
+//                    alpha = 0.1f
+//                ).wrapContentSize()
+//        ) {
+//            SpellCardContent(spell)
+//        }
+//    }
 }
 
 @Composable
-fun SpellDescriptionSmall(
-    spell: Spell
-) {
+fun SpellCardContent(spell: Spell) {
+//    val scrollState = rememberScrollState()
     Column(
-        modifier = Modifier
-            .padding(0.dp)
-            .fillMaxWidth()
-            .background(Color.Transparent),
+        modifier = Modifier.wrapContentSize().padding(16.dp)
+//            .verticalScroll(scrollState)
     ) {
-        MultiPatternHighlightedText(
-            baseTextStyle = MaterialTheme.typography.body2.copy(color = WarborneTheme.borderSkillColor),
-            text = spell.description,
-            patternsWithStyles = listOf(
-                Regex("""\[Damage Rate: [^\]]+]""") to SpanStyle(
-                    color = WarborneTheme.textDamageColor,
-                    fontWeight = FontWeight.Bold
-                ),
-                Regex("""\[Healing Rate: [^\]]+]""") to SpanStyle(
-                    color = WarborneTheme.textHealColor,
-                    fontWeight = FontWeight.Bold
-                ),
-                Regex("""\[Target-based Max HP [^\]]+]""") to SpanStyle(
-                    color = WarborneTheme.textShieldColor,
-                    fontWeight = FontWeight.Bold
-                )
+        Row(
+            verticalAlignment = Alignment.Bottom,
+            horizontalArrangement = Arrangement.Start,
+        ) {
+            SpellIcon(
+                Modifier.size(64.dp).border(
+                    1.dp,
+                    color = WarborneTheme.borderSkillColor,
+                ), gearType = spell.associatedGearType, spellType = spell.type, id = spell.gameId
             )
+            Spacer(Modifier.size(16.dp))
+            GearStylizedTextTitle(text = spell.name)
+        }
+        Divider(
+            modifier = Modifier.fillMaxWidth().padding(top = 8.dp, bottom = 16.dp),
+            color = WarborneTheme.borderSkillColor,
+            thickness = 1.dp
         )
-    }
-}
-
-@Composable
-fun SpellDescription(spell: Spell) {
-    Column(
-        modifier = Modifier
-            .padding(8.dp),
-    ) {
-        Text(
-            spell.name,
-            style = MaterialTheme.typography.h6,
-            color = WarborneTheme.textDescriptionColor
-        )
-        Spacer(modifier = Modifier.size(8.dp))
+        SpellAttributes(spell)
+        Spacer(Modifier.size(16.dp))
         MultiPatternHighlightedText(
             baseTextStyle = MaterialTheme.typography.body1.copy(color = WarborneTheme.textDescriptionColor),
             text = spell.description,
@@ -227,45 +143,73 @@ fun SpellDescription(spell: Spell) {
                 )
             )
         )
-        Spacer(modifier = Modifier.size(8.dp))
-        Divider(
-            Modifier.fillMaxWidth().height(1.dp),
-            color = WarborneTheme.textDescriptionColor
-        )
-        Row {
-            if (spell.manaCost != "0") {
-                SpellAttributeRow(label = "Mana Cost", value = spell.manaCost)
+        Spacer(Modifier.size(16.dp))
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+
+            ) {
+            if (!spell.gearName.isNullOrEmpty() && spell.associatedGearType != GearType.DRIFTER) {
+                ArmorImage(spell = spell)
+                Spacer(Modifier.size(16.dp))
             }
-            if (spell.cooldown != "0") {
-                SpellAttributeRow(label = "Cooldown", value = "${spell.cooldown}s")
-            }
-            if (spell.castingRange != "0") {
-                SpellAttributeRow(label = "Range", value = "${spell.castingRange}m")
-            }
-            SpellAttributeRow(
-                label = "",
-                value = spell.requiredGearLevel.textValue
+            GearStylizedText(
+                text = if (spell.gearName.isNullOrEmpty()) "Skill available at ${spell.requiredGearLevel.textValue} and above."
+                else "Skill available at ${spell.requiredGearLevel.textValue} and above for ${spell.gearName}",
+                maxLines = 2
             )
         }
     }
 }
 
 @Composable
-private fun SpellAttributeRow(label: String, value: String, color: Color = WarborneTheme.textDescriptionColor) {
-    Row {
-        Text(
-            buildAnnotatedString {
-                append("$label: ")
-                withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                    append(value)
+fun SpellAttributes(spell: Spell) {
+    val attributes = mutableListOf<Pair<String, String>>()
+
+    if (spell.manaCost.isNotEmpty()) {
+        attributes.add("Mana: " to spell.manaCost)
+    }
+    if (spell.cooldown.isNotEmpty()) {
+        attributes.add("Cooldown: " to "${spell.cooldown}s")
+    }
+    if (spell.castingRange.isNotEmpty()) {
+        attributes.add("Range: " to "${spell.castingRange} m")
+    }
+
+    Column {
+        attributes.forEachIndexed { index, (label, value) ->
+            val modifier = if (index % 2 == 0) {
+                Modifier
+                    .background(
+                        brush = Brush.linearGradient(
+                            listOf(
+                                WarborneTheme.textBorderColor,
+                                WarborneTheme.textBorderColor
+                            )
+                        ),
+                        alpha = 0.5f
+                    )
+            } else {
+                Modifier
+            }
+
+            Box(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(2.dp)
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    GearStylizedText(text = label, color = WarborneTheme.textDescriptionColor)
+                    GearStylizedText(text = value, color = WarborneTheme.textDescriptionColor)
                 }
-            },
-            style = MaterialTheme.typography.subtitle2,
-            color = color
-        )
-        Spacer(modifier = Modifier.size(8.dp))
+            }
+        }
     }
 }
+
 
 
 

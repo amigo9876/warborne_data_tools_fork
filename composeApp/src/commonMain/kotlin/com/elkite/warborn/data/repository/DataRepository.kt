@@ -35,6 +35,15 @@ object DataRepository {
         return drifters
     }
 
+    suspend fun getLastUpdateData(): String {
+        val body = httpClient.get(url).bodyAsText()
+        val jsonElement = Json.parseToJsonElement(body)
+
+        val data = jsonElement.jsonObject["data"]?.jsonObject ?: return ""
+        val lastUpdate = data["lastDataUpdate"]?.jsonPrimitive?.content ?: return ""
+        return lastUpdate
+    }
+
 
     private fun parseJsonToSpells(json: String): List<Spell> {
         val result = mutableListOf<Spell>()
@@ -118,7 +127,24 @@ object DataRepository {
 
             val unlockStr = json["unlock"]?.jsonPrimitive?.content
                 ?.uppercase() ?: return null
-            val gearLevel = GearLevel.valueOf(unlockStr)
+            val gearLevel = when (json["unlock"]?.jsonPrimitive?.content) {
+                "0" -> GearLevel.TIER_0
+                "1" -> GearLevel.TIER_I
+                "2" -> GearLevel.TIER_II
+                "3" -> GearLevel.TIER_III
+                "4" -> GearLevel.TIER_IV
+                "5" -> GearLevel.TIER_V
+                "6" -> GearLevel.TIER_VI
+                "7" -> GearLevel.TIER_VII
+                "8" -> GearLevel.TIER_VIII
+                "9" -> GearLevel.TIER_IX
+                "10" -> GearLevel.TIER_X
+                "11" -> GearLevel.TIER_X_
+                else -> {
+                    println("Unknown gear level: $unlockStr")
+                    return null
+                }
+            }
 
             Spell(
                 gameId = id,
