@@ -2,6 +2,8 @@ package com.elkite.warborn.presentation.screen.build_loadout.common
 
 import ArmorSmallList
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
@@ -9,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.gear.Gear
 import com.elkite.warborn.domain.entities.gear.GearType
 import com.elkite.warborn.domain.entities.gear.LoadoutType
@@ -22,6 +25,7 @@ import com.elkite.warborn.presentation.widgets.gear.WeaponSmallList
 import com.elkite.warborn.presentation.widgets.loadout.LoadoutCardList
 import com.elkite.warborn.presentation.widgets.loadout_from_url.LoadoutFromUrl
 import com.elkite.warborn.presentation.widgets.spell.SpellCardListGrid
+import com.elkite.warborn.presentation.widgets.utils.GearStylizedText
 import com.elkite.warborn.presentation.widgets.utils.ScreenScaffoldCommon
 
 @Composable
@@ -35,6 +39,7 @@ fun BuildScreenContent(screenModel: BuildScreenModel, state: BuildScreenModel.Bu
         modifier = Modifier.fillMaxSize(),
         first = {
             LoadoutColumn(screenModel, loadoutType, gearType, gear, state)
+            GearStylizedText(modifier = Modifier.padding(16.dp),text = "Last data update: ${state.lastDataUpdate}")
         },
         second = {
             ItemListColumn(gearType, state, gear, screenModel)
@@ -58,7 +63,7 @@ private fun LoadoutColumn(
     LoadoutFromUrl(screenModel, loadout)
 
     LoadoutCardList(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.wrapContentSize(),
         loadout = loadout,
     ) { type ->
         loadoutType.value = type

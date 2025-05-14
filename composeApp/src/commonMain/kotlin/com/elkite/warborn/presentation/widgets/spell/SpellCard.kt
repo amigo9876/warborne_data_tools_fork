@@ -45,7 +45,7 @@ fun SpellCardListGrid(
         columns = StaggeredGridCells.Fixed(1),
         verticalItemSpacing = 4.dp,
         horizontalArrangement = Arrangement.spacedBy(4.dp),
-        modifier = modifier.background(color = Color.Transparent),
+        modifier = modifier.background(color = Color.Transparent).padding(horizontal = 16.dp),
     ) {
         item {
             Spacer(Modifier.size(12.dp))
@@ -54,7 +54,7 @@ fun SpellCardListGrid(
             SpellCard(onSpellClick, spell)
         }
         item {
-            Spacer(Modifier.size(16.dp))
+            Spacer(Modifier.size(12.dp))
         }
     }
 }
@@ -71,39 +71,12 @@ fun SpellCard(
             onSpellClick(spell)
         }
     )
-
-
-//    Card(
-//        modifier = Modifier
-//            .border(
-//                1.dp,
-//                color = WarborneTheme.borderSkillColor,
-//            )
-//            .clickable {
-//                onSpellClick(spell)
-//            },
-//    ) {
-//        Box(
-//            modifier = Modifier
-//                .background(color = WarborneTheme.textBackgroundColor) // Background color
-//                .paint(
-//                    painter = painterResource(Res.drawable.skin_image_tabBg),
-//                    contentScale = ContentScale.FillBounds, // Ensures the vector scales proportionally to fill the area
-//                    alignment = Alignment.Center,
-//                    alpha = 0.1f
-//                ).wrapContentSize()
-//        ) {
-//            SpellCardContent(spell)
-//        }
-//    }
 }
 
 @Composable
 fun SpellCardContent(spell: Spell) {
-//    val scrollState = rememberScrollState()
     Column(
         modifier = Modifier.wrapContentSize().padding(16.dp)
-//            .verticalScroll(scrollState)
     ) {
         Row(
             verticalAlignment = Alignment.Bottom,

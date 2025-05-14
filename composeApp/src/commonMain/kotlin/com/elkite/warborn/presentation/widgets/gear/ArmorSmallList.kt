@@ -96,23 +96,6 @@ private fun ArmorCategorySmallListItem(
             )
         }
     )
-
-
-
-//    GearStylizedCard(
-//        onClick = {
-//            onCategoryClick(gearStats)
-//        },
-//        composable = {
-//            ArmorImage(
-//                gearStats = gearStats,
-//                gearType = gearType,
-//                modifier = Modifier.size(64.dp)
-//            )
-//        },
-//        modifier = Modifier.size(64.dp)
-//    )
-
 }
 
 @Composable

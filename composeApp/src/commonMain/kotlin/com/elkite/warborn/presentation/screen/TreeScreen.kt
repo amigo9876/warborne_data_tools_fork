@@ -12,7 +12,13 @@ class TreeScreen : Screen {
     override fun Content() {
         Column {
             Text(
-                text = "TO COME : \nNATURE / DAGGER / SPEAR \nLater FIRE FROST HOLY CURSE \nWINDOW RESIZING & MOBILER \nCONSUMABLES \nMODS",
+                text = "TO COME : FROST HOLY CURSE \n" +
+                       "APPLY LAST PATCHES UPDATE \n" +
+                        "WINDOW RESIZING\n" +
+                        "BETTER UI\n" +
+                        "CONSUMABLES \n" +
+                        "MODS \n " +
+                        "LINKS",
                 color = Color.LightGray
             )
         }

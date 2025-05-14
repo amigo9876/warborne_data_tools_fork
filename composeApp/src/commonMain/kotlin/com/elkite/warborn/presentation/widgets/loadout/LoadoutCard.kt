@@ -8,10 +8,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CutCornerShape
@@ -53,7 +53,7 @@ fun LoadoutCardList(
     onClick: (LoadoutType) -> Unit,
 ) {
     Column(
-        modifier = modifier.fillMaxSize().padding(16.dp)
+        modifier = modifier.wrapContentSize().padding(16.dp)
             .verticalScroll(rememberScrollState()),
     ) {
         Column(
@@ -82,7 +82,7 @@ fun LoadoutCardList(
                     contentScale = ContentScale.Crop,
                     alignment = Alignment.BottomCenter,
                 )
-                .padding(16.dp)
+                .padding(16.dp),
         )
         {
             LoadoutDrifterCard(LoadoutType.DRIFTER, loadout.drifter, onClick)
@@ -100,9 +100,9 @@ fun LoadoutCardList(
                 LoadoutSpellCard(LoadoutType.PASSIVE, loadout.passive, onClick)
             }
         }
-        Column(modifier = Modifier.weight(1f)) {
-
-        }
+//        Column(modifier = Modifier.weight(1f)) {
+//
+//        }
     }
 }
 
