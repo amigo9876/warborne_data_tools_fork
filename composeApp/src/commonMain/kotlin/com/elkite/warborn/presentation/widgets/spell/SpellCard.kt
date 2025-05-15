@@ -45,7 +45,7 @@ fun SpellCardListGrid(
         columns = StaggeredGridCells.Fixed(1),
         verticalItemSpacing = 4.dp,
         horizontalArrangement = Arrangement.spacedBy(4.dp),
-        modifier = modifier.background(color = Color.Transparent).padding(16.dp),
+        modifier = modifier.background(color = Color.Transparent).padding(horizontal = 16.dp),
     ) {
         item {
             Spacer(Modifier.size(12.dp))

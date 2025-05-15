@@ -69,7 +69,7 @@ fun DrifterCard(
 @Composable
 private fun DrifterCardContent(drifter: Drifter) {
     Column(
-        modifier = Modifier.wrapContentSize().padding(vertical = 16.dp)
+        modifier = Modifier.wrapContentSize().padding(all = 16.dp)
     ) {
         Row(
             verticalAlignment = Alignment.Bottom,
