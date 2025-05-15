@@ -205,7 +205,6 @@ private fun DescriptionColumn(
             spells = spells,
             onSpellClick = { spell ->
                 screenModel.updateLoadout(spell)
-                screenModel.updatePassive(spell.associatedGearType)
             }
         )
     } else if (gear.value is Drifter) {

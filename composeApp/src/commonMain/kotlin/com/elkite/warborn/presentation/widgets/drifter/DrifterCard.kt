@@ -37,7 +37,7 @@ fun DrifterCardScrollable(
         modifier = Modifier
             .fillMaxWidth()
             .verticalScroll(scrollState)
-            .padding()
+            .padding(horizontal = 16.dp)
     ) {
         Spacer(Modifier.size(16.dp))
         DrifterCard(

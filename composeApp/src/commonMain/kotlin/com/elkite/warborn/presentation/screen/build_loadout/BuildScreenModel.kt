@@ -9,7 +9,6 @@ import com.elkite.warborn.domain.entities.gear.LoadoutType
 import com.elkite.warborn.domain.entities.gear.drifter.Drifter
 import com.elkite.warborn.domain.entities.gear.spell.Spell
 import com.elkite.warborn.domain.entities.gear.spell.SpellType
-import io.github.aakira.napier.Napier
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -32,17 +31,17 @@ class BuildScreenModel : ScreenModel {
     }
 
     fun updatePassive(gearType: GearType) {
-        val passive = when (val state = _screenState.value) {
+       _loadout.value = when (val state = _screenState.value) {
             is BuildScreenState.Success -> {
-                state.weapons[gearType]?.first { it.type == SpellType.PASSIVE }
+                _loadout.value.copy(
+                    passive = state.weapons[gearType]?.first { it.type == SpellType.PASSIVE },
+                    basicAttack = state.weapons[gearType]?.first { it.type == SpellType.BASIC_ATTACK },
+                    commonSkill = state.weapons[gearType]?.first { it.type == SpellType.COMMON_SKILL }
+                )
             }
 
-            else -> null
+            else -> _loadout.value
         }
-
-        _loadout.value = _loadout.value.copy(
-            passive = passive,
-        )
     }
 
     fun updateLoadout(newSpell: Spell) {
@@ -50,23 +49,11 @@ class BuildScreenModel : ScreenModel {
             LoadoutType.HEAD -> _loadout.value.copy(head = newSpell)
             LoadoutType.CHEST -> _loadout.value.copy(chest = newSpell)
             LoadoutType.BOOTS -> _loadout.value.copy(boots = newSpell)
-            LoadoutType.WEAPON -> if (_loadout.value.weapon?.associatedGearType == newSpell.associatedGearType) {
-                _loadout.value.copy(
-                    weapon = newSpell,
-                )
-            } else {
-                _loadout.value.copy(
-                    weapon = newSpell,
-                    basicAttack = null,
-                    commonSkill = null,
-                    passive = null
-                )
-            }
+            LoadoutType.WEAPON -> _loadout.value.copy(weapon = newSpell,)
             LoadoutType.PASSIVE -> _loadout.value.copy(passive = newSpell)
             LoadoutType.COMMON_SKILL -> _loadout.value.copy(commonSkill = newSpell)
             LoadoutType.BASIC_ATTACK -> _loadout.value.copy(basicAttack = newSpell)
             LoadoutType.DRIFTER -> {
-                Napier.e { "SHOULD NOT HAPPEN $newSpell" }
                 _loadout.value
             }
         }
