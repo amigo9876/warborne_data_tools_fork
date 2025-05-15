@@ -66,6 +66,22 @@ import com.elkite.warborn.resources.Com_Weapon_Nature
 import com.elkite.warborn.resources.Com_Weapon_Spear
 import com.elkite.warborn.resources.Com_Weapon_Staff
 import com.elkite.warborn.resources.Com_Weapon_Sword
+import com.elkite.warborn.resources.CurseAttack_1
+import com.elkite.warborn.resources.CurseAttack_2
+import com.elkite.warborn.resources.CurseAttack_3
+import com.elkite.warborn.resources.Curse_AntiMagic
+import com.elkite.warborn.resources.Curse_Cloud
+import com.elkite.warborn.resources.Curse_Common_Skill_1
+import com.elkite.warborn.resources.Curse_Common_Skill_2
+import com.elkite.warborn.resources.Curse_Common_Skill_3
+import com.elkite.warborn.resources.Curse_Common_Skill_4
+import com.elkite.warborn.resources.Curse_Common_Skill_5
+import com.elkite.warborn.resources.Curse_Cripple
+import com.elkite.warborn.resources.Curse_DeathDisease
+import com.elkite.warborn.resources.Curse_Flower
+import com.elkite.warborn.resources.Curse_Infect
+import com.elkite.warborn.resources.Curse_Passive
+import com.elkite.warborn.resources.Curse_Worm
 import com.elkite.warborn.resources.DaggerAttack_2
 import com.elkite.warborn.resources.DaggerAttack_3
 import com.elkite.warborn.resources.DaggerAttack_4
@@ -279,6 +295,38 @@ import com.elkite.warborn.resources.Helm_Str_5
 import com.elkite.warborn.resources.Helm_Str_6
 import com.elkite.warborn.resources.Helm_Str_7
 import com.elkite.warborn.resources.Helm_Str_8
+import com.elkite.warborn.resources.HolyStaffAttack_1
+import com.elkite.warborn.resources.HolyStaffAttack_2
+import com.elkite.warborn.resources.HolyStaffAttack_3
+import com.elkite.warborn.resources.HolyStaff_Common_Skill_1
+import com.elkite.warborn.resources.HolyStaff_Common_Skill_2
+import com.elkite.warborn.resources.HolyStaff_Common_Skill_3
+import com.elkite.warborn.resources.HolyStaff_Common_Skill_4
+import com.elkite.warborn.resources.HolyStaff_Common_Skill_5
+import com.elkite.warborn.resources.HolyStaff_Fallen
+import com.elkite.warborn.resources.HolyStaff_HolyGuardian
+import com.elkite.warborn.resources.HolyStaff_HolyShine
+import com.elkite.warborn.resources.HolyStaff_LeapFaith
+import com.elkite.warborn.resources.HolyStaff_Passive
+import com.elkite.warborn.resources.HolyStaff_Redemption
+import com.elkite.warborn.resources.HolyStaff_Shield
+import com.elkite.warborn.resources.HolyStaff_SingleHoly
+import com.elkite.warborn.resources.IceStaffAttack_1
+import com.elkite.warborn.resources.IceStaffAttack_2
+import com.elkite.warborn.resources.IceStaffAttack_3
+import com.elkite.warborn.resources.IceStaff_Chillhowl
+import com.elkite.warborn.resources.IceStaff_Common_Skill_2
+import com.elkite.warborn.resources.IceStaff_Common_Skill_3
+import com.elkite.warborn.resources.IceStaff_Common_Skill_4
+import com.elkite.warborn.resources.IceStaff_Common_Skill_5
+import com.elkite.warborn.resources.IceStaff_Common_Skill_6
+import com.elkite.warborn.resources.IceStaff_Frost
+import com.elkite.warborn.resources.IceStaff_GreatFrost
+import com.elkite.warborn.resources.IceStaff_IceAvatar
+import com.elkite.warborn.resources.IceStaff_IcePhase
+import com.elkite.warborn.resources.IceStaff_Icicle
+import com.elkite.warborn.resources.IceStaff_Passive
+import com.elkite.warborn.resources.IceStaff_Permafrost
 import com.elkite.warborn.resources.MaceAttack_1
 import com.elkite.warborn.resources.MaceAttack_2
 import com.elkite.warborn.resources.MaceAttack_3
@@ -843,11 +891,11 @@ object IconMap {
     private fun getArmorHolyIcon(id: String): DrawableResource {
         return when (id) {
             "Guardian's Embrace" -> Res.drawable.EnhancementItem_STAFF1
-            "Celestia Redeemer" -> Res.drawable.EnhancementItem_STAFF2
+            "Celestial Redeemer" -> Res.drawable.EnhancementItem_STAFF2
             "Luminous Ward" -> Res.drawable.EnhancementItem_STAFF3
             "Judgement's Staff" -> Res.drawable.EnhancementItem_STAFF4
             "Divine Resonator" -> Res.drawable.EnhancementItem_STAFF5
-            "Celestial Redeemer" -> Res.drawable.EnhancementItem_STAFF6
+            "Radiant Nova" -> Res.drawable.EnhancementItem_STAFF6
             "Sol Protector" -> Res.drawable.EnhancementItem_STAFF7
             else -> Res.drawable.error_emoji
         }
@@ -1270,66 +1318,66 @@ object IconMap {
 
     private fun getSkillFrostIcon(id: String): DrawableResource {
         return when (id) {
-            "FireStaffAttack_1" -> Res.drawable.FireStaffAttack_1
-            "FireStaffAttack_2" -> Res.drawable.FireStaffAttack_2
-            "FireStaffAttack_3" -> Res.drawable.FireStaffAttack_3
-            "FireStaff_Common_Skill_1" -> Res.drawable.FireStaff_Common_Skill_1
-            "FireStaff_Common_Skill_2" -> Res.drawable.FireStaff_Common_Skill_2
-            "FireStaff_Common_Skill_3" -> Res.drawable.FireStaff_Common_Skill_3
-            "FireStaff_Common_Skill_4" -> Res.drawable.FireStaff_Common_Skill_4
-            "FireStaff_Common_Skill_5" -> Res.drawable.FireStaff_Common_Skill_5
-            "FireStaff_Passive" -> Res.drawable.FireStaff_Passive
-            "FireStaff_Blazing" -> Res.drawable.FireStaff_Blazing
-            "FireStaff_1HandStaff" -> Res.drawable.FireStaff_1HandStaff
-            "FireStaff_Brimstone" -> Res.drawable.FireStaff_Brimstone
-            "FireStaff_Flare" -> Res.drawable.FireStaff_Flare
-            "FireStaff_Fanning" -> Res.drawable.FireStaff_Fanning
-            "FireStaff_Dawnsong" -> Res.drawable.FireStaff_Dawnsong
-            "FireStaff_LavaCannonade" -> Res.drawable.FireStaff_LavaCannonade
+            "IceStaffAttack_1" -> Res.drawable.IceStaffAttack_1
+            "IceStaffAttack_2" -> Res.drawable.IceStaffAttack_2
+            "IceStaffAttack_3" -> Res.drawable.IceStaffAttack_3
+            "IceStaff_Common_Skill_6" -> Res.drawable.IceStaff_Common_Skill_6
+            "IceStaff_Common_Skill_2" -> Res.drawable.IceStaff_Common_Skill_2
+            "IceStaff_Common_Skill_3" -> Res.drawable.IceStaff_Common_Skill_3
+            "IceStaff_Common_Skill_4" -> Res.drawable.IceStaff_Common_Skill_4
+            "IceStaff_Common_Skill_5" -> Res.drawable.IceStaff_Common_Skill_5
+            "IceStaff_Passive" -> Res.drawable.IceStaff_Passive
+            "IceStaff_Frost" -> Res.drawable.IceStaff_Frost
+            "IceStaff_Icicle" -> Res.drawable.IceStaff_Icicle
+            "IceStaff_Chillhowl" -> Res.drawable.IceStaff_Chillhowl
+            "IceStaff_GreatFrost" -> Res.drawable.IceStaff_GreatFrost
+            "IceStaff_IcePhase" -> Res.drawable.IceStaff_IcePhase
+            "IceStaff_Permafrost" -> Res.drawable.IceStaff_Permafrost
+            "IceStaff_IceAvatar" -> Res.drawable.IceStaff_IceAvatar
             else -> Res.drawable.error_emoji
         }
     }
 
     private fun getSkillCurseIcon(id: String): DrawableResource {
         return when (id) {
-            "FireStaffAttack_1" -> Res.drawable.FireStaffAttack_1
-            "FireStaffAttack_2" -> Res.drawable.FireStaffAttack_2
-            "FireStaffAttack_3" -> Res.drawable.FireStaffAttack_3
-            "FireStaff_Common_Skill_1" -> Res.drawable.FireStaff_Common_Skill_1
-            "FireStaff_Common_Skill_2" -> Res.drawable.FireStaff_Common_Skill_2
-            "FireStaff_Common_Skill_3" -> Res.drawable.FireStaff_Common_Skill_3
-            "FireStaff_Common_Skill_4" -> Res.drawable.FireStaff_Common_Skill_4
-            "FireStaff_Common_Skill_5" -> Res.drawable.FireStaff_Common_Skill_5
-            "FireStaff_Passive" -> Res.drawable.FireStaff_Passive
-            "FireStaff_Blazing" -> Res.drawable.FireStaff_Blazing
-            "FireStaff_1HandStaff" -> Res.drawable.FireStaff_1HandStaff
-            "FireStaff_Brimstone" -> Res.drawable.FireStaff_Brimstone
-            "FireStaff_Flare" -> Res.drawable.FireStaff_Flare
-            "FireStaff_Fanning" -> Res.drawable.FireStaff_Fanning
-            "FireStaff_Dawnsong" -> Res.drawable.FireStaff_Dawnsong
-            "FireStaff_LavaCannonade" -> Res.drawable.FireStaff_LavaCannonade
+            "CurseAttack_1" -> Res.drawable.CurseAttack_1
+            "CurseAttack_2" -> Res.drawable.CurseAttack_2
+            "CurseAttack_3" -> Res.drawable.CurseAttack_3
+            "Curse_Common_Skill_1" -> Res.drawable.Curse_Common_Skill_1
+            "Curse_Common_Skill_2" -> Res.drawable.Curse_Common_Skill_2
+            "Curse_Common_Skill_3" -> Res.drawable.Curse_Common_Skill_3
+            "Curse_Common_Skill_4" -> Res.drawable.Curse_Common_Skill_4
+            "Curse_Common_Skill_5" -> Res.drawable.Curse_Common_Skill_5
+            "Curse_Passive" -> Res.drawable.Curse_Passive
+            "Curse_DeathDisease" -> Res.drawable.Curse_DeathDisease
+            "Curse_AntiMagic" -> Res.drawable.Curse_AntiMagic
+            "Curse_Infect" -> Res.drawable.Curse_Infect
+            "Curse_Worm" -> Res.drawable.Curse_Worm
+            "Curse_Clipple" -> Res.drawable.Curse_Cripple
+            "Curse_Cloud" -> Res.drawable.Curse_Cloud
+            "Curse_Flower" -> Res.drawable.Curse_Flower
             else -> Res.drawable.error_emoji
         }
     }
 
     private fun getSkillHolyIcon(id: String): DrawableResource {
         return when (id) {
-            "FireStaffAttack_1" -> Res.drawable.FireStaffAttack_1
-            "FireStaffAttack_2" -> Res.drawable.FireStaffAttack_2
-            "FireStaffAttack_3" -> Res.drawable.FireStaffAttack_3
-            "FireStaff_Common_Skill_1" -> Res.drawable.FireStaff_Common_Skill_1
-            "FireStaff_Common_Skill_2" -> Res.drawable.FireStaff_Common_Skill_2
-            "FireStaff_Common_Skill_3" -> Res.drawable.FireStaff_Common_Skill_3
-            "FireStaff_Common_Skill_4" -> Res.drawable.FireStaff_Common_Skill_4
-            "FireStaff_Common_Skill_5" -> Res.drawable.FireStaff_Common_Skill_5
-            "FireStaff_Passive" -> Res.drawable.FireStaff_Passive
-            "FireStaff_Blazing" -> Res.drawable.FireStaff_Blazing
-            "FireStaff_1HandStaff" -> Res.drawable.FireStaff_1HandStaff
-            "FireStaff_Brimstone" -> Res.drawable.FireStaff_Brimstone
-            "FireStaff_Flare" -> Res.drawable.FireStaff_Flare
-            "FireStaff_Fanning" -> Res.drawable.FireStaff_Fanning
-            "FireStaff_Dawnsong" -> Res.drawable.FireStaff_Dawnsong
-            "FireStaff_LavaCannonade" -> Res.drawable.FireStaff_LavaCannonade
+            "HolyStaffAttack_1" -> Res.drawable.HolyStaffAttack_1
+            "HolyStaffAttack_2" -> Res.drawable.HolyStaffAttack_2
+            "HolyStaffAttack_3" -> Res.drawable.HolyStaffAttack_3
+            "HolyStaff_Common_Skill_1" -> Res.drawable.HolyStaff_Common_Skill_1
+            "HolyStaff_Common_Skill_2" -> Res.drawable.HolyStaff_Common_Skill_2
+            "HolyStaff_Common_Skill_3" -> Res.drawable.HolyStaff_Common_Skill_3
+            "HolyStaff_Common_Skill_4" -> Res.drawable.HolyStaff_Common_Skill_4
+            "HolyStaff_Common_Skill_5" -> Res.drawable.HolyStaff_Common_Skill_5
+            "HolyStaff_Shield" -> Res.drawable.HolyStaff_Shield
+            "HolyStaff_LeapFaith" -> Res.drawable.HolyStaff_LeapFaith
+            "HolyStaff_Redemption" -> Res.drawable.HolyStaff_Redemption
+            "HolyStaff_SingleHoly" -> Res.drawable.HolyStaff_SingleHoly
+            "HolyStaff_HolyShine" -> Res.drawable.HolyStaff_HolyShine
+            "HolyStaff_Fallen" -> Res.drawable.HolyStaff_Fallen
+            "HolyStaff_HolyGuardian" -> Res.drawable.HolyStaff_HolyGuardian
+            "HolyStaff_Passive" -> Res.drawable.HolyStaff_Passive
             else -> Res.drawable.error_emoji
         }
     }
