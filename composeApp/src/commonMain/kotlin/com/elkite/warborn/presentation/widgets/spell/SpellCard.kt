@@ -45,7 +45,7 @@ fun SpellCardListGrid(
         columns = StaggeredGridCells.Fixed(1),
         verticalItemSpacing = 4.dp,
         horizontalArrangement = Arrangement.spacedBy(4.dp),
-        modifier = modifier.background(color = Color.Transparent).padding(horizontal = 16.dp),
+        modifier = modifier.background(color = Color.Transparent).padding(16.dp),
     ) {
         item {
             Spacer(Modifier.size(12.dp))
@@ -76,7 +76,7 @@ fun SpellCard(
 @Composable
 fun SpellCardContent(spell: Spell) {
     Column(
-        modifier = Modifier.wrapContentSize().padding(16.dp)
+        modifier = Modifier.wrapContentSize().padding(vertical = 16.dp, horizontal = 16.dp)
     ) {
         Row(
             verticalAlignment = Alignment.Bottom,
@@ -123,7 +123,7 @@ fun SpellCardContent(spell: Spell) {
 
             ) {
             if (!spell.gearName.isNullOrEmpty() && spell.associatedGearType != GearType.DRIFTER) {
-                ArmorImage(spell = spell)
+                ArmorImage(gearName = spell.gearName, gearType = spell.associatedGearType)
                 Spacer(Modifier.size(16.dp))
             }
             GearStylizedText(

@@ -359,6 +359,34 @@ import com.elkite.warborn.resources.Nature_Passive
 import com.elkite.warborn.resources.Nature_Tranquility
 import com.elkite.warborn.resources.Nature_TreeSkin
 import com.elkite.warborn.resources.Nature_TwineSeed
+import com.elkite.warborn.resources.ParagonCard_Dex_1
+import com.elkite.warborn.resources.ParagonCard_Dex_2
+import com.elkite.warborn.resources.ParagonCard_Dex_3
+import com.elkite.warborn.resources.ParagonCard_Dex_4
+import com.elkite.warborn.resources.ParagonCard_Dex_5
+import com.elkite.warborn.resources.ParagonCard_Dex_6
+import com.elkite.warborn.resources.ParagonCard_Dex_7
+import com.elkite.warborn.resources.ParagonCard_Dex_8
+import com.elkite.warborn.resources.ParagonCard_Dex_9
+import com.elkite.warborn.resources.ParagonCard_Int_1
+import com.elkite.warborn.resources.ParagonCard_Int_10
+import com.elkite.warborn.resources.ParagonCard_Int_11
+import com.elkite.warborn.resources.ParagonCard_Int_2
+import com.elkite.warborn.resources.ParagonCard_Int_3
+import com.elkite.warborn.resources.ParagonCard_Int_4
+import com.elkite.warborn.resources.ParagonCard_Int_6
+import com.elkite.warborn.resources.ParagonCard_Int_7
+import com.elkite.warborn.resources.ParagonCard_Int_9
+import com.elkite.warborn.resources.ParagonCard_Nonepng
+import com.elkite.warborn.resources.ParagonCard_Str_1
+import com.elkite.warborn.resources.ParagonCard_Str_2
+import com.elkite.warborn.resources.ParagonCard_Str_3
+import com.elkite.warborn.resources.ParagonCard_Str_4
+import com.elkite.warborn.resources.ParagonCard_Str_5
+import com.elkite.warborn.resources.ParagonCard_Str_6
+import com.elkite.warborn.resources.ParagonCard_Str_7
+import com.elkite.warborn.resources.ParagonCard_Str_8
+import com.elkite.warborn.resources.ParagonCard_Str_9
 import com.elkite.warborn.resources.ParagonFullBodyBg_Dex_1
 import com.elkite.warborn.resources.ParagonFullBodyBg_Dex_2
 import com.elkite.warborn.resources.ParagonFullBodyBg_Dex_3
@@ -657,6 +685,40 @@ object IconMap {
             "paragon_dex_8" -> Res.drawable.ParagonFullBody_Dex_8
             "paragon_dex_9" -> Res.drawable.ParagonFullBody_Dex_9
             null -> Res.drawable.ParagonFullBody_None
+            else -> Res.drawable.error_emoji
+        }
+    }
+
+    fun getDrifterCard(drifter: Drifter?): DrawableResource {
+        return when (drifter?.gameId) {
+            "paragon_str_1" -> Res.drawable.ParagonCard_Str_1
+            "paragon_str_2" -> Res.drawable.ParagonCard_Str_2
+            "paragon_str_3" -> Res.drawable.ParagonCard_Str_3
+            "paragon_str_4" -> Res.drawable.ParagonCard_Str_4
+            "paragon_str_5" -> Res.drawable.ParagonCard_Str_5
+            "paragon_str_6" -> Res.drawable.ParagonCard_Str_6
+            "paragon_str_7" -> Res.drawable.ParagonCard_Str_7
+            "paragon_str_8" -> Res.drawable.ParagonCard_Str_8
+            "paragon_str_9" -> Res.drawable.ParagonCard_Str_9
+            "paragon_int_1" -> Res.drawable.ParagonCard_Int_1
+            "paragon_int_2" -> Res.drawable.ParagonCard_Int_2
+            "paragon_int_3" -> Res.drawable.ParagonCard_Int_3
+            "paragon_int_4" -> Res.drawable.ParagonCard_Int_4
+            "paragon_int_10" -> Res.drawable.ParagonCard_Int_10
+            "paragon_int_6" -> Res.drawable.ParagonCard_Int_6
+            "paragon_int_7" -> Res.drawable.ParagonCard_Int_7
+            "paragon_int_11" -> Res.drawable.ParagonCard_Int_11
+            "paragon_int_9" -> Res.drawable.ParagonCard_Int_9
+            "paragon_dex_1" -> Res.drawable.ParagonCard_Dex_1
+            "paragon_dex_2" -> Res.drawable.ParagonCard_Dex_2
+            "paragon_dex_3" -> Res.drawable.ParagonCard_Dex_3
+            "paragon_dex_4" -> Res.drawable.ParagonCard_Dex_4
+            "paragon_dex_5" -> Res.drawable.ParagonCard_Dex_5
+            "paragon_dex_6" -> Res.drawable.ParagonCard_Dex_6
+            "paragon_dex_7" -> Res.drawable.ParagonCard_Dex_7
+            "paragon_dex_8" -> Res.drawable.ParagonCard_Dex_8
+            "paragon_dex_9" -> Res.drawable.ParagonCard_Dex_9
+            null -> Res.drawable.ParagonCard_Nonepng
             else -> Res.drawable.error_emoji
         }
     }

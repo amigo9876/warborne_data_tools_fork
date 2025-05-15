@@ -3,6 +3,7 @@ package com.elkite.warborn.presentation.screen.main.common
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -80,11 +81,11 @@ fun MainContentWeb() {
                     TabNavigationRailItem(SecondTab)
                 }
                 Column(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxSize()
                         .paint(
                             painterResource(Res.drawable.Enhancement_img_bg_2),
                             contentScale = androidx.compose.ui.layout.ContentScale.FillBounds
-                        ).padding(paddingValues).statusBarsPadding()
+                        ).padding(paddingValues)
                 ) {
                     CurrentTab()
                 }

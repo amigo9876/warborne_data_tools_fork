@@ -1,6 +1,9 @@
 package com.elkite.warborn.presentation.screen.build_loadout.common
 
 import ArmorSmallList
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
@@ -10,6 +13,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.gear.Gear
@@ -22,14 +26,18 @@ import com.elkite.warborn.presentation.screen.build_loadout.BuildScreenModel
 import com.elkite.warborn.presentation.widgets.drifter.DrifterCardScrollable
 import com.elkite.warborn.presentation.widgets.drifter.DrifterSmallList
 import com.elkite.warborn.presentation.widgets.gear.WeaponSmallList
-import com.elkite.warborn.presentation.widgets.loadout.LoadoutCardList
+import com.elkite.warborn.presentation.widgets.loadout.LoadoutCard
 import com.elkite.warborn.presentation.widgets.loadout_from_url.LoadoutFromUrl
 import com.elkite.warborn.presentation.widgets.spell.SpellCardListGrid
+import com.elkite.warborn.presentation.widgets.utils.ClickableText
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedText
 import com.elkite.warborn.presentation.widgets.utils.ScreenScaffoldCommon
 
 @Composable
-fun BuildScreenContent(screenModel: BuildScreenModel, state: BuildScreenModel.BuildScreenState.Success) {
+fun BuildScreenContent(
+    screenModel: BuildScreenModel,
+    state: BuildScreenModel.BuildScreenState.Success
+) {
 
     val gearType = remember { mutableStateOf(GearType.DRIFTER) }
     val gear = remember { mutableStateOf<Gear>(state.drifters.first()) }
@@ -38,8 +46,20 @@ fun BuildScreenContent(screenModel: BuildScreenModel, state: BuildScreenModel.Bu
     ScreenScaffoldCommon(
         modifier = Modifier.fillMaxSize(),
         first = {
-            LoadoutColumn(screenModel, loadoutType, gearType, gear, state)
-            GearStylizedText(modifier = Modifier.padding(16.dp),text = "Last data update: ${state.lastDataUpdate}")
+            Box(Modifier.fillMaxSize()) {
+                LoadoutColumn(screenModel, loadoutType, gearType, gear, state)
+                Column(
+                    Modifier.align(Alignment.BottomStart).padding(16.dp)
+                ) {
+                    Row {
+                        GearStylizedText(text = "Discord : ")
+                        ClickableText("https://discord.gg/H8GJZyc59e")
+                    }
+                    GearStylizedText(
+                        text = "Last data update: ${state.lastDataUpdate}"
+                    )
+                }
+            }
         },
         second = {
             ItemListColumn(gearType, state, gear, screenModel)
@@ -62,35 +82,51 @@ private fun LoadoutColumn(
 
     LoadoutFromUrl(screenModel, loadout)
 
-    LoadoutCardList(
+    LoadoutCard(
         modifier = Modifier.wrapContentSize(),
         loadout = loadout,
+        selectedLoadout = loadoutType.value,
     ) { type ->
         loadoutType.value = type
         when (type) {
             LoadoutType.HEAD -> {
                 gearType.value = GearType.HEAD
-                gear.value = state.head.values.first().first()
+                if (loadout.head == null)
+                    gear.value = state.head.values.first().first()
+                else
+                    gear.value = loadout.head as Spell
             }
 
             LoadoutType.CHEST -> {
                 gearType.value = GearType.CHEST
-                gear.value = state.chest.values.first().first()
+                if (loadout.chest == null)
+                    gear.value = state.chest.values.first().first()
+                else
+                    gear.value = loadout.chest as Spell
             }
 
             LoadoutType.BOOTS -> {
                 gearType.value = GearType.BOOTS
-                gear.value = state.boots.values.first().first()
+                if (loadout.boots == null)
+                    gear.value = state.boots.values.first().first()
+                else
+                    gear.value = loadout.boots as Spell
             }
 
             LoadoutType.WEAPON -> {
                 gearType.value = GearType.WEAPON
-                gear.value = state.weapons.values.first().first()
+                if (loadout.weapon == null)
+                    gear.value = state.weapons.values.first().first()
+                else
+                    gear.value = loadout.weapon as Spell
             }
 
             LoadoutType.DRIFTER -> {
                 gearType.value = GearType.DRIFTER
-                gear.value = state.drifters.first()
+                if (loadout.drifter == null)
+                    gear.value = state.drifters.first()
+                else
+                    gear.value = loadout.drifter as Drifter
             }
 
             LoadoutType.PASSIVE -> {

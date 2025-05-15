@@ -1,6 +1,5 @@
 package com.elkite.warborn.presentation.widgets.loadout
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -11,11 +10,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.CutCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,266 +24,157 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.gear.Loadout
 import com.elkite.warborn.domain.entities.gear.LoadoutType
-import com.elkite.warborn.domain.entities.gear.drifter.Drifter
-import com.elkite.warborn.domain.entities.gear.spell.Spell
 import com.elkite.warborn.presentation.theme.WarborneTheme
-import com.elkite.warborn.presentation.theme.WarborneTheme.borderSkillColor
-import com.elkite.warborn.presentation.widgets.drifter.DrifterIcon
-import com.elkite.warborn.presentation.widgets.gear.ArmorImage
-import com.elkite.warborn.presentation.widgets.spell.SpellIcon
-import com.elkite.warborn.resources.Com_Clothes_Armor
-import com.elkite.warborn.resources.Com_Head_Helmet
-import com.elkite.warborn.resources.Com_Shoes_Boots
-import com.elkite.warborn.resources.Com_Weapon_Sword
-import com.elkite.warborn.resources.Nature_Common_Attack
-import com.elkite.warborn.resources.ParagonPortrait_None
-import com.elkite.warborn.resources.Res
+import com.elkite.warborn.presentation.widgets.utils.GearStylizedTextTitle
 import com.elkite.warborn.util.IconMap
 import org.jetbrains.compose.resources.painterResource
 
 
 @Composable
-fun LoadoutCardList(
+fun LoadoutCard(
     modifier: Modifier = Modifier,
     loadout: Loadout,
+    selectedLoadout: LoadoutType,
     onClick: (LoadoutType) -> Unit,
 ) {
     Column(
-        modifier = modifier.wrapContentSize().padding(16.dp)
-            .verticalScroll(rememberScrollState()),
-    ) {
-        Column(
-            modifier = Modifier
-                .height(416.dp)
-                .background(Color.Black)
-                .clip(RectangleShape) // Clip to the border shape
-                .border(
-                    width = 3.dp,
-                    brush = Brush.linearGradient(
-                        colors = listOf(
-                            WarborneTheme.drifterBorderStartColor,
-                            WarborneTheme.drifterBorderMiddleColor,
-                            WarborneTheme.drifterBorderEndColor
-                        )
-                    ),
-                    shape = RectangleShape
-                )
-                .paint(
-                    painterResource(IconMap.getDrifterFullBodyBg(drifter = loadout.drifter)),
-                    contentScale = ContentScale.None,
-                    alignment = Alignment.BottomCenter,
-                )
-                .paint(
-                    painterResource(IconMap.getDrifterFullBody(drifter = loadout.drifter)),
-                    contentScale = ContentScale.Crop,
-                    alignment = Alignment.BottomCenter,
-                )
-                .padding(16.dp),
-        )
-        {
-            LoadoutDrifterCard(LoadoutType.DRIFTER, loadout.drifter, onClick)
-            Spacer(Modifier.size(16.dp))
-            LoadoutSpellCard(LoadoutType.HEAD, loadout.head, onClick)
-            Spacer(Modifier.size(16.dp))
-            LoadoutSpellCard(LoadoutType.CHEST, loadout.chest, onClick)
-            Spacer(Modifier.size(16.dp))
-            LoadoutSpellCard(LoadoutType.BOOTS, loadout.boots, onClick)
-            Spacer(Modifier.size(16.dp))
-            Row {
-                LoadoutSpellCard(LoadoutType.WEAPON, loadout.weapon, onClick)
-                LoadoutSpellCard(LoadoutType.BASIC_ATTACK, loadout.basicAttack, onClick)
-                LoadoutSpellCard(LoadoutType.COMMON_SKILL, loadout.commonSkill, onClick)
-                LoadoutSpellCard(LoadoutType.PASSIVE, loadout.passive, onClick)
-            }
-        }
-//        Column(modifier = Modifier.weight(1f)) {
-//
-//        }
-    }
-}
-
-@Composable
-fun LoadoutDrifterCard(
-    loadoutType: LoadoutType,
-    drifter: Drifter?,
-    onClick: (LoadoutType) -> Unit,
-) {
-    Row {
-        Box(
-            modifier = Modifier
-                .size(64.dp)
-                .border(
-                    width = 2.dp,
-                    brush = Brush.linearGradient(
-                        colors = listOf(
-                            WarborneTheme.drifterBorderStartColor,
-                            WarborneTheme.drifterBorderMiddleColor,
-                            WarborneTheme.drifterBorderEndColor
-                        )
-                    ),
-                    shape = RectangleShape // You can change this to a different shape if needed
-                )
-                .background(Color.Black)
-                .clickable {
-                    onClick(loadoutType)
-                }) {
-            drifter?.let {
-                DrifterIcon(
-                    modifier = Modifier.size(64.dp),
-                    drifter = it
-                )
-            } ?: Image(
-                painter = painterResource(Res.drawable.ParagonPortrait_None),
-                contentDescription = null,
-                modifier = Modifier.size(64.dp)
-                    .clip(CutCornerShape(16.dp))
+        modifier = modifier.wrapContentSize()
+            .paint(
+                painterResource(IconMap.getDrifterFullBodyBg(drifter = loadout.drifter)),
+                contentScale = ContentScale.None,
+                alignment = Alignment.CenterStart,
+                alpha = 0.3f
             )
-        }
-    }
-}
-
-@Composable
-fun LoadoutSpellCard(
-    loadoutType: LoadoutType,
-    spell: Spell?,
-    onClick: (LoadoutType) -> Unit,
-) {
-    Row {
-        ArmorIcon(loadoutType, spell, onClick)
-        Spacer(Modifier.size(16.dp))
-        SpellIconTransform(loadoutType, onClick, spell)
-    }
-}
-
-
-@Composable
-private fun ArmorIcon(
-    loadoutType: LoadoutType,
-    spell: Spell?,
-    onClick: (LoadoutType) -> Unit
-) {
-    when (loadoutType) {
-        LoadoutType.HEAD,
-        LoadoutType.CHEST,
-        LoadoutType.BOOTS,
-        LoadoutType.WEAPON -> spell?.gearName?.let {
+            .padding(16.dp)
+    ) {
+        Row(modifier = Modifier.wrapContentSize()) {
             Box(
-                modifier = Modifier.size(64.dp).border(
-                    width = 2.dp,
-                    color = borderSkillColor,
-                    shape = CircleShape
-                ).clickable {
-                    onClick(loadoutType)
-                }) {
-                ArmorImage(modifier = Modifier.size(64.dp), spell = spell)
+                modifier = Modifier
+                    .height(470.dp)
+                    .width(344.dp)
+                    .background(Color.Black)
+                    .clip(RectangleShape) // Clip to the border shape
+                    .border(
+                        width = 3.dp,
+                        brush = Brush.linearGradient(
+                            colors = listOf(
+                                WarborneTheme.drifterBorderStartColor,
+                                WarborneTheme.drifterBorderMiddleColor,
+                                WarborneTheme.drifterBorderEndColor
+                            )
+                        ),
+                        shape = RectangleShape
+                    )
+                    .paint(
+                        painter = painterResource(IconMap.getDrifterCard(drifter = loadout.drifter)),
+                        contentScale = ContentScale.Crop,
+                    )
+                    .clickable { onClick(LoadoutType.DRIFTER) }
+                    .padding(16.dp),
+                contentAlignment = Alignment.BottomEnd
+            ) {
+                GearStylizedTextTitle(
+                    text = loadout.drifter?.name ?: "Select drifter"
+                )
             }
-        } ?: EmptyLoadout(loadoutType, onClick)
-
-        else -> {}
-    }
-}
-
-@Composable
-private fun SpellIconTransform(
-    loadoutType: LoadoutType,
-    onClick: (LoadoutType) -> Unit,
-    spell: Spell?
-) {
-
-    val modifier = when (loadoutType) {
-        LoadoutType.PASSIVE -> Modifier
-            .size(64.dp)
-            .clip(CutCornerShape(16.dp))
-            .border(
-                width = 2.dp,
-                color = borderSkillColor,
-                shape = CutCornerShape(16.dp)
+            Spacer(modifier = Modifier.size(16.dp))
+            Column {
+                LoadoutArmorIcon(
+                    loadoutType = LoadoutType.WEAPON,
+                    gearName = loadout.weapon?.gearName,
+                    gearType = loadout.weapon?.associatedGearType,
+                    onClick = onClick
+                )
+                Spacer(modifier = Modifier.size(16.dp))
+                LoadoutArmorIcon(
+                    loadoutType = LoadoutType.HEAD,
+                    gearName = loadout.head?.gearName,
+                    gearType = loadout.head?.associatedGearType,
+                    onClick = onClick
+                )
+                Spacer(modifier = Modifier.size(16.dp))
+                LoadoutArmorIcon(
+                    loadoutType = LoadoutType.CHEST,
+                    gearName = loadout.chest?.gearName,
+                    gearType = loadout.chest?.associatedGearType,
+                    onClick = onClick
+                )
+                Spacer(modifier = Modifier.size(16.dp))
+                LoadoutArmorIcon(
+                    loadoutType = LoadoutType.BOOTS,
+                    gearName = loadout.boots?.gearName,
+                    gearType = loadout.boots?.associatedGearType,
+                    onClick = onClick
+                )
+                Spacer(modifier = Modifier.size(16.dp))
+            }
+        }
+        Spacer(modifier = Modifier.size(16.dp))
+        Row(modifier = Modifier.wrapContentSize()) {
+            LoadoutSpellIcon(
+                isSelected = selectedLoadout == LoadoutType.BASIC_ATTACK,
+                loadoutType = LoadoutType.BASIC_ATTACK,
+                spell = loadout.basicAttack,
+                onClick = { onClick(LoadoutType.BASIC_ATTACK) }
             )
-            .background(Color.Black)
-            .clickable {
-                onClick(loadoutType)
-            }
-
-        else -> Modifier.size(64.dp)
-            .background(Color.Black)
-            .border(
-                width = 2.dp,
-                color = borderSkillColor,
-            ).clickable {
-                onClick(loadoutType)
-            }
-    }
-
-    Box(
-        modifier = modifier
-    ) {
-        spell?.let {
-            SpellIcon(
-                modifier = Modifier.size(64.dp),
-                gearType = spell.associatedGearType,
-                spellType = spell.type,
-                id = spell.gameId
+            Spacer(modifier = Modifier.size(8.dp))
+            LoadoutSpellIcon(
+                isSelected = selectedLoadout == LoadoutType.COMMON_SKILL,
+                loadoutType = LoadoutType.COMMON_SKILL,
+                spell = loadout.commonSkill,
+                onClick = { onClick(LoadoutType.COMMON_SKILL) }
+            )
+            Spacer(modifier = Modifier.size(8.dp))
+            LoadoutSpellIcon(
+                isSelected = selectedLoadout == LoadoutType.WEAPON,
+                loadoutType = LoadoutType.WEAPON,
+                spell = loadout.weapon,
+                onClick = { onClick(LoadoutType.WEAPON) }
+            )
+            Spacer(modifier = Modifier.size(8.dp))
+            LoadoutSpellIcon(
+                isSelected = selectedLoadout == LoadoutType.DRIFTER,
+                loadoutType = LoadoutType.DRIFTER,
+                spell = loadout.drifter?.spell,
+                onClick = { onClick(LoadoutType.DRIFTER) }
+            )
+            Spacer(modifier = Modifier.size(8.dp))
+            LoadoutSpellIcon(
+                isSelected = selectedLoadout == LoadoutType.CHEST,
+                loadoutType = LoadoutType.CHEST,
+                spell = loadout.chest,
+                onClick = { onClick(LoadoutType.CHEST) }
+            )
+            Spacer(modifier = Modifier.size(8.dp))
+            LoadoutSpellIcon(
+                isSelected = selectedLoadout == LoadoutType.BOOTS,
+                loadoutType = LoadoutType.BOOTS,
+                spell = loadout.boots,
+                onClick = { onClick(LoadoutType.BOOTS) }
+            )
+        }
+        Spacer(modifier = Modifier.size(8.dp))
+        Row(modifier = Modifier.wrapContentSize()) {
+            LoadoutSpellIcon(
+                isSelected = selectedLoadout == LoadoutType.HEAD,
+                loadoutType = LoadoutType.PASSIVE,
+                spell = loadout.head,
+                onClick = { onClick(LoadoutType.HEAD) }
+            )
+            Spacer(modifier = Modifier.size(8.dp))
+            LoadoutSpellIcon(
+                isSelected = selectedLoadout == LoadoutType.PASSIVE,
+                loadoutType = LoadoutType.PASSIVE,
+                spell = loadout.passive,
+                onClick = { onClick(LoadoutType.PASSIVE) }
+            )
+            Spacer(modifier = Modifier.size(8.dp))
+            LoadoutSpellIcon(
+                isSelected = selectedLoadout == LoadoutType.DRIFTER,
+                loadoutType = LoadoutType.PASSIVE,
+                spell = loadout.drifter?.passive,
+                onClick = { onClick(LoadoutType.DRIFTER) }
             )
         }
     }
 }
-
-@Composable
-private fun EmptyLoadout(
-    loadoutType: LoadoutType,
-    onClick: (LoadoutType) -> Unit
-) {
-    Box(
-        modifier = Modifier
-            .size(64.dp)
-            .border(
-                width = 2.dp,
-                color = borderSkillColor,
-                shape = when (loadoutType) {
-                    LoadoutType.PASSIVE -> CutCornerShape(16.dp)
-                    LoadoutType.HEAD,
-                    LoadoutType.CHEST,
-                    LoadoutType.BOOTS,
-                    LoadoutType.WEAPON-> CircleShape
-                    else -> RectangleShape
-                }
-            )
-            .clip(when (loadoutType) {
-                LoadoutType.PASSIVE -> CutCornerShape(16.dp)
-                LoadoutType.HEAD,
-                LoadoutType.CHEST,
-                LoadoutType.BOOTS,
-                LoadoutType.WEAPON-> CircleShape
-                else -> RectangleShape
-            })
-            .background(Color.Black)
-            .clickable { onClick(loadoutType) },
-        contentAlignment = Alignment.Center
-    ) {
-        Image(
-            painter = painterResource(
-                when (loadoutType) {
-                    LoadoutType.HEAD -> Res.drawable.Com_Head_Helmet
-                    LoadoutType.CHEST -> Res.drawable.Com_Clothes_Armor
-                    LoadoutType.BOOTS -> Res.drawable.Com_Shoes_Boots
-                    LoadoutType.WEAPON -> Res.drawable.Com_Weapon_Sword
-                    else -> Res.drawable.Nature_Common_Attack
-                }
-            ),
-
-            contentDescription = null,
-            modifier = Modifier.size(48.dp)
-                .let {
-                    when (loadoutType) {
-                        LoadoutType.PASSIVE -> return@let it.clip(CutCornerShape(16.dp))
-                        LoadoutType.HEAD,
-                        LoadoutType.CHEST,
-                        LoadoutType.BOOTS,
-                        LoadoutType.WEAPON -> return@let it.clip(CircleShape)
-                        else -> it
-                    }
-                },
-        )
-    }
-}
-

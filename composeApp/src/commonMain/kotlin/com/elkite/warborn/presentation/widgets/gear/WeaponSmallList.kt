@@ -110,8 +110,9 @@ private fun WeaponSmallListItem(
         text = spell.gearName ?: "",
         composable = {
             ArmorImage(
-                spell = spell,
-                modifier = Modifier.size(64.dp)
+                modifier = Modifier.size(64.dp),
+                gearType = spell.associatedGearType,
+                gearName = spell.gearName
             )
         }
     )

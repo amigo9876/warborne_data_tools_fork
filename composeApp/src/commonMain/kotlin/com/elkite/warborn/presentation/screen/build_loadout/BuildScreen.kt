@@ -2,16 +2,13 @@ package com.elkite.warborn.presentation.screen.build_loadout
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.Navigator
-import cafe.adriel.voyager.navigator.currentOrThrow
 import com.elkite.warborn.presentation.screen.build_loadout.common.BuildScreenContent
+import com.elkite.warborn.presentation.widgets.utils.GearStylizedText
 import io.github.aakira.napier.Napier
 
 class BuildScreen : Screen {
@@ -21,18 +18,15 @@ class BuildScreen : Screen {
     @Composable
     override fun Content() {
         val screenModel = rememberScreenModel { BuildScreenModel() }
-        val navigator = LocalNavigator.currentOrThrow
 
         BuildScreenState(
             screenModel,
-            navigator,
         )
     }
 
     @Composable
     fun BuildScreenState(
         screenModel: BuildScreenModel,
-        navigator: Navigator,
     ) {
         val pageState by screenModel.buildScreenState.collectAsState()
 
@@ -44,10 +38,6 @@ class BuildScreen : Screen {
             }
 
             is BuildScreenModel.BuildScreenState.Success -> {
-//                BuildScreenContent(
-//                    screenModel,
-//                )
-
                 BuildScreenContent(
                     screenModel,
                     pageState as BuildScreenModel.BuildScreenState.Success,
@@ -59,7 +49,7 @@ class BuildScreen : Screen {
                 Napier.e { errorMessage }
                 // Show an error message
                 Column {
-                    Text(errorMessage)
+                    GearStylizedText(text = errorMessage)
                 }
             }
         }

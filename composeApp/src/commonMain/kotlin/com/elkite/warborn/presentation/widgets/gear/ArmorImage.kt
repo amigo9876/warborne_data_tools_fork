@@ -10,7 +10,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.gear.GearStats
 import com.elkite.warborn.domain.entities.gear.GearType
-import com.elkite.warborn.domain.entities.gear.spell.Spell
 import com.elkite.warborn.presentation.theme.WarborneTheme
 import com.elkite.warborn.resources.Com_Clothes_Armor
 import com.elkite.warborn.resources.Com_Head_Helmet
@@ -23,19 +22,19 @@ import org.jetbrains.compose.resources.painterResource
 @Composable
 fun ArmorImage(
     modifier: Modifier = Modifier.size(48.dp),
-    spell: Spell
+    gearType: GearType,
+    gearName: String?,
 ) {
-    spell.gearName?.let {
-
-        if (spell.associatedGearType != GearType.DRIFTER)
+    gearName?.let {
+        if (gearType != GearType.DRIFTER)
             Image(
                 modifier = modifier.clip(
                     shape = CircleShape
                 ),
                 painter = painterResource(
                     IconMap.getArmorIcon(
-                        spell.associatedGearType,
-                        spell.gearName
+                        gearType,
+                        gearName
                     )
                 ),
                 contentDescription = "Gear's Icon",

@@ -11,14 +11,10 @@ class TreeScreen : Screen {
     @Composable
     override fun Content() {
         Column {
+
+
             Text(
-                text = "TO COME : FROST HOLY CURSE \n" +
-                       "APPLY LAST PATCHES UPDATE \n" +
-                        "WINDOW RESIZING\n" +
-                        "BETTER UI\n" +
-                        "CONSUMABLES \n" +
-                        "MODS \n " +
-                        "LINKS",
+                text = "Coming later....",
                 color = Color.LightGray
             )
         }
