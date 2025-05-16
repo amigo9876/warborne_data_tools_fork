@@ -2,6 +2,7 @@ package com.elkite.warborn.presentation.widgets.spell
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -65,11 +66,8 @@ fun SpellCard(
     spell: Spell
 ) {
     GearStylizedCard(
-        modifier = Modifier,
+        modifier = Modifier.clickable { onSpellClick(spell) },
         composable = @Composable { SpellCardContent(spell) },
-        onClick = {
-            onSpellClick(spell)
-        }
     )
 }
 

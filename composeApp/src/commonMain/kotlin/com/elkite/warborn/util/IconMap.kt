@@ -221,6 +221,7 @@ import com.elkite.warborn.resources.EnhancementItem_SHOES3
 import com.elkite.warborn.resources.EnhancementItem_SHOES4
 import com.elkite.warborn.resources.EnhancementItem_SHOES5
 import com.elkite.warborn.resources.EnhancementItem_SHOES6
+import com.elkite.warborn.resources.EnhancementItem_SHOES7
 import com.elkite.warborn.resources.EnhancementItem_SPEAR1
 import com.elkite.warborn.resources.EnhancementItem_SPEAR2
 import com.elkite.warborn.resources.EnhancementItem_SPEAR3
@@ -550,6 +551,7 @@ import com.elkite.warborn.resources.Shoes_Str_7
 import com.elkite.warborn.resources.SpearAttack_2
 import com.elkite.warborn.resources.SpearAttack_3
 import com.elkite.warborn.resources.SpearAttack_4
+import com.elkite.warborn.resources.Spear_Bright
 import com.elkite.warborn.resources.Spear_Common_Skill_1
 import com.elkite.warborn.resources.Spear_Common_Skill_2
 import com.elkite.warborn.resources.Spear_Common_Skill_3
@@ -931,7 +933,7 @@ object IconMap {
             "Evasion Striders" -> Res.drawable.EnhancementItem_SHOES4
             "Rallystep Boots" -> Res.drawable.EnhancementItem_SHOES5
             "Shadeveil Slippers" -> Res.drawable.EnhancementItem_SHOES6
-            "Exodrift Slippers" -> Res.drawable.EnhancementItem_SHOES1
+            "Exodrift Slippers" -> Res.drawable.EnhancementItem_SHOES7
             else -> Res.drawable.error_emoji
         }
     }
@@ -1307,7 +1309,7 @@ object IconMap {
             "Spear_Sweep" -> Res.drawable.Spear_Sweep
             "Spear_DragonBack" -> Res.drawable.Spear_DragonBack
             "Spear_SpiritHunter" -> Res.drawable.Spear_SpiritHunter
-            "Spear_Bright" -> Res.drawable.error_emoji
+            "Spear_Bright" -> Res.drawable.Spear_Bright
             else -> Res.drawable.error_emoji
         }
     }

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -31,7 +32,6 @@ import org.jetbrains.compose.resources.painterResource
 fun GearStylizedCard(
     modifier: Modifier = Modifier,
     composable: @Composable () -> Unit,
-    onClick: () -> Unit,
     backgroundAlpha: Float = 0.1f
 ) {
     Card(
@@ -39,20 +39,18 @@ fun GearStylizedCard(
             .border(
                 1.dp,
                 color = WarborneTheme.borderSkillColor,
-            )
-            .clickable {
-                onClick()
-            },
+            ),
     ) {
         Box(
-            modifier = modifier
+            modifier = Modifier.wrapContentHeight()
                 .background(color = WarborneTheme.textBackgroundColor) // Background color
                 .paint(
                     painter = painterResource(Res.drawable.skin_image_tabBg),
                     contentScale = ContentScale.FillBounds, // Ensures the vector scales proportionally to fill the area
                     alignment = Alignment.Center,
                     alpha = backgroundAlpha
-                )
+                ),
+            contentAlignment = Alignment.Center,
         ) {
             composable()
         }
@@ -63,11 +61,11 @@ fun GearStylizedCard(
 fun GearStylizedCardRow(
     modifier: Modifier = Modifier.height(64.dp),
     composable: @Composable () -> Unit,
-    text: String,
+    text: String? = null,
     onClick: () -> Unit,
 ) {
     GearStylizedCard(
-        modifier = modifier,
+        modifier = modifier.clickable { onClick() },
         composable = {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -75,16 +73,17 @@ fun GearStylizedCardRow(
 
             ) {
                 composable()
-                Spacer(Modifier.weight(1f))
-                GearStylizedTextTitle(
-                    text = text,
-                    style = MaterialTheme.typography.body1
-                )
-                Spacer(Modifier.weight(1f))
+                text?.let {
+                    Spacer(Modifier.weight(1f))
+                    GearStylizedTextTitle(
+                        text = text,
+                        style = MaterialTheme.typography.body1
+                    )
+                    Spacer(Modifier.weight(1f))
+                }
             }
         },
-        onClick = onClick,
-        backgroundAlpha = 0.5f
+        backgroundAlpha = 0.1f
     )
 }
 

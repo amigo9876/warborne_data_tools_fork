@@ -33,11 +33,14 @@ class BuildScreenModel : ScreenModel {
     fun updatePassive(gearType: GearType) {
        _loadout.value = when (val state = _screenState.value) {
             is BuildScreenState.Success -> {
+                if (_loadout.value.weapon?.associatedGearType != gearType)
                 _loadout.value.copy(
                     passive = state.weapons[gearType]?.first { it.type == SpellType.PASSIVE },
                     basicAttack = state.weapons[gearType]?.first { it.type == SpellType.BASIC_ATTACK },
-                    commonSkill = state.weapons[gearType]?.first { it.type == SpellType.COMMON_SKILL }
-                )
+                    commonSkill = state.weapons[gearType]?.first { it.type == SpellType.COMMON_SKILL },
+                    weapon = state.weapons[gearType]?.first { it.type == SpellType.SKILL },
+                ) else
+                    _loadout.value.copy(passive = state.weapons[gearType]?.first { it.type == SpellType.PASSIVE },)
             }
 
             else -> _loadout.value
@@ -49,7 +52,7 @@ class BuildScreenModel : ScreenModel {
             LoadoutType.HEAD -> _loadout.value.copy(head = newSpell)
             LoadoutType.CHEST -> _loadout.value.copy(chest = newSpell)
             LoadoutType.BOOTS -> _loadout.value.copy(boots = newSpell)
-            LoadoutType.WEAPON -> _loadout.value.copy(weapon = newSpell,)
+            LoadoutType.WEAPON -> _loadout.value.copy(weapon = newSpell)
             LoadoutType.PASSIVE -> _loadout.value.copy(passive = newSpell)
             LoadoutType.COMMON_SKILL -> _loadout.value.copy(commonSkill = newSpell)
             LoadoutType.BASIC_ATTACK -> _loadout.value.copy(basicAttack = newSpell)

@@ -1,17 +1,19 @@
+package com.elkite.warborn.presentation.widgets.gear
 
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material.Card
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonColors
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -19,101 +21,110 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.gear.GearStats
 import com.elkite.warborn.domain.entities.gear.GearType
+import com.elkite.warborn.domain.entities.gear.LoadoutType
 import com.elkite.warborn.domain.entities.gear.spell.Spell
 import com.elkite.warborn.presentation.theme.WarborneTheme
-import com.elkite.warborn.presentation.widgets.gear.ArmorImage
-import com.elkite.warborn.presentation.widgets.utils.GearStylizedCardRow
+import com.elkite.warborn.presentation.widgets.utils.GearStylizedCard
+import com.elkite.warborn.presentation.widgets.utils.GearStylizedText
+import com.elkite.warborn.presentation.widgets.utils.GearStylizedTextTitle
 
 @Composable
 fun ArmorSmallList(
     modifier: Modifier = Modifier,
-    spells: HashMap<GearStats, List<Spell>>,
-    gearType: GearType,
-    columnCount: Int = 1,
+    loadoutType: LoadoutType,
+    spellsHead: HashMap<GearStats, List<Spell>>,
+    spellsChest: HashMap<GearStats, List<Spell>>,
+    spellsBoots: HashMap<GearStats, List<Spell>>,
     onSpellClick: (Spell) -> Unit,
 ) {
-    val selectedGearStats = remember { mutableStateOf(GearStats.STR) }
+    val subcategoryOptions = listOf(
+        GearType.HEAD,
+        GearType.CHEST,
+        GearType.BOOTS
+    )
+    val selectedIndex = remember { mutableStateOf(0) }
 
-    Row(
-        modifier = modifier.fillMaxSize().padding(16.dp)
-    ) {
-        LazyVerticalGrid(
-            modifier = Modifier.weight(1f),
-            columns = GridCells.Fixed(columnCount),
-            verticalArrangement = Arrangement.spacedBy(4.dp),
-            horizontalArrangement = Arrangement.spacedBy(4.dp),
-        ) {
-            items(spells.keys.toList()) { gearStats ->
-                ArmorCategorySmallListItem(
-                    gearStats = gearStats,
-                    gearType = gearType,
-                    onCategoryClick = {
-                        selectedGearStats.value = gearStats
-                    },
-                )
-            }
-        }
-        Spacer(Modifier.size(8.dp))
-        LazyVerticalGrid(
-            modifier = Modifier.weight(1f),
-            columns = GridCells.Fixed(columnCount),
-            verticalArrangement = Arrangement.spacedBy(4.dp),
-            horizontalArrangement = Arrangement.spacedBy(4.dp),
-        ) {
-            val filteredSpells = spells[selectedGearStats.value]
-
-            items(items = filteredSpells ?: listOf()) { spell ->
-                ArmorSmallListItem(
-                    spell = spell,
-                    onSpellClick = onSpellClick,
-                )
-            }
+    val currentSpells = derivedStateOf {
+        when (subcategoryOptions[selectedIndex.value]) {
+            GearType.HEAD -> spellsHead
+            GearType.CHEST -> spellsChest
+            GearType.BOOTS -> spellsBoots
+            else -> emptyMap()
         }
     }
-}
 
-@Composable
-private fun ArmorCategorySmallListItem(
-    gearStats: GearStats,
-    gearType: GearType,
-    onCategoryClick: (GearStats) -> Unit,
-) {
-    Card(
-        modifier = Modifier.size(64.dp).border(
-            width = 1.dp,
-            color = WarborneTheme.borderSkillColor,
-            shape = RectangleShape,
-        )
-            .clickable {
-                onCategoryClick(gearStats)
-            },
-        backgroundColor = WarborneTheme.textBackgroundColor,
-        content = {
-            ArmorImage(
-                gearStats = gearStats,
-                gearType = gearType,
-                modifier = Modifier.size(64.dp)
-            )
+    LaunchedEffect(loadoutType) {
+        selectedIndex.value = when (loadoutType) {
+            LoadoutType.HEAD -> 0
+            LoadoutType.CHEST -> 1
+            LoadoutType.BOOTS -> 2
+            else -> 0
         }
-    )
-}
+    }
 
-@Composable
-private fun ArmorSmallListItem(
-    spell: Spell,
-    onSpellClick: (Spell) -> Unit,
-) {
-    GearStylizedCardRow(
-        onClick = {
-            onSpellClick(spell)
-        },
-        text = spell.gearName ?: "",
-        composable = {
-            ArmorImage(
-                gearType = spell.associatedGearType,
-                gearName = spell.gearName,
-                modifier = Modifier.size(64.dp)
-            )
+
+    Column(modifier = modifier) {
+        SingleChoiceSegmentedButtonRow(
+            modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp),
+        ) {
+            subcategoryOptions.forEachIndexed { index, label ->
+                SegmentedButton(
+                    onClick = { selectedIndex.value = index },
+                    selected = index == selectedIndex.value,
+                    label = { GearStylizedText(text = label.name) },
+                    shape = RectangleShape,
+                    colors = SegmentedButtonColors(
+                        activeBorderColor = WarborneTheme.textDescriptionColor,
+                        activeContainerColor = WarborneTheme.textBackgroundColor,
+                        activeContentColor = WarborneTheme.textDescriptionColor,
+                        inactiveBorderColor = WarborneTheme.borderSkillColor,
+                        inactiveContainerColor = WarborneTheme.textBackgroundColor,
+                        inactiveContentColor = WarborneTheme.textDescriptionColor,
+                        disabledActiveContainerColor = WarborneTheme.textBackgroundColor,
+                        disabledActiveContentColor = WarborneTheme.textBackgroundColor,
+                        disabledActiveBorderColor = WarborneTheme.textBackgroundColor,
+                        disabledInactiveContainerColor = WarborneTheme.textBackgroundColor,
+                        disabledInactiveContentColor = WarborneTheme.textBackgroundColor,
+                        disabledInactiveBorderColor = WarborneTheme.textBackgroundColor,
+                    )
+                )
+            }
         }
-    )
+
+        GearStylizedCard(
+            modifier = Modifier.wrapContentHeight(),
+            composable = {
+                Column(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .fillMaxWidth()
+                ) {
+                    currentSpells.value.forEach { (title, spells) ->
+                        Column(
+                            modifier = Modifier.wrapContentHeight().fillMaxWidth().padding(16.dp),
+                            verticalArrangement = Arrangement.Center,
+                        ) {
+                            GearStylizedTextTitle(
+                                text = title.naming,
+                                modifier = Modifier.padding(bottom = 8.dp)
+                            )
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                spells.forEach { spell ->
+                                    ArmorImage(
+                                        gearType = spell.associatedGearType,
+                                        gearName = spell.gearName,
+                                        modifier = Modifier
+                                            .size(64.dp)
+                                            .clickable { onSpellClick(spell) }
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+            })
+    }
 }

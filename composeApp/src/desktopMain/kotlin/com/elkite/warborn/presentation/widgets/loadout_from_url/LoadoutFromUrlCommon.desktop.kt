@@ -7,8 +7,7 @@ import com.elkite.warborn.presentation.screen.build_loadout.BuildScreenModel
 
 @Composable
 actual fun LoadoutFromUrl(
-    screenModel: BuildScreenModel,
     loadout: Loadout,
+    onLoadoutUrlUpdate: (String) -> Unit
 ) {
-    screenModel.updateLoadoutFromUrl("")
 }

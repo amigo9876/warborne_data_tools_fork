@@ -13,12 +13,14 @@ import org.jetbrains.compose.resources.painterResource
 @Composable
 fun WeaponImage(
     modifier: Modifier = Modifier.size(48.dp),
-    gearType: GearType
+    gearType: GearType,
+    isSelected: Boolean = false,
 ) {
         Icon(
             painter = painterResource(IconMap.getWeaponIcon(gearType)),
             contentDescription = "$gearType icon",
             modifier = modifier,
-            tint = WarborneTheme.textDescriptionColor
+            tint = if (isSelected) WarborneTheme.drifterBorderStartColor
+                else WarborneTheme.textDescriptionColor
         )
 }

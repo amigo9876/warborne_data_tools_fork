@@ -6,15 +6,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.elkite.warborn.domain.entities.gear.Loadout
-import com.elkite.warborn.presentation.screen.build_loadout.BuildScreenModel
 import kotlinx.browser.window
 
 @Composable
 actual fun LoadoutFromUrl(
-    screenModel: BuildScreenModel,
     loadout: Loadout,
+    onLoadoutUrlUpdate: (String) -> Unit,
 ) {
-    val queryParams = remember(loadout) { screenModel.loadout.value.toQueryParams() }
+//    val queryParams = remember(loadout) { screenModel.loadout.value.toQueryParams() }
+    val queryParams = remember(loadout) { loadout.toQueryParams() }
     var lastQueryParamsMap by remember { mutableStateOf<Map<String, String>>(emptyMap()) }
 
     if (queryParams != lastQueryParamsMap.entries.joinToString("&") { "${it.key}=${it.value}" }) {
@@ -26,5 +26,6 @@ actual fun LoadoutFromUrl(
         window.history.replaceState(null, "", "?$queryParams")
     }
 
-    screenModel.updateLoadoutFromUrl(window.location.href)
+    onLoadoutUrlUpdate(window.location.href)
+//    screenModel.updateLoadoutFromUrl(window.location.href)
 }

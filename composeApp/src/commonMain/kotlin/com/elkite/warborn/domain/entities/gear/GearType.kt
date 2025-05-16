@@ -3,6 +3,13 @@ package com.elkite.warborn.domain.entities.gear
 import kotlinx.serialization.Serializable
 
 @Serializable
+enum class GearMainCategory {
+    DRIFTER,
+    WEAPON,
+    ARMOR,
+}
+
+@Serializable
 enum class GearType {
     HEAD,
     CHEST,
