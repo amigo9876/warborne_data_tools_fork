@@ -26,6 +26,7 @@ import com.elkite.warborn.domain.entities.gear.Loadout
 import com.elkite.warborn.domain.entities.gear.LoadoutType
 import com.elkite.warborn.domain.entities.gear.spell.Spell
 import com.elkite.warborn.domain.entities.gear.spell.SpellType
+import com.elkite.warborn.presentation.widgets.loadout.LoadoutArmorIcon
 import com.elkite.warborn.presentation.widgets.loadout.LoadoutSpellIcon
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedCard
 
@@ -101,14 +102,28 @@ fun WeaponSmallList(
                     ).forEach { (spellType, loadoutType) ->
                         Row(modifier = Modifier.padding(16.dp)) {
                             filteredSpells?.filter { it.type == spellType }?.forEach { spell ->
-                                LoadoutSpellIcon(
-                                    loadoutType = loadoutType,
-                                    spell = spell,
-                                    onClick = {
-                                        onCategoryClick(spell.associatedGearType)
-                                        onSpellClick(spell) },
-                                    isSelected = selectedGear.gameId == spell.gameId
-                                )
+                                Column {
+                                    LoadoutSpellIcon(
+                                        loadoutType = loadoutType,
+                                        spell = spell,
+                                        onClick = {
+                                            onCategoryClick(spell.associatedGearType)
+                                            onSpellClick(spell)
+                                        },
+                                        isSelected = selectedGear.gameId == spell.gameId
+                                    )
+                                    Spacer(modifier = Modifier.size(8.dp))
+                                    if (spellType == SpellType.SKILL)
+                                        LoadoutArmorIcon(
+                                            loadoutType = LoadoutType.WEAPON,
+                                            gearName = spell.gearName,
+                                            gearType = spell.associatedGearType,
+                                            onClick = {
+                                                onCategoryClick(spell.associatedGearType)
+                                                onSpellClick(spell)
+                                            }
+                                        )
+                                }
                                 Spacer(modifier = Modifier.size(4.dp))
                             }
                         }
