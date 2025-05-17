@@ -1,4 +1,4 @@
-package com.elkite.warborn.presentation.screen.build_loadout
+package com.elkite.warborn.presentation.screen.main
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import com.elkite.warborn.data.repository.DataRepository
@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class BuildScreenModel : ScreenModel {
+class MainScreenModel : ScreenModel {
 
     private val _screenState = MutableStateFlow<BuildScreenState>(BuildScreenState.Loading)
     val buildScreenState: StateFlow<BuildScreenState> = _screenState

@@ -39,15 +39,8 @@ fun LoadoutCard(
 ) {
     Column(
         modifier = modifier.wrapContentSize()
-            .paint(
-                painterResource(IconMap.getDrifterFullBodyBg(drifter = loadout.drifter)),
-                contentScale = ContentScale.None,
-                alignment = Alignment.CenterStart,
-                alpha = 0.3f
-            )
             .padding(16.dp)
     ) {
-        Row(modifier = Modifier.wrapContentSize()) {
             Box(
                 modifier = Modifier
                     .height(470.dp)
@@ -71,86 +64,91 @@ fun LoadoutCard(
                     )
                     .clickable { onClick(LoadoutType.DRIFTER) }
                     .padding(16.dp),
-                contentAlignment = Alignment.BottomEnd
             ) {
+                Column(modifier = Modifier.align(Alignment.TopEnd)) {
+                    LoadoutArmorIcon(
+                        loadoutType = LoadoutType.WEAPON,
+                        gearName = loadout.weapon?.gearName,
+                        gearType = loadout.weapon?.associatedGearType,
+                        onClick = onClick
+                    )
+                    Spacer(modifier = Modifier.size(16.dp))
+                    LoadoutArmorIcon(
+                        loadoutType = LoadoutType.HEAD,
+                        gearName = loadout.head?.gearName,
+                        gearType = loadout.head?.associatedGearType,
+                        onClick = onClick
+                    )
+                    Spacer(modifier = Modifier.size(16.dp))
+                    LoadoutArmorIcon(
+                        loadoutType = LoadoutType.CHEST,
+                        gearName = loadout.chest?.gearName,
+                        gearType = loadout.chest?.associatedGearType,
+                        onClick = onClick
+                    )
+                    Spacer(modifier = Modifier.size(16.dp))
+                    LoadoutArmorIcon(
+                        loadoutType = LoadoutType.BOOTS,
+                        gearName = loadout.boots?.gearName,
+                        gearType = loadout.boots?.associatedGearType,
+                        onClick = onClick
+                    )
+                    Spacer(modifier = Modifier.size(16.dp))
+                }
                 GearStylizedTextTitle(
+                    modifier = Modifier.align(Alignment.BottomEnd),
                     text = loadout.drifter?.name ?: "Select drifter"
                 )
+
             }
-            Spacer(modifier = Modifier.size(16.dp))
-            Column {
-                LoadoutArmorIcon(
-                    loadoutType = LoadoutType.WEAPON,
-                    gearName = loadout.weapon?.gearName,
-                    gearType = loadout.weapon?.associatedGearType,
-                    onClick = onClick
-                )
-                Spacer(modifier = Modifier.size(16.dp))
-                LoadoutArmorIcon(
-                    loadoutType = LoadoutType.HEAD,
-                    gearName = loadout.head?.gearName,
-                    gearType = loadout.head?.associatedGearType,
-                    onClick = onClick
-                )
-                Spacer(modifier = Modifier.size(16.dp))
-                LoadoutArmorIcon(
-                    loadoutType = LoadoutType.CHEST,
-                    gearName = loadout.chest?.gearName,
-                    gearType = loadout.chest?.associatedGearType,
-                    onClick = onClick
-                )
-                Spacer(modifier = Modifier.size(16.dp))
-                LoadoutArmorIcon(
-                    loadoutType = LoadoutType.BOOTS,
-                    gearName = loadout.boots?.gearName,
-                    gearType = loadout.boots?.associatedGearType,
-                    onClick = onClick
-                )
-                Spacer(modifier = Modifier.size(16.dp))
-            }
-        }
         Spacer(modifier = Modifier.size(16.dp))
         Row(modifier = Modifier.wrapContentSize()) {
             LoadoutSpellIcon(
                 isSelected = selectedLoadout == LoadoutType.BASIC_ATTACK,
                 loadoutType = LoadoutType.BASIC_ATTACK,
                 spell = loadout.basicAttack,
-                onClick = { onClick(LoadoutType.BASIC_ATTACK) }
+                onClick = { onClick(LoadoutType.BASIC_ATTACK) },
+                modifier = Modifier.size(48.dp)
             )
             Spacer(modifier = Modifier.size(8.dp))
             LoadoutSpellIcon(
                 isSelected = selectedLoadout == LoadoutType.COMMON_SKILL,
                 loadoutType = LoadoutType.COMMON_SKILL,
                 spell = loadout.commonSkill,
-                onClick = { onClick(LoadoutType.COMMON_SKILL) }
+                onClick = { onClick(LoadoutType.COMMON_SKILL) },
+                modifier = Modifier.size(48.dp)
             )
             Spacer(modifier = Modifier.size(8.dp))
             LoadoutSpellIcon(
                 isSelected = selectedLoadout == LoadoutType.WEAPON,
                 loadoutType = LoadoutType.WEAPON,
                 spell = loadout.weapon,
-                onClick = { onClick(LoadoutType.WEAPON) }
+                onClick = { onClick(LoadoutType.WEAPON) },
+                modifier = Modifier.size(48.dp)
             )
             Spacer(modifier = Modifier.size(8.dp))
             LoadoutSpellIcon(
                 isSelected = selectedLoadout == LoadoutType.DRIFTER,
                 loadoutType = LoadoutType.DRIFTER,
                 spell = loadout.drifter?.spell,
-                onClick = { onClick(LoadoutType.DRIFTER) }
+                onClick = { onClick(LoadoutType.DRIFTER) },
+                modifier = Modifier.size(48.dp)
             )
             Spacer(modifier = Modifier.size(8.dp))
             LoadoutSpellIcon(
                 isSelected = selectedLoadout == LoadoutType.CHEST,
                 loadoutType = LoadoutType.CHEST,
                 spell = loadout.chest,
-                onClick = { onClick(LoadoutType.CHEST) }
+                onClick = { onClick(LoadoutType.CHEST) },
+                modifier = Modifier.size(48.dp)
             )
             Spacer(modifier = Modifier.size(8.dp))
             LoadoutSpellIcon(
                 isSelected = selectedLoadout == LoadoutType.BOOTS,
                 loadoutType = LoadoutType.BOOTS,
                 spell = loadout.boots,
-                onClick = { onClick(LoadoutType.BOOTS) }
+                onClick = { onClick(LoadoutType.BOOTS) },
+                modifier = Modifier.size(48.dp)
             )
         }
         Spacer(modifier = Modifier.size(8.dp))
@@ -159,21 +157,24 @@ fun LoadoutCard(
                 isSelected = selectedLoadout == LoadoutType.HEAD,
                 loadoutType = LoadoutType.PASSIVE,
                 spell = loadout.head,
-                onClick = { onClick(LoadoutType.HEAD) }
+                onClick = { onClick(LoadoutType.HEAD) },
+                modifier = Modifier.size(48.dp)
             )
             Spacer(modifier = Modifier.size(8.dp))
             LoadoutSpellIcon(
                 isSelected = selectedLoadout == LoadoutType.PASSIVE,
                 loadoutType = LoadoutType.PASSIVE,
                 spell = loadout.passive,
-                onClick = { onClick(LoadoutType.PASSIVE) }
+                onClick = { onClick(LoadoutType.PASSIVE) },
+                modifier = Modifier.size(48.dp)
             )
             Spacer(modifier = Modifier.size(8.dp))
             LoadoutSpellIcon(
                 isSelected = selectedLoadout == LoadoutType.DRIFTER,
                 loadoutType = LoadoutType.PASSIVE,
                 spell = loadout.drifter?.passive,
-                onClick = { onClick(LoadoutType.DRIFTER) }
+                onClick = { onClick(LoadoutType.DRIFTER) },
+                modifier = Modifier.size(48.dp)
             )
         }
     }

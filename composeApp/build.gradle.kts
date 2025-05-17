@@ -53,6 +53,9 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.ktor.client.okhttp)
+            implementation(libs.androidx.adaptive.layout)
+            implementation(libs.androidx.adaptive)
+            implementation(libs.androidx.adaptive.navigation)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -62,6 +65,7 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(compose.material3)
+            implementation(libs.material3)
 
             implementation(libs.material.icons.core)
 
@@ -87,9 +91,13 @@ kotlin {
             implementation(libs.napier)
             implementation(libs.kotlinx.datetime)
         }
+
         wasmJsMain.dependencies {
             implementation(libs.ktor.client.js)
             implementation(libs.kotlinx.browser)
+            implementation(libs.wasm.adaptive)
+            implementation(libs.wasm.adaptive.layout)
+            implementation(libs.wasm.adaptive.navigation)
         }
     }
 }

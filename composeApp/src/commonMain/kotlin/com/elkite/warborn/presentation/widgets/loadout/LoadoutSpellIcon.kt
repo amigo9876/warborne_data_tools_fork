@@ -25,10 +25,10 @@ fun LoadoutSpellIcon(
     onClick: () -> Unit,
     spell: Spell?,
     isSelected: Boolean = false,
+    modifier: Modifier = Modifier.size(64.dp),
 ) {
-    val modifier = when (loadoutType) {
-        LoadoutType.PASSIVE -> Modifier
-            .size(64.dp)
+    val transformModifier = when (loadoutType) {
+        LoadoutType.PASSIVE -> modifier
             .clip(CutCornerShape(16.dp))
             .let {
                 if (isSelected) {
@@ -56,7 +56,7 @@ fun LoadoutSpellIcon(
                 onClick()
             }
 
-        else -> Modifier.size(64.dp)
+        else -> modifier
             .background(Color.Black)
             .let {
                 if (isSelected) {
@@ -85,13 +85,13 @@ fun LoadoutSpellIcon(
 
     spell?.let {
         SpellIcon(
-            modifier = modifier,
+            modifier = transformModifier,
             gearType = spell.associatedGearType,
             spellType = spell.type,
             id = spell.gameId
         )
     } ?: Box(
-        modifier = modifier
+        modifier = transformModifier
             .clickable {
                 onClick()
             }

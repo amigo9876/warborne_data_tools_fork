@@ -13,7 +13,6 @@ actual fun LoadoutFromUrl(
     loadout: Loadout,
     onLoadoutUrlUpdate: (String) -> Unit,
 ) {
-//    val queryParams = remember(loadout) { screenModel.loadout.value.toQueryParams() }
     val queryParams = remember(loadout) { loadout.toQueryParams() }
     var lastQueryParamsMap by remember { mutableStateOf<Map<String, String>>(emptyMap()) }
 
@@ -27,5 +26,4 @@ actual fun LoadoutFromUrl(
     }
 
     onLoadoutUrlUpdate(window.location.href)
-//    screenModel.updateLoadoutFromUrl(window.location.href)
 }

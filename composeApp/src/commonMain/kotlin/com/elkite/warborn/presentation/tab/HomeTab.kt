@@ -9,7 +9,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import cafe.adriel.voyager.transitions.SlideTransition
-import com.elkite.warborn.presentation.screen.build_loadout.BuildScreen
+import com.elkite.warborn.presentation.screen.main.MainScreen
 
 
 object HomeTab : Tab {
@@ -30,7 +30,7 @@ object HomeTab : Tab {
 
     @Composable
     override fun Content() {
-        Navigator(BuildScreen()) {
+        Navigator(MainScreen) {
             SlideTransition(it)
         }
     }

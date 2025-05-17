@@ -11,10 +11,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
-import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -36,25 +34,17 @@ import com.elkite.warborn.presentation.widgets.utils.MultiPatternHighlightedText
 
 
 @Composable
-fun SpellCardListGrid(
+fun SpellCardList(
     modifier: Modifier = Modifier,
     spells: List<Spell>,
     onSpellClick: (Spell) -> Unit,
 ) {
-
-    LazyVerticalStaggeredGrid(
-        columns = StaggeredGridCells.Fixed(1),
-        verticalItemSpacing = 4.dp,
-        horizontalArrangement = Arrangement.spacedBy(4.dp),
-        modifier = modifier.background(color = Color.Transparent).padding(horizontal = 16.dp),
+    Column(
+        modifier = modifier.width(600.dp).background(color = Color.Transparent).padding(horizontal = 16.dp),
     ) {
-        item {
+        spells.forEach { spell ->
             Spacer(Modifier.size(12.dp))
-        }
-        items(spells) { spell ->
             SpellCard(onSpellClick, spell)
-        }
-        item {
             Spacer(Modifier.size(12.dp))
         }
     }
