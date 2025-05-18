@@ -821,9 +821,9 @@ object IconMap {
             GearType.BOW -> Res.drawable.Com_Weapon_Bow
             GearType.NATURE -> Res.drawable.Com_Weapon_Nature
             GearType.DAGGER -> Res.drawable.Com_Weapon_Dagger
-            GearType.SPEAR -> Res.drawable.Com_Weapon_Spear
+            GearType.SPEAR -> Res.drawable.Com_Weapon_Frost
             GearType.FIRE -> Res.drawable.Com_Weapon_Fire
-            GearType.FROST -> Res.drawable.Com_Weapon_Frost
+            GearType.FROST -> Res.drawable.Com_Weapon_Spear
             GearType.CURSE -> Res.drawable.Com_Weapon_Curse
             GearType.HOLY -> Res.drawable.Com_Weapon_Staff
             else -> Res.drawable.error_emoji

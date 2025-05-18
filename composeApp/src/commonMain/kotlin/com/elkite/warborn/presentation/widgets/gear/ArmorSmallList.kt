@@ -1,6 +1,7 @@
 package com.elkite.warborn.presentation.widgets.gear
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonColors
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
@@ -52,6 +54,7 @@ fun ArmorSmallList(
             else -> emptyMap()
         }
     }
+    val scrollState = rememberScrollState()
 
     LaunchedEffect(loadoutType) {
         selectedIndex.value = when (loadoutType) {
@@ -109,7 +112,7 @@ fun ArmorSmallList(
                                 modifier = Modifier.padding(bottom = 8.dp)
                             )
                             Row(
-                                modifier = Modifier.fillMaxWidth(),
+                                modifier = Modifier.fillMaxWidth().horizontalScroll(scrollState),
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
                                 spells.forEach { spell ->

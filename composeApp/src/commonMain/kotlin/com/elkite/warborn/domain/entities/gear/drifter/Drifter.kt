@@ -9,7 +9,11 @@ data class Drifter(
     override val name: String,
     override val gearStats: GearStats,
     val spell: Spell,
-    val passive: Spell
+    val passive: Spell,
+    val strBonus: String,
+    val dexBonus: String,
+    val intBonus: String,
+
 ) : Gear(
     gameId, name, gearStats
 )

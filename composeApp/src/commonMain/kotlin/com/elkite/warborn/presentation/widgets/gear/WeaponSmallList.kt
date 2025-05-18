@@ -1,6 +1,7 @@
 package com.elkite.warborn.presentation.widgets.gear
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -58,6 +60,7 @@ fun WeaponSmallList(
             spells[selectedGearType.value]
         }
     }
+    val scrollState = rememberScrollState()
 
     Column(
         modifier = modifier,
@@ -100,7 +103,7 @@ fun WeaponSmallList(
                         SpellType.COMMON_SKILL to LoadoutType.COMMON_SKILL,
                         SpellType.SKILL to LoadoutType.WEAPON
                     ).forEach { (spellType, loadoutType) ->
-                        Row(modifier = Modifier.padding(16.dp)) {
+                        Row(modifier = Modifier.padding(16.dp).horizontalScroll(scrollState)) {
                             filteredSpells?.filter { it.type == spellType }?.forEach { spell ->
                                 Column {
                                     LoadoutSpellIcon(

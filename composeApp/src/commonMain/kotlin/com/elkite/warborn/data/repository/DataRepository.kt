@@ -176,6 +176,9 @@ object DataRepository {
                 val obj = drifterJson.jsonObject
                 val gameId = obj["gameId"]?.jsonPrimitive?.content ?: continue
                 val name = obj["name"]?.jsonPrimitive?.content ?: continue
+                val strBonus = obj["strBonus"]?.jsonPrimitive?.content ?: continue
+                val dexBonus = obj["dexBonus"]?.jsonPrimitive?.content ?: continue
+                val intBonus = obj["intBonus"]?.jsonPrimitive?.content ?: continue
                 val spells = obj["spells"]?.jsonArray ?: continue
                 if (spells.size < 2) continue
 
@@ -191,7 +194,7 @@ object DataRepository {
                 val activeSpell = parseSpell(spells[0].jsonObject, GearType.DRIFTER, gearStats) ?: continue
                 val passiveSpell = parseSpell(spells[1].jsonObject, GearType.DRIFTER, gearStats) ?: continue
 
-                drifters.add(Drifter(gameId, name, gearStats, activeSpell, passiveSpell))
+                drifters.add(Drifter(gameId, name, gearStats, activeSpell, passiveSpell, strBonus, dexBonus, intBonus))
             } catch (e: Exception) {
                 println("Error parsing drifter: ${e.message}")
             }
