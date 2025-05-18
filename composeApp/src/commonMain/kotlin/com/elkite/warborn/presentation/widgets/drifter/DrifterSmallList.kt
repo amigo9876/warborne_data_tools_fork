@@ -47,7 +47,7 @@ private fun DrifterSmallListItem(
         composable = {
             DrifterIcon(
                 modifier = Modifier.size(64.dp),
-                drifter = drifter,
+                drifterId = drifter.gameId,
             )
         }
     )

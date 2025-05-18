@@ -51,7 +51,7 @@ fun LoadoutDrifterIcon(
             drifter?.let {
                 DrifterIcon(
                     modifier = Modifier.size(64.dp),
-                    drifter = it
+                    drifterId = it.gameId
                 )
             } ?: Image(
                 painter = painterResource(Res.drawable.ParagonPortrait_None),

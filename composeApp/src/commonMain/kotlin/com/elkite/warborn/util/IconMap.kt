@@ -588,8 +588,8 @@ import org.jetbrains.compose.resources.DrawableResource
 
 object IconMap {
 
-    fun getDrifterIcon(drifter: Drifter?): DrawableResource {
-        return when (drifter?.gameId) {
+    fun getDrifterIcon(gameId: String?): DrawableResource {
+        return when (gameId) {
             "paragon_str_1" -> Res.drawable.ParagonPortrait_Str_1
             "paragon_str_2" -> Res.drawable.ParagonPortrait_Str_2
             "paragon_str_3" -> Res.drawable.ParagonPortrait_Str_3

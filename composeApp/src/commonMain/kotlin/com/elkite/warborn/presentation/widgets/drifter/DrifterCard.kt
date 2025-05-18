@@ -18,14 +18,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.gear.drifter.Drifter
 import com.elkite.warborn.presentation.theme.WarborneTheme
 import com.elkite.warborn.presentation.widgets.spell.SpellCardContent
+import com.elkite.warborn.presentation.widgets.utils.AttributeList
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedCard
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedText
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedTextTitle
+import com.elkite.warborn.presentation.widgets.utils.HighlightedSupportBonus
 
 
 @Composable
@@ -34,12 +35,9 @@ fun DrifterCardScrollable(
     drifter: Drifter,
     onDrifterClick: (Drifter) -> Unit,
 ) {
-//    val scrollState = rememberScrollState()
-
     Column(
         modifier = Modifier
             .width(600.dp)
-//            .verticalScroll(scrollState)
             .padding(horizontal = 16.dp)
     ) {
         Spacer(Modifier.size(16.dp))
@@ -87,7 +85,7 @@ private fun DrifterCardContent(drifter: Drifter) {
                         )
                     ),
                     shape = RectangleShape // You can change this to a different shape if needed
-                ), drifter = drifter
+                ), drifterId = drifter.gameId
             )
             Spacer(Modifier.size(16.dp))
             GearStylizedTextTitle(text = drifter.name)
@@ -99,21 +97,10 @@ private fun DrifterCardContent(drifter: Drifter) {
             thickness = 1.dp
         )
         DrifterBonusStats(drifter)
-
-        Divider(
-            modifier = Modifier.fillMaxWidth()
-                .padding(top = 8.dp, bottom = 16.dp, start = 16.dp, end = 16.dp),
-            color = WarborneTheme.borderSkillColor,
-            thickness = 1.dp
-        )
+        LinksCard(drifter)
+        SupportCard(drifter)
         SpellCardContent(
             spell = drifter.spell,
-        )
-        Divider(
-            modifier = Modifier.fillMaxWidth()
-                .padding(top = 8.dp, bottom = 16.dp, start = 16.dp, end = 16.dp),
-            color = WarborneTheme.borderSkillColor,
-            thickness = 1.dp
         )
         SpellCardContent(
             spell = drifter.passive,
@@ -122,29 +109,77 @@ private fun DrifterCardContent(drifter: Drifter) {
 }
 
 @Composable
-private fun DrifterBonusStats(drifter: Drifter) {
-    Column(modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth()) {
-        GearStylizedText(text = "Bonus stats per mastery level")
-        Spacer(Modifier.size(8.dp))
-
-        listOf(
-            Triple("Strength: ", drifter.strBonus, WarborneTheme.strengthColor),
-            Triple("Agility: ", drifter.dexBonus, WarborneTheme.dexterityColor),
-            Triple("Intelligence: ", drifter.intBonus, WarborneTheme.intelligenceColor)
-        ).forEach { (label, value, color) ->
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                GearStylizedText(color = color, text = label)
-                GearStylizedText(
-                    text = value,
-                    color = WarborneTheme.textHealColor,
-                    style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.Bold)
-                )
+private fun LinksCard(drifter: Drifter) {
+        Column(modifier = Modifier.fillMaxWidth().padding(top = 16.dp, start = 16.dp, end = 16.dp)) {
+            GearStylizedTextTitle(text = "Links")
+            Divider(
+                modifier = Modifier.fillMaxWidth()
+                    .padding(top = 8.dp, bottom = 16.dp),
+                color = WarborneTheme.borderSkillColor,
+                thickness = 1.dp
+            )
+            drifter.links.forEach {
+                Column {
+                    GearStylizedTextTitle(
+                        text = it.name,
+                        style = MaterialTheme.typography.h5
+                    )
+                    Spacer(Modifier.size(8.dp))
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(16.dp)
+                    ) {
+                        it.driftersId.forEach {
+                            DrifterIcon(
+                                drifterId = it
+                            )
+                        }
+                    }
+                    Spacer(Modifier.size(8.dp))
+                    GearStylizedText(
+                        text = it.description,
+                        color = WarborneTheme.textDescriptionColor,
+                        style = MaterialTheme.typography.body1
+                    )
+                    Spacer(Modifier.size(16.dp))
+                }
             }
-            Spacer(Modifier.size(8.dp))
         }
+}
+
+@Composable
+private fun SupportCard(drifter: Drifter) {
+    Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+        GearStylizedTextTitle(text = "Support")
+        Divider(
+            modifier = Modifier.fillMaxWidth()
+                .padding(top = 8.dp, bottom = 16.dp),
+            color = WarborneTheme.borderSkillColor,
+            thickness = 1.dp
+        )
+        HighlightedSupportBonus(
+            text = drifter.supportBonus,
+        )
+        HighlightedSupportBonus(
+            text = drifter.supportMalus,
+        )
+    }
+}
+
+@Composable
+private fun DrifterBonusStats(drifter: Drifter) {
+    val attributes = listOf(
+        "Strength: " to drifter.strBonus,
+        "Agility: " to drifter.dexBonus,
+        "Intelligence: " to drifter.intBonus
+    )
+    val colors = listOf(
+        WarborneTheme.strengthColor,
+        WarborneTheme.dexterityColor,
+        WarborneTheme.intelligenceColor
+    )
+
+    Column(modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth()) {
+        AttributeList(attributes = attributes, colors = colors)
     }
 }
 

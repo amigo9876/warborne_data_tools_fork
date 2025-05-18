@@ -5,6 +5,7 @@ import com.elkite.warborn.domain.entities.gear.GearLevel
 import com.elkite.warborn.domain.entities.gear.GearStats
 import com.elkite.warborn.domain.entities.gear.GearType
 import com.elkite.warborn.domain.entities.gear.drifter.Drifter
+import com.elkite.warborn.domain.entities.gear.drifter.Link
 import com.elkite.warborn.domain.entities.gear.spell.Spell
 import com.elkite.warborn.domain.entities.gear.spell.SpellType
 import io.ktor.client.request.get
@@ -17,7 +18,7 @@ import kotlinx.serialization.json.jsonPrimitive
 
 object DataRepository {
 
-    const val url = "https://elkite.github.io/warborne_data/data.json"
+    private const val url = "https://elkite.github.io/warborne_data/data.json"
 
     suspend fun getData() : List<Spell> {
         val body = httpClient.get(url).bodyAsText()
@@ -29,7 +30,6 @@ object DataRepository {
 
     suspend fun getDrifters(): List<Drifter> {
         val body = httpClient.get(url).bodyAsText()
-
         val drifters = parseDrifters(body)
 
         return drifters
@@ -170,7 +170,27 @@ object DataRepository {
         val jsonElement = Json.parseToJsonElement(json)
         val data = jsonElement.jsonObject["data"]?.jsonObject ?: return emptyList()
         val drifterSection = data["drifters"]?.jsonObject.orEmpty()
+        val linksSection = data["links"]?.jsonArray.orEmpty()
 
+        // Parse links
+        val links = linksSection.mapNotNull { linkJson ->
+            try {
+                val obj = linkJson.jsonObject
+                val linkName = obj["linkName"]?.jsonPrimitive?.content ?: return@mapNotNull null
+                val linkBonus = obj["linkBonus"]?.jsonPrimitive?.content ?: return@mapNotNull null
+                val driftersNeeded = obj["driftersNeeded"]?.jsonPrimitive?.content?.toIntOrNull() ?: return@mapNotNull null
+                val driftersId = obj["drifters"]?.jsonArray?.mapNotNull { drifterObj ->
+                    drifterObj.jsonObject["drifterId"]?.jsonPrimitive?.content
+                } ?: emptyList()
+
+                Link(linkName, linkBonus, driftersNeeded, driftersId)
+            } catch (e: Exception) {
+                println("Error parsing link: ${e.message}")
+                null
+            }
+        }
+
+        // Parse drifters
         for ((drifterKey, drifterJson) in drifterSection) {
             try {
                 val obj = drifterJson.jsonObject
@@ -179,6 +199,8 @@ object DataRepository {
                 val strBonus = obj["strBonus"]?.jsonPrimitive?.content ?: continue
                 val dexBonus = obj["dexBonus"]?.jsonPrimitive?.content ?: continue
                 val intBonus = obj["intBonus"]?.jsonPrimitive?.content ?: continue
+                val supportBonus = obj["supportBonus"]?.jsonPrimitive?.content ?: continue
+                val supportMalus = obj["supportMalus"]?.jsonPrimitive?.content ?: continue
                 val spells = obj["spells"]?.jsonArray ?: continue
                 if (spells.size < 2) continue
 
@@ -194,7 +216,23 @@ object DataRepository {
                 val activeSpell = parseSpell(spells[0].jsonObject, GearType.DRIFTER, gearStats) ?: continue
                 val passiveSpell = parseSpell(spells[1].jsonObject, GearType.DRIFTER, gearStats) ?: continue
 
-                drifters.add(Drifter(gameId, name, gearStats, activeSpell, passiveSpell, strBonus, dexBonus, intBonus))
+                val matchedLinks = links.filter { link -> gameId in link.driftersId }
+
+                drifters.add(
+                    Drifter(
+                        gameId = gameId,
+                        name = name,
+                        gearStats = gearStats,
+                        spell = activeSpell,
+                        passive = passiveSpell,
+                        strBonus = strBonus,
+                        dexBonus = dexBonus,
+                        intBonus = intBonus,
+                        supportBonus = supportBonus,
+                        supportMalus = supportMalus,
+                        links = matchedLinks
+                    )
+                )
             } catch (e: Exception) {
                 println("Error parsing drifter: ${e.message}")
             }
@@ -202,5 +240,4 @@ object DataRepository {
 
         return drifters
     }
-
 }

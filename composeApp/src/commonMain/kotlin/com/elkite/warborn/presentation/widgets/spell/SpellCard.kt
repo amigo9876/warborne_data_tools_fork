@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,15 +17,16 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.gear.GearType
 import com.elkite.warborn.domain.entities.gear.spell.Spell
 import com.elkite.warborn.presentation.theme.WarborneTheme
 import com.elkite.warborn.presentation.widgets.gear.ArmorImage
+import com.elkite.warborn.presentation.widgets.utils.AttributeList
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedCard
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedText
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedTextTitle
@@ -87,7 +87,9 @@ fun SpellCardContent(spell: Spell) {
         SpellAttributes(spell)
         Spacer(Modifier.size(16.dp))
         MultiPatternHighlightedText(
-            baseTextStyle = MaterialTheme.typography.body1.copy(color = WarborneTheme.textDescriptionColor),
+            baseTextStyle = MaterialTheme.typography.body1.copy(color = WarborneTheme.textDescriptionColor).copy(
+                    fontFamily = FontFamily.Monospace
+                    ),
             text = spell.description,
             patternsWithStyles = listOf(
                 Regex("""\[Damage Rate: [^\]]+]""") to SpanStyle(
@@ -137,38 +139,7 @@ fun SpellAttributes(spell: Spell) {
         attributes.add("Range: " to "${spell.castingRange} m")
     }
 
-    Column {
-        attributes.forEachIndexed { index, (label, value) ->
-            val modifier = if (index % 2 == 0) {
-                Modifier
-                    .background(
-                        brush = Brush.linearGradient(
-                            listOf(
-                                WarborneTheme.textBorderColor,
-                                WarborneTheme.textBorderColor
-                            )
-                        ),
-                        alpha = 0.5f
-                    )
-            } else {
-                Modifier
-            }
-
-            Box(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(2.dp)
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    GearStylizedText(text = label, color = WarborneTheme.textDescriptionColor)
-                    GearStylizedText(text = value, color = WarborneTheme.textDescriptionColor)
-                }
-            }
-        }
-    }
+    AttributeList(attributes = attributes)
 }
 
 

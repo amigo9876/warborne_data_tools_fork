@@ -1,16 +1,21 @@
 package com.elkite.warborn.presentation.widgets.utils
 
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
+import com.elkite.warborn.presentation.theme.WarborneTheme
 
 @Composable
 fun MultiPatternHighlightedText(
     text: String,
-    baseTextStyle: TextStyle, // <- use full Material style
+    baseTextStyle: TextStyle,
     patternsWithStyles: List<Pair<Regex, SpanStyle>>
 ) {
     val baseSpanStyle = baseTextStyle.toSpanStyle()
@@ -55,3 +60,30 @@ fun MultiPatternHighlightedText(
 
 data class MatchData(val start: Int, val end: Int, val text: String, val style: SpanStyle)
 
+
+@Composable
+fun HighlightedSupportBonus(
+    text: String,
+    bonusColor: Color = WarborneTheme.dexterityColor,
+    malusColor: Color = WarborneTheme.strengthColor
+) {
+    MultiPatternHighlightedText(
+        text = text,
+        baseTextStyle = MaterialTheme.typography.body1.copy(color = WarborneTheme.textDescriptionColor)
+            .copy(
+                fontFamily = FontFamily.Monospace
+            ),
+        patternsWithStyles = listOf(
+            // Highlight +XXXX in green
+            Regex("\\+\\d+(\\.\\d+)?%?") to SpanStyle(
+                color = bonusColor,
+                fontWeight = FontWeight.Bold
+            ),
+            // Highlight -XXXX in red
+            Regex("-\\d+(\\.\\d+)?%?") to SpanStyle(
+                color = malusColor,
+                fontWeight = FontWeight.Bold
+            )
+        )
+    )
+}

@@ -13,7 +13,10 @@ data class Drifter(
     val strBonus: String,
     val dexBonus: String,
     val intBonus: String,
+    val supportBonus: String,
+    val supportMalus: String,
+    val links: List<Link> = emptyList(),
 
-) : Gear(
+    ) : Gear(
     gameId, name, gearStats
 )
