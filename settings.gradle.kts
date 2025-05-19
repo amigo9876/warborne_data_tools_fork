@@ -1,4 +1,4 @@
-rootProject.name = "Warborn"
+rootProject.name = "Warborne"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
