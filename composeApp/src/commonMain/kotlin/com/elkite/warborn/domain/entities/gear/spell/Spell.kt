@@ -9,7 +9,6 @@ import com.elkite.warborn.domain.entities.gear.LoadoutType
 data class Spell(
     override val gameId: String,
     override val name: String,
-    override val gearStats: GearStats,
     val description: String,
     val type: SpellType,
     val castingRange: String,
@@ -18,7 +17,8 @@ data class Spell(
     val requiredGearLevel: GearLevel,
     val associatedGearType: GearType,
     val gearName: String? = null,
-) : Gear(gameId, name, gearStats) {
+    val gearStats: GearStats,
+) : Gear(gameId, name) {
     override fun toString(): String {
         return "Spell(id='${gameId}',\\\n name='$name',\\\n description='$description',\\\n type=$type," +
                 "\\\n castingRange='$castingRange',\\\n cooldown='$cooldown',\\\n " +

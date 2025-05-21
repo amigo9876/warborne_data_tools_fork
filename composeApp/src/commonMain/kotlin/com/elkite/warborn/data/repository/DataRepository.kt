@@ -6,6 +6,9 @@ import com.elkite.warborn.domain.entities.gear.GearStats
 import com.elkite.warborn.domain.entities.gear.GearType
 import com.elkite.warborn.domain.entities.gear.drifter.Drifter
 import com.elkite.warborn.domain.entities.gear.drifter.Link
+import com.elkite.warborn.domain.entities.gear.mods.Mod
+import com.elkite.warborn.domain.entities.gear.mods.ModSlot
+import com.elkite.warborn.domain.entities.gear.mods.ModType
 import com.elkite.warborn.domain.entities.gear.spell.Spell
 import com.elkite.warborn.domain.entities.gear.spell.SpellType
 import io.ktor.client.request.get
@@ -33,6 +36,11 @@ object DataRepository {
         val drifters = parseDrifters(body)
 
         return drifters
+    }
+
+    suspend fun getMods(): List<Mod> {
+        val body = httpClient.get(url).bodyAsText()
+        return parseMods(body)
     }
 
     suspend fun getLastUpdateData(): String {
@@ -239,5 +247,54 @@ object DataRepository {
         }
 
         return drifters
+    }
+
+    private fun parseMods(json: String): List<Mod> {
+        val mods = mutableListOf<Mod>()
+        val jsonElement = Json.parseToJsonElement(json)
+        val data = jsonElement.jsonObject["data"]?.jsonObject ?: return mods
+        val modsSection = data["mods"]?.jsonObject ?: return mods
+
+        for ((category, categoryData) in modsSection) {
+            val modType = when (category) {
+                "armor" -> ModType.ARMOR
+                "weapon" -> ModType.WEAPON
+                else -> continue
+            }
+
+            val modsArray = categoryData.jsonObject["mods"]?.jsonArray ?: continue
+            for (modJson in modsArray) {
+                try {
+                    val obj = modJson.jsonObject
+                    val iconName = obj["iconName"]?.jsonPrimitive?.content ?: continue
+                    val name = obj["name"]?.jsonPrimitive?.content ?: continue
+                    val description = obj["description"]?.jsonPrimitive?.content ?: continue
+                    val rarity = obj["rarity"]?.jsonPrimitive?.content ?: continue
+                    val slot = obj["slot"]?.jsonPrimitive?.content?.uppercase() ?: continue
+                    val arguments = obj["arguments"]?.jsonArray?.mapNotNull { arg ->
+                        val argObj = arg.jsonObject
+                        val argName = argObj["argumentName"]?.jsonPrimitive?.content ?: return@mapNotNull null
+                        val argRange = argObj["argumentRange"]?.jsonPrimitive?.content ?: return@mapNotNull null
+                        argName to argRange
+                    } ?: emptyList()
+
+                    mods.add(
+                        Mod(
+                            gameId = iconName,
+                            name = name,
+                            description = description,
+                            arguments = arguments,
+                            rarity = rarity,
+                            type = modType,
+                            slot = ModSlot.valueOf(slot.uppercase())
+                        )
+                    )
+                } catch (e: Exception) {
+                    println("Error parsing mod: ${e.message}")
+                }
+            }
+        }
+
+        return mods
     }
 }

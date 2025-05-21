@@ -7,6 +7,7 @@ enum class GearMainCategory {
     DRIFTER,
     WEAPON,
     ARMOR,
+    MOD
 }
 
 @Serializable
@@ -27,7 +28,7 @@ enum class GearType {
     CURSE,
     HOLY,
     WEAPON,
-    DRIFTER
+    DRIFTER,
 }
 
 @Serializable
@@ -39,5 +40,9 @@ enum class LoadoutType {
     PASSIVE,
     BASIC_ATTACK,
     COMMON_SKILL,
-    DRIFTER
+    DRIFTER,
+    MOD_WEAPON,
+    MOD_HEAD,
+    MOD_CHEST,
+    MOD_BOOTS,
 }

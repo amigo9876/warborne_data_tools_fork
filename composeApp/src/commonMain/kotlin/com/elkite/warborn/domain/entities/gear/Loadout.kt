@@ -1,6 +1,7 @@
 package com.elkite.warborn.domain.entities.gear
 
 import com.elkite.warborn.domain.entities.gear.drifter.Drifter
+import com.elkite.warborn.domain.entities.gear.mods.Mod
 import com.elkite.warborn.domain.entities.gear.spell.Spell
 
 data class Loadout(
@@ -11,7 +12,11 @@ data class Loadout(
     val passive: Spell? = null,
     val commonSkill: Spell? = null,
     val basicAttack: Spell? = null,
-    val drifter: Drifter? = null
+    val drifter: Drifter? = null,
+    val modWeapon: Mod? = null,
+    val modHead: Mod? = null,
+    val modChest: Mod? = null,
+    val modBoots: Mod? = null,
 ) {
 
     fun toQueryParams(): String {
@@ -23,16 +28,12 @@ data class Loadout(
             passive?.let { "passive=${it.gameId}" },
             commonSkill?.let { "commonSkill=${it.gameId}" },
             basicAttack?.let { "basicAttack=${it.gameId}" },
-            drifter?.let { "drifter=${it.gameId}" }
+            drifter?.let { "drifter=${it.gameId}" },
+            modWeapon?.let { "modWeapon=${it.gameId}" },
+            modHead?.let { "modHead=${it.gameId}" },
+            modChest?.let { "modChest=${it.gameId}" },
+            modBoots?.let { "modBoots=${it.gameId}" },
         ).joinToString("&")
-    }
-
-    fun isEmpty(): Boolean {
-        return head == null && chest == null && boots == null && weapon == null && passive == null && commonSkill == null && basicAttack == null
-    }
-
-    fun getSpells(): List<Spell> {
-        return listOfNotNull(head, weapon, chest, basicAttack, boots, commonSkill, passive)
     }
 
     override fun toString(): String {

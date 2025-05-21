@@ -23,6 +23,7 @@ import com.elkite.warborn.domain.entities.gear.GearType
 import com.elkite.warborn.domain.entities.gear.Loadout
 import com.elkite.warborn.domain.entities.gear.LoadoutType
 import com.elkite.warborn.domain.entities.gear.drifter.Drifter
+import com.elkite.warborn.domain.entities.gear.mods.Mod
 import com.elkite.warborn.domain.entities.gear.spell.Spell
 import com.elkite.warborn.presentation.theme.WarborneTheme
 import com.elkite.warborn.presentation.widgets.drifter.DrifterCardScrollable
@@ -31,6 +32,8 @@ import com.elkite.warborn.presentation.widgets.gear.ArmorSmallList
 import com.elkite.warborn.presentation.widgets.gear.WeaponSmallList
 import com.elkite.warborn.presentation.widgets.loadout.LoadoutCard
 import com.elkite.warborn.presentation.widgets.loadout_from_url.LoadoutFromUrl
+import com.elkite.warborn.presentation.widgets.mod.ModCardList
+import com.elkite.warborn.presentation.widgets.mod.ModSmallList
 import com.elkite.warborn.presentation.widgets.spell.SpellCardList
 import com.elkite.warborn.presentation.widgets.utils.ClickableText
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedText
@@ -70,17 +73,20 @@ fun ItemListColumn(
     onUpdateLoadout: (Spell) -> Unit,
     onUpdateDrifter: (Drifter) -> Unit,
     onUpdatePassive: (GearType) -> Unit,
+    onUpdateMod: (Mod, LoadoutType) -> Unit
 ) {
 
     val categoryOptions = listOf(
         GearMainCategory.DRIFTER,
         GearMainCategory.WEAPON,
-        GearMainCategory.ARMOR
+        GearMainCategory.ARMOR,
+        GearMainCategory.MOD
     )
     val selectedIndex = remember { mutableStateOf(0) }
 
     LaunchedEffect(loadoutType) {
         selectedIndex.value = when (loadoutType) {
+            LoadoutType.MOD_WEAPON, LoadoutType.MOD_HEAD, LoadoutType.MOD_CHEST, LoadoutType.MOD_BOOTS -> 3
             LoadoutType.HEAD, LoadoutType.CHEST, LoadoutType.BOOTS -> 2
             LoadoutType.DRIFTER -> 0
             else -> 1
@@ -159,6 +165,18 @@ fun ItemListColumn(
                         onUpdateDrifter(drifter)
                     })
             }
+
+            GearMainCategory.MOD -> {
+                ModSmallList(
+                    modifier = Modifier.sizeIn(minWidth = 600.dp, minHeight = 700.dp, maxWidth = 800.dp, maxHeight = 800.dp).padding(top = 4.dp),
+                    loadoutType = loadoutType,
+                    mods = state.mods,
+                    onModClick = { mod, loadoutType ->
+                        onUpdateGear(mod)
+                        onUpdateMod(mod, loadoutType)
+                    }
+                )
+            }
         }
 
     }
@@ -178,6 +196,12 @@ fun DescriptionColumn(
         DrifterCardScrollable(
             drifter = gear,
             onDrifterClick = { drifter ->
+            }
+        )
+    } else if (gear is Mod) {
+        ModCardList(
+            mods = listOf(gear),
+            onModClick = { mod ->
             }
         )
     }

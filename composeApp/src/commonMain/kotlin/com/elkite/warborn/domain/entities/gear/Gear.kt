@@ -6,5 +6,4 @@ import kotlinx.serialization.Serializable
 open class Gear(
     open val gameId: String,
     open val name: String,
-    open val gearStats: GearStats,
 )

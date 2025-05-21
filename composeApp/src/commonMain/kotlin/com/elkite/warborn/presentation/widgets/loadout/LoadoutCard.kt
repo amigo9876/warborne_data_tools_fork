@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.gear.Loadout
 import com.elkite.warborn.domain.entities.gear.LoadoutType
 import com.elkite.warborn.presentation.theme.WarborneTheme
+import com.elkite.warborn.presentation.widgets.mod.ModImage
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedTextTitle
 import com.elkite.warborn.util.IconMap
 import org.jetbrains.compose.resources.painterResource
@@ -66,33 +67,86 @@ fun LoadoutCard(
                     .padding(16.dp),
             ) {
                 Column(modifier = Modifier.align(Alignment.TopEnd)) {
-                    LoadoutArmorIcon(
-                        loadoutType = LoadoutType.WEAPON,
-                        gearName = loadout.weapon?.gearName,
-                        gearType = loadout.weapon?.associatedGearType,
-                        onClick = onClick
-                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        LoadoutArmorIcon(
+                            loadoutType = LoadoutType.WEAPON,
+                            gearName = loadout.weapon?.gearName,
+                            gearType = loadout.weapon?.associatedGearType,
+                            onClick = {
+                                onClick(LoadoutType.WEAPON)
+                            }
+                        )
+                        Spacer(modifier = Modifier.size(16.dp))
+                        ModImage(
+                            modifier = Modifier.size(48.dp),
+                            mod = loadout.modWeapon,
+                            onClick = {
+                                onClick(LoadoutType.MOD_WEAPON)
+                            }
+                        )
+                    }
                     Spacer(modifier = Modifier.size(16.dp))
-                    LoadoutArmorIcon(
-                        loadoutType = LoadoutType.HEAD,
-                        gearName = loadout.head?.gearName,
-                        gearType = loadout.head?.associatedGearType,
-                        onClick = onClick
-                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        LoadoutArmorIcon(
+                            loadoutType = LoadoutType.HEAD,
+                            gearName = loadout.head?.gearName,
+                            gearType = loadout.head?.associatedGearType,
+                            onClick = {
+                                onClick(LoadoutType.HEAD)
+                            }
+                        )
+                        Spacer(modifier = Modifier.size(16.dp))
+                        ModImage(
+                            mod = loadout.modHead,
+                            onClick = {
+                                onClick(LoadoutType.MOD_HEAD)
+                            }
+                        )
+                    }
                     Spacer(modifier = Modifier.size(16.dp))
-                    LoadoutArmorIcon(
-                        loadoutType = LoadoutType.CHEST,
-                        gearName = loadout.chest?.gearName,
-                        gearType = loadout.chest?.associatedGearType,
-                        onClick = onClick
-                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        LoadoutArmorIcon(
+                            loadoutType = LoadoutType.CHEST,
+                            gearName = loadout.chest?.gearName,
+                            gearType = loadout.chest?.associatedGearType,
+                            onClick = {
+                                onClick(LoadoutType.CHEST)
+                            }
+                        )
+                        Spacer(modifier = Modifier.size(16.dp))
+                        ModImage(
+                            mod = loadout.modChest,
+                            onClick = {
+                                onClick(LoadoutType.MOD_CHEST)
+                            }
+                        )
+                    }
                     Spacer(modifier = Modifier.size(16.dp))
-                    LoadoutArmorIcon(
-                        loadoutType = LoadoutType.BOOTS,
-                        gearName = loadout.boots?.gearName,
-                        gearType = loadout.boots?.associatedGearType,
-                        onClick = onClick
-                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        LoadoutArmorIcon(
+                            loadoutType = LoadoutType.BOOTS,
+                            gearName = loadout.boots?.gearName,
+                            gearType = loadout.boots?.associatedGearType,
+                            onClick = {
+                                onClick(LoadoutType.BOOTS)
+                            }
+                        )
+                        Spacer(modifier = Modifier.size(16.dp))
+                        ModImage(
+                            mod = loadout.modBoots,
+                            onClick = {
+                                onClick(LoadoutType.MOD_BOOTS)
+                            }
+                        )
+                    }
                     Spacer(modifier = Modifier.size(16.dp))
                 }
                 GearStylizedTextTitle(

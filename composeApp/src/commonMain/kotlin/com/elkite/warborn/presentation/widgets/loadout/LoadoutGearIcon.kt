@@ -18,7 +18,7 @@ fun LoadoutArmorIcon(
     loadoutType: LoadoutType,
     gearName: String?,
     gearType: GearType?,
-    onClick: (LoadoutType) -> Unit
+    onClick: () -> Unit
 ) {
     when (loadoutType) {
         LoadoutType.HEAD,
@@ -31,7 +31,7 @@ fun LoadoutArmorIcon(
                     color = borderSkillColor,
                     shape = CircleShape
                 ).clickable {
-                    onClick(loadoutType)
+                    onClick()
                 }) {
                 ArmorImage(modifier = Modifier.size(64.dp), gearName = gearName, gearType = gearType)
             }

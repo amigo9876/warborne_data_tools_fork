@@ -7,6 +7,7 @@ import com.elkite.warborn.domain.entities.gear.GearType
 import com.elkite.warborn.domain.entities.gear.Loadout
 import com.elkite.warborn.domain.entities.gear.LoadoutType
 import com.elkite.warborn.domain.entities.gear.drifter.Drifter
+import com.elkite.warborn.domain.entities.gear.mods.Mod
 import com.elkite.warborn.domain.entities.gear.spell.Spell
 import com.elkite.warborn.domain.entities.gear.spell.SpellType
 import kotlinx.coroutines.CoroutineScope
@@ -30,6 +31,34 @@ class MainScreenModel : ScreenModel {
         loadSpells()
     }
 
+    fun updateModWeapon(mod: Mod) {
+        _loadout.value = _loadout.value.copy(modWeapon = mod)
+    }
+
+    fun updateModHead(mod: Mod) {
+        if (_loadout.value.modChest?.name == mod.name)
+            _loadout.value = _loadout.value.copy(modChest = null)
+        if (_loadout.value.modBoots?.name == mod.name)
+            _loadout.value = _loadout.value.copy(modBoots = null)
+        _loadout.value = _loadout.value.copy(modHead = mod)
+    }
+
+    fun updateModChest(mod: Mod) {
+        if (_loadout.value.modHead?.name == mod.name)
+            _loadout.value = _loadout.value.copy(modHead = null)
+        if (_loadout.value.modBoots?.name == mod.name)
+            _loadout.value = _loadout.value.copy(modBoots = null)
+        _loadout.value = _loadout.value.copy(modChest = mod)
+    }
+
+    fun updateModBoots(mod: Mod) {
+        if (_loadout.value.modChest?.name == mod.name)
+            _loadout.value = _loadout.value.copy(modChest = null)
+        if (_loadout.value.modHead?.name == mod.name)
+            _loadout.value = _loadout.value.copy(modHead = null)
+        _loadout.value = _loadout.value.copy(modBoots = mod)
+    }
+
     fun updatePassive(gearType: GearType) {
        _loadout.value = when (val state = _screenState.value) {
             is BuildScreenState.Success -> {
@@ -46,7 +75,7 @@ class MainScreenModel : ScreenModel {
             else -> _loadout.value
         }
     }
-
+    //TODO switch to gear with cast
     fun updateLoadout(newSpell: Spell) {
         _loadout.value = when (newSpell.getLoadoutType()) {
             LoadoutType.HEAD -> _loadout.value.copy(head = newSpell)
@@ -57,6 +86,9 @@ class MainScreenModel : ScreenModel {
             LoadoutType.COMMON_SKILL -> _loadout.value.copy(commonSkill = newSpell)
             LoadoutType.BASIC_ATTACK -> _loadout.value.copy(basicAttack = newSpell)
             LoadoutType.DRIFTER -> {
+                _loadout.value
+            }
+            else -> {
                 _loadout.value
             }
         }
@@ -71,6 +103,7 @@ class MainScreenModel : ScreenModel {
             try {
                 val spells = DataRepository.getData()
                 val drifters = DataRepository.getDrifters()
+                val mods = DataRepository.getMods()
                 val lastDataUpdate = DataRepository.getLastUpdateData()
 
                 _screenState.update {
@@ -113,7 +146,8 @@ class MainScreenModel : ScreenModel {
                                 GearType.HOLY to spells.filter { it.associatedGearType == GearType.HOLY }
                             )
                         ),
-                        drifters = drifters
+                        drifters = drifters,
+                        mods = mods
                     )
                 }
             } catch (e: Exception) {
@@ -128,6 +162,7 @@ class MainScreenModel : ScreenModel {
         coroutineScope.launch {
             val spells = DataRepository.getData()
             val drifters = DataRepository.getDrifters()
+            val mods = DataRepository.getMods()
 
             val newLoadout = Loadout(
                 head = queryParams["head"]?.let { gameId -> spells.find { it.gameId == gameId } },
@@ -137,7 +172,11 @@ class MainScreenModel : ScreenModel {
                 passive = queryParams["passive"]?.let { gameId -> spells.find { it.gameId == gameId } },
                 commonSkill = queryParams["commonSkill"]?.let { gameId -> spells.find { it.gameId == gameId } },
                 basicAttack = queryParams["basicAttack"]?.let { gameId -> spells.find { it.gameId == gameId } },
-                drifter = queryParams["drifter"]?.let { gameId -> drifters.find { it.gameId == gameId } }
+                drifter = queryParams["drifter"]?.let { gameId -> drifters.find { it.gameId == gameId } },
+                modWeapon = queryParams["modWeapon"]?.let { id -> mods.find { it.gameId == id } },
+                modHead = queryParams["modHead"]?.let { id -> mods.find { it.gameId == id } },
+                modChest = queryParams["modChest"]?.let { id -> mods.find { it.gameId == id } },
+                modBoots = queryParams["modBoots"]?.let { id -> mods.find { it.gameId == id } }
             )
 
             if (_loadout.value != newLoadout) {
@@ -164,6 +203,7 @@ class MainScreenModel : ScreenModel {
             val boots: HashMap<GearStats, List<Spell>>,
             val weapons: HashMap<GearType, List<Spell>>,
             val drifters: List<Drifter>,
+            val mods: List<Mod>
         ) : BuildScreenState()
 
         data class Error(val message: String) : BuildScreenState()

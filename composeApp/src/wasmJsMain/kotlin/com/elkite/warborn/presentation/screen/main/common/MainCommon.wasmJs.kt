@@ -18,6 +18,10 @@ import androidx.compose.ui.draw.paint
 import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.gear.Gear
 import com.elkite.warborn.domain.entities.gear.LoadoutType
+import com.elkite.warborn.domain.entities.gear.drifter.Drifter
+import com.elkite.warborn.domain.entities.gear.mods.Mod
+import com.elkite.warborn.domain.entities.gear.mods.ModSlot
+import com.elkite.warborn.domain.entities.gear.mods.ModType
 import com.elkite.warborn.domain.entities.gear.spell.Spell
 import com.elkite.warborn.domain.entities.gear.spell.SpellType
 import com.elkite.warborn.presentation.screen.main.DescriptionColumn
@@ -106,8 +110,21 @@ actual fun MainContent(
                             loadout.passive ?: state.weapons.values.first()
                                 .first { it.type == SpellType.PASSIVE }
                         }
+
+                        LoadoutType.MOD_WEAPON -> {
+                            loadout.modWeapon ?: state.mods.first { it.type == ModType.WEAPON && it.slot == ModSlot.ALL }
+                        }
+                        LoadoutType.MOD_HEAD -> {
+                            loadout.modHead ?: state.mods.first { it.type == ModType.ARMOR && it.slot == ModSlot.ALL }
+                        }
+                        LoadoutType.MOD_CHEST -> {
+                            loadout.modChest ?: state.mods.first { it.type == ModType.ARMOR && it.slot == ModSlot.CHEST }
+                        }
+                        LoadoutType.MOD_BOOTS -> {
+                            loadout.modBoots ?: state.mods.first { it.type == ModType.ARMOR && it.slot == ModSlot.BOOTS }
+                        }
                     }
-                }
+                },
             )
             ItemListColumn(
                 state = state,
@@ -118,8 +135,18 @@ actual fun MainContent(
                     gear.value = it
                     if (it is Spell) {
                         loadoutType.value = it.getLoadoutType()
-                    } else {
+                    } else if (it is Drifter) {
                         loadoutType.value = LoadoutType.DRIFTER
+                    } else if (it is Mod) {
+                        loadoutType.value =
+                           when (it.type) {
+                                ModType.WEAPON -> LoadoutType.MOD_WEAPON
+                                ModType.ARMOR -> when (it.slot) {
+                                    ModSlot.CHEST -> LoadoutType.MOD_CHEST
+                                    ModSlot.BOOTS -> LoadoutType.MOD_BOOTS
+                                    else -> loadoutType.value
+                                }
+                        }
                     }
                 },
                 onUpdateLoadout = {
@@ -131,6 +158,15 @@ actual fun MainContent(
                 onUpdatePassive = {
                     screenModel.updatePassive(it)
                 },
+                onUpdateMod = { mod, loadoutType ->
+                    when (loadoutType) {
+                        LoadoutType.MOD_WEAPON -> screenModel.updateModWeapon(mod)
+                        LoadoutType.MOD_HEAD -> screenModel.updateModHead(mod)
+                        LoadoutType.MOD_CHEST -> screenModel.updateModChest(mod)
+                        LoadoutType.MOD_BOOTS -> screenModel.updateModBoots(mod)
+                        else -> {}
+                    }
+                }
             )
             DescriptionColumn(gear.value)
 

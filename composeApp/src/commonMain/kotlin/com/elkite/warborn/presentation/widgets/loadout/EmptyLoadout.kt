@@ -28,7 +28,7 @@ import org.jetbrains.compose.resources.painterResource
 @Composable
 fun EmptyLoadout(
     loadoutType: LoadoutType,
-    onClick: (LoadoutType) -> Unit
+    onClick: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -54,7 +54,7 @@ fun EmptyLoadout(
                 else -> RectangleShape
             })
             .background(Color.Black)
-            .clickable { onClick(loadoutType) },
+            .clickable { onClick() },
         contentAlignment = Alignment.Center
     ) {
         Image(
