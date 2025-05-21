@@ -121,6 +121,7 @@ fun WeaponSmallList(
                                             loadoutType = LoadoutType.WEAPON,
                                             gearName = spell.gearName,
                                             gearType = spell.associatedGearType,
+                                            rarity = spell.rarity,
                                             onClick = {
                                                 onCategoryClick(spell.associatedGearType)
                                                 onSpellClick(spell)

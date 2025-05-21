@@ -17,7 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.paint
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
@@ -25,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.gear.Loadout
 import com.elkite.warborn.domain.entities.gear.LoadoutType
 import com.elkite.warborn.presentation.theme.WarborneTheme
-import com.elkite.warborn.presentation.widgets.mod.ModImage
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedTextTitle
 import com.elkite.warborn.util.IconMap
 import org.jetbrains.compose.resources.painterResource
@@ -50,13 +48,7 @@ fun LoadoutCard(
                     .clip(RectangleShape) // Clip to the border shape
                     .border(
                         width = 3.dp,
-                        brush = Brush.linearGradient(
-                            colors = listOf(
-                                WarborneTheme.drifterBorderStartColor,
-                                WarborneTheme.drifterBorderMiddleColor,
-                                WarborneTheme.drifterBorderEndColor
-                            )
-                        ),
+                        brush = WarborneTheme.legendaryBrush,
                         shape = RectangleShape
                     )
                     .paint(
@@ -71,15 +63,18 @@ fun LoadoutCard(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         LoadoutArmorIcon(
+                            isSelected = selectedLoadout == LoadoutType.WEAPON,
                             loadoutType = LoadoutType.WEAPON,
                             gearName = loadout.weapon?.gearName,
                             gearType = loadout.weapon?.associatedGearType,
+                            rarity = loadout.weapon?.rarity,
                             onClick = {
                                 onClick(LoadoutType.WEAPON)
                             }
                         )
                         Spacer(modifier = Modifier.size(16.dp))
-                        ModImage(
+                        LoadoutModIcon(
+                            selectedLoadout == LoadoutType.MOD_WEAPON,
                             modifier = Modifier.size(48.dp),
                             mod = loadout.modWeapon,
                             onClick = {
@@ -92,15 +87,18 @@ fun LoadoutCard(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         LoadoutArmorIcon(
+                            isSelected = selectedLoadout == LoadoutType.HEAD,
                             loadoutType = LoadoutType.HEAD,
                             gearName = loadout.head?.gearName,
                             gearType = loadout.head?.associatedGearType,
+                            rarity = loadout.head?.rarity,
                             onClick = {
                                 onClick(LoadoutType.HEAD)
                             }
                         )
                         Spacer(modifier = Modifier.size(16.dp))
-                        ModImage(
+                        LoadoutModIcon(
+                            selectedLoadout == LoadoutType.MOD_HEAD,
                             mod = loadout.modHead,
                             onClick = {
                                 onClick(LoadoutType.MOD_HEAD)
@@ -112,15 +110,18 @@ fun LoadoutCard(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         LoadoutArmorIcon(
+                            isSelected = selectedLoadout == LoadoutType.CHEST,
                             loadoutType = LoadoutType.CHEST,
                             gearName = loadout.chest?.gearName,
                             gearType = loadout.chest?.associatedGearType,
+                            rarity = loadout.chest?.rarity,
                             onClick = {
                                 onClick(LoadoutType.CHEST)
                             }
                         )
                         Spacer(modifier = Modifier.size(16.dp))
-                        ModImage(
+                        LoadoutModIcon(
+                            selectedLoadout == LoadoutType.MOD_CHEST,
                             mod = loadout.modChest,
                             onClick = {
                                 onClick(LoadoutType.MOD_CHEST)
@@ -132,15 +133,18 @@ fun LoadoutCard(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         LoadoutArmorIcon(
+                            isSelected = selectedLoadout == LoadoutType.BOOTS,
                             loadoutType = LoadoutType.BOOTS,
                             gearName = loadout.boots?.gearName,
                             gearType = loadout.boots?.associatedGearType,
+                            rarity = loadout.boots?.rarity,
                             onClick = {
                                 onClick(LoadoutType.BOOTS)
                             }
                         )
                         Spacer(modifier = Modifier.size(16.dp))
-                        ModImage(
+                        LoadoutModIcon(
+                            selectedLoadout == LoadoutType.MOD_BOOTS,
                             mod = loadout.modBoots,
                             onClick = {
                                 onClick(LoadoutType.MOD_BOOTS)

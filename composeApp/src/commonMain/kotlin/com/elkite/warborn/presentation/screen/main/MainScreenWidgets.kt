@@ -36,6 +36,7 @@ import com.elkite.warborn.presentation.widgets.mod.ModCardList
 import com.elkite.warborn.presentation.widgets.mod.ModSmallList
 import com.elkite.warborn.presentation.widgets.spell.SpellCardList
 import com.elkite.warborn.presentation.widgets.utils.ClickableText
+import com.elkite.warborn.presentation.widgets.utils.CopyButton
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedText
 
 @Composable
@@ -59,6 +60,13 @@ fun LoadoutColumn(
                 GearStylizedText(text = "Discord : ")
                 ClickableText("https://discord.gg/H8GJZyc59e")
             }
+            CopyButton(
+                modifier = Modifier.padding(start = 8.dp),
+                textToCopy = loadout.toQueryParams(),
+                buttonText = {
+                    GearStylizedText(text = "Copy Loadout")
+                }
+            )
         }
     }
 }

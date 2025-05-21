@@ -4,6 +4,7 @@ import com.elkite.warborn.data.network.httpClient
 import com.elkite.warborn.domain.entities.gear.GearLevel
 import com.elkite.warborn.domain.entities.gear.GearStats
 import com.elkite.warborn.domain.entities.gear.GearType
+import com.elkite.warborn.domain.entities.gear.Rarity
 import com.elkite.warborn.domain.entities.gear.drifter.Drifter
 import com.elkite.warborn.domain.entities.gear.drifter.Link
 import com.elkite.warborn.domain.entities.gear.mods.Mod
@@ -128,6 +129,14 @@ object DataRepository {
             val manaCost = json["manaCost"]?.jsonPrimitive?.content ?: return null
             val desc = json["description"]?.jsonPrimitive?.content ?: return null
             val gearName = json["gearName"]?.jsonPrimitive?.content ?: return null
+            val rarity = json["rarity"]?.jsonPrimitive?.content?.let {
+                return@let when (it) {
+                    "1" -> Rarity.RARE
+                    "2" -> Rarity.EPIC
+                    "3" -> Rarity.LEGENDARY
+                    else -> null
+                }
+            }
 
             val typeStr = json["type"]?.jsonPrimitive?.content
                 ?.uppercase() ?: return null
@@ -165,7 +174,8 @@ object DataRepository {
                 requiredGearLevel = gearLevel,
                 associatedGearType = gearType,
                 gearName = gearName,
-                gearStats = gearStats
+                gearStats = gearStats,
+                rarity = rarity
             )
         } catch (e: Exception) {
             println("Error parsing spell: ${e.message}")
@@ -209,6 +219,8 @@ object DataRepository {
                 val intBonus = obj["intBonus"]?.jsonPrimitive?.content ?: continue
                 val supportBonus = obj["supportBonus"]?.jsonPrimitive?.content ?: continue
                 val supportMalus = obj["supportMalus"]?.jsonPrimitive?.content ?: continue
+                val supportBonusValue = obj["supportBonusValue"]?.jsonPrimitive?.content ?: continue
+                val supportMalusValue = obj["supportMalusValue"]?.jsonPrimitive?.content ?: continue
                 val spells = obj["spells"]?.jsonArray ?: continue
                 if (spells.size < 2) continue
 
@@ -238,6 +250,8 @@ object DataRepository {
                         intBonus = intBonus,
                         supportBonus = supportBonus,
                         supportMalus = supportMalus,
+                        supportBonusValue = supportBonusValue,
+                        supportMalusValue = supportMalusValue,
                         links = matchedLinks
                     )
                 )

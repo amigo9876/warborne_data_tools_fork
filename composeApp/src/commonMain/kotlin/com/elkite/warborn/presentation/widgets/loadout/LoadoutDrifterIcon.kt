@@ -11,7 +11,6 @@ import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
@@ -35,13 +34,7 @@ fun LoadoutDrifterIcon(
                 .size(64.dp)
                 .border(
                     width = 2.dp,
-                    brush = Brush.linearGradient(
-                        colors = listOf(
-                            WarborneTheme.drifterBorderStartColor,
-                            WarborneTheme.drifterBorderMiddleColor,
-                            WarborneTheme.drifterBorderEndColor
-                        )
-                    ),
+                    brush = WarborneTheme.legendaryBrush,
                     shape = RectangleShape // You can change this to a different shape if needed
                 )
                 .background(Color.Black)

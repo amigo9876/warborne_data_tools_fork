@@ -18,6 +18,7 @@ import androidx.compose.material3.SegmentedButtonColors
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -179,7 +180,7 @@ fun ModSmallList(
                             )
 
                             FlowRow(
-                                modifier = Modifier.fillMaxWidth().horizontalScroll(scrollState),
+                                modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceEvenly,
                                 verticalArrangement = Arrangement.spacedBy(8.dp),
                                 maxItemsInEachRow = 4
@@ -193,37 +194,47 @@ fun ModSmallList(
                                         }
                                     )
                                     else
-                                        Row {
-                                            WeaponImage(
-                                                gearType = when (it.slot) {
-                                                    ModSlot.AXE -> GearType.AXE
-                                                    ModSlot.GUN -> GearType.GUN
-                                                    ModSlot.SWORD -> GearType.SWORD
-                                                    ModSlot.MACE -> GearType.MACE
-                                                    ModSlot.BOW -> GearType.BOW
-                                                    ModSlot.DAGGER -> GearType.DAGGER
-                                                    ModSlot.SPEAR -> GearType.SPEAR
-                                                    ModSlot.NATURE -> GearType.NATURE
-                                                    ModSlot.FIRE -> GearType.FIRE
-                                                    ModSlot.ICE -> GearType.FROST
-                                                    ModSlot.CURSE -> GearType.CURSE
-                                                    ModSlot.HOLY -> GearType.HOLY
-                                                    else -> GearType.SWORD
-                                                }
-                                            )
-                                            Spacer(Modifier.size(8.dp))
-                                            ModImage(
-                                                mod = it,
-                                                onClick = {
-                                                    onModClick(it, subcategoryOptions[selectedIndex.value])
-                                                }
-                                            )
-                                        }
+                                        WeaponExclusiveMod(it, onModClick, subcategoryOptions, selectedIndex)
                                 }
                             }
                         }
                     }
                 }
+            }
+        )
+    }
+}
+
+@Composable
+private fun WeaponExclusiveMod(
+    it: Mod,
+    onModClick: (Mod, LoadoutType) -> Unit,
+    subcategoryOptions: List<LoadoutType>,
+    selectedIndex: MutableState<Int>
+) {
+    Row {
+        WeaponImage(
+            gearType = when (it.slot) {
+                ModSlot.AXE -> GearType.AXE
+                ModSlot.GUN -> GearType.GUN
+                ModSlot.SWORD -> GearType.SWORD
+                ModSlot.MACE -> GearType.MACE
+                ModSlot.BOW -> GearType.BOW
+                ModSlot.DAGGER -> GearType.DAGGER
+                ModSlot.SPEAR -> GearType.SPEAR
+                ModSlot.NATURE -> GearType.NATURE
+                ModSlot.FIRE -> GearType.FIRE
+                ModSlot.ICE -> GearType.FROST
+                ModSlot.CURSE -> GearType.CURSE
+                ModSlot.HOLY -> GearType.HOLY
+                else -> GearType.SWORD
+            }
+        )
+        Spacer(Modifier.size(8.dp))
+        ModImage(
+            mod = it,
+            onClick = {
+                onModClick(it, subcategoryOptions[selectedIndex.value])
             }
         )
     }

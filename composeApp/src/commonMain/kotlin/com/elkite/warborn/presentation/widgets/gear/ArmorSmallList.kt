@@ -119,6 +119,7 @@ fun ArmorSmallList(
                                     ArmorImage(
                                         gearType = spell.associatedGearType,
                                         gearName = spell.gearName,
+                                        rarity = spell.rarity,
                                         modifier = Modifier
                                             .size(64.dp)
                                             .clickable { onSpellClick(spell) }

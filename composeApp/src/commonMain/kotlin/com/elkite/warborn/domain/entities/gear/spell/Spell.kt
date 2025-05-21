@@ -5,6 +5,7 @@ import com.elkite.warborn.domain.entities.gear.GearLevel
 import com.elkite.warborn.domain.entities.gear.GearStats
 import com.elkite.warborn.domain.entities.gear.GearType
 import com.elkite.warborn.domain.entities.gear.LoadoutType
+import com.elkite.warborn.domain.entities.gear.Rarity
 
 data class Spell(
     override val gameId: String,
@@ -18,6 +19,7 @@ data class Spell(
     val associatedGearType: GearType,
     val gearName: String? = null,
     val gearStats: GearStats,
+    val rarity: Rarity? = null,
 ) : Gear(gameId, name) {
     override fun toString(): String {
         return "Spell(id='${gameId}',\\\n name='$name',\\\n description='$description',\\\n type=$type," +

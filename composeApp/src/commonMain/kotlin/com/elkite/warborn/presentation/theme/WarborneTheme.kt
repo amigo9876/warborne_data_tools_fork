@@ -1,15 +1,30 @@
 package com.elkite.warborn.presentation.theme
 
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
 object WarborneTheme {
 
-    val drifterBorderStartColor: Color
+    val legendaryBorderStartColor: Color
         get() = Color(0xFFfcf4a3)
-    val drifterBorderEndColor: Color
+    private val legendaryBorderEndColor: Color
         get() = Color(0xFF6a2818)
-    val drifterBorderMiddleColor: Color
+    val legendaryBorderMidColor: Color
         get() = Color(0xFFcd5521)
+
+    private val rareBorderStartColor: Color
+        get() = Color(0xFF304d6c)
+    private val rareBorderMidColor: Color
+        get() = Color(0xFF597e96)
+    private val rareBorderEndColor: Color
+        get() = Color(0xFF0d2740)
+
+    private val epicBorderStartColor: Color
+        get() = Color(0xFFb95fe3)
+    private val epicBorderMidColor: Color
+        get() = Color(0xFF8b00fa)
+    private val epicBorderEndColor: Color
+        get() = Color(0xFF5823cf)
 
     val textDescriptionColor: Color
         get() = Color(0xFFc5dadf)
@@ -36,4 +51,49 @@ object WarborneTheme {
         get() = Color(0xFFed6757)
     val intelligenceColor: Color
         get() = Color(0xFF7bb1ef)
+
+
+    val legendaryBrushBackground = Brush.verticalGradient(
+        colorStops = arrayOf(
+           0.0f to legendaryBorderMidColor,
+           0.05f to legendaryBorderEndColor,
+           0.3f to Color.Black
+        )
+    )
+    val epicBrushBackground = Brush.verticalGradient(
+        colorStops = arrayOf(
+            0.0f to epicBorderMidColor,
+            0.05f to epicBorderEndColor,
+            0.3f to Color.Black
+        )
+    )
+    val rareBrushBackground = Brush.verticalGradient(
+        colorStops = arrayOf(
+            0.0f to rareBorderMidColor,
+            0.05f to rareBorderEndColor,
+            0.3f to Color.Black
+        )
+    )
+
+    val legendaryBrush = Brush.linearGradient(
+        colors = listOf(
+            legendaryBorderStartColor,
+            legendaryBorderMidColor,
+            legendaryBorderEndColor
+        )
+    )
+    val epicBrush = Brush.linearGradient(
+        colors = listOf(
+            epicBorderStartColor,
+            epicBorderMidColor,
+            epicBorderEndColor
+        )
+    )
+    val rareBrush = Brush.linearGradient(
+        colors = listOf(
+            rareBorderStartColor,
+            rareBorderMidColor,
+            rareBorderEndColor
+        )
+    )
 }

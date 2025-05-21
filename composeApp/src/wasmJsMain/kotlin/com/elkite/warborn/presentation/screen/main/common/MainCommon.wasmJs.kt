@@ -68,7 +68,7 @@ actual fun MainContent(
                 loadout = loadoutState.value,
                 loadoutType = loadoutType.value,
                 onLoadoutUrlUpdate = { url ->
-                    screenModel.updateLoadoutFromUrl(url)
+                    screenModel.updateLoadoutFromUrl(url, state)
                 },
                 onLoadoutClick = { type ->
                     val loadout = loadoutState.value

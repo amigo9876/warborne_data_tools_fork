@@ -16,7 +16,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.gear.drifter.Drifter
@@ -26,7 +25,6 @@ import com.elkite.warborn.presentation.widgets.utils.AttributeList
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedCard
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedText
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedTextTitle
-import com.elkite.warborn.presentation.widgets.utils.HighlightedSupportBonus
 
 
 @Composable
@@ -77,13 +75,7 @@ private fun DrifterCardContent(drifter: Drifter) {
             DrifterIcon(
                 Modifier.size(64.dp).border(
                     width = 1.dp,
-                    brush = Brush.linearGradient(
-                        colors = listOf(
-                            WarborneTheme.drifterBorderStartColor,
-                            WarborneTheme.drifterBorderMiddleColor,
-                            WarborneTheme.drifterBorderEndColor
-                        )
-                    ),
+                    brush = WarborneTheme.legendaryBrush,
                     shape = RectangleShape // You can change this to a different shape if needed
                 ), drifterId = drifter.gameId
             )
@@ -148,7 +140,16 @@ private fun LinksCard(drifter: Drifter) {
 
 @Composable
 private fun SupportCard(drifter: Drifter) {
-    Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+    val attributes = listOf(
+        drifter.supportBonus to drifter.supportBonusValue,
+        drifter.supportMalus to drifter.supportMalusValue
+    )
+    val colors = listOf(
+        WarborneTheme.textHealColor,
+        WarborneTheme.textDamageColor,
+    )
+
+    Column(modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth()) {
         GearStylizedTextTitle(text = "Support")
         Divider(
             modifier = Modifier.fillMaxWidth()
@@ -156,12 +157,7 @@ private fun SupportCard(drifter: Drifter) {
             color = WarborneTheme.borderSkillColor,
             thickness = 1.dp
         )
-        HighlightedSupportBonus(
-            text = drifter.supportBonus,
-        )
-        HighlightedSupportBonus(
-            text = drifter.supportMalus,
-        )
+        AttributeList(attributes = attributes, colors = colors)
     }
 }
 

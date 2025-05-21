@@ -14,6 +14,8 @@ data class Drifter(
     val intBonus: String,
     val supportBonus: String,
     val supportMalus: String,
+    val supportBonusValue: String,
+    val supportMalusValue: String,
     val links: List<Link> = emptyList(),
     val gearStats: GearStats,
     ) : Gear(

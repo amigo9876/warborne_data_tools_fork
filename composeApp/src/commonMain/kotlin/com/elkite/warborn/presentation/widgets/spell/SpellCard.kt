@@ -113,7 +113,7 @@ fun SpellCardContent(spell: Spell) {
 
             ) {
             if (!spell.gearName.isNullOrEmpty() && spell.associatedGearType != GearType.DRIFTER) {
-                ArmorImage(gearName = spell.gearName, gearType = spell.associatedGearType)
+                ArmorImage(gearName = spell.gearName, gearType = spell.associatedGearType, rarity = spell.rarity)
                 Spacer(Modifier.size(16.dp))
             }
             GearStylizedText(

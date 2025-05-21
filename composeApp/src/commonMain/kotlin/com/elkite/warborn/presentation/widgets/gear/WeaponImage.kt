@@ -20,7 +20,7 @@ fun WeaponImage(
             painter = painterResource(IconMap.getWeaponIcon(gearType)),
             contentDescription = "$gearType icon",
             modifier = modifier,
-            tint = if (isSelected) WarborneTheme.drifterBorderStartColor
+            tint = if (isSelected) WarborneTheme.legendaryBorderStartColor
                 else WarborneTheme.textDescriptionColor
         )
 }

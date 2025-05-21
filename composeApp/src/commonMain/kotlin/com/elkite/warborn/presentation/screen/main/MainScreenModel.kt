@@ -156,32 +156,26 @@ class MainScreenModel : ScreenModel {
         }
     }
 
-    fun updateLoadoutFromUrl(url: String?) {
+    fun updateLoadoutFromUrl(url: String?, state: BuildScreenState.Success) {
         val queryParams = parseQueryParams(url)
 
-        coroutineScope.launch {
-            val spells = DataRepository.getData()
-            val drifters = DataRepository.getDrifters()
-            val mods = DataRepository.getMods()
+        val newLoadout = Loadout(
+            head = queryParams["head"]?.let { gameId -> state.head.values.flatten().find { it.gameId == gameId } },
+            chest = queryParams["chest"]?.let { gameId -> state.chest.values.flatten().find { it.gameId == gameId } },
+            boots = queryParams["boots"]?.let { gameId -> state.boots.values.flatten().find { it.gameId == gameId } },
+            weapon = queryParams["weapon"]?.let { gameId -> state.weapons.values.flatten().find { it.gameId == gameId } },
+            passive = queryParams["passive"]?.let { gameId -> state.weapons.values.flatten().find { it.gameId == gameId } },
+            commonSkill = queryParams["commonSkill"]?.let { gameId -> state.weapons.values.flatten().find { it.gameId == gameId } },
+            basicAttack = queryParams["basicAttack"]?.let { gameId -> state.weapons.values.flatten().find { it.gameId == gameId } },
+            drifter = queryParams["drifter"]?.let { gameId -> state.drifters.find { it.gameId == gameId } },
+            modWeapon = queryParams["modWeapon"]?.let { id -> state.mods.find { it.gameId == id } },
+            modHead = queryParams["modHead"]?.let { id -> state.mods.find { it.gameId == id } },
+            modChest = queryParams["modChest"]?.let { id -> state.mods.find { it.gameId == id } },
+            modBoots = queryParams["modBoots"]?.let { id -> state.mods.find { it.gameId == id } }
+        )
 
-            val newLoadout = Loadout(
-                head = queryParams["head"]?.let { gameId -> spells.find { it.gameId == gameId } },
-                chest = queryParams["chest"]?.let { gameId -> spells.find { it.gameId == gameId } },
-                boots = queryParams["boots"]?.let { gameId -> spells.find { it.gameId == gameId } },
-                weapon = queryParams["weapon"]?.let { gameId -> spells.find { it.gameId == gameId } },
-                passive = queryParams["passive"]?.let { gameId -> spells.find { it.gameId == gameId } },
-                commonSkill = queryParams["commonSkill"]?.let { gameId -> spells.find { it.gameId == gameId } },
-                basicAttack = queryParams["basicAttack"]?.let { gameId -> spells.find { it.gameId == gameId } },
-                drifter = queryParams["drifter"]?.let { gameId -> drifters.find { it.gameId == gameId } },
-                modWeapon = queryParams["modWeapon"]?.let { id -> mods.find { it.gameId == id } },
-                modHead = queryParams["modHead"]?.let { id -> mods.find { it.gameId == id } },
-                modChest = queryParams["modChest"]?.let { id -> mods.find { it.gameId == id } },
-                modBoots = queryParams["modBoots"]?.let { id -> mods.find { it.gameId == id } }
-            )
-
-            if (_loadout.value != newLoadout) {
-                _loadout.value = newLoadout
-            }
+        if (_loadout.value != newLoadout) {
+            _loadout.value = newLoadout
         }
     }
 

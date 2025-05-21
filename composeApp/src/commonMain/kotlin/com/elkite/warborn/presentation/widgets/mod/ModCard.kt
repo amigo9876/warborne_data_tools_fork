@@ -105,7 +105,7 @@ fun ModCardContent(
                 ),
                 Regex("""\[\s*[^a-zA-Z\]]*](?!])""") to SpanStyle(
                     fontWeight = FontWeight.Bold,
-                    color = WarborneTheme.drifterBorderMiddleColor
+                    color = WarborneTheme.legendaryBorderMidColor
                 )
 
             )

@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.gear.LoadoutType
 import com.elkite.warborn.presentation.theme.WarborneTheme.borderSkillColor
+import com.elkite.warborn.presentation.theme.WarborneTheme.legendaryBrush
 import com.elkite.warborn.resources.Com_Clothes_Armor
 import com.elkite.warborn.resources.Com_Head_Helmet
 import com.elkite.warborn.resources.Com_Shoes_Boots
@@ -27,34 +28,64 @@ import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun EmptyLoadout(
+    isSelected: Boolean = false,
     loadoutType: LoadoutType,
     onClick: () -> Unit
 ) {
+   val modifier = if (isSelected) {
+       Modifier
+           .size(64.dp)
+           .border(
+               width = 2.dp,
+               brush = legendaryBrush,
+               shape = when (loadoutType) {
+                   LoadoutType.PASSIVE -> CutCornerShape(16.dp)
+                   LoadoutType.HEAD,
+                   LoadoutType.CHEST,
+                   LoadoutType.BOOTS,
+                   LoadoutType.WEAPON-> RectangleShape
+                   else -> RectangleShape
+               }
+           )
+           .clip(when (loadoutType) {
+               LoadoutType.PASSIVE -> CutCornerShape(16.dp)
+               LoadoutType.HEAD,
+               LoadoutType.CHEST,
+               LoadoutType.BOOTS,
+               LoadoutType.WEAPON-> RectangleShape
+               else -> RectangleShape
+           })
+           .background(Color.Black)
+           .clickable { onClick() }
+   } else {
+       Modifier
+           .size(64.dp)
+           .border(
+               width = 2.dp,
+               color = borderSkillColor,
+               shape = when (loadoutType) {
+                   LoadoutType.PASSIVE -> CutCornerShape(16.dp)
+                   LoadoutType.HEAD,
+                   LoadoutType.CHEST,
+                   LoadoutType.BOOTS,
+                   LoadoutType.WEAPON-> RectangleShape
+                   else -> RectangleShape
+               }
+           )
+           .clip(when (loadoutType) {
+               LoadoutType.PASSIVE -> CutCornerShape(16.dp)
+               LoadoutType.HEAD,
+               LoadoutType.CHEST,
+               LoadoutType.BOOTS,
+               LoadoutType.WEAPON-> RectangleShape
+               else -> RectangleShape
+           })
+           .background(Color.Black)
+           .clickable { onClick() }
+   }
+
     Box(
-        modifier = Modifier
-            .size(64.dp)
-            .border(
-                width = 2.dp,
-                color = borderSkillColor,
-                shape = when (loadoutType) {
-                    LoadoutType.PASSIVE -> CutCornerShape(16.dp)
-                    LoadoutType.HEAD,
-                    LoadoutType.CHEST,
-                    LoadoutType.BOOTS,
-                    LoadoutType.WEAPON-> CircleShape
-                    else -> RectangleShape
-                }
-            )
-            .clip(when (loadoutType) {
-                LoadoutType.PASSIVE -> CutCornerShape(16.dp)
-                LoadoutType.HEAD,
-                LoadoutType.CHEST,
-                LoadoutType.BOOTS,
-                LoadoutType.WEAPON-> CircleShape
-                else -> RectangleShape
-            })
-            .background(Color.Black)
-            .clickable { onClick() },
+        modifier = modifier,
         contentAlignment = Alignment.Center
     ) {
         Image(
