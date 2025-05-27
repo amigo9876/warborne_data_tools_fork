@@ -3,7 +3,7 @@ package com.elkite.warborn.presentation.theme
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
-object WarborneTheme {
+object WarborneColorTheme {
 
     val legendaryBorderStartColor: Color
         get() = Color(0xFFfcf4a3)
@@ -31,7 +31,7 @@ object WarborneTheme {
     val textBackgroundColor: Color
         get() = Color(0xFF1c2121)
     val textBorderColor: Color
-        get()= Color(0xFF323736)
+        get() = Color(0xFF323736)
 
     val textDamageColor: Color
         get() = Color(0xFFed6757)
@@ -55,9 +55,9 @@ object WarborneTheme {
 
     val legendaryBrushBackground = Brush.verticalGradient(
         colorStops = arrayOf(
-           0.0f to legendaryBorderMidColor,
-           0.05f to legendaryBorderEndColor,
-           0.3f to Color.Black
+            0.0f to legendaryBorderMidColor,
+            0.05f to legendaryBorderEndColor,
+            0.3f to Color.Black
         )
     )
     val epicBrushBackground = Brush.verticalGradient(
@@ -94,6 +94,29 @@ object WarborneTheme {
             rareBorderStartColor,
             rareBorderMidColor,
             rareBorderEndColor
+        )
+    )
+    val weaponSpellsCardBrushSelected = Brush.linearGradient(
+        colorStops = arrayOf(
+            0.0f to legendaryBorderMidColor.copy(alpha = 1f),
+            0.5f to legendaryBorderStartColor.copy(alpha = 1f),
+            0.6f to legendaryBorderStartColor.copy(alpha = 0.8f),
+            0.8f to legendaryBorderStartColor.copy(alpha = 0.5f),
+            0.9f to legendaryBorderStartColor.copy(alpha = 0.3f),
+            1.0f to borderSkillColor.copy(alpha = 0.05f)
+
+        )
+    )
+
+    val weaponSpellsCardBrushUnSelected = Brush.linearGradient(
+        colorStops = arrayOf(
+            0.0f to legendaryBorderStartColor.copy(alpha = 0.8f),
+            0.3f to legendaryBorderStartColor.copy(alpha = 0.5f),
+            0.6f to legendaryBorderStartColor.copy(alpha = 0.3f),
+            0.8f to legendaryBorderStartColor.copy(alpha = 0.2f),
+            0.9f to borderSkillColor.copy(alpha = 0.3f),
+            1.0f to borderSkillColor.copy(alpha = 0.05f)
+
         )
     )
 }

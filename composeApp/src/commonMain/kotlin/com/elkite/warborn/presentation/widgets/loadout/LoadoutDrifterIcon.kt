@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.gear.LoadoutType
 import com.elkite.warborn.domain.entities.gear.drifter.Drifter
-import com.elkite.warborn.presentation.theme.WarborneTheme
+import com.elkite.warborn.presentation.theme.WarborneColorTheme
 import com.elkite.warborn.presentation.widgets.drifter.DrifterIcon
 import com.elkite.warborn.resources.ParagonPortrait_None
 import com.elkite.warborn.resources.Res
@@ -34,7 +34,7 @@ fun LoadoutDrifterIcon(
                 .size(64.dp)
                 .border(
                     width = 2.dp,
-                    brush = WarborneTheme.legendaryBrush,
+                    brush = WarborneColorTheme.legendaryBrush,
                     shape = RectangleShape // You can change this to a different shape if needed
                 )
                 .background(Color.Black)
@@ -50,7 +50,7 @@ fun LoadoutDrifterIcon(
                 painter = painterResource(Res.drawable.ParagonPortrait_None),
                 contentDescription = null,
                 modifier = Modifier.size(64.dp)
-                    .clip(CutCornerShape(16.dp))
+                    .clip(CutCornerShape(12.dp))
             )
         }
     }

@@ -1,7 +1,6 @@
 package com.elkite.warborn.presentation.widgets.mod
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
@@ -10,8 +9,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonColors
@@ -30,10 +29,11 @@ import com.elkite.warborn.domain.entities.gear.LoadoutType
 import com.elkite.warborn.domain.entities.gear.mods.Mod
 import com.elkite.warborn.domain.entities.gear.mods.ModSlot
 import com.elkite.warborn.domain.entities.gear.mods.ModType
-import com.elkite.warborn.presentation.theme.WarborneTheme
+import com.elkite.warborn.presentation.theme.WarborneColorTheme
 import com.elkite.warborn.presentation.widgets.gear.WeaponImage
-import com.elkite.warborn.presentation.widgets.utils.GearStylizedCard
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedText
+import com.elkite.warborn.presentation.widgets.utils.isCompact
+import com.elkite.warborn.presentation.widgets.utils.isMedium
 import com.elkite.warborn.resources.Com_Clothes_Armor
 import com.elkite.warborn.resources.Com_Head_Helmet
 import com.elkite.warborn.resources.Com_Shoes_Boots
@@ -56,7 +56,6 @@ fun ModSmallList(
         LoadoutType.MOD_BOOTS
     )
     val selectedIndex = remember { mutableStateOf(0) }
-
     val currentMods = derivedStateOf {
         when (subcategoryOptions[selectedIndex.value]) {
             LoadoutType.MOD_WEAPON -> mods.filter { it.type == ModType.WEAPON }
@@ -66,7 +65,8 @@ fun ModSmallList(
             else -> emptyList()
         }
     }
-    val scrollState = rememberScrollState()
+    val modsAll = currentMods.value.filter { it.slot == ModSlot.ALL }
+    val rest = currentMods.value.filter { it.slot != ModSlot.ALL }
 
     LaunchedEffect(loadoutType) {
         selectedIndex.value = when (loadoutType) {
@@ -78,130 +78,141 @@ fun ModSmallList(
     }
 
 
-    Column(modifier = modifier) {
+    Column(modifier = modifier.fillMaxWidth()) {
         SingleChoiceSegmentedButtonRow(
-            modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp),
+            modifier = Modifier.padding(bottom = 8.dp),
         ) {
             subcategoryOptions.forEachIndexed { index, label ->
                 SegmentedButton(
                     onClick = { selectedIndex.value = index },
                     selected = index == selectedIndex.value,
-                    label = { when (label) {
-                        LoadoutType.MOD_WEAPON -> Image(
-                            modifier = Modifier.size(24.dp),
-                            painter = painterResource(Res.drawable.Com_Weapon_Sword),
-                            contentDescription = null,
+                    label = {
+                        when (label) {
+                            LoadoutType.MOD_WEAPON -> Image(
+                                modifier = Modifier.size(32.dp),
+                                painter = painterResource(Res.drawable.Com_Weapon_Sword),
+                                contentDescription = null,
 
-                        )
-                        LoadoutType.MOD_HEAD -> Image(
-                            modifier = Modifier.size(24.dp),
-                            painter = painterResource(Res.drawable.Com_Head_Helmet),
-                            contentDescription = null,
+                                )
 
+                            LoadoutType.MOD_HEAD -> Image(
+                                modifier = Modifier.size(32.dp),
+                                painter = painterResource(Res.drawable.Com_Head_Helmet),
+                                contentDescription = null,
+
+                                )
+
+                            LoadoutType.MOD_CHEST -> Image(
+                                modifier = Modifier.size(32.dp),
+                                painter = painterResource(Res.drawable.Com_Clothes_Armor),
+                                contentDescription = null,
+
+                                )
+
+                            LoadoutType.MOD_BOOTS -> Image(
+                                modifier = Modifier.size(32.dp),
+                                painter = painterResource(Res.drawable.Com_Shoes_Boots),
+                                contentDescription = null,
+
+                                )
+
+                            else -> Icon(
+                                modifier = Modifier.size(32.dp),
+                                painter = painterResource(Res.drawable.error_emoji),
+                                contentDescription = null,
                             )
-                        LoadoutType.MOD_CHEST -> Image(
-                            modifier = Modifier.size(24.dp),
-                            painter = painterResource(Res.drawable.Com_Clothes_Armor),
-                            contentDescription = null,
-
-                            )
-                        LoadoutType.MOD_BOOTS -> Image(
-                            modifier = Modifier.size(24.dp),
-                            painter = painterResource(Res.drawable.Com_Shoes_Boots),
-                            contentDescription = null,
-
-                            )
-                        else -> Icon(
-                            modifier = Modifier.size(24.dp),
-                            painter = painterResource(Res.drawable.error_emoji),
-                            contentDescription = null,
-                        )
-                    } },
+                        }
+                    },
                     shape = RectangleShape,
                     colors = SegmentedButtonColors(
-                        activeBorderColor = WarborneTheme.textDescriptionColor,
-                        activeContainerColor = WarborneTheme.textBackgroundColor,
-                        activeContentColor = WarborneTheme.textDescriptionColor,
-                        inactiveBorderColor = WarborneTheme.borderSkillColor,
-                        inactiveContainerColor = WarborneTheme.textBackgroundColor,
-                        inactiveContentColor = WarborneTheme.textDescriptionColor,
-                        disabledActiveContainerColor = WarborneTheme.textBackgroundColor,
-                        disabledActiveContentColor = WarborneTheme.textBackgroundColor,
-                        disabledActiveBorderColor = WarborneTheme.textBackgroundColor,
-                        disabledInactiveContainerColor = WarborneTheme.textBackgroundColor,
-                        disabledInactiveContentColor = WarborneTheme.textBackgroundColor,
-                        disabledInactiveBorderColor = WarborneTheme.textBackgroundColor,
+                        activeBorderColor = WarborneColorTheme.borderSkillHightlightColor,
+                        activeContainerColor = WarborneColorTheme.textBackgroundColor,
+                        activeContentColor = WarborneColorTheme.textDescriptionColor,
+                        inactiveBorderColor = WarborneColorTheme.borderSkillColor,
+                        inactiveContainerColor = WarborneColorTheme.textBackgroundColor,
+                        inactiveContentColor = WarborneColorTheme.borderSkillColor,
+                        disabledActiveContainerColor = WarborneColorTheme.textBackgroundColor,
+                        disabledActiveContentColor = WarborneColorTheme.textBackgroundColor,
+                        disabledActiveBorderColor = WarborneColorTheme.textBackgroundColor,
+                        disabledInactiveContainerColor = WarborneColorTheme.textBackgroundColor,
+                        disabledInactiveContentColor = WarborneColorTheme.textBackgroundColor,
+                        disabledInactiveBorderColor = WarborneColorTheme.textBackgroundColor,
                     )
                 )
             }
         }
 
-        GearStylizedCard(
-            modifier = Modifier.wrapContentHeight(),
-            composable = {
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth()
+
+        LazyColumn(
+            modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp),
+        ) {
+            item {
+                GearStylizedText(
+                    text = ModSlot.ALL.name.lowercase().capitalize(),
+                )
+                Divider(
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(top = 8.dp, bottom = 16.dp),
+                    color = WarborneColorTheme.borderSkillColor,
+                    thickness = 1.dp
+                )
+
+                FlowRow(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                    horizontalArrangement = if (isCompact() || isMedium()) Arrangement.spacedBy(4.dp) else Arrangement.SpaceBetween,
+                    maxItemsInEachRow = if (isCompact() || isMedium()) 5 else 7
                 ) {
-
-                    val modsAll = currentMods.value.filter { it.slot == ModSlot.ALL }
-                    val rest = currentMods.value.filter { it.slot != ModSlot.ALL }
-
-                    Column(
-                        modifier = Modifier.wrapContentHeight().fillMaxWidth().padding(16.dp),
-                        verticalArrangement = Arrangement.Center,
-                    ) {
-                        GearStylizedText(
-                            text = ModSlot.ALL.name.lowercase().capitalize(),
-                            modifier = Modifier.padding(bottom = 8.dp)
+                    modsAll.map {
+                        ModImage(
+                            mod = it,
+                            onClick = {
+                                onModClick(it, subcategoryOptions[selectedIndex.value])
+                            }
                         )
+                    }
 
-                        FlowRow(
-                            modifier = Modifier.fillMaxWidth().horizontalScroll(scrollState),
-                            horizontalArrangement = Arrangement.SpaceEvenly,
-                            verticalArrangement = Arrangement.spacedBy(8.dp),
-                            maxItemsInEachRow = 4
-                        ) {
-                            modsAll.map {
+                }
+            }
+            if (rest.isNotEmpty()) {
+                item {
+                    Spacer(modifier = Modifier.size(16.dp))
+                    GearStylizedText(
+                        text = "Others",
+                    )
+                    Divider(
+                        modifier = Modifier.fillMaxWidth()
+                            .padding(top = 8.dp, bottom = 16.dp),
+                        color = WarborneColorTheme.borderSkillColor,
+                        thickness = 1.dp
+                    )
+                    FlowRow(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalArrangement = Arrangement.spacedBy(4.dp),
+                        horizontalArrangement = if (isCompact() || isMedium()) Arrangement.spacedBy(4.dp) else Arrangement.SpaceEvenly,
+                        maxItemsInEachRow = if (isCompact() || isMedium()) 3 else 4
+                    ) {
+                        rest.map {
+                            if (it.type == ModType.ARMOR)
                                 ModImage(
                                     mod = it,
                                     onClick = {
                                         onModClick(it, subcategoryOptions[selectedIndex.value])
                                     }
                                 )
-                            }
-
-                        }
-                        if (rest.isNotEmpty()) {
-                            GearStylizedText(
-                                text = "Others",
-                                modifier = Modifier.padding(bottom = 8.dp)
-                            )
-
-                            FlowRow(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceEvenly,
-                                verticalArrangement = Arrangement.spacedBy(8.dp),
-                                maxItemsInEachRow = 4
-                            ) {
-                                rest.map {
-                                    if (it.type == ModType.ARMOR)
-                                    ModImage(
-                                        mod = it,
-                                        onClick = {
-                                            onModClick(it, subcategoryOptions[selectedIndex.value])
-                                        }
-                                    )
-                                    else
-                                        WeaponExclusiveMod(it, onModClick, subcategoryOptions, selectedIndex)
-                                }
-                            }
+                            else
+                                WeaponExclusiveMod(
+                                    it,
+                                    onModClick,
+                                    subcategoryOptions,
+                                    selectedIndex
+                                )
                         }
                     }
                 }
             }
-        )
+        }
     }
 }
 

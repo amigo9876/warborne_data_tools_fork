@@ -1,12 +1,13 @@
 package com.elkite.warborn.presentation.widgets.gear
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.gear.GearType
-import com.elkite.warborn.presentation.theme.WarborneTheme
+import com.elkite.warborn.presentation.theme.WarborneColorTheme
 import com.elkite.warborn.util.IconMap
 import org.jetbrains.compose.resources.painterResource
 
@@ -16,11 +17,11 @@ fun WeaponImage(
     gearType: GearType,
     isSelected: Boolean = false,
 ) {
-        Icon(
+        Image(
             painter = painterResource(IconMap.getWeaponIcon(gearType)),
             contentDescription = "$gearType icon",
             modifier = modifier,
-            tint = if (isSelected) WarborneTheme.legendaryBorderStartColor
-                else WarborneTheme.textDescriptionColor
+            colorFilter = if (isSelected) ColorFilter.tint(WarborneColorTheme.legendaryBorderStartColor)
+            else ColorFilter.tint(WarborneColorTheme.textDescriptionColor),
         )
 }

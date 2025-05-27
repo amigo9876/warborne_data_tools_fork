@@ -5,17 +5,16 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.gear.LoadoutType
 import com.elkite.warborn.domain.entities.gear.spell.Spell
-import com.elkite.warborn.presentation.theme.WarborneTheme
-import com.elkite.warborn.presentation.theme.WarborneTheme.borderSkillColor
+import com.elkite.warborn.presentation.theme.WarborneColorTheme
+import com.elkite.warborn.presentation.theme.WarborneColorTheme.borderSkillColor
+import com.elkite.warborn.presentation.theme.spellBorderPassive
 import com.elkite.warborn.presentation.widgets.spell.SpellIcon
 
 @Composable
@@ -28,22 +27,9 @@ fun LoadoutSpellIcon(
 ) {
     val transformModifier = when (loadoutType) {
         LoadoutType.PASSIVE -> modifier
-            .clip(CutCornerShape(16.dp))
-            .let {
-                if (isSelected) {
-                    it.border(
-                        width = 3.dp,
-                        brush = WarborneTheme.legendaryBrush,
-                        shape = CutCornerShape(16.dp)
-                    )
-                } else {
-                    it.border(
-                        width = 2.dp,
-                        color = borderSkillColor,
-                        shape = CutCornerShape(16.dp)
-                    )
-                }
-            }
+            .spellBorderPassive(
+                isSelected = isSelected,
+            )
             .background(Color.Black)
             .clickable {
                 onClick()
@@ -55,7 +41,7 @@ fun LoadoutSpellIcon(
                 if (isSelected) {
                     it.border(
                         width = 3.dp,
-                        brush = WarborneTheme.legendaryBrush,
+                        brush = WarborneColorTheme.legendaryBrush,
                         shape = RectangleShape
                     )
                 } else {

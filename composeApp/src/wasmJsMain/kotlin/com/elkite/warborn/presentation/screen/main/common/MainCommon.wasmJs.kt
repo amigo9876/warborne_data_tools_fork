@@ -1,5 +1,8 @@
 package com.elkite.warborn.presentation.screen.main.common
 
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.FlowRow
@@ -14,7 +17,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.paint
+import androidx.compose.ui.layout.ContentScale.Companion.Crop
 import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.gear.Gear
 import com.elkite.warborn.domain.entities.gear.LoadoutType
@@ -42,15 +45,22 @@ actual fun MainContent(
     val loadoutState = screenModel.loadout.collectAsState()
     val scrollableState = rememberScrollState()
 
+    Box(modifier = Modifier.fillMaxSize()){
 
-    Box(
-        modifier = Modifier.paint(
-            painterResource(IconMap.getDrifterFullBodyBg(loadoutState.value.drifter)),
-            contentScale = androidx.compose.ui.layout.ContentScale.FillBounds,
-            alignment = Alignment.Center,
-            alpha = 0.5f
-        )
-    ) {
+        Crossfade(
+            targetState = loadoutState.value.drifter,
+            animationSpec = tween()
+        ) { drifter ->
+            Image(
+                modifier = Modifier.fillMaxSize(),
+                painter = painterResource(IconMap.getDrifterFullBodyBg(drifter)),
+                contentScale = Crop,
+                alignment = Alignment.BottomCenter,
+                alpha = 0.3f,
+                contentDescription = null,
+            )
+        }
+
         GearStylizedText(
             text = "This app is not affiliated with or endorsed by QOOLAND",
             style = MaterialTheme.typography.subtitle2,
@@ -61,6 +71,7 @@ actual fun MainContent(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(scrollableState),
+            verticalArrangement = Arrangement.Top,
             horizontalArrangement = Arrangement.SpaceBetween,
             maxItemsInEachRow = 3
         ) {
@@ -112,16 +123,23 @@ actual fun MainContent(
                         }
 
                         LoadoutType.MOD_WEAPON -> {
-                            loadout.modWeapon ?: state.mods.first { it.type == ModType.WEAPON && it.slot == ModSlot.ALL }
+                            loadout.modWeapon
+                                ?: state.mods.first { it.type == ModType.WEAPON && it.slot == ModSlot.ALL }
                         }
+
                         LoadoutType.MOD_HEAD -> {
-                            loadout.modHead ?: state.mods.first { it.type == ModType.ARMOR && it.slot == ModSlot.ALL }
+                            loadout.modHead
+                                ?: state.mods.first { it.type == ModType.ARMOR && it.slot == ModSlot.ALL }
                         }
+
                         LoadoutType.MOD_CHEST -> {
-                            loadout.modChest ?: state.mods.first { it.type == ModType.ARMOR && it.slot == ModSlot.CHEST }
+                            loadout.modChest
+                                ?: state.mods.first { it.type == ModType.ARMOR && it.slot == ModSlot.CHEST }
                         }
+
                         LoadoutType.MOD_BOOTS -> {
-                            loadout.modBoots ?: state.mods.first { it.type == ModType.ARMOR && it.slot == ModSlot.BOOTS }
+                            loadout.modBoots
+                                ?: state.mods.first { it.type == ModType.ARMOR && it.slot == ModSlot.BOOTS }
                         }
                     }
                 },
@@ -139,14 +157,14 @@ actual fun MainContent(
                         loadoutType.value = LoadoutType.DRIFTER
                     } else if (it is Mod) {
                         loadoutType.value =
-                           when (it.type) {
+                            when (it.type) {
                                 ModType.WEAPON -> LoadoutType.MOD_WEAPON
                                 ModType.ARMOR -> when (it.slot) {
                                     ModSlot.CHEST -> LoadoutType.MOD_CHEST
                                     ModSlot.BOOTS -> LoadoutType.MOD_BOOTS
                                     else -> loadoutType.value
                                 }
-                        }
+                            }
                     }
                 },
                 onUpdateLoadout = {
@@ -169,7 +187,6 @@ actual fun MainContent(
                 }
             )
             DescriptionColumn(gear.value)
-
         }
     }
 }

@@ -13,7 +13,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.gear.mods.Mod
-import com.elkite.warborn.presentation.theme.WarborneTheme
+import com.elkite.warborn.presentation.theme.WarborneColorTheme
 import com.elkite.warborn.util.IconMap
 import org.jetbrains.compose.resources.painterResource
 
@@ -27,13 +27,13 @@ fun LoadoutModIcon(
     val borderModifier = if (isSelected) {
         modifier.border(
             width = 3.dp,
-            brush = WarborneTheme.legendaryBrush,
+            brush = WarborneColorTheme.legendaryBrush,
             shape = RoundedCornerShape(16.dp)
         ).clip(RoundedCornerShape(16.dp)).clickable { onClick() }
     } else {
         modifier.border(
             width = 3.dp,
-            color = WarborneTheme.borderSkillColor,
+            color = WarborneColorTheme.borderSkillColor,
             shape = RoundedCornerShape(16.dp)
         ).clip(RoundedCornerShape(16.dp)).clickable { onClick() }
     }

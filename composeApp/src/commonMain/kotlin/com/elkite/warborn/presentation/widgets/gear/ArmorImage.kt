@@ -12,7 +12,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.gear.GearType
 import com.elkite.warborn.domain.entities.gear.Rarity
-import com.elkite.warborn.presentation.theme.WarborneTheme
+import com.elkite.warborn.presentation.theme.WarborneColorTheme
 import com.elkite.warborn.util.GearIconMap
 import org.jetbrains.compose.resources.painterResource
 
@@ -30,19 +30,19 @@ fun ArmorImage(
                     .border(
                         width = 2.dp,
                         brush = when (rarity) {
-                            Rarity.LEGENDARY -> WarborneTheme.legendaryBrush
-                            Rarity.EPIC -> WarborneTheme.epicBrush
-                            Rarity.RARE -> WarborneTheme.rareBrush
-                            null -> WarborneTheme.legendaryBrush
+                            Rarity.LEGENDARY -> WarborneColorTheme.legendaryBrush
+                            Rarity.EPIC -> WarborneColorTheme.epicBrush
+                            Rarity.RARE -> WarborneColorTheme.rareBrush
+                            null -> WarborneColorTheme.legendaryBrush
                         },
                         shape = RectangleShape
                     )
                     .background(
                         brush = when (rarity) {
-                            Rarity.LEGENDARY -> WarborneTheme.legendaryBrushBackground
-                            Rarity.EPIC -> WarborneTheme.epicBrushBackground
-                            Rarity.RARE -> WarborneTheme.rareBrushBackground
-                            null -> WarborneTheme.legendaryBrushBackground
+                            Rarity.LEGENDARY -> WarborneColorTheme.legendaryBrushBackground
+                            Rarity.EPIC -> WarborneColorTheme.epicBrushBackground
+                            Rarity.RARE -> WarborneColorTheme.rareBrushBackground
+                            null -> WarborneColorTheme.legendaryBrushBackground
                         },
                         shape = RectangleShape
                     )

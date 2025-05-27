@@ -101,53 +101,50 @@ class MainScreenModel : ScreenModel {
     private fun loadSpells() {
         coroutineScope.launch {
             try {
-                val spells = DataRepository.getData()
-                val drifters = DataRepository.getDrifters()
-                val mods = DataRepository.getMods()
-                val lastDataUpdate = DataRepository.getLastUpdateData()
+                val data = DataRepository.getData()
 
                 _screenState.update {
                     BuildScreenState.Success(
-                        lastDataUpdate = lastDataUpdate,
+                        lastDataUpdate = data.lastUpdate,
                         head = HashMap(
                             mapOf(
-                                GearStats.STR to spells.filter { it.associatedGearType == GearType.HEAD && it.gearStats == GearStats.STR },
-                                GearStats.AGI to spells.filter { it.associatedGearType == GearType.HEAD && it.gearStats == GearStats.AGI },
-                                GearStats.INT to spells.filter { it.associatedGearType == GearType.HEAD && it.gearStats == GearStats.INT }
+                                GearStats.STR to data.spells.filter { it.associatedGearType == GearType.HEAD && it.gearStats == GearStats.STR },
+                                GearStats.AGI to data.spells.filter { it.associatedGearType == GearType.HEAD && it.gearStats == GearStats.AGI },
+                                GearStats.INT to data.spells.filter { it.associatedGearType == GearType.HEAD && it.gearStats == GearStats.INT }
                             )
                         ),
                         chest = HashMap(
                             mapOf(
-                                GearStats.STR to spells.filter { it.associatedGearType == GearType.CHEST && it.gearStats == GearStats.STR },
-                                GearStats.AGI to spells.filter { it.associatedGearType == GearType.CHEST && it.gearStats == GearStats.AGI },
-                                GearStats.INT to spells.filter { it.associatedGearType == GearType.CHEST && it.gearStats == GearStats.INT }
+                                GearStats.STR to data.spells.filter { it.associatedGearType == GearType.CHEST && it.gearStats == GearStats.STR },
+                                GearStats.AGI to data.spells.filter { it.associatedGearType == GearType.CHEST && it.gearStats == GearStats.AGI },
+                                GearStats.INT to data.spells.filter { it.associatedGearType == GearType.CHEST && it.gearStats == GearStats.INT }
                             )
                         ),
                         boots = HashMap(
                             mapOf(
-                                GearStats.STR to spells.filter { it.associatedGearType == GearType.BOOTS && it.gearStats == GearStats.STR },
-                                GearStats.AGI to spells.filter { it.associatedGearType == GearType.BOOTS && it.gearStats == GearStats.AGI },
-                                GearStats.INT to spells.filter { it.associatedGearType == GearType.BOOTS && it.gearStats == GearStats.INT }
+                                GearStats.STR to data.spells.filter { it.associatedGearType == GearType.BOOTS && it.gearStats == GearStats.STR },
+                                GearStats.AGI to data.spells.filter { it.associatedGearType == GearType.BOOTS && it.gearStats == GearStats.AGI },
+                                GearStats.INT to data.spells.filter { it.associatedGearType == GearType.BOOTS && it.gearStats == GearStats.INT }
                             )
                         ),
                         weapons = HashMap(
                             mapOf(
-                                GearType.SWORD to spells.filter { it.associatedGearType == GearType.SWORD },
-                                GearType.GUN to spells.filter { it.associatedGearType == GearType.GUN },
-                                GearType.AXE to spells.filter { it.associatedGearType == GearType.AXE },
-                                GearType.MACE to spells.filter { it.associatedGearType == GearType.MACE },
-                                GearType.BOW to spells.filter { it.associatedGearType == GearType.BOW },
-                                GearType.SPEAR to spells.filter { it.associatedGearType == GearType.SPEAR },
-                                GearType.NATURE to spells.filter { it.associatedGearType == GearType.NATURE },
-                                GearType.DAGGER to spells.filter { it.associatedGearType == GearType.DAGGER },
-                                GearType.FIRE to spells.filter { it.associatedGearType == GearType.FIRE },
-                                GearType.FROST to spells.filter { it.associatedGearType == GearType.FROST },
-                                GearType.CURSE to spells.filter { it.associatedGearType == GearType.CURSE },
-                                GearType.HOLY to spells.filter { it.associatedGearType == GearType.HOLY }
+                                GearType.SWORD to data.spells.filter { it.associatedGearType == GearType.SWORD },
+                                GearType.GUN to data.spells.filter { it.associatedGearType == GearType.GUN },
+                                GearType.AXE to data.spells.filter { it.associatedGearType == GearType.AXE },
+                                GearType.MACE to data.spells.filter { it.associatedGearType == GearType.MACE },
+                                GearType.BOW to data.spells.filter { it.associatedGearType == GearType.BOW },
+                                GearType.SPEAR to data.spells.filter { it.associatedGearType == GearType.SPEAR },
+                                GearType.NATURE to data.spells.filter { it.associatedGearType == GearType.NATURE },
+                                GearType.DAGGER to data.spells.filter { it.associatedGearType == GearType.DAGGER },
+                                GearType.FIRE to data.spells.filter { it.associatedGearType == GearType.FIRE },
+                                GearType.FROST to data.spells.filter { it.associatedGearType == GearType.FROST },
+                                GearType.CURSE to data.spells.filter { it.associatedGearType == GearType.CURSE },
+                                GearType.HOLY to data.spells.filter { it.associatedGearType == GearType.HOLY }
                             )
                         ),
-                        drifters = drifters,
-                        mods = mods
+                        drifters = data.drifters,
+                        mods = data.mods
                     )
                 }
             } catch (e: Exception) {

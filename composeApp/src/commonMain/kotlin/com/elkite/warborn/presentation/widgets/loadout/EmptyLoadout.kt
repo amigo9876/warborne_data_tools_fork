@@ -16,8 +16,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.gear.LoadoutType
-import com.elkite.warborn.presentation.theme.WarborneTheme.borderSkillColor
-import com.elkite.warborn.presentation.theme.WarborneTheme.legendaryBrush
+import com.elkite.warborn.presentation.theme.WarborneColorTheme.borderSkillColor
+import com.elkite.warborn.presentation.theme.WarborneColorTheme.legendaryBrush
 import com.elkite.warborn.resources.Com_Clothes_Armor
 import com.elkite.warborn.resources.Com_Head_Helmet
 import com.elkite.warborn.resources.Com_Shoes_Boots
@@ -39,7 +39,7 @@ fun EmptyLoadout(
                width = 2.dp,
                brush = legendaryBrush,
                shape = when (loadoutType) {
-                   LoadoutType.PASSIVE -> CutCornerShape(16.dp)
+                   LoadoutType.PASSIVE -> CutCornerShape(12.dp)
                    LoadoutType.HEAD,
                    LoadoutType.CHEST,
                    LoadoutType.BOOTS,
@@ -48,7 +48,7 @@ fun EmptyLoadout(
                }
            )
            .clip(when (loadoutType) {
-               LoadoutType.PASSIVE -> CutCornerShape(16.dp)
+               LoadoutType.PASSIVE -> CutCornerShape(12.dp)
                LoadoutType.HEAD,
                LoadoutType.CHEST,
                LoadoutType.BOOTS,
@@ -64,7 +64,7 @@ fun EmptyLoadout(
                width = 2.dp,
                color = borderSkillColor,
                shape = when (loadoutType) {
-                   LoadoutType.PASSIVE -> CutCornerShape(16.dp)
+                   LoadoutType.PASSIVE -> CutCornerShape(12.dp)
                    LoadoutType.HEAD,
                    LoadoutType.CHEST,
                    LoadoutType.BOOTS,
@@ -73,7 +73,7 @@ fun EmptyLoadout(
                }
            )
            .clip(when (loadoutType) {
-               LoadoutType.PASSIVE -> CutCornerShape(16.dp)
+               LoadoutType.PASSIVE -> CutCornerShape(12.dp)
                LoadoutType.HEAD,
                LoadoutType.CHEST,
                LoadoutType.BOOTS,
@@ -103,7 +103,7 @@ fun EmptyLoadout(
             modifier = Modifier.size(48.dp)
                 .let {
                     when (loadoutType) {
-                        LoadoutType.PASSIVE -> return@let it.clip(CutCornerShape(16.dp))
+                        LoadoutType.PASSIVE -> return@let it.clip(CutCornerShape(12.dp))
                         LoadoutType.HEAD,
                         LoadoutType.CHEST,
                         LoadoutType.BOOTS,

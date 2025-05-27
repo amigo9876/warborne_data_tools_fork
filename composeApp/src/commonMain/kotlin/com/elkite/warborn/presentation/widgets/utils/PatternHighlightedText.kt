@@ -10,7 +10,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
-import com.elkite.warborn.presentation.theme.WarborneTheme
+import com.elkite.warborn.presentation.theme.WarborneColorTheme
 
 @Composable
 fun MultiPatternHighlightedText(
@@ -64,12 +64,12 @@ data class MatchData(val start: Int, val end: Int, val text: String, val style: 
 @Composable
 fun HighlightedSupportBonus(
     text: String,
-    bonusColor: Color = WarborneTheme.dexterityColor,
-    malusColor: Color = WarborneTheme.strengthColor
+    bonusColor: Color = WarborneColorTheme.dexterityColor,
+    malusColor: Color = WarborneColorTheme.strengthColor
 ) {
     MultiPatternHighlightedText(
         text = text,
-        baseTextStyle = MaterialTheme.typography.body1.copy(color = WarborneTheme.textDescriptionColor)
+        baseTextStyle = MaterialTheme.typography.body1.copy(color = WarborneColorTheme.textDescriptionColor)
             .copy(
                 fontFamily = FontFamily.Monospace
             ),

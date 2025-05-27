@@ -22,7 +22,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.gear.mods.Mod
-import com.elkite.warborn.presentation.theme.WarborneTheme
+import com.elkite.warborn.presentation.theme.WarborneColorTheme
+import com.elkite.warborn.presentation.theme.spellBorder
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedCard
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedTextTitle
 import com.elkite.warborn.presentation.widgets.utils.MultiPatternHighlightedText
@@ -64,7 +65,6 @@ fun ModCardContent(
 ) {
     Column(
         modifier = Modifier.wrapContentSize().padding(vertical = 16.dp, horizontal = 16.dp),
-        verticalArrangement = Arrangement.Top
     ) {
         Row(
             modifier = Modifier,
@@ -72,40 +72,40 @@ fun ModCardContent(
             horizontalArrangement = Arrangement.Start,
         ) {
             ModImage(
-                modifier = Modifier.size(64.dp), mod = mod
+                modifier = Modifier.size(64.dp).spellBorder(), mod = mod
             )
             Spacer(Modifier.size(16.dp))
             GearStylizedTextTitle(text = mod.name)
         }
         Divider(
             modifier = Modifier.fillMaxWidth().padding(top = 8.dp, bottom = 16.dp),
-            color = WarborneTheme.borderSkillColor,
+            color = WarborneColorTheme.borderSkillColor,
             thickness = 1.dp
         )
         val description =
             formatDescription(description = mod.description, arguments = mod.arguments)
         MultiPatternHighlightedText(
-            baseTextStyle = MaterialTheme.typography.body1.copy(color = WarborneTheme.textDescriptionColor)
+            baseTextStyle = MaterialTheme.typography.body1.copy(color = WarborneColorTheme.textDescriptionColor)
                 .copy(
                     fontFamily = FontFamily.Monospace
                 ),
             text = description,
             patternsWithStyles = listOf(
                 Regex("""\[Damage Rate: [^\]]+]]""") to SpanStyle(
-                    color = WarborneTheme.textDamageColor,
+                    color = WarborneColorTheme.textDamageColor,
                     fontWeight = FontWeight.Bold
                 ),
                 Regex("""\[Healing Rate: [^\]]+]]""") to SpanStyle(
-                    color = WarborneTheme.textHealColor,
+                    color = WarborneColorTheme.textHealColor,
                     fontWeight = FontWeight.Bold
                 ),
                 Regex("""\[Target-based Max HP [^\]]+]]""") to SpanStyle(
-                    color = WarborneTheme.textShieldColor,
+                    color = WarborneColorTheme.textShieldColor,
                     fontWeight = FontWeight.Bold
                 ),
                 Regex("""\[\s*[^a-zA-Z\]]*](?!])""") to SpanStyle(
                     fontWeight = FontWeight.Bold,
-                    color = WarborneTheme.legendaryBorderMidColor
+                    color = WarborneColorTheme.legendaryBorderMidColor
                 )
 
             )

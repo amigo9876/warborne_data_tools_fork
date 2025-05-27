@@ -24,7 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.gear.GearType
 import com.elkite.warborn.domain.entities.gear.spell.Spell
-import com.elkite.warborn.presentation.theme.WarborneTheme
+import com.elkite.warborn.presentation.theme.WarborneColorTheme
 import com.elkite.warborn.presentation.widgets.gear.ArmorImage
 import com.elkite.warborn.presentation.widgets.utils.AttributeList
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedCard
@@ -43,9 +43,11 @@ fun SpellCardList(
         modifier = modifier.width(600.dp).background(color = Color.Transparent).padding(horizontal = 16.dp),
     ) {
         spells.forEach { spell ->
-            Spacer(Modifier.size(12.dp))
-            SpellCard(onSpellClick, spell)
-            Spacer(Modifier.size(12.dp))
+            Column {
+                Spacer(Modifier.size(12.dp))
+                SpellCard(onSpellClick, spell)
+                Spacer(Modifier.size(12.dp))
+            }
         }
     }
 }
@@ -73,7 +75,7 @@ fun SpellCardContent(spell: Spell) {
             SpellIcon(
                 Modifier.size(64.dp).border(
                     1.dp,
-                    color = WarborneTheme.borderSkillColor,
+                    color = WarborneColorTheme.borderSkillColor,
                 ), gearType = spell.associatedGearType, spellType = spell.type, id = spell.gameId
             )
             Spacer(Modifier.size(16.dp))
@@ -81,27 +83,27 @@ fun SpellCardContent(spell: Spell) {
         }
         Divider(
             modifier = Modifier.fillMaxWidth().padding(top = 8.dp, bottom = 16.dp),
-            color = WarborneTheme.borderSkillColor,
+            color = WarborneColorTheme.borderSkillColor,
             thickness = 1.dp
         )
         SpellAttributes(spell)
         Spacer(Modifier.size(16.dp))
         MultiPatternHighlightedText(
-            baseTextStyle = MaterialTheme.typography.body1.copy(color = WarborneTheme.textDescriptionColor).copy(
+            baseTextStyle = MaterialTheme.typography.body1.copy(color = WarborneColorTheme.textDescriptionColor).copy(
                     fontFamily = FontFamily.Monospace
                     ),
             text = spell.description,
             patternsWithStyles = listOf(
                 Regex("""\[Damage Rate: [^\]]+]""") to SpanStyle(
-                    color = WarborneTheme.textDamageColor,
+                    color = WarborneColorTheme.textDamageColor,
                     fontWeight = FontWeight.Bold
                 ),
                 Regex("""\[Healing Rate: [^\]]+]""") to SpanStyle(
-                    color = WarborneTheme.textHealColor,
+                    color = WarborneColorTheme.textHealColor,
                     fontWeight = FontWeight.Bold
                 ),
                 Regex("""\[Target-based Max HP [^\]]+]""") to SpanStyle(
-                    color = WarborneTheme.textShieldColor,
+                    color = WarborneColorTheme.textShieldColor,
                     fontWeight = FontWeight.Bold
                 )
             )

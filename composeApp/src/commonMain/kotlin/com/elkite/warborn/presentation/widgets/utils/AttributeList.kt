@@ -12,12 +12,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.elkite.warborn.presentation.theme.WarborneTheme
+import com.elkite.warborn.presentation.theme.WarborneColorTheme
 
 @Composable
 fun AttributeList(
     attributes: List<Pair<String, String>>,
-    colors: List<Color> = List(attributes.size) { WarborneTheme.textDescriptionColor } // Default color
+    colors: List<Color> = List(attributes.size) { WarborneColorTheme.textDescriptionColor } // Default color
 ) {
     Column {
         attributes.forEachIndexed { index, (label, value) ->
@@ -26,8 +26,8 @@ fun AttributeList(
                     .background(
                         brush = Brush.linearGradient(
                             listOf(
-                                WarborneTheme.textBorderColor,
-                                WarborneTheme.textBorderColor
+                                WarborneColorTheme.textBorderColor,
+                                WarborneColorTheme.textBorderColor
                             )
                         ),
                         alpha = 0.5f

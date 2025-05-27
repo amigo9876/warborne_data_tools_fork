@@ -1,12 +1,17 @@
 package com.elkite.warborn.presentation.widgets.loadout
 
-import androidx.compose.foundation.background
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -16,15 +21,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.paint
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.gear.Loadout
 import com.elkite.warborn.domain.entities.gear.LoadoutType
-import com.elkite.warborn.presentation.theme.WarborneTheme
+import com.elkite.warborn.presentation.theme.WarborneColorTheme
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedTextTitle
+import com.elkite.warborn.presentation.widgets.utils.isCompact
+import com.elkite.warborn.presentation.widgets.utils.isMedium
 import com.elkite.warborn.util.IconMap
 import org.jetbrains.compose.resources.painterResource
 
@@ -40,125 +45,40 @@ fun LoadoutCard(
         modifier = modifier.wrapContentSize()
             .padding(16.dp)
     ) {
+        Row {
             Box(
                 modifier = Modifier
-                    .height(470.dp)
-                    .width(344.dp)
-                    .background(Color.Black)
-                    .clip(RectangleShape) // Clip to the border shape
+                    .height(if (isCompact() || isMedium()) 500.dp else 470.dp)
+                    .width(if (isCompact() || isMedium()) 450.dp else 344.dp)
+                    .clip(RectangleShape)
                     .border(
                         width = 3.dp,
-                        brush = WarborneTheme.legendaryBrush,
+                        brush = WarborneColorTheme.legendaryBrush,
                         shape = RectangleShape
                     )
-                    .paint(
-                        painter = painterResource(IconMap.getDrifterCard(drifter = loadout.drifter)),
-                        contentScale = ContentScale.Crop,
-                    )
                     .clickable { onClick(LoadoutType.DRIFTER) }
-                    .padding(16.dp),
             ) {
-                Column(modifier = Modifier.align(Alignment.TopEnd)) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        LoadoutArmorIcon(
-                            isSelected = selectedLoadout == LoadoutType.WEAPON,
-                            loadoutType = LoadoutType.WEAPON,
-                            gearName = loadout.weapon?.gearName,
-                            gearType = loadout.weapon?.associatedGearType,
-                            rarity = loadout.weapon?.rarity,
-                            onClick = {
-                                onClick(LoadoutType.WEAPON)
-                            }
-                        )
-                        Spacer(modifier = Modifier.size(16.dp))
-                        LoadoutModIcon(
-                            selectedLoadout == LoadoutType.MOD_WEAPON,
-                            modifier = Modifier.size(48.dp),
-                            mod = loadout.modWeapon,
-                            onClick = {
-                                onClick(LoadoutType.MOD_WEAPON)
-                            }
-                        )
-                    }
-                    Spacer(modifier = Modifier.size(16.dp))
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        LoadoutArmorIcon(
-                            isSelected = selectedLoadout == LoadoutType.HEAD,
-                            loadoutType = LoadoutType.HEAD,
-                            gearName = loadout.head?.gearName,
-                            gearType = loadout.head?.associatedGearType,
-                            rarity = loadout.head?.rarity,
-                            onClick = {
-                                onClick(LoadoutType.HEAD)
-                            }
-                        )
-                        Spacer(modifier = Modifier.size(16.dp))
-                        LoadoutModIcon(
-                            selectedLoadout == LoadoutType.MOD_HEAD,
-                            mod = loadout.modHead,
-                            onClick = {
-                                onClick(LoadoutType.MOD_HEAD)
-                            }
-                        )
-                    }
-                    Spacer(modifier = Modifier.size(16.dp))
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        LoadoutArmorIcon(
-                            isSelected = selectedLoadout == LoadoutType.CHEST,
-                            loadoutType = LoadoutType.CHEST,
-                            gearName = loadout.chest?.gearName,
-                            gearType = loadout.chest?.associatedGearType,
-                            rarity = loadout.chest?.rarity,
-                            onClick = {
-                                onClick(LoadoutType.CHEST)
-                            }
-                        )
-                        Spacer(modifier = Modifier.size(16.dp))
-                        LoadoutModIcon(
-                            selectedLoadout == LoadoutType.MOD_CHEST,
-                            mod = loadout.modChest,
-                            onClick = {
-                                onClick(LoadoutType.MOD_CHEST)
-                            }
-                        )
-                    }
-                    Spacer(modifier = Modifier.size(16.dp))
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        LoadoutArmorIcon(
-                            isSelected = selectedLoadout == LoadoutType.BOOTS,
-                            loadoutType = LoadoutType.BOOTS,
-                            gearName = loadout.boots?.gearName,
-                            gearType = loadout.boots?.associatedGearType,
-                            rarity = loadout.boots?.rarity,
-                            onClick = {
-                                onClick(LoadoutType.BOOTS)
-                            }
-                        )
-                        Spacer(modifier = Modifier.size(16.dp))
-                        LoadoutModIcon(
-                            selectedLoadout == LoadoutType.MOD_BOOTS,
-                            mod = loadout.modBoots,
-                            onClick = {
-                                onClick(LoadoutType.MOD_BOOTS)
-                            }
-                        )
-                    }
-                    Spacer(modifier = Modifier.size(16.dp))
+                Crossfade(targetState = loadout.drifter, animationSpec = tween(1000)) { drifter ->
+                    Image(
+                        modifier = Modifier.fillMaxSize(),
+                        painter = painterResource(IconMap.getDrifterCard(drifter = drifter)),
+                        contentScale = ContentScale.Crop,
+                        contentDescription = null
+                    )
                 }
+                if (isCompact() || isMedium())
+                    ArmorLoadoutWithModColumn(selectedLoadout, loadout, onClick)
                 GearStylizedTextTitle(
-                    modifier = Modifier.align(Alignment.BottomEnd),
+                    modifier = Modifier.align(Alignment.BottomEnd).padding(16.dp),
                     text = loadout.drifter?.name ?: "Select drifter"
                 )
 
             }
+            if (!isCompact() && !isMedium()) {
+                Spacer(modifier = Modifier.width(16.dp))
+                ArmorLoadoutWithModColumn(selectedLoadout, loadout, onClick)
+            }
+        }
         Spacer(modifier = Modifier.size(16.dp))
         Row(modifier = Modifier.wrapContentSize()) {
             LoadoutSpellIcon(
@@ -235,5 +155,211 @@ fun LoadoutCard(
                 modifier = Modifier.size(48.dp)
             )
         }
+    }
+}
+
+@Composable
+private fun BoxScope.ArmorLoadoutWithModColumn(
+    selectedLoadout: LoadoutType,
+    loadout: Loadout,
+    onClick: (LoadoutType) -> Unit
+) {
+    Column(modifier = Modifier.Companion.align(Alignment.TopEnd).padding(top = 16.dp, end = 16.dp)) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            LoadoutArmorIcon(
+                isSelected = selectedLoadout == LoadoutType.WEAPON,
+                loadoutType = LoadoutType.WEAPON,
+                gearName = loadout.weapon?.gearName,
+                gearType = loadout.weapon?.associatedGearType,
+                rarity = loadout.weapon?.rarity,
+                onClick = {
+                    onClick(LoadoutType.WEAPON)
+                }
+            )
+            Spacer(modifier = Modifier.size(16.dp))
+            LoadoutModIcon(
+                selectedLoadout == LoadoutType.MOD_WEAPON,
+                modifier = Modifier.size(48.dp),
+                mod = loadout.modWeapon,
+                onClick = {
+                    onClick(LoadoutType.MOD_WEAPON)
+                }
+            )
+        }
+        Spacer(modifier = Modifier.size(16.dp))
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            LoadoutArmorIcon(
+                isSelected = selectedLoadout == LoadoutType.HEAD,
+                loadoutType = LoadoutType.HEAD,
+                gearName = loadout.head?.gearName,
+                gearType = loadout.head?.associatedGearType,
+                rarity = loadout.head?.rarity,
+                onClick = {
+                    onClick(LoadoutType.HEAD)
+                }
+            )
+            Spacer(modifier = Modifier.size(16.dp))
+            LoadoutModIcon(
+                selectedLoadout == LoadoutType.MOD_HEAD,
+                mod = loadout.modHead,
+                onClick = {
+                    onClick(LoadoutType.MOD_HEAD)
+                }
+            )
+        }
+        Spacer(modifier = Modifier.size(16.dp))
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            LoadoutArmorIcon(
+                isSelected = selectedLoadout == LoadoutType.CHEST,
+                loadoutType = LoadoutType.CHEST,
+                gearName = loadout.chest?.gearName,
+                gearType = loadout.chest?.associatedGearType,
+                rarity = loadout.chest?.rarity,
+                onClick = {
+                    onClick(LoadoutType.CHEST)
+                }
+            )
+            Spacer(modifier = Modifier.size(16.dp))
+            LoadoutModIcon(
+                selectedLoadout == LoadoutType.MOD_CHEST,
+                mod = loadout.modChest,
+                onClick = {
+                    onClick(LoadoutType.MOD_CHEST)
+                }
+            )
+        }
+        Spacer(modifier = Modifier.size(16.dp))
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            LoadoutArmorIcon(
+                isSelected = selectedLoadout == LoadoutType.BOOTS,
+                loadoutType = LoadoutType.BOOTS,
+                gearName = loadout.boots?.gearName,
+                gearType = loadout.boots?.associatedGearType,
+                rarity = loadout.boots?.rarity,
+                onClick = {
+                    onClick(LoadoutType.BOOTS)
+                }
+            )
+            Spacer(modifier = Modifier.size(16.dp))
+            LoadoutModIcon(
+                selectedLoadout == LoadoutType.MOD_BOOTS,
+                mod = loadout.modBoots,
+                onClick = {
+                    onClick(LoadoutType.MOD_BOOTS)
+                }
+            )
+        }
+        Spacer(modifier = Modifier.size(16.dp))
+    }
+}
+
+@Composable
+private fun RowScope.ArmorLoadoutWithModColumn(
+    selectedLoadout: LoadoutType,
+    loadout: Loadout,
+    onClick: (LoadoutType) -> Unit
+) {
+    Column(modifier = Modifier) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            LoadoutArmorIcon(
+                isSelected = selectedLoadout == LoadoutType.WEAPON,
+                loadoutType = LoadoutType.WEAPON,
+                gearName = loadout.weapon?.gearName,
+                gearType = loadout.weapon?.associatedGearType,
+                rarity = loadout.weapon?.rarity,
+                onClick = {
+                    onClick(LoadoutType.WEAPON)
+                }
+            )
+            Spacer(modifier = Modifier.size(16.dp))
+            LoadoutModIcon(
+                selectedLoadout == LoadoutType.MOD_WEAPON,
+                modifier = Modifier.size(48.dp),
+                mod = loadout.modWeapon,
+                onClick = {
+                    onClick(LoadoutType.MOD_WEAPON)
+                }
+            )
+        }
+        Spacer(modifier = Modifier.size(16.dp))
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            LoadoutArmorIcon(
+                isSelected = selectedLoadout == LoadoutType.HEAD,
+                loadoutType = LoadoutType.HEAD,
+                gearName = loadout.head?.gearName,
+                gearType = loadout.head?.associatedGearType,
+                rarity = loadout.head?.rarity,
+                onClick = {
+                    onClick(LoadoutType.HEAD)
+                }
+            )
+            Spacer(modifier = Modifier.size(16.dp))
+            LoadoutModIcon(
+                selectedLoadout == LoadoutType.MOD_HEAD,
+                mod = loadout.modHead,
+                onClick = {
+                    onClick(LoadoutType.MOD_HEAD)
+                }
+            )
+        }
+        Spacer(modifier = Modifier.size(16.dp))
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            LoadoutArmorIcon(
+                isSelected = selectedLoadout == LoadoutType.CHEST,
+                loadoutType = LoadoutType.CHEST,
+                gearName = loadout.chest?.gearName,
+                gearType = loadout.chest?.associatedGearType,
+                rarity = loadout.chest?.rarity,
+                onClick = {
+                    onClick(LoadoutType.CHEST)
+                }
+            )
+            Spacer(modifier = Modifier.size(16.dp))
+            LoadoutModIcon(
+                selectedLoadout == LoadoutType.MOD_CHEST,
+                mod = loadout.modChest,
+                onClick = {
+                    onClick(LoadoutType.MOD_CHEST)
+                }
+            )
+        }
+        Spacer(modifier = Modifier.size(16.dp))
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            LoadoutArmorIcon(
+                isSelected = selectedLoadout == LoadoutType.BOOTS,
+                loadoutType = LoadoutType.BOOTS,
+                gearName = loadout.boots?.gearName,
+                gearType = loadout.boots?.associatedGearType,
+                rarity = loadout.boots?.rarity,
+                onClick = {
+                    onClick(LoadoutType.BOOTS)
+                }
+            )
+            Spacer(modifier = Modifier.size(16.dp))
+            LoadoutModIcon(
+                selectedLoadout == LoadoutType.MOD_BOOTS,
+                mod = loadout.modBoots,
+                onClick = {
+                    onClick(LoadoutType.MOD_BOOTS)
+                }
+            )
+        }
+        Spacer(modifier = Modifier.size(16.dp))
     }
 }

@@ -1,4 +1,4 @@
-package com.elkite.warborn.presentation.screen.main
+package com.elkite.warborn.presentation.screen.search
 
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
@@ -6,9 +6,10 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.elkite.warborn.presentation.screen.common.CommonScreenState
-import com.elkite.warborn.presentation.screen.main.common.MainContent
+import com.elkite.warborn.presentation.screen.main.MainScreenModel
+import com.elkite.warborn.presentation.screen.search.common.SearchScreenCommon
 
-object MainScreen : Screen {
+class SearchScreen : Screen {
 
     @Composable
     override fun Content() {
@@ -18,12 +19,10 @@ object MainScreen : Screen {
         CommonScreenState(
             screenModel = screenModel,
             content = { successState ->
-                MainContent(
-                    screenModel,
+                SearchScreenCommon(
                     successState
                 )
             }
         )
     }
 }
-

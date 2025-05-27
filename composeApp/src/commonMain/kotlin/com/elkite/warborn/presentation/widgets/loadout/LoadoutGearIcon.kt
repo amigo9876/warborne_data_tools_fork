@@ -9,11 +9,12 @@ import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.gear.GearType
 import com.elkite.warborn.domain.entities.gear.LoadoutType
 import com.elkite.warborn.domain.entities.gear.Rarity
-import com.elkite.warborn.presentation.theme.WarborneTheme
+import com.elkite.warborn.presentation.theme.WarborneColorTheme
 import com.elkite.warborn.presentation.widgets.gear.ArmorImage
 
 @Composable
 fun LoadoutArmorIcon(
+    modifier: Modifier = Modifier,
     isSelected: Boolean = false,
     loadoutType: LoadoutType,
     gearName: String?,
@@ -21,15 +22,15 @@ fun LoadoutArmorIcon(
     rarity: Rarity?,
     onClick: () -> Unit
 ) {
-    val modifier =
-        Modifier.border(
+    val borderModifier =
+        modifier.border(
             width = 3.dp,
-            brush = if (isSelected) WarborneTheme.legendaryBrush else {
+            brush = if (isSelected) WarborneColorTheme.legendaryBrush else {
                 when (rarity) {
-                    Rarity.LEGENDARY -> WarborneTheme.legendaryBrush
-                    Rarity.EPIC -> WarborneTheme.epicBrush
-                    Rarity.RARE -> WarborneTheme.rareBrush
-                    null -> WarborneTheme.legendaryBrush
+                    Rarity.LEGENDARY -> WarborneColorTheme.legendaryBrush
+                    Rarity.EPIC -> WarborneColorTheme.epicBrush
+                    Rarity.RARE -> WarborneColorTheme.rareBrush
+                    null -> WarborneColorTheme.legendaryBrush
                 }
             },
             shape = RectangleShape
@@ -41,7 +42,7 @@ fun LoadoutArmorIcon(
         LoadoutType.CHEST,
         LoadoutType.BOOTS,
         LoadoutType.WEAPON -> if (gearType != null && gearName != null) {
-            ArmorImage(modifier = modifier, gearName = gearName, gearType = gearType, rarity = rarity)
+            ArmorImage(modifier = borderModifier, gearName = gearName, gearType = gearType, rarity = rarity)
         } else EmptyLoadout(isSelected, loadoutType, onClick)
 
         else -> {}

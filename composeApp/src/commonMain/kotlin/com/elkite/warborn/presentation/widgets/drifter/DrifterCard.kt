@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -19,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.gear.drifter.Drifter
-import com.elkite.warborn.presentation.theme.WarborneTheme
+import com.elkite.warborn.presentation.theme.WarborneColorTheme
 import com.elkite.warborn.presentation.widgets.spell.SpellCardContent
 import com.elkite.warborn.presentation.widgets.utils.AttributeList
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedCard
@@ -36,9 +37,10 @@ fun DrifterCardScrollable(
     Column(
         modifier = Modifier
             .width(600.dp)
+            .fillMaxHeight()
             .padding(horizontal = 16.dp)
     ) {
-        Spacer(Modifier.size(16.dp))
+        Spacer(Modifier.size(12.dp))
         DrifterCard(
             modifier = modifier,
             drifter = drifter,
@@ -65,7 +67,7 @@ fun DrifterCard(
 @Composable
 private fun DrifterCardContent(drifter: Drifter) {
     Column(
-        modifier = Modifier.wrapContentSize().padding(all = 16.dp)
+        modifier = Modifier.wrapContentSize().padding(vertical = 16.dp)
     ) {
         Row(
             verticalAlignment = Alignment.Bottom,
@@ -75,7 +77,7 @@ private fun DrifterCardContent(drifter: Drifter) {
             DrifterIcon(
                 Modifier.size(64.dp).border(
                     width = 1.dp,
-                    brush = WarborneTheme.legendaryBrush,
+                    brush = WarborneColorTheme.legendaryBrush,
                     shape = RectangleShape // You can change this to a different shape if needed
                 ), drifterId = drifter.gameId
             )
@@ -85,7 +87,7 @@ private fun DrifterCardContent(drifter: Drifter) {
         Divider(
             modifier = Modifier.fillMaxWidth()
                 .padding(top = 8.dp, bottom = 16.dp, start = 16.dp, end = 16.dp),
-            color = WarborneTheme.borderSkillColor,
+            color = WarborneColorTheme.borderSkillColor,
             thickness = 1.dp
         )
         DrifterBonusStats(drifter)
@@ -107,7 +109,7 @@ private fun LinksCard(drifter: Drifter) {
             Divider(
                 modifier = Modifier.fillMaxWidth()
                     .padding(top = 8.dp, bottom = 16.dp),
-                color = WarborneTheme.borderSkillColor,
+                color = WarborneColorTheme.borderSkillColor,
                 thickness = 1.dp
             )
             drifter.links.forEach {
@@ -129,7 +131,7 @@ private fun LinksCard(drifter: Drifter) {
                     Spacer(Modifier.size(8.dp))
                     GearStylizedText(
                         text = it.description,
-                        color = WarborneTheme.textDescriptionColor,
+                        color = WarborneColorTheme.textDescriptionColor,
                         style = MaterialTheme.typography.body1
                     )
                     Spacer(Modifier.size(16.dp))
@@ -145,8 +147,8 @@ private fun SupportCard(drifter: Drifter) {
         drifter.supportMalus to drifter.supportMalusValue
     )
     val colors = listOf(
-        WarborneTheme.textHealColor,
-        WarborneTheme.textDamageColor,
+        WarborneColorTheme.textHealColor,
+        WarborneColorTheme.textDamageColor,
     )
 
     Column(modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth()) {
@@ -154,7 +156,7 @@ private fun SupportCard(drifter: Drifter) {
         Divider(
             modifier = Modifier.fillMaxWidth()
                 .padding(top = 8.dp, bottom = 16.dp),
-            color = WarborneTheme.borderSkillColor,
+            color = WarborneColorTheme.borderSkillColor,
             thickness = 1.dp
         )
         AttributeList(attributes = attributes, colors = colors)
@@ -169,9 +171,9 @@ private fun DrifterBonusStats(drifter: Drifter) {
         "Intelligence: " to drifter.intBonus
     )
     val colors = listOf(
-        WarborneTheme.strengthColor,
-        WarborneTheme.dexterityColor,
-        WarborneTheme.intelligenceColor
+        WarborneColorTheme.strengthColor,
+        WarborneColorTheme.dexterityColor,
+        WarborneColorTheme.intelligenceColor
     )
 
     Column(modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth()) {

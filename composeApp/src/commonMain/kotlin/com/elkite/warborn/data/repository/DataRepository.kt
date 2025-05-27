@@ -1,5 +1,6 @@
 package com.elkite.warborn.data.repository
 
+import com.elkite.warborn.data.entities.Data
 import com.elkite.warborn.data.network.httpClient
 import com.elkite.warborn.domain.entities.gear.GearLevel
 import com.elkite.warborn.domain.entities.gear.GearStats
@@ -24,33 +25,26 @@ object DataRepository {
 
     private const val url = "https://elkite.github.io/warborne_data/data.json"
 
-    suspend fun getData() : List<Spell> {
+    suspend fun getData() : Data {
         val body = httpClient.get(url).bodyAsText()
 
         val spells = parseJsonToSpells(body)
-
-        return spells
-    }
-
-    suspend fun getDrifters(): List<Drifter> {
-        val body = httpClient.get(url).bodyAsText()
         val drifters = parseDrifters(body)
+        val mods = parseMods(body)
+        val lastUpdate = getLastUpdateData(body)
 
-        return drifters
+        return Data(
+            lastUpdate = lastUpdate,
+            spells = spells,
+            drifters = drifters,
+            mods = mods
+        )
     }
 
-    suspend fun getMods(): List<Mod> {
-        val body = httpClient.get(url).bodyAsText()
-        return parseMods(body)
-    }
-
-    suspend fun getLastUpdateData(): String {
-        val body = httpClient.get(url).bodyAsText()
-        val jsonElement = Json.parseToJsonElement(body)
-
+    private fun getLastUpdateData(json: String): String {
+        val jsonElement = Json.parseToJsonElement(json)
         val data = jsonElement.jsonObject["data"]?.jsonObject ?: return ""
-        val lastUpdate = data["lastDataUpdate"]?.jsonPrimitive?.content ?: return ""
-        return lastUpdate
+        return data["lastDataUpdate"]?.jsonPrimitive?.content ?: ""
     }
 
 

@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.elkite.warborn.util.IconMap
 import org.jetbrains.compose.resources.painterResource
@@ -21,5 +22,6 @@ fun DrifterIcon(
         ),
         contentDescription = "Drifter's Icon",
         modifier = modifier,
+        contentScale = ContentScale.Crop
     )
 }
