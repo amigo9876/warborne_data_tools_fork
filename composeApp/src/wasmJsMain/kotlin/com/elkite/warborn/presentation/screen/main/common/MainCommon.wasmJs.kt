@@ -32,6 +32,7 @@ import com.elkite.warborn.presentation.screen.main.ItemListColumn
 import com.elkite.warborn.presentation.screen.main.LoadoutColumn
 import com.elkite.warborn.presentation.screen.main.MainScreenModel
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedText
+import com.elkite.warborn.presentation.widgets.utils.isMediumOrCompact
 import com.elkite.warborn.util.IconMap
 import org.jetbrains.compose.resources.painterResource
 
@@ -72,7 +73,7 @@ actual fun MainContent(
                 .fillMaxSize()
                 .verticalScroll(scrollableState),
             verticalArrangement = Arrangement.Top,
-            horizontalArrangement = Arrangement.SpaceBetween,
+            horizontalArrangement = if (isMediumOrCompact()) Arrangement.SpaceAround else Arrangement.Start,
             maxItemsInEachRow = 3
         ) {
             LoadoutColumn(
