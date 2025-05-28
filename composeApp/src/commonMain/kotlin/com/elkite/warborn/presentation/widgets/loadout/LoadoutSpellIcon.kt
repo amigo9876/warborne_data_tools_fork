@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -16,6 +17,41 @@ import com.elkite.warborn.presentation.theme.WarborneColorTheme
 import com.elkite.warborn.presentation.theme.WarborneColorTheme.borderSkillColor
 import com.elkite.warborn.presentation.theme.spellBorderPassive
 import com.elkite.warborn.presentation.widgets.spell.SpellIcon
+import com.elkite.warborn.presentation.widgets.tooltip.TooltipBox
+
+@Composable
+fun LoadoutSpellIconWithTooltip(
+    isSelected: Boolean,
+    loadoutType: LoadoutType,
+    tooltipState: com.elkite.warborn.presentation.widgets.tooltip.TooltipState,
+    spell: Spell?,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    if (spell != null) {
+        TooltipBox(
+            tooltipState = tooltipState,
+            gear = spell,
+            modifier = modifier
+        ) {
+            LoadoutSpellIcon(
+                isSelected = isSelected,
+                loadoutType = loadoutType,
+                spell = spell,
+                onClick = onClick,
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+    } else {
+        LoadoutSpellIcon(
+            isSelected = isSelected,
+            loadoutType = loadoutType,
+            spell = null,
+            onClick = onClick,
+            modifier = modifier
+        )
+    }
+}
 
 @Composable
 fun LoadoutSpellIcon(

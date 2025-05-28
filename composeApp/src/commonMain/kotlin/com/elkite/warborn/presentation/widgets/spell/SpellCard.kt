@@ -1,6 +1,5 @@
 package com.elkite.warborn.presentation.widgets.spell
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -10,14 +9,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -40,14 +37,12 @@ fun SpellCardList(
     onSpellClick: (Spell) -> Unit,
 ) {
     Column(
-        modifier = modifier.width(600.dp).background(color = Color.Transparent).padding(horizontal = 16.dp),
+        modifier = modifier.padding(horizontal = 16.dp),
     ) {
         spells.forEach { spell ->
-            Column {
                 Spacer(Modifier.size(12.dp))
                 SpellCard(onSpellClick, spell)
                 Spacer(Modifier.size(12.dp))
-            }
         }
     }
 }

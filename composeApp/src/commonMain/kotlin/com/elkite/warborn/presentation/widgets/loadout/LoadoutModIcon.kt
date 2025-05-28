@@ -14,8 +14,40 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.gear.mods.Mod
 import com.elkite.warborn.presentation.theme.WarborneColorTheme
+import com.elkite.warborn.presentation.widgets.tooltip.TooltipBox
+import com.elkite.warborn.presentation.widgets.tooltip.TooltipState
 import com.elkite.warborn.util.IconMap
 import org.jetbrains.compose.resources.painterResource
+
+@Composable
+fun LoadoutModIconWithToolTip(
+    tooltipState: TooltipState,
+    isSelected: Boolean = false,
+    modifier: Modifier = Modifier.size(48.dp),
+    mod: Mod?,
+    onClick: () -> Unit = {},
+) {
+    if (mod != null)
+    TooltipBox(
+        tooltipState = tooltipState,
+        gear = mod,
+        modifier = modifier
+    ) {
+        LoadoutModIcon(
+            isSelected = isSelected,
+            modifier = modifier,
+            mod = mod,
+            onClick = onClick
+        )
+    } else {
+        LoadoutModIcon(
+            isSelected = isSelected,
+            modifier = modifier,
+            mod = null,
+            onClick = onClick
+        )
+    }
+}
 
 @Composable
 fun LoadoutModIcon(

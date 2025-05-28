@@ -4,8 +4,10 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRowScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -89,7 +91,7 @@ fun LoadoutColumn(
 }
 
 @Composable
-fun ItemListColumn(
+fun FlowRowScope.ItemListColumn(
     state: MainScreenModel.BuildScreenState.Success,
     loadout: Loadout,
     loadoutType: LoadoutType,
@@ -103,17 +105,17 @@ fun ItemListColumn(
 
     val modifier =
         if (isCompact())
-            Modifier.sizeIn(maxWidth = 450.dp, minHeight = 700.dp, maxHeight = 1000.dp)
+            Modifier.sizeIn(minWidth = 300.dp, maxWidth = 450.dp, minHeight = 700.dp, maxHeight = 1000.dp)
                 .wrapContentSize()
         else if (isMedium())
-            Modifier.sizeIn(maxWidth = 450.dp, minHeight = 700.dp, maxHeight = 1000.dp)
+            Modifier.sizeIn(minWidth = 300.dp, maxWidth = 450.dp, minHeight = 700.dp, maxHeight = 1000.dp)
                 .wrapContentSize()
         else
             Modifier.sizeIn(
-                minWidth = 450.dp,
-                maxWidth = 600.dp,
-                minHeight = 700.dp,
-                maxHeight = 1000.dp
+                maxWidth = 650.dp,
+                minWidth = 400.dp,
+                minHeight = 550.dp,
+                maxHeight = 1000.dp,
             ).wrapContentSize()
 
     val categoryOptions = listOf(
@@ -251,12 +253,23 @@ fun ItemListColumn(
 }
 
 @Composable
-fun DescriptionColumn(
+fun FlowRowScope.DescriptionColumn(
     gear: Gear,
     onLoadoutClick: () -> Unit = {}
 ) {
+    val modifier = if (isCompact())
+        Modifier.fillMaxSize()
+    else if (isMedium())
+        Modifier.wrapContentHeight().weight(1f)
+    else
+        Modifier.sizeIn(
+            minWidth = 300.dp,
+            maxWidth = 600.dp,
+        ).wrapContentHeight().weight(1f)
+
     if (gear is Spell) {
         SpellCardList(
+            modifier = modifier,
             spells = listOf(gear),
             onSpellClick = { spell ->
                 onLoadoutClick()
@@ -264,6 +277,7 @@ fun DescriptionColumn(
         )
     } else if (gear is Drifter) {
         DrifterCardScrollable(
+            modifier = modifier,
             drifter = gear,
             onDrifterClick = { drifter ->
                 onLoadoutClick()
@@ -271,6 +285,7 @@ fun DescriptionColumn(
         )
     } else if (gear is Mod) {
         ModCardList(
+            modifier = modifier,
             mods = listOf(gear),
             onModClick = { mod ->
                 onLoadoutClick()

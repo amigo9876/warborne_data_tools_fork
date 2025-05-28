@@ -24,9 +24,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import com.elkite.warborn.domain.entities.gear.Loadout
 import com.elkite.warborn.domain.entities.gear.LoadoutType
 import com.elkite.warborn.presentation.theme.WarborneColorTheme
+import com.elkite.warborn.presentation.widgets.tooltip.GearTooltip
+import com.elkite.warborn.presentation.widgets.tooltip.TooltipState
+import com.elkite.warborn.presentation.widgets.tooltip.rememberTooltipState
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedTextTitle
 import com.elkite.warborn.presentation.widgets.utils.isCompact
 import com.elkite.warborn.presentation.widgets.utils.isMedium
@@ -41,6 +45,8 @@ fun LoadoutCard(
     selectedLoadout: LoadoutType,
     onClick: (LoadoutType) -> Unit,
 ) {
+    val tooltipState = rememberTooltipState()
+
     Column(
         modifier = modifier.wrapContentSize()
             .padding(16.dp)
@@ -58,7 +64,10 @@ fun LoadoutCard(
                     )
                     .clickable { onClick(LoadoutType.DRIFTER) }
             ) {
-                Crossfade(targetState = loadout.drifter, animationSpec = tween(1000)) { drifter ->
+                Crossfade(
+                    targetState = loadout.drifter,
+                    animationSpec = tween(1000)
+                ) { drifter ->
                     Image(
                         modifier = Modifier.fillMaxSize(),
                         painter = painterResource(IconMap.getDrifterCard(drifter = drifter)),
@@ -67,21 +76,40 @@ fun LoadoutCard(
                     )
                 }
                 if (isCompact() || isMedium())
-                    ArmorLoadoutWithModColumn(selectedLoadout, loadout, onClick)
+                    ArmorLoadoutWithModColumn(
+                        tooltipState = tooltipState,
+                        selectedLoadout, loadout, onClick
+                    )
                 GearStylizedTextTitle(
                     modifier = Modifier.align(Alignment.BottomEnd).padding(16.dp),
                     text = loadout.drifter?.name ?: "Select drifter"
                 )
-
+                if (tooltipState.isVisible && tooltipState.gear != null) {
+                    tooltipState.gear?.let {
+                        GearTooltip(
+                            gear = it,
+                            modifier =
+                                if (isCompact() || isMedium())
+                                    Modifier.fillMaxSize().padding(end = 64.dp).zIndex(1000f)
+                                else
+                                    Modifier.fillMaxSize()
+                                        .zIndex(1000f)
+                        )
+                    }
+                }
             }
             if (!isCompact() && !isMedium()) {
                 Spacer(modifier = Modifier.width(16.dp))
-                ArmorLoadoutWithModColumn(selectedLoadout, loadout, onClick)
+                ArmorLoadoutWithModColumn(
+                    tooltipState = tooltipState,
+                    selectedLoadout, loadout, onClick
+                )
             }
         }
         Spacer(modifier = Modifier.size(16.dp))
         Row(modifier = Modifier.wrapContentSize()) {
-            LoadoutSpellIcon(
+            LoadoutSpellIconWithTooltip(
+                tooltipState = tooltipState,
                 isSelected = selectedLoadout == LoadoutType.BASIC_ATTACK,
                 loadoutType = LoadoutType.BASIC_ATTACK,
                 spell = loadout.basicAttack,
@@ -89,7 +117,8 @@ fun LoadoutCard(
                 modifier = Modifier.size(48.dp)
             )
             Spacer(modifier = Modifier.size(8.dp))
-            LoadoutSpellIcon(
+            LoadoutSpellIconWithTooltip(
+                tooltipState = tooltipState,
                 isSelected = selectedLoadout == LoadoutType.COMMON_SKILL,
                 loadoutType = LoadoutType.COMMON_SKILL,
                 spell = loadout.commonSkill,
@@ -97,7 +126,8 @@ fun LoadoutCard(
                 modifier = Modifier.size(48.dp)
             )
             Spacer(modifier = Modifier.size(8.dp))
-            LoadoutSpellIcon(
+            LoadoutSpellIconWithTooltip(
+                tooltipState = tooltipState,
                 isSelected = selectedLoadout == LoadoutType.WEAPON,
                 loadoutType = LoadoutType.WEAPON,
                 spell = loadout.weapon,
@@ -105,7 +135,8 @@ fun LoadoutCard(
                 modifier = Modifier.size(48.dp)
             )
             Spacer(modifier = Modifier.size(8.dp))
-            LoadoutSpellIcon(
+            LoadoutSpellIconWithTooltip(
+                tooltipState = tooltipState,
                 isSelected = selectedLoadout == LoadoutType.DRIFTER,
                 loadoutType = LoadoutType.DRIFTER,
                 spell = loadout.drifter?.spell,
@@ -113,7 +144,8 @@ fun LoadoutCard(
                 modifier = Modifier.size(48.dp)
             )
             Spacer(modifier = Modifier.size(8.dp))
-            LoadoutSpellIcon(
+            LoadoutSpellIconWithTooltip(
+                tooltipState = tooltipState,
                 isSelected = selectedLoadout == LoadoutType.CHEST,
                 loadoutType = LoadoutType.CHEST,
                 spell = loadout.chest,
@@ -121,7 +153,8 @@ fun LoadoutCard(
                 modifier = Modifier.size(48.dp)
             )
             Spacer(modifier = Modifier.size(8.dp))
-            LoadoutSpellIcon(
+            LoadoutSpellIconWithTooltip(
+                tooltipState = tooltipState,
                 isSelected = selectedLoadout == LoadoutType.BOOTS,
                 loadoutType = LoadoutType.BOOTS,
                 spell = loadout.boots,
@@ -131,7 +164,8 @@ fun LoadoutCard(
         }
         Spacer(modifier = Modifier.size(8.dp))
         Row(modifier = Modifier.wrapContentSize()) {
-            LoadoutSpellIcon(
+            LoadoutSpellIconWithTooltip(
+                tooltipState = tooltipState,
                 isSelected = selectedLoadout == LoadoutType.HEAD,
                 loadoutType = LoadoutType.PASSIVE,
                 spell = loadout.head,
@@ -139,7 +173,8 @@ fun LoadoutCard(
                 modifier = Modifier.size(48.dp)
             )
             Spacer(modifier = Modifier.size(8.dp))
-            LoadoutSpellIcon(
+            LoadoutSpellIconWithTooltip(
+                tooltipState = tooltipState,
                 isSelected = selectedLoadout == LoadoutType.PASSIVE,
                 loadoutType = LoadoutType.PASSIVE,
                 spell = loadout.passive,
@@ -147,7 +182,8 @@ fun LoadoutCard(
                 modifier = Modifier.size(48.dp)
             )
             Spacer(modifier = Modifier.size(8.dp))
-            LoadoutSpellIcon(
+            LoadoutSpellIconWithTooltip(
+                tooltipState = tooltipState,
                 isSelected = selectedLoadout == LoadoutType.DRIFTER,
                 loadoutType = LoadoutType.PASSIVE,
                 spell = loadout.drifter?.passive,
@@ -160,11 +196,14 @@ fun LoadoutCard(
 
 @Composable
 private fun BoxScope.ArmorLoadoutWithModColumn(
+    tooltipState: TooltipState,
     selectedLoadout: LoadoutType,
     loadout: Loadout,
     onClick: (LoadoutType) -> Unit
 ) {
-    Column(modifier = Modifier.Companion.align(Alignment.TopEnd).padding(top = 16.dp, end = 16.dp)) {
+    Column(
+        modifier = Modifier.Companion.align(Alignment.TopEnd).padding(top = 16.dp, end = 16.dp)
+    ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -179,7 +218,8 @@ private fun BoxScope.ArmorLoadoutWithModColumn(
                 }
             )
             Spacer(modifier = Modifier.size(16.dp))
-            LoadoutModIcon(
+            LoadoutModIconWithToolTip(
+                tooltipState = tooltipState,
                 selectedLoadout == LoadoutType.MOD_WEAPON,
                 modifier = Modifier.size(48.dp),
                 mod = loadout.modWeapon,
@@ -203,7 +243,8 @@ private fun BoxScope.ArmorLoadoutWithModColumn(
                 }
             )
             Spacer(modifier = Modifier.size(16.dp))
-            LoadoutModIcon(
+            LoadoutModIconWithToolTip(
+                tooltipState = tooltipState,
                 selectedLoadout == LoadoutType.MOD_HEAD,
                 mod = loadout.modHead,
                 onClick = {
@@ -226,7 +267,8 @@ private fun BoxScope.ArmorLoadoutWithModColumn(
                 }
             )
             Spacer(modifier = Modifier.size(16.dp))
-            LoadoutModIcon(
+            LoadoutModIconWithToolTip(
+                tooltipState = tooltipState,
                 selectedLoadout == LoadoutType.MOD_CHEST,
                 mod = loadout.modChest,
                 onClick = {
@@ -249,7 +291,8 @@ private fun BoxScope.ArmorLoadoutWithModColumn(
                 }
             )
             Spacer(modifier = Modifier.size(16.dp))
-            LoadoutModIcon(
+            LoadoutModIconWithToolTip(
+                tooltipState = tooltipState,
                 selectedLoadout == LoadoutType.MOD_BOOTS,
                 mod = loadout.modBoots,
                 onClick = {
@@ -263,6 +306,7 @@ private fun BoxScope.ArmorLoadoutWithModColumn(
 
 @Composable
 private fun RowScope.ArmorLoadoutWithModColumn(
+    tooltipState: TooltipState,
     selectedLoadout: LoadoutType,
     loadout: Loadout,
     onClick: (LoadoutType) -> Unit
@@ -282,7 +326,8 @@ private fun RowScope.ArmorLoadoutWithModColumn(
                 }
             )
             Spacer(modifier = Modifier.size(16.dp))
-            LoadoutModIcon(
+            LoadoutModIconWithToolTip(
+                tooltipState = tooltipState,
                 selectedLoadout == LoadoutType.MOD_WEAPON,
                 modifier = Modifier.size(48.dp),
                 mod = loadout.modWeapon,
@@ -306,7 +351,8 @@ private fun RowScope.ArmorLoadoutWithModColumn(
                 }
             )
             Spacer(modifier = Modifier.size(16.dp))
-            LoadoutModIcon(
+            LoadoutModIconWithToolTip(
+                tooltipState = tooltipState,
                 selectedLoadout == LoadoutType.MOD_HEAD,
                 mod = loadout.modHead,
                 onClick = {
@@ -329,7 +375,8 @@ private fun RowScope.ArmorLoadoutWithModColumn(
                 }
             )
             Spacer(modifier = Modifier.size(16.dp))
-            LoadoutModIcon(
+            LoadoutModIconWithToolTip(
+                tooltipState = tooltipState,
                 selectedLoadout == LoadoutType.MOD_CHEST,
                 mod = loadout.modChest,
                 onClick = {
@@ -352,7 +399,8 @@ private fun RowScope.ArmorLoadoutWithModColumn(
                 }
             )
             Spacer(modifier = Modifier.size(16.dp))
-            LoadoutModIcon(
+            LoadoutModIconWithToolTip(
+                tooltipState = tooltipState,
                 selectedLoadout == LoadoutType.MOD_BOOTS,
                 mod = loadout.modBoots,
                 onClick = {
