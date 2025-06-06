@@ -27,26 +27,6 @@ import com.elkite.warborn.presentation.widgets.utils.GearStylizedTextTitle
 
 
 @Composable
-fun DrifterCardScrollable(
-    modifier: Modifier = Modifier,
-    drifter: Drifter,
-    onDrifterClick: (Drifter) -> Unit,
-) {
-    Column(
-        modifier = modifier
-            .padding(horizontal = 16.dp)
-    ) {
-            Spacer(Modifier.size(12.dp))
-            DrifterCard(
-                drifter = drifter,
-                onDrifterClick = onDrifterClick,
-            )
-            Spacer(Modifier.size(32.dp))
-    }
-}
-
-
-@Composable
 fun DrifterCard(
     modifier: Modifier = Modifier,
     drifter: Drifter,

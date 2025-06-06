@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.gear.GearType
 import com.elkite.warborn.domain.entities.gear.spell.Spell
 import com.elkite.warborn.presentation.theme.WarborneColorTheme
+import com.elkite.warborn.presentation.widgets.balance.BalanceIcon
 import com.elkite.warborn.presentation.widgets.gear.ArmorImage
 import com.elkite.warborn.presentation.widgets.utils.AttributeList
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedCard
@@ -31,29 +32,13 @@ import com.elkite.warborn.presentation.widgets.utils.MultiPatternHighlightedText
 
 
 @Composable
-fun SpellCardList(
-    modifier: Modifier = Modifier,
-    spells: List<Spell>,
-    onSpellClick: (Spell) -> Unit,
-) {
-    Column(
-        modifier = modifier.padding(horizontal = 16.dp),
-    ) {
-        spells.forEach { spell ->
-                Spacer(Modifier.size(12.dp))
-                SpellCard(onSpellClick, spell)
-                Spacer(Modifier.size(12.dp))
-        }
-    }
-}
-
-@Composable
 fun SpellCard(
+    modifier: Modifier = Modifier,
     onSpellClick: (Spell) -> Unit,
     spell: Spell
 ) {
     GearStylizedCard(
-        modifier = Modifier.clickable { onSpellClick(spell) },
+        modifier = modifier.clickable { onSpellClick(spell) },
         composable = @Composable { SpellCardContent(spell) },
     )
 }
@@ -73,6 +58,12 @@ fun SpellCardContent(spell: Spell) {
                     color = WarborneColorTheme.borderSkillColor,
                 ), gearType = spell.associatedGearType, spellType = spell.type, id = spell.gameId
             )
+            if (spell.balance.lastUpdate.isNotEmpty()) {
+                Spacer(Modifier.size(16.dp))
+                BalanceIcon(
+                    balanceStatus = spell.balance.status
+                )
+            }
             Spacer(Modifier.size(16.dp))
             GearStylizedTextTitle(text = spell.name)
         }
@@ -119,6 +110,22 @@ fun SpellCardContent(spell: Spell) {
                 maxLines = 2
             )
         }
+        if (spell.balance.lastUpdate.isNotEmpty()) {
+            Spacer(Modifier.size(32.dp))
+            GearStylizedText(
+                text = "Latest changes on patch: ${spell.balance.lastUpdate}",
+            )
+            Divider(
+                modifier = Modifier.fillMaxWidth().padding(top = 8.dp, bottom = 16.dp),
+                color = WarborneColorTheme.borderSkillColor,
+                thickness = 1.dp
+            )
+            GearStylizedText(
+                text = spell.balance.changes,
+                maxLines = Int.MAX_VALUE
+            )
+        }
+
     }
 }
 

@@ -1,7 +1,7 @@
 package com.elkite.warborn.presentation.tab
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
@@ -9,7 +9,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import cafe.adriel.voyager.transitions.SlideTransition
-import com.elkite.warborn.presentation.screen.search.SearchScreen
+import com.elkite.warborn.presentation.screen.patch.PatchScreen
 
 
 object ThirdTab : Tab {
@@ -17,7 +17,7 @@ object ThirdTab : Tab {
         @Composable
         get() {
             val title = "Build"
-            val icon = rememberVectorPainter(Icons.Default.Search)
+            val icon = rememberVectorPainter(Icons.Default.Notifications)
 
             return remember {
                 TabOptions(
@@ -30,7 +30,7 @@ object ThirdTab : Tab {
 
     @Composable
     override fun Content() {
-        Navigator(SearchScreen()) {
+        Navigator(PatchScreen()) {
             SlideTransition(it)
         }
     }

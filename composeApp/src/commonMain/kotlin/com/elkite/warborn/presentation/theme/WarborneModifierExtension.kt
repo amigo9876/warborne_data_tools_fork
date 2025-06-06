@@ -9,8 +9,11 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.input.pointer.PointerEventType
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.elkite.warborn.domain.entities.gear.Gear
 import com.elkite.warborn.presentation.theme.WarborneColorTheme.borderSkillColor
 import com.elkite.warborn.presentation.theme.WarborneColorTheme.legendaryBrush
 
@@ -76,3 +79,22 @@ fun Modifier.spellBorder(
                 }
             }
         )
+
+@Composable
+fun Modifier.onHover(gear: Gear, onHover: (Gear) -> Unit) = Modifier
+    .pointerInput(Unit) {
+        awaitPointerEventScope {
+            while (true) {
+                val event = awaitPointerEvent()
+                when (event.type) {
+                    PointerEventType.Enter -> {
+                        onHover(gear)
+                    }
+                    PointerEventType.Exit -> {
+
+                    }
+                    else -> {}
+                }
+            }
+        }
+    }

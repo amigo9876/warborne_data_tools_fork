@@ -36,15 +36,15 @@ import com.elkite.warborn.domain.entities.gear.drifter.Drifter
 import com.elkite.warborn.domain.entities.gear.mods.Mod
 import com.elkite.warborn.domain.entities.gear.spell.Spell
 import com.elkite.warborn.presentation.theme.WarborneColorTheme
-import com.elkite.warborn.presentation.widgets.drifter.DrifterCardScrollable
+import com.elkite.warborn.presentation.widgets.drifter.DrifterCard
 import com.elkite.warborn.presentation.widgets.drifter.DrifterSmallList
 import com.elkite.warborn.presentation.widgets.gear.ArmorSmallList
 import com.elkite.warborn.presentation.widgets.gear.WeaponSmallList
 import com.elkite.warborn.presentation.widgets.loadout.LoadoutCard
 import com.elkite.warborn.presentation.widgets.loadout_from_url.LoadoutFromUrl
-import com.elkite.warborn.presentation.widgets.mod.ModCardList
+import com.elkite.warborn.presentation.widgets.mod.ModCard
 import com.elkite.warborn.presentation.widgets.mod.ModSmallList
-import com.elkite.warborn.presentation.widgets.spell.SpellCardList
+import com.elkite.warborn.presentation.widgets.spell.SpellCard
 import com.elkite.warborn.presentation.widgets.utils.ClickableText
 import com.elkite.warborn.presentation.widgets.utils.CopyButton
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedCard
@@ -258,25 +258,25 @@ fun FlowRowScope.DescriptionColumn(
     onLoadoutClick: () -> Unit = {}
 ) {
     val modifier = if (isCompact())
-        Modifier.fillMaxSize()
+        Modifier.fillMaxSize().padding(16.dp)
     else if (isMedium())
-        Modifier.wrapContentHeight().weight(1f)
+        Modifier.wrapContentHeight().weight(1f).padding(16.dp)
     else
         Modifier.sizeIn(
             minWidth = 300.dp,
             maxWidth = 600.dp,
-        ).wrapContentHeight().weight(1f)
+        ).wrapContentHeight().weight(1f).padding(16.dp)
 
     if (gear is Spell) {
-        SpellCardList(
+        SpellCard(
             modifier = modifier,
-            spells = listOf(gear),
+            spell = gear,
             onSpellClick = { spell ->
                 onLoadoutClick()
             }
         )
     } else if (gear is Drifter) {
-        DrifterCardScrollable(
+        DrifterCard(
             modifier = modifier,
             drifter = gear,
             onDrifterClick = { drifter ->
@@ -284,9 +284,9 @@ fun FlowRowScope.DescriptionColumn(
             }
         )
     } else if (gear is Mod) {
-        ModCardList(
+        ModCard(
             modifier = modifier,
-            mods = listOf(gear),
+            mod = gear,
             onModClick = { mod ->
                 onLoadoutClick()
             }

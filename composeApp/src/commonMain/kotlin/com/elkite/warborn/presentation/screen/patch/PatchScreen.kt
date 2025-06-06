@@ -1,4 +1,4 @@
-package com.elkite.warborn.presentation.screen.search
+package com.elkite.warborn.presentation.screen.patch
 
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
@@ -7,9 +7,9 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.elkite.warborn.presentation.screen.common.CommonScreenState
 import com.elkite.warborn.presentation.screen.main.MainScreenModel
-import com.elkite.warborn.presentation.screen.search.common.SearchScreenCommon
+import com.elkite.warborn.presentation.screen.patch.common.PatchScreenCommon
 
-class SearchScreen : Screen {
+class PatchScreen : Screen {
 
     @Composable
     override fun Content() {
@@ -19,7 +19,7 @@ class SearchScreen : Screen {
         CommonScreenState(
             screenModel = screenModel,
             content = { successState ->
-                SearchScreenCommon(
+                PatchScreenCommon(
                     successState
                 )
             }

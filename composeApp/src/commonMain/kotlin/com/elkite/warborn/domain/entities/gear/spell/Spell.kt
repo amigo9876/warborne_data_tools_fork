@@ -6,10 +6,12 @@ import com.elkite.warborn.domain.entities.gear.GearStats
 import com.elkite.warborn.domain.entities.gear.GearType
 import com.elkite.warborn.domain.entities.gear.LoadoutType
 import com.elkite.warborn.domain.entities.gear.Rarity
+import com.elkite.warborn.presentation.widgets.patch_balance.Balance
 
 data class Spell(
     override val gameId: String,
     override val name: String,
+    override val balance: Balance,
     val description: String,
     val type: SpellType,
     val castingRange: String,
@@ -20,7 +22,7 @@ data class Spell(
     val gearName: String? = null,
     val gearStats: GearStats,
     val rarity: Rarity? = null,
-) : Gear(gameId, name) {
+) : Gear(gameId, name, balance) {
     override fun toString(): String {
         return "Spell(id='${gameId}',\\\n name='$name',\\\n description='$description',\\\n type=$type," +
                 "\\\n castingRange='$castingRange',\\\n cooldown='$cooldown',\\\n " +

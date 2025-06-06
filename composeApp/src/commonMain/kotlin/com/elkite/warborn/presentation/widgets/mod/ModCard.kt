@@ -21,39 +21,24 @@ import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.gear.mods.Mod
 import com.elkite.warborn.presentation.theme.WarborneColorTheme
 import com.elkite.warborn.presentation.theme.spellBorder
+import com.elkite.warborn.presentation.widgets.balance.BalanceIcon
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedCard
+import com.elkite.warborn.presentation.widgets.utils.GearStylizedText
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedTextTitle
 import com.elkite.warborn.presentation.widgets.utils.MultiPatternHighlightedText
 
 @Composable
 fun ModCard(
+    modifier: Modifier = Modifier,
     mod: Mod,
     onModClick: (Mod) -> Unit,
 ) {
     GearStylizedCard(
-        modifier = Modifier.clickable { onModClick(mod) },
+        modifier = modifier.clickable { onModClick(mod) },
         composable = @Composable {
             ModCardContent(mod)
         },
     )
-}
-
-@Composable
-fun ModCardList(
-    modifier: Modifier = Modifier,
-    mods: List<Mod>,
-    onModClick: (Mod) -> Unit,
-) {
-    Column(
-        modifier = modifier
-            .padding(horizontal = 16.dp),
-    ) {
-        mods.forEach { mod ->
-            Spacer(Modifier.size(12.dp))
-            ModCard(mod = mod, onModClick = onModClick)
-            Spacer(Modifier.size(12.dp))
-        }
-    }
 }
 
 @Composable
@@ -71,8 +56,15 @@ fun ModCardContent(
             ModImage(
                 modifier = Modifier.size(64.dp).spellBorder(), mod = mod
             )
+            if (mod.balance.lastUpdate.isNotEmpty()) {
+                Spacer(Modifier.size(16.dp))
+                BalanceIcon(
+                    balanceStatus = mod.balance.status
+                )
+            }
             Spacer(Modifier.size(16.dp))
             GearStylizedTextTitle(text = mod.name)
+
         }
         Divider(
             modifier = Modifier.fillMaxWidth().padding(top = 8.dp, bottom = 16.dp),
@@ -107,6 +99,32 @@ fun ModCardContent(
 
             )
         )
+
+        if (mod.balance.lastUpdate.isNotEmpty()) {
+            Spacer(Modifier.size(32.dp))
+            GearStylizedText(
+                text = "Last patch note mention: ${mod.balance.lastUpdate}",
+                style = MaterialTheme.typography.subtitle2.copy(
+                    color = WarborneColorTheme.borderSkillColor,
+                    fontFamily = FontFamily.Monospace
+                )
+            )
+            Spacer(Modifier.size(8.dp))
+            GearStylizedText(
+                text = "latest changes:",
+                style = MaterialTheme.typography.subtitle2.copy(
+                    color = WarborneColorTheme.borderSkillColor,
+                    fontFamily = FontFamily.Monospace
+                )
+            )
+            GearStylizedText(
+                text = mod.balance.changes,
+                style = MaterialTheme.typography.subtitle2.copy(
+                    color = WarborneColorTheme.borderSkillColor,
+                    fontFamily = FontFamily.Monospace
+                )
+            )
+        }
     }
 }
 

@@ -57,7 +57,7 @@ fun App() {
                             ) {
                                 TabNavigationRailItem(HomeTab)
                                 TabNavigationRailItem(SecondTab)
-//                                TabNavigationRailItem(ThirdTab)
+                                TabNavigationRailItem(ThirdTab)
                             }
                             Column(
                                 modifier = Modifier.fillMaxSize()
@@ -87,7 +87,7 @@ fun App() {
                         BottomNavigation(backgroundColor = WarborneColorTheme.textBackgroundColor) {
                             TabNavigationItem(HomeTab)
                             TabNavigationItem(SecondTab)
-//                            TabNavigationItem(ThirdTab)
+                            TabNavigationItem(ThirdTab)
                         }
                     }
                 )
