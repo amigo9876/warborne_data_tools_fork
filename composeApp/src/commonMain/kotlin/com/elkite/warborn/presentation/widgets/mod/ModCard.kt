@@ -102,27 +102,25 @@ fun ModCardContent(
 
         if (mod.balance.lastUpdate.isNotEmpty()) {
             Spacer(Modifier.size(32.dp))
-            GearStylizedText(
-                text = "Last patch note mention: ${mod.balance.lastUpdate}",
-                style = MaterialTheme.typography.subtitle2.copy(
-                    color = WarborneColorTheme.borderSkillColor,
-                    fontFamily = FontFamily.Monospace
+            Row(
+                verticalAlignment = Alignment.Bottom,
+                horizontalArrangement = Arrangement.Start,
+            ) {
+                BalanceIcon(
+                    balanceStatus = mod.balance.status
                 )
-            )
-            Spacer(Modifier.size(8.dp))
-            GearStylizedText(
-                text = "latest changes:",
-                style = MaterialTheme.typography.subtitle2.copy(
-                    color = WarborneColorTheme.borderSkillColor,
-                    fontFamily = FontFamily.Monospace
+                GearStylizedText(
+                    text = "Latest changes on patch: ${mod.balance.lastUpdate}",
                 )
+            }
+            Divider(
+                modifier = Modifier.fillMaxWidth().padding(top = 8.dp, bottom = 16.dp),
+                color = WarborneColorTheme.borderSkillColor,
+                thickness = 1.dp
             )
             GearStylizedText(
                 text = mod.balance.changes,
-                style = MaterialTheme.typography.subtitle2.copy(
-                    color = WarborneColorTheme.borderSkillColor,
-                    fontFamily = FontFamily.Monospace
-                )
+                maxLines = Int.MAX_VALUE
             )
         }
     }

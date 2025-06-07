@@ -61,7 +61,7 @@ fun SpellCardContent(spell: Spell) {
             Spacer(Modifier.size(16.dp))
             Column {
                 GearStylizedTextTitle(text = spell.name)
-                if (spell.gearName != null)
+                if (!spell.gearName.isNullOrEmpty())
                     GearStylizedText(
                         text = spell.gearName,
                         style = MaterialTheme.typography.caption.copy(
@@ -149,7 +149,6 @@ fun SpellCardContent(spell: Spell) {
                 maxLines = Int.MAX_VALUE
             )
         }
-
     }
 }
 
