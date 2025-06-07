@@ -58,26 +58,38 @@ fun SpellCardContent(spell: Spell) {
                     color = WarborneColorTheme.borderSkillColor,
                 ), gearType = spell.associatedGearType, spellType = spell.type, id = spell.gameId
             )
-            if (spell.balance.lastUpdate.isNotEmpty()) {
-                Spacer(Modifier.size(16.dp))
-                BalanceIcon(
-                    balanceStatus = spell.balance.status
-                )
-            }
             Spacer(Modifier.size(16.dp))
-            GearStylizedTextTitle(text = spell.name)
+            Column {
+                GearStylizedTextTitle(text = spell.name)
+                if (spell.gearName != null)
+                    GearStylizedText(
+                        text = spell.gearName,
+                        style = MaterialTheme.typography.caption.copy(
+                            fontWeight = FontWeight.ExtraLight,
+                        ),
+                    ) else {
+                    GearStylizedText(
+                        text = spell.associatedGearType.name.lowercase().capitalize(),
+                        style = MaterialTheme.typography.caption.copy(
+                            fontWeight = FontWeight.ExtraLight,
+                        ),
+                    )
+                }
+            }
         }
         Divider(
             modifier = Modifier.fillMaxWidth().padding(top = 8.dp, bottom = 16.dp),
             color = WarborneColorTheme.borderSkillColor,
             thickness = 1.dp
         )
+
         SpellAttributes(spell)
         Spacer(Modifier.size(16.dp))
         MultiPatternHighlightedText(
-            baseTextStyle = MaterialTheme.typography.body1.copy(color = WarborneColorTheme.textDescriptionColor).copy(
+            baseTextStyle = MaterialTheme.typography.body1.copy(color = WarborneColorTheme.textDescriptionColor)
+                .copy(
                     fontFamily = FontFamily.Monospace
-                    ),
+                ),
             text = spell.description,
             patternsWithStyles = listOf(
                 Regex("""\[Damage Rate: [^\]]+]""") to SpanStyle(
@@ -101,7 +113,11 @@ fun SpellCardContent(spell: Spell) {
 
             ) {
             if (!spell.gearName.isNullOrEmpty() && spell.associatedGearType != GearType.DRIFTER) {
-                ArmorImage(gearName = spell.gearName, gearType = spell.associatedGearType, rarity = spell.rarity)
+                ArmorImage(
+                    gearName = spell.gearName,
+                    gearType = spell.associatedGearType,
+                    rarity = spell.rarity
+                )
                 Spacer(Modifier.size(16.dp))
             }
             GearStylizedText(
@@ -112,9 +128,17 @@ fun SpellCardContent(spell: Spell) {
         }
         if (spell.balance.lastUpdate.isNotEmpty()) {
             Spacer(Modifier.size(32.dp))
-            GearStylizedText(
-                text = "Latest changes on patch: ${spell.balance.lastUpdate}",
-            )
+            Row(
+                verticalAlignment = Alignment.Bottom,
+                horizontalArrangement = Arrangement.Start,
+            ) {
+                BalanceIcon(
+                    balanceStatus = spell.balance.status
+                )
+                GearStylizedText(
+                    text = "Latest changes on patch: ${spell.balance.lastUpdate}",
+                )
+            }
             Divider(
                 modifier = Modifier.fillMaxWidth().padding(top = 8.dp, bottom = 16.dp),
                 color = WarborneColorTheme.borderSkillColor,
