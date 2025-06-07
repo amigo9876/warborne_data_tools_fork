@@ -394,6 +394,7 @@ import com.elkite.warborn.resources.ParagonCard_Dex_9
 import com.elkite.warborn.resources.ParagonCard_Int_1
 import com.elkite.warborn.resources.ParagonCard_Int_10
 import com.elkite.warborn.resources.ParagonCard_Int_11
+import com.elkite.warborn.resources.ParagonCard_Int_13
 import com.elkite.warborn.resources.ParagonCard_Int_2
 import com.elkite.warborn.resources.ParagonCard_Int_3
 import com.elkite.warborn.resources.ParagonCard_Int_4
@@ -422,6 +423,7 @@ import com.elkite.warborn.resources.ParagonFullBodyBg_Dex_9
 import com.elkite.warborn.resources.ParagonFullBodyBg_Int_1
 import com.elkite.warborn.resources.ParagonFullBodyBg_Int_10
 import com.elkite.warborn.resources.ParagonFullBodyBg_Int_11
+import com.elkite.warborn.resources.ParagonFullBodyBg_Int_13
 import com.elkite.warborn.resources.ParagonFullBodyBg_Int_2
 import com.elkite.warborn.resources.ParagonFullBodyBg_Int_3
 import com.elkite.warborn.resources.ParagonFullBodyBg_Int_4
@@ -450,6 +452,7 @@ import com.elkite.warborn.resources.ParagonFullBody_Dex_9
 import com.elkite.warborn.resources.ParagonFullBody_Int_1
 import com.elkite.warborn.resources.ParagonFullBody_Int_10
 import com.elkite.warborn.resources.ParagonFullBody_Int_11
+import com.elkite.warborn.resources.ParagonFullBody_Int_13
 import com.elkite.warborn.resources.ParagonFullBody_Int_2
 import com.elkite.warborn.resources.ParagonFullBody_Int_3
 import com.elkite.warborn.resources.ParagonFullBody_Int_4
@@ -478,6 +481,7 @@ import com.elkite.warborn.resources.ParagonPortrait_Dex_9
 import com.elkite.warborn.resources.ParagonPortrait_Int_1
 import com.elkite.warborn.resources.ParagonPortrait_Int_10
 import com.elkite.warborn.resources.ParagonPortrait_Int_11
+import com.elkite.warborn.resources.ParagonPortrait_Int_13
 import com.elkite.warborn.resources.ParagonPortrait_Int_2
 import com.elkite.warborn.resources.ParagonPortrait_Int_3
 import com.elkite.warborn.resources.ParagonPortrait_Int_4
@@ -517,6 +521,8 @@ import com.elkite.warborn.resources.Paragon_Skill_Int_10
 import com.elkite.warborn.resources.Paragon_Skill_Int_10_Passive
 import com.elkite.warborn.resources.Paragon_Skill_Int_11
 import com.elkite.warborn.resources.Paragon_Skill_Int_11_Passive
+import com.elkite.warborn.resources.Paragon_Skill_Int_13_Passive
+import com.elkite.warborn.resources.Paragon_Skill_Int_13
 import com.elkite.warborn.resources.Paragon_Skill_Int_1_Passive
 import com.elkite.warborn.resources.Paragon_Skill_Int_2
 import com.elkite.warborn.resources.Paragon_Skill_Int_2_Passive
@@ -656,6 +662,7 @@ object IconMap {
             "paragon_int_7" -> Res.drawable.ParagonPortrait_Int_7
             "paragon_int_11" -> Res.drawable.ParagonPortrait_Int_11
             "paragon_int_10" -> Res.drawable.ParagonPortrait_Int_10
+            "paragon_int_13" -> Res.drawable.ParagonPortrait_Int_13
             "paragon_dex_1" -> Res.drawable.ParagonPortrait_Dex_1
             "paragon_dex_2" -> Res.drawable.ParagonPortrait_Dex_2
             "paragon_dex_3" -> Res.drawable.ParagonPortrait_Dex_3
@@ -686,6 +693,7 @@ object IconMap {
             "paragon_int_3" -> Res.drawable.ParagonFullBodyBg_Int_3
             "paragon_int_4" -> Res.drawable.ParagonFullBodyBg_Int_4
             "paragon_int_10" -> Res.drawable.ParagonFullBodyBg_Int_10
+            "paragon_int_13" -> Res.drawable.ParagonFullBodyBg_Int_13
             "paragon_int_6" -> Res.drawable.ParagonFullBodyBg_Int_6
             "paragon_int_7" -> Res.drawable.ParagonFullBodyBg_Int_7
             "paragon_int_11" -> Res.drawable.ParagonFullBodyBg_Int_11
@@ -721,6 +729,7 @@ object IconMap {
             "paragon_int_3" -> Res.drawable.ParagonFullBody_Int_3
             "paragon_int_4" -> Res.drawable.ParagonFullBody_Int_4
             "paragon_int_10" -> Res.drawable.ParagonFullBody_Int_10
+            "paragon_int_13" -> Res.drawable.ParagonFullBody_Int_13
             "paragon_int_6" -> Res.drawable.ParagonFullBody_Int_6
             "paragon_int_7" -> Res.drawable.ParagonFullBody_Int_7
             "paragon_int_11" -> Res.drawable.ParagonFullBody_Int_11
@@ -758,6 +767,7 @@ object IconMap {
             "paragon_int_6" -> Res.drawable.ParagonCard_Int_6
             "paragon_int_7" -> Res.drawable.ParagonCard_Int_7
             "paragon_int_11" -> Res.drawable.ParagonCard_Int_11
+            "paragon_int_13" -> Res.drawable.ParagonCard_Int_13
             "paragon_int_9" -> Res.drawable.ParagonCard_Int_9
             "paragon_dex_1" -> Res.drawable.ParagonCard_Dex_1
             "paragon_dex_2" -> Res.drawable.ParagonCard_Dex_2
@@ -798,6 +808,7 @@ object IconMap {
             "Paragon_Skill_Int_3" -> Res.drawable.Paragon_Skill_Int_3
             "Paragon_Skill_Int_4" -> Res.drawable.Paragon_Skill_Int_4
             "Paragon_Skill_Int_10" -> Res.drawable.Paragon_Skill_Int_10
+            "Paragon_Skill_Int_13" -> Res.drawable.Paragon_Skill_Int_13
             "Paragon_Skill_Int_6" -> Res.drawable.Paragon_Skill_Int_6
             "Paragon_Skill_Int_7" -> Res.drawable.Paragon_Skill_Int_7
             "Paragon_Skill_Int_11" -> Res.drawable.Paragon_Skill_Int_11
@@ -831,6 +842,7 @@ object IconMap {
             "Paragon_Skill_Int_3_Passive" -> Res.drawable.Paragon_Skill_Int_3_Passive
             "Paragon_Skill_Int_4_Passive" -> Res.drawable.Paragon_Skill_Int_4_Passive
             "Paragon_Skill_Int_10_Passive" -> Res.drawable.Paragon_Skill_Int_10_Passive
+            "Paragon_Skill_Int_13_Passive" -> Res.drawable.Paragon_Skill_Int_13_Passive
             "Paragon_Skill_Int_6_Passive" -> Res.drawable.Paragon_Skill_Int_6_Passive
             "Paragon_Skill_Int_7_Passive" -> Res.drawable.Paragon_Skill_Int_7_Passive
             "Paragon_Skill_Int_11_Passive" -> Res.drawable.Paragon_Skill_Int_11_Passive
