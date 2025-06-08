@@ -16,7 +16,7 @@ object HomeTab : Tab {
     override val options: TabOptions
         @Composable
         get() {
-            val title = "Build"
+            val title = "Loadout"
             val icon = rememberVectorPainter(Icons.Default.Home)
 
             return remember {

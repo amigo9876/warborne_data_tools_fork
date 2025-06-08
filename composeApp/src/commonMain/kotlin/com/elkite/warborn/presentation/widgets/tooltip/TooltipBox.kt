@@ -116,7 +116,22 @@ fun GearTooltip(
                 style = MaterialTheme.typography.h6,
                 text = gear.name,
             )
-
+            if (!(gear as Spell).gearName.isNullOrEmpty())
+                gear.gearName?.let {
+                    GearStylizedText(
+                        text = it,
+                        style = MaterialTheme.typography.caption.copy(
+                            fontWeight = FontWeight.ExtraLight,
+                        ),
+                    )
+                } else {
+                GearStylizedText(
+                    text = gear.associatedGearType.name.lowercase().capitalize(),
+                    style = MaterialTheme.typography.caption.copy(
+                        fontWeight = FontWeight.ExtraLight,
+                    ),
+                )
+            }
             Spacer(modifier = Modifier.height(4.dp))
 
             when (gear) {

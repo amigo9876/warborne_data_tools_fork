@@ -16,7 +16,7 @@ object SecondTab : Tab {
     override val options: TabOptions
         @Composable
         get() {
-            val title = "Build"
+            val title = "Info"
             val icon = rememberVectorPainter(Icons.Default.Info)
 
             return remember {

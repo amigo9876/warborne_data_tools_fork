@@ -22,6 +22,7 @@ data class Spell(
     val gearName: String? = null,
     val gearStats: GearStats,
     val rarity: Rarity? = null,
+    val stats: Stats
 ) : Gear(gameId, name, balance) {
     override fun toString(): String {
         return "Spell(id='${gameId}',\\\n name='$name',\\\n description='$description',\\\n type=$type," +

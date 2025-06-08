@@ -107,6 +107,7 @@ private fun TabNavigationRailItem(tab: Tab) {
                 Icon(painter = icon, contentDescription = tab.options.title)
             }
         },
+        label = { tab.options.title.let { androidx.compose.material.Text(it) } },
         unselectedContentColor = WarborneColorTheme.textDescriptionColor,
         selectedContentColor = WarborneColorTheme.textShieldColor
     )

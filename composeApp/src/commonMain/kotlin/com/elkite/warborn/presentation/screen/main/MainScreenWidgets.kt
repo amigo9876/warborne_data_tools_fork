@@ -19,8 +19,10 @@ import androidx.compose.material3.SegmentedButtonColors
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -257,6 +259,8 @@ fun FlowRowScope.DescriptionColumn(
     gear: Gear,
     onLoadoutClick: () -> Unit = {}
 ) {
+    var isCompact by remember{ mutableStateOf(false) }
+
     val modifier = if (isCompact())
         Modifier.fillMaxSize().padding(16.dp)
     else if (isMedium())
@@ -273,6 +277,10 @@ fun FlowRowScope.DescriptionColumn(
             spell = gear,
             onSpellClick = { spell ->
                 onLoadoutClick()
+            },
+            isCompact = isCompact,
+            onCompactClick = {
+                isCompact = it
             }
         )
     } else if (gear is Drifter) {
@@ -281,6 +289,10 @@ fun FlowRowScope.DescriptionColumn(
             drifter = gear,
             onDrifterClick = { drifter ->
                 onLoadoutClick()
+            },
+            isCompact = isCompact,
+            onCompactClick = {
+                isCompact = it
             }
         )
     } else if (gear is Mod) {

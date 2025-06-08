@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Switch
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,6 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.gear.GearType
 import com.elkite.warborn.domain.entities.gear.spell.Spell
+import com.elkite.warborn.domain.entities.gear.spell.Stats
 import com.elkite.warborn.presentation.theme.WarborneColorTheme
 import com.elkite.warborn.presentation.widgets.balance.BalanceIcon
 import com.elkite.warborn.presentation.widgets.gear.ArmorImage
@@ -35,19 +37,64 @@ import com.elkite.warborn.presentation.widgets.utils.MultiPatternHighlightedText
 fun SpellCard(
     modifier: Modifier = Modifier,
     onSpellClick: (Spell) -> Unit,
+    onCompactClick: ((Boolean) -> Unit)? = null,
+    isCompact: Boolean,
     spell: Spell
 ) {
     GearStylizedCard(
         modifier = modifier.clickable { onSpellClick(spell) },
-        composable = @Composable { SpellCardContent(spell) },
+        composable = @Composable { SpellCardContent(spell, onCompactClick, isCompact) },
     )
 }
 
 @Composable
-fun SpellCardContent(spell: Spell) {
+fun SpellCardContent(
+    spell: Spell,
+    onCompactClick: ((Boolean) -> Unit)?,
+    isCompact: Boolean
+) {
     Column(
         modifier = Modifier.wrapContentSize().padding(vertical = 16.dp, horizontal = 16.dp)
     ) {
+        if (!spell.gearName.isNullOrEmpty() && spell.associatedGearType != GearType.DRIFTER && !isCompact) {
+            Row(
+                verticalAlignment = Alignment.Bottom,
+                horizontalArrangement = Arrangement.Start,
+            ) {
+                ArmorImage(
+                    gearName = spell.gearName,
+                    gearType = spell.associatedGearType,
+                    rarity = spell.rarity
+                )
+                Spacer(Modifier.size(16.dp))
+                Column {
+                    GearStylizedTextTitle(text = spell.gearName)
+
+                    GearStylizedText(
+                        text = spell.associatedGearType.name.lowercase().capitalize(),
+                        style = MaterialTheme.typography.caption.copy(
+                            fontWeight = FontWeight.ExtraLight,
+                        ),
+                    )
+                }
+                if (onCompactClick != null) {
+                    Spacer(Modifier.weight(1f))
+                    Switch(
+                        checked = isCompact, onCheckedChange = {
+                            onCompactClick(it)
+                        },
+                        modifier = Modifier.padding(end = 8.dp)
+                    )
+                }
+            }
+            Divider(
+                modifier = Modifier.fillMaxWidth().padding(top = 8.dp, bottom = 16.dp),
+                color = WarborneColorTheme.borderSkillColor,
+                thickness = 1.dp
+            )
+            SpellStats(stats = spell.stats)
+            Spacer(Modifier.size(32.dp))
+        }
         Row(
             verticalAlignment = Alignment.Bottom,
             horizontalArrangement = Arrangement.Start,
@@ -76,13 +123,21 @@ fun SpellCardContent(spell: Spell) {
                     )
                 }
             }
+            if (onCompactClick != null) {
+                Spacer(Modifier.weight(1f))
+                Switch(
+                    checked = isCompact, onCheckedChange = {
+                        onCompactClick(it)
+                    },
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+            }
         }
         Divider(
             modifier = Modifier.fillMaxWidth().padding(top = 8.dp, bottom = 16.dp),
             color = WarborneColorTheme.borderSkillColor,
             thickness = 1.dp
         )
-
         SpellAttributes(spell)
         Spacer(Modifier.size(16.dp))
         MultiPatternHighlightedText(
@@ -107,12 +162,13 @@ fun SpellCardContent(spell: Spell) {
             )
         )
         Spacer(Modifier.size(16.dp))
+        Spacer(Modifier.size(16.dp))
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
 
             ) {
-            if (!spell.gearName.isNullOrEmpty() && spell.associatedGearType != GearType.DRIFTER) {
+            if (!spell.gearName.isNullOrEmpty() && spell.associatedGearType != GearType.DRIFTER && !isCompact) {
                 ArmorImage(
                     gearName = spell.gearName,
                     gearType = spell.associatedGearType,
@@ -120,35 +176,44 @@ fun SpellCardContent(spell: Spell) {
                 )
                 Spacer(Modifier.size(16.dp))
             }
-            GearStylizedText(
-                text = if (spell.gearName.isNullOrEmpty()) "Skill available at ${spell.requiredGearLevel.textValue} and above."
-                else "Skill available at ${spell.requiredGearLevel.textValue} and above for ${spell.gearName}",
-                maxLines = 2
-            )
-        }
-        if (spell.balance.lastUpdate.isNotEmpty()) {
-            Spacer(Modifier.size(32.dp))
-            Row(
-                verticalAlignment = Alignment.Bottom,
-                horizontalArrangement = Arrangement.Start,
-            ) {
-                BalanceIcon(
-                    balanceStatus = spell.balance.status
-                )
+            if (!isCompact)
                 GearStylizedText(
-                    text = "Latest changes on patch: ${spell.balance.lastUpdate}",
+                    text = if (spell.gearName.isNullOrEmpty()) "Skill available at ${spell.requiredGearLevel.textValue} and above."
+                    else "Skill available at ${spell.requiredGearLevel.textValue} and above for ${spell.gearName}",
+                    maxLines = 2,
+                    style = MaterialTheme.typography.caption.copy(
+                        fontWeight = FontWeight.ExtraLight,
+                    ),
                 )
-            }
-            Divider(
-                modifier = Modifier.fillMaxWidth().padding(top = 8.dp, bottom = 16.dp),
-                color = WarborneColorTheme.borderSkillColor,
-                thickness = 1.dp
+        }
+        SpellBalance(spell, isCompact)
+    }
+}
+
+@Composable
+private fun SpellBalance(spell: Spell, isCompact: Boolean) {
+    if (spell.balance.lastUpdate.isNotEmpty() && !isCompact) {
+        Spacer(Modifier.size(32.dp))
+        Row(
+            verticalAlignment = Alignment.Bottom,
+            horizontalArrangement = Arrangement.Start,
+        ) {
+            BalanceIcon(
+                balanceStatus = spell.balance.status
             )
             GearStylizedText(
-                text = spell.balance.changes,
-                maxLines = Int.MAX_VALUE
+                text = "Latest changes on patch: ${spell.balance.lastUpdate}",
             )
         }
+        Divider(
+            modifier = Modifier.fillMaxWidth().padding(top = 8.dp, bottom = 16.dp),
+            color = WarborneColorTheme.borderSkillColor,
+            thickness = 1.dp
+        )
+        GearStylizedText(
+            text = spell.balance.changes,
+            maxLines = Int.MAX_VALUE
+        )
     }
 }
 
@@ -166,6 +231,49 @@ fun SpellAttributes(spell: Spell) {
         attributes.add("Range: " to "${spell.castingRange} m")
     }
 
+    AttributeList(attributes = attributes)
+}
+
+@Composable
+fun SpellStats(stats: Stats) {
+    val attributes = mutableListOf<Pair<String, String>>()
+
+    if (!stats.bonusDamage.isNullOrEmpty()) {
+        attributes.add("Damage & Heal bonus: " to "${stats.bonusDamage}%")
+    }
+    if (!stats.attackPower.isNullOrEmpty()) {
+        attributes.add("Attack Power: " to stats.attackPower)
+    }
+    if (!stats.hp.isNullOrEmpty()) {
+        attributes.add("HP: " to stats.hp)
+    }
+    if (!stats.armor.isNullOrEmpty()) {
+        attributes.add("Armor: " to stats.armor)
+    }
+    if (!stats.magicResist.isNullOrEmpty()) {
+        attributes.add("Magic resistance: " to stats.magicResist)
+    }
+    if (!stats.tenacity.isNullOrEmpty()) {
+        attributes.add("Tenacity penetration: " to "${stats.tenacity}%")
+    }
+    if (!stats.mpRecovery.isNullOrEmpty()) {
+        attributes.add("Mana recovery bonus: " to "${stats.mpRecovery}%")
+    }
+    if (!stats.ms.isNullOrEmpty()) {
+        attributes.add("Movement Speed: " to "${stats.ms} m/s")
+    }
+    if (!stats.attackSpeed.isNullOrEmpty()) {
+        attributes.add("Attack Speed: " to "${stats.attackSpeed}/s")
+    }
+
+    if (attributes.isNotEmpty())
+        GearStylizedText(
+            text = "All stats are based on Tier IV",
+            style = MaterialTheme.typography.caption.copy(
+                fontWeight = FontWeight.ExtraLight,
+                color = WarborneColorTheme.textDescriptionColor
+            ), modifier = Modifier.padding(bottom = 8.dp)
+        )
     AttributeList(attributes = attributes)
 }
 

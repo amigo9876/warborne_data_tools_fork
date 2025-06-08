@@ -16,7 +16,7 @@ object ThirdTab : Tab {
     override val options: TabOptions
         @Composable
         get() {
-            val title = "Build"
+            val title = "Patch"
             val icon = rememberVectorPainter(Icons.Default.Notifications)
 
             return remember {

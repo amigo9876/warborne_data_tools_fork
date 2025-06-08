@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Switch
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,16 +32,22 @@ fun DrifterCard(
     modifier: Modifier = Modifier,
     drifter: Drifter,
     onDrifterClick: (Drifter) -> Unit,
+    isCompact: Boolean = false,
+    onCompactClick: ((Boolean) -> Unit)? = null
 ) {
 
     GearStylizedCard(
         modifier = modifier.clickable { onDrifterClick(drifter) },
-        composable = @Composable { DrifterCardContent(drifter) },
+        composable = @Composable { DrifterCardContent(drifter, isCompact, onCompactClick) },
     )
 }
 
 @Composable
-private fun DrifterCardContent(drifter: Drifter) {
+private fun DrifterCardContent(
+    drifter: Drifter,
+    isCompact: Boolean = false,
+    onCompactClick: ((Boolean) -> Unit)? = null
+) {
     Column(
         modifier = Modifier.wrapContentSize().padding(vertical = 16.dp)
     ) {
@@ -58,6 +65,15 @@ private fun DrifterCardContent(drifter: Drifter) {
             )
             Spacer(Modifier.size(16.dp))
             GearStylizedTextTitle(text = drifter.name)
+            if (onCompactClick != null) {
+                Spacer(Modifier.weight(1f))
+                Switch(
+                    checked = isCompact, onCheckedChange = {
+                        onCompactClick(it)
+                    },
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+            }
         }
         Divider(
             modifier = Modifier.fillMaxWidth()
@@ -65,54 +81,60 @@ private fun DrifterCardContent(drifter: Drifter) {
             color = WarborneColorTheme.borderSkillColor,
             thickness = 1.dp
         )
-        DrifterBonusStats(drifter)
-        LinksCard(drifter)
-        SupportCard(drifter)
+        if (!isCompact) {
+            DrifterBonusStats(drifter)
+            LinksCard(drifter)
+            SupportCard(drifter)
+        }
         SpellCardContent(
             spell = drifter.spell,
+            isCompact = isCompact,
+            onCompactClick = onCompactClick
         )
         SpellCardContent(
             spell = drifter.passive,
+            isCompact = isCompact,
+            onCompactClick = onCompactClick
         )
     }
 }
 
 @Composable
 private fun LinksCard(drifter: Drifter) {
-        Column(modifier = Modifier.fillMaxWidth().padding(top = 16.dp, start = 16.dp, end = 16.dp)) {
-            GearStylizedTextTitle(text = "Links")
-            Divider(
-                modifier = Modifier.fillMaxWidth()
-                    .padding(top = 8.dp, bottom = 16.dp),
-                color = WarborneColorTheme.borderSkillColor,
-                thickness = 1.dp
-            )
-            drifter.links.forEach {
-                Column {
-                    GearStylizedTextTitle(
-                        text = it.name,
-                        style = MaterialTheme.typography.h5
-                    )
-                    Spacer(Modifier.size(8.dp))
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(16.dp)
-                    ) {
-                        it.driftersId.forEach {
-                            DrifterIcon(
-                                drifterId = it
-                            )
-                        }
+    Column(modifier = Modifier.fillMaxWidth().padding(top = 16.dp, start = 16.dp, end = 16.dp)) {
+        GearStylizedTextTitle(text = "Links")
+        Divider(
+            modifier = Modifier.fillMaxWidth()
+                .padding(top = 8.dp, bottom = 16.dp),
+            color = WarborneColorTheme.borderSkillColor,
+            thickness = 1.dp
+        )
+        drifter.links.forEach {
+            Column {
+                GearStylizedTextTitle(
+                    text = it.name,
+                    style = MaterialTheme.typography.h5
+                )
+                Spacer(Modifier.size(8.dp))
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    it.driftersId.forEach {
+                        DrifterIcon(
+                            drifterId = it
+                        )
                     }
-                    Spacer(Modifier.size(8.dp))
-                    GearStylizedText(
-                        text = it.description,
-                        color = WarborneColorTheme.textDescriptionColor,
-                        style = MaterialTheme.typography.body1
-                    )
-                    Spacer(Modifier.size(16.dp))
                 }
+                Spacer(Modifier.size(8.dp))
+                GearStylizedText(
+                    text = it.description,
+                    color = WarborneColorTheme.textDescriptionColor,
+                    style = MaterialTheme.typography.body1
+                )
+                Spacer(Modifier.size(16.dp))
             }
         }
+    }
 }
 
 @Composable

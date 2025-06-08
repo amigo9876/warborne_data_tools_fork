@@ -13,6 +13,7 @@ import com.elkite.warborn.domain.entities.gear.mods.ModSlot
 import com.elkite.warborn.domain.entities.gear.mods.ModType
 import com.elkite.warborn.domain.entities.gear.spell.Spell
 import com.elkite.warborn.domain.entities.gear.spell.SpellType
+import com.elkite.warborn.domain.entities.gear.spell.Stats
 import com.elkite.warborn.presentation.widgets.patch_balance.Balance
 import com.elkite.warborn.presentation.widgets.patch_balance.BalanceStatus
 import io.ktor.client.request.get
@@ -95,6 +96,21 @@ object DataRepository {
         }
 
         return Balance(lastUpdate, changes, status)
+    }
+
+    private fun parseStats(json: JsonObject): Stats {
+       val obj = json["stats"]?.jsonObject ?: return Stats()
+        return Stats(
+            bonusDamage =  obj["dmgBonus"]?.jsonPrimitive?.content,
+            hp = obj["hp"]?.jsonPrimitive?.content,
+            tenacity = obj["tenacity"]?.jsonPrimitive?.content,
+            mpRecovery = obj["mpRecovery"]?.jsonPrimitive?.content,
+            ms = obj["ms"]?.jsonPrimitive?.content,
+            attackSpeed = obj["as"]?.jsonPrimitive?.content,
+            armor = obj["armor"]?.jsonPrimitive?.content,
+            magicResist = obj["magicResi"]?.jsonPrimitive?.content,
+            attackPower = obj["attackPower"]?.jsonPrimitive?.content
+        )
     }
 
     private fun parseWeapons(json: String): List<Spell> {
@@ -458,7 +474,8 @@ object DataRepository {
                 associatedGearType = gearType,
                 gearName = gearName,
                 gearStats = gearStats,
-                rarity = rarity
+                rarity = rarity,
+                stats = parseStats(json)
             )
         } catch (e: Exception) {
             println("Error parsing spell: ${e.message}")

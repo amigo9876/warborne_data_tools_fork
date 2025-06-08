@@ -102,7 +102,9 @@ actual fun PatchScreenCommon(state: MainScreenModel.BuildScreenState.Success) {
                         is Spell -> {
                             SpellCard(
                                 spell = it,
-                                onSpellClick = {}
+                                onSpellClick = {},
+                                isCompact = false,
+                                onCompactClick = null
                             )
                         }
 
