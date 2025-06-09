@@ -7,6 +7,7 @@ import com.elkite.warborn.domain.entities.gear.GearStats
 import com.elkite.warborn.domain.entities.gear.GearType
 import com.elkite.warborn.domain.entities.gear.Rarity
 import com.elkite.warborn.domain.entities.gear.drifter.Drifter
+import com.elkite.warborn.domain.entities.gear.drifter.DrifterStats
 import com.elkite.warborn.domain.entities.gear.drifter.Link
 import com.elkite.warborn.domain.entities.gear.mods.Mod
 import com.elkite.warborn.domain.entities.gear.mods.ModSlot
@@ -110,6 +111,43 @@ object DataRepository {
             armor = obj["armor"]?.jsonPrimitive?.content,
             magicResist = obj["magicResi"]?.jsonPrimitive?.content,
             attackPower = obj["attackPower"]?.jsonPrimitive?.content
+        )
+    }
+
+    private fun parseDrifterStats(json: JsonObject): DrifterStats {
+        val obj = json["stats"]?.jsonObject ?: return DrifterStats(
+            maxHpBonus = "",
+            maxMpBonus = "",
+            attackSpeedBonus = "",
+            castingSpeedBonus = "",
+            skillCooldownRateBonus = "",
+            physicalDamageBonus = "",
+            magicDamageBonus = "",
+            healingBonus = "",
+            damageBonusPvE = "",
+            criticalRate = "",
+            tenacityPenetration = "",
+            armor = "",
+            magicResistance = "",
+            block = "",
+            controlResistance = ""
+        )
+        return DrifterStats(
+            maxHpBonus = obj["Max HP Bonus"]?.jsonPrimitive?.content ?: "",
+            maxMpBonus = obj["Max MP Bonus"]?.jsonPrimitive?.content ?: "",
+            attackSpeedBonus = obj["Attack Speed Bonus"]?.jsonPrimitive?.content ?: "",
+            castingSpeedBonus = obj["Casting Speed Bonus"]?.jsonPrimitive?.content ?: "",
+            skillCooldownRateBonus = obj["Skill Cooldown Rate Bonus"]?.jsonPrimitive?.content ?: "",
+            physicalDamageBonus = obj["Physical Damage Bonus"]?.jsonPrimitive?.content ?: "",
+            magicDamageBonus = obj["Magic Damage Bonus"]?.jsonPrimitive?.content ?: "",
+            healingBonus = obj["Healing Bonus"]?.jsonPrimitive?.content ?: "",
+            damageBonusPvE = obj["Damage Bonus (PvE)"]?.jsonPrimitive?.content ?: "",
+            criticalRate = obj["Critical Rate"]?.jsonPrimitive?.content ?: "",
+            tenacityPenetration = obj["Tenacity Penetration"]?.jsonPrimitive?.content ?: "",
+            armor = obj["Armor"]?.jsonPrimitive?.content ?: "",
+            magicResistance = obj["Magic Resistance"]?.jsonPrimitive?.content ?: "",
+            block = obj["Block"]?.jsonPrimitive?.content ?: "",
+            controlResistance = obj["Control Resistance"]?.jsonPrimitive?.content ?: ""
         )
     }
 
@@ -315,7 +353,8 @@ object DataRepository {
                             supportBonusValue = supportBonusValue,
                             supportMalusValue = supportMalusValue,
                             links = matchedLinks,
-                            gearStats = gearStats
+                            gearStats = gearStats,
+                            drifterStats = parseDrifterStats(obj)
                         )
                     )
                     println("Successfully parsed drifter: $name")

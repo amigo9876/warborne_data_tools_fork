@@ -17,8 +17,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.gear.drifter.Drifter
+import com.elkite.warborn.domain.entities.gear.drifter.DrifterStats
 import com.elkite.warborn.presentation.theme.WarborneColorTheme
 import com.elkite.warborn.presentation.widgets.spell.SpellCardContent
 import com.elkite.warborn.presentation.widgets.utils.AttributeList
@@ -83,6 +85,7 @@ private fun DrifterCardContent(
         )
         if (!isCompact) {
             DrifterBonusStats(drifter)
+            DrifterStats(drifter.drifterStats)
             LinksCard(drifter)
             SupportCard(drifter)
         }
@@ -176,6 +179,83 @@ private fun DrifterBonusStats(drifter: Drifter) {
     Column(modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth()) {
         AttributeList(attributes = attributes, colors = colors)
     }
+}
+
+@Composable
+fun DrifterStats(stats: DrifterStats) {
+    val attributes = mutableListOf<Pair<String, String>>()
+
+    if (stats.maxHpBonus.isNotEmpty()) {
+        attributes.add("Max HP Bonus: " to stats.maxHpBonus)
+    }
+    if (stats.maxMpBonus.isNotEmpty()) {
+        attributes.add("Max MP Bonus: " to stats.maxMpBonus)
+    }
+    if (stats.attackSpeedBonus.isNotEmpty()) {
+        attributes.add("Attack Speed Bonus: " to stats.attackSpeedBonus)
+    }
+    if (stats.castingSpeedBonus.isNotEmpty()) {
+        attributes.add("Casting Speed Bonus: " to stats.castingSpeedBonus)
+    }
+    if (stats.skillCooldownRateBonus.isNotEmpty()) {
+        attributes.add("Skill Cooldown Rate Bonus: " to stats.skillCooldownRateBonus)
+    }
+    if (stats.physicalDamageBonus.isNotEmpty()) {
+        attributes.add("Physical Damage Bonus: " to stats.physicalDamageBonus)
+    }
+    if (stats.magicDamageBonus.isNotEmpty()) {
+        attributes.add("Magic Damage Bonus: " to stats.magicDamageBonus)
+    }
+    if (stats.healingBonus.isNotEmpty()) {
+        attributes.add("Healing Bonus: " to stats.healingBonus)
+    }
+    if (stats.damageBonusPvE.isNotEmpty()) {
+        attributes.add("Damage Bonus (PvE): " to stats.damageBonusPvE)
+    }
+    if (stats.criticalRate.isNotEmpty()) {
+        attributes.add("Critical Rate: " to stats.criticalRate)
+    }
+    if (stats.tenacityPenetration.isNotEmpty()) {
+        attributes.add("Tenacity Penetration" to stats.tenacityPenetration)
+    }
+    if (stats.armor.isNotEmpty()) {
+        attributes.add("Armor: " to stats.armor)
+    }
+    if (stats.magicResistance.isNotEmpty()) {
+        attributes.add("Magic Resistance: " to stats.magicResistance)
+    }
+    if (stats.block.isNotEmpty()) {
+        attributes.add("Block: " to stats.block)
+    }
+    if (stats.controlResistance.isNotEmpty()) {
+        attributes.add("Control Resistance: " to stats.controlResistance)
+    }
+
+
+    if (attributes.isNotEmpty())
+        Column(modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth()) {
+            Spacer(Modifier.size(16.dp))
+            Row(
+                verticalAlignment = Alignment.Bottom
+            ) {
+                GearStylizedTextTitle(text = "Stats")
+                Spacer(Modifier.weight(1f))
+                GearStylizedText(
+                    text = "All stats are based on Mastery Level 1",
+                    style = MaterialTheme.typography.caption.copy(
+                        fontWeight = FontWeight.ExtraLight,
+                        color = WarborneColorTheme.textDescriptionColor
+                    ), modifier = Modifier.padding(bottom = 8.dp)
+                )
+            }
+            Divider(
+                modifier = Modifier.fillMaxWidth()
+                    .padding(top = 8.dp, bottom = 16.dp),
+                color = WarborneColorTheme.borderSkillColor,
+                thickness = 1.dp
+            )
+            AttributeList(attributes = attributes)
+        }
 }
 
 

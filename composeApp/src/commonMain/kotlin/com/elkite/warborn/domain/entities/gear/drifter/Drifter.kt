@@ -20,6 +20,7 @@ data class Drifter(
     val supportMalusValue: String,
     val links: List<Link> = emptyList(),
     val gearStats: GearStats,
+    val drifterStats: DrifterStats
     ) : Gear(
     gameId, name, balance
 )
