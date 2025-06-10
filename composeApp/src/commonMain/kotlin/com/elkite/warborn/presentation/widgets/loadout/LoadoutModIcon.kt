@@ -27,7 +27,7 @@ fun LoadoutModIconWithToolTip(
     mod: Mod?,
     onClick: () -> Unit = {},
 ) {
-    if (mod != null)
+    if (mod != null) {
     TooltipBox(
         tooltipState = tooltipState,
         gear = mod,
@@ -39,6 +39,7 @@ fun LoadoutModIconWithToolTip(
             mod = mod,
             onClick = onClick
         )
+    }
     } else {
         LoadoutModIcon(
             isSelected = isSelected,

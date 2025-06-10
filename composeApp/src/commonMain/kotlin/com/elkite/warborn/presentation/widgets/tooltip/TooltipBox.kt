@@ -116,26 +116,22 @@ fun GearTooltip(
                 style = MaterialTheme.typography.h6,
                 text = gear.name,
             )
-            if (!(gear as Spell).gearName.isNullOrEmpty())
-                gear.gearName?.let {
-                    GearStylizedText(
-                        text = it,
+            when (gear) {
+                is Spell -> {
+                    gear.gearName?.let {
+                        GearStylizedText(
+                            text = it,
+                            style = MaterialTheme.typography.caption.copy(
+                                fontWeight = FontWeight.ExtraLight,
+                            ),
+                        )
+                    } ?: GearStylizedText(
+                        text = gear.associatedGearType.name.lowercase().capitalize(),
                         style = MaterialTheme.typography.caption.copy(
                             fontWeight = FontWeight.ExtraLight,
                         ),
                     )
-                } else {
-                GearStylizedText(
-                    text = gear.associatedGearType.name.lowercase().capitalize(),
-                    style = MaterialTheme.typography.caption.copy(
-                        fontWeight = FontWeight.ExtraLight,
-                    ),
-                )
-            }
-            Spacer(modifier = Modifier.height(4.dp))
-
-            when (gear) {
-                is Spell -> {
+                    Spacer(modifier = Modifier.height(4.dp))
                     MultiPatternHighlightedText(
                         baseTextStyle = MaterialTheme.typography.body2.copy(color = WarborneColorTheme.textDescriptionColor)
                             .copy(
