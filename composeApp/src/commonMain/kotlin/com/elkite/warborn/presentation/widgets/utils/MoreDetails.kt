@@ -24,20 +24,12 @@ fun MoreDetails(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        if (!isCompact)
-            GearStylizedTextTitle(
-                text = "Detailed",
-                style = MaterialTheme.typography.caption.copy(
-                    fontWeight = FontWeight.ExtraLight,
-                )
+        GearStylizedTextTitle(
+            text = "Compact",
+            style = MaterialTheme.typography.caption.copy(
+                fontWeight = FontWeight.ExtraLight,
             )
-        else
-            GearStylizedTextTitle(
-                text = "Compact",
-                style = MaterialTheme.typography.caption.copy(
-                    fontWeight = FontWeight.ExtraLight,
-                )
-            )
+        )
         Spacer(modifier = Modifier.width(4.dp))
         Switch(
             checked = isCompact, onCheckedChange = {
