@@ -6,12 +6,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRowScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.SegmentedButton
@@ -51,6 +53,7 @@ import com.elkite.warborn.presentation.widgets.utils.ClickableText
 import com.elkite.warborn.presentation.widgets.utils.CopyButton
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedCard
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedText
+import com.elkite.warborn.presentation.widgets.utils.MoreDetails
 import com.elkite.warborn.presentation.widgets.utils.isCompact
 import com.elkite.warborn.presentation.widgets.utils.isMedium
 import com.elkite.warborn.resources.Com_Head_Helmet
@@ -79,7 +82,7 @@ fun LoadoutColumn(
         Column(modifier = Modifier.padding(16.dp)) {
             Row {
                 GearStylizedText(text = "Discord : ")
-                ClickableText("https://discord.gg/H8GJZyc59e")
+                ClickableText("https://discord.gg/xQHwDzRh67")
             }
             CopyButton(
                 modifier = Modifier.padding(start = 8.dp),
@@ -98,13 +101,14 @@ fun FlowRowScope.ItemListColumn(
     loadout: Loadout,
     loadoutType: LoadoutType,
     selectedGear: Gear,
+    isDescCompact: Boolean,
     onUpdateGear: (Gear) -> Unit,
     onUpdateLoadout: (Spell) -> Unit,
     onUpdateDrifter: (Drifter) -> Unit,
     onUpdatePassive: (GearType) -> Unit,
-    onUpdateMod: (Mod, LoadoutType) -> Unit
+    onUpdateMod: (Mod, LoadoutType) -> Unit,
+    onCompactClick: (Boolean) -> Unit,
 ) {
-
     val modifier =
         if (isCompact())
             Modifier.sizeIn(minWidth = 300.dp, maxWidth = 450.dp, minHeight = 700.dp, maxHeight = 1000.dp)
@@ -146,45 +150,50 @@ fun FlowRowScope.ItemListColumn(
                 modifier = Modifier.padding(16.dp),
                 verticalArrangement = Arrangement.Top
             ) {
-                SingleChoiceSegmentedButtonRow(
-                    modifier = Modifier.wrapContentSize().padding(bottom = 8.dp),
+                Row(
                 ) {
-                    categoryOptions.forEachIndexed { index, label ->
-                        SegmentedButton(
-                            onClick = { selectedIndex.value = index },
-                            selected = index == selectedIndex.value,
-                            label = {
-                                Image(
-                                    painter = painterResource(
-                                        when (label) {
-                                            GearMainCategory.ARMOR -> Res.drawable.Com_Head_Helmet
-                                            GearMainCategory.WEAPON -> Res.drawable.Com_Weapon_Sword
-                                            GearMainCategory.DRIFTER -> Res.drawable.Common_ParagonWarehouse
-                                            GearMainCategory.MOD -> Res.drawable.ItemIcon_MODCore
-                                        }
-                                    ),
-                                    colorFilter = ColorFilter.tint(Color.White),
-                                    contentDescription = null,
-                                    modifier = Modifier.size(32.dp)
+                    SingleChoiceSegmentedButtonRow(
+                        modifier = Modifier.wrapContentSize().padding(bottom = 8.dp),
+                    ) {
+                        categoryOptions.forEachIndexed { index, label ->
+                            SegmentedButton(
+                                onClick = { selectedIndex.value = index },
+                                selected = index == selectedIndex.value,
+                                label = {
+                                    Image(
+                                        painter = painterResource(
+                                            when (label) {
+                                                GearMainCategory.ARMOR -> Res.drawable.Com_Head_Helmet
+                                                GearMainCategory.WEAPON -> Res.drawable.Com_Weapon_Sword
+                                                GearMainCategory.DRIFTER -> Res.drawable.Common_ParagonWarehouse
+                                                GearMainCategory.MOD -> Res.drawable.ItemIcon_MODCore
+                                            }
+                                        ),
+                                        colorFilter = ColorFilter.tint(Color.White),
+                                        contentDescription = null,
+                                        modifier = Modifier.size(32.dp)
+                                    )
+                                },
+                                shape = RectangleShape,
+                                colors = SegmentedButtonColors(
+                                    activeBorderColor = WarborneColorTheme.borderSkillHightlightColor,
+                                    activeContainerColor = WarborneColorTheme.textBackgroundColor,
+                                    activeContentColor = WarborneColorTheme.textDescriptionColor,
+                                    inactiveBorderColor = WarborneColorTheme.borderSkillColor,
+                                    inactiveContainerColor = WarborneColorTheme.textBackgroundColor,
+                                    inactiveContentColor = WarborneColorTheme.borderSkillColor,
+                                    disabledActiveContainerColor = WarborneColorTheme.textBackgroundColor,
+                                    disabledActiveContentColor = WarborneColorTheme.textBackgroundColor,
+                                    disabledActiveBorderColor = WarborneColorTheme.textBackgroundColor,
+                                    disabledInactiveContainerColor = WarborneColorTheme.textBackgroundColor,
+                                    disabledInactiveContentColor = WarborneColorTheme.textBackgroundColor,
+                                    disabledInactiveBorderColor = WarborneColorTheme.textBackgroundColor,
                                 )
-                            },
-                            shape = RectangleShape,
-                            colors = SegmentedButtonColors(
-                                activeBorderColor = WarborneColorTheme.borderSkillHightlightColor,
-                                activeContainerColor = WarborneColorTheme.textBackgroundColor,
-                                activeContentColor = WarborneColorTheme.textDescriptionColor,
-                                inactiveBorderColor = WarborneColorTheme.borderSkillColor,
-                                inactiveContainerColor = WarborneColorTheme.textBackgroundColor,
-                                inactiveContentColor = WarborneColorTheme.borderSkillColor,
-                                disabledActiveContainerColor = WarborneColorTheme.textBackgroundColor,
-                                disabledActiveContentColor = WarborneColorTheme.textBackgroundColor,
-                                disabledActiveBorderColor = WarborneColorTheme.textBackgroundColor,
-                                disabledInactiveContainerColor = WarborneColorTheme.textBackgroundColor,
-                                disabledInactiveContentColor = WarborneColorTheme.textBackgroundColor,
-                                disabledInactiveBorderColor = WarborneColorTheme.textBackgroundColor,
                             )
-                        )
+                        }
                     }
+                    Spacer(modifier = Modifier.width(16.dp))
+                    MoreDetails(isCompact = isDescCompact, onCompactClick = onCompactClick)
                 }
                 Column(
                     modifier = Modifier.fillMaxWidth(),
@@ -257,10 +266,9 @@ fun FlowRowScope.ItemListColumn(
 @Composable
 fun FlowRowScope.DescriptionColumn(
     gear: Gear,
+    isDescCompact: Boolean,
     onLoadoutClick: () -> Unit = {}
 ) {
-    var isCompact by remember{ mutableStateOf(false) }
-
     val modifier = if (isCompact())
         Modifier.fillMaxSize().padding(16.dp)
     else if (isMedium())
@@ -278,10 +286,7 @@ fun FlowRowScope.DescriptionColumn(
             onSpellClick = { spell ->
                 onLoadoutClick()
             },
-            isCompact = isCompact,
-            onCompactClick = {
-                isCompact = it
-            }
+            isCompact = isDescCompact,
         )
     } else if (gear is Drifter) {
         DrifterCard(
@@ -290,10 +295,7 @@ fun FlowRowScope.DescriptionColumn(
             onDrifterClick = { drifter ->
                 onLoadoutClick()
             },
-            isCompact = isCompact,
-            onCompactClick = {
-                isCompact = it
-            }
+            isCompact = isDescCompact,
         )
     } else if (gear is Mod) {
         ModCard(

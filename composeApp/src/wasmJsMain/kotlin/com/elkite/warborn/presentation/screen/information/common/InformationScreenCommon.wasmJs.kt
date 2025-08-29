@@ -26,7 +26,7 @@ actual fun InformationScreenCommon(state: MainScreenModel.BuildScreenState.Succe
             GearStylizedText(text = "Feel free to report any issue or suggestion on the following links:")
             Row {
                 GearStylizedText(text = "Discord : ")
-                ClickableText("https://discord.gg/H8GJZyc59e")
+                ClickableText("https://discord.gg/xQHwDzRh67")
             }
             Spacer(Modifier.size(16.dp))
             Row {
@@ -36,7 +36,7 @@ actual fun InformationScreenCommon(state: MainScreenModel.BuildScreenState.Succe
             Spacer(Modifier.size(16.dp))
             Row {
                 GearStylizedText(text = "Data code : ")
-                ClickableText("https://github.com/ElKite/warborne_data")
+                ClickableText("https://github.com/ElKite/warborne-data-json")
             }
         }
     }

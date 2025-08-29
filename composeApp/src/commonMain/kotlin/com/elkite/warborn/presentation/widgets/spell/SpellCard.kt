@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Switch
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,6 +29,7 @@ import com.elkite.warborn.presentation.widgets.utils.AttributeList
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedCard
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedText
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedTextTitle
+import com.elkite.warborn.presentation.widgets.utils.MoreDetails
 import com.elkite.warborn.presentation.widgets.utils.MultiPatternHighlightedText
 
 
@@ -37,26 +37,24 @@ import com.elkite.warborn.presentation.widgets.utils.MultiPatternHighlightedText
 fun SpellCard(
     modifier: Modifier = Modifier,
     onSpellClick: (Spell) -> Unit,
-    onCompactClick: ((Boolean) -> Unit)? = null,
     isCompact: Boolean,
     spell: Spell
 ) {
     GearStylizedCard(
         modifier = modifier.clickable { onSpellClick(spell) },
-        composable = @Composable { SpellCardContent(spell, onCompactClick, isCompact) },
+        composable = @Composable { SpellCardContent(spell, isCompact) },
     )
 }
 
 @Composable
 fun SpellCardContent(
     spell: Spell,
-    onCompactClick: ((Boolean) -> Unit)?,
     isCompact: Boolean
 ) {
     Column(
         modifier = Modifier.wrapContentSize().padding(vertical = 16.dp, horizontal = 16.dp)
     ) {
-        if (!spell.gearName.isNullOrEmpty() && spell.associatedGearType != GearType.DRIFTER && !isCompact) {
+        if (!spell.gearName.isNullOrEmpty() && spell.associatedGearType != GearType.DRIFTER) {
             Row(
                 verticalAlignment = Alignment.Bottom,
                 horizontalArrangement = Arrangement.Start,
@@ -69,21 +67,11 @@ fun SpellCardContent(
                 Spacer(Modifier.size(16.dp))
                 Column {
                     GearStylizedTextTitle(text = spell.gearName)
-
                     GearStylizedText(
                         text = spell.associatedGearType.name.lowercase().capitalize(),
                         style = MaterialTheme.typography.caption.copy(
                             fontWeight = FontWeight.ExtraLight,
                         ),
-                    )
-                }
-                if (onCompactClick != null) {
-                    Spacer(Modifier.weight(1f))
-                    Switch(
-                        checked = isCompact, onCheckedChange = {
-                            onCompactClick(it)
-                        },
-                        modifier = Modifier.padding(end = 8.dp)
                     )
                 }
             }
@@ -92,8 +80,10 @@ fun SpellCardContent(
                 color = WarborneColorTheme.borderSkillColor,
                 thickness = 1.dp
             )
-            SpellStats(stats = spell.stats)
-            Spacer(Modifier.size(32.dp))
+            if (!isCompact) {
+                SpellStats(stats = spell.stats)
+                Spacer(Modifier.size(32.dp))
+            }
         }
         Row(
             verticalAlignment = Alignment.Bottom,
@@ -122,15 +112,6 @@ fun SpellCardContent(
                         ),
                     )
                 }
-            }
-            if (onCompactClick != null) {
-                Spacer(Modifier.weight(1f))
-                Switch(
-                    checked = isCompact, onCheckedChange = {
-                        onCompactClick(it)
-                    },
-                    modifier = Modifier.padding(end = 8.dp)
-                )
             }
         }
         Divider(
@@ -166,7 +147,6 @@ fun SpellCardContent(
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
-
             ) {
             if (!spell.gearName.isNullOrEmpty() && spell.associatedGearType != GearType.DRIFTER && !isCompact) {
                 ArmorImage(

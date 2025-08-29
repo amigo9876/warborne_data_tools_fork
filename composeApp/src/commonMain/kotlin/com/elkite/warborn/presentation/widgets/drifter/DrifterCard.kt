@@ -27,6 +27,7 @@ import com.elkite.warborn.presentation.widgets.utils.AttributeList
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedCard
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedText
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedTextTitle
+import com.elkite.warborn.presentation.widgets.utils.MoreDetails
 
 
 @Composable
@@ -35,12 +36,11 @@ fun DrifterCard(
     drifter: Drifter,
     onDrifterClick: (Drifter) -> Unit,
     isCompact: Boolean = false,
-    onCompactClick: ((Boolean) -> Unit)? = null
 ) {
 
     GearStylizedCard(
         modifier = modifier.clickable { onDrifterClick(drifter) },
-        composable = @Composable { DrifterCardContent(drifter, isCompact, onCompactClick) },
+        composable = @Composable { DrifterCardContent(drifter, isCompact) },
     )
 }
 
@@ -48,7 +48,6 @@ fun DrifterCard(
 private fun DrifterCardContent(
     drifter: Drifter,
     isCompact: Boolean = false,
-    onCompactClick: ((Boolean) -> Unit)? = null
 ) {
     Column(
         modifier = Modifier.wrapContentSize().padding(vertical = 16.dp)
@@ -62,20 +61,11 @@ private fun DrifterCardContent(
                 Modifier.size(64.dp).border(
                     width = 1.dp,
                     brush = WarborneColorTheme.legendaryBrush,
-                    shape = RectangleShape // You can change this to a different shape if needed
+                    shape = RectangleShape
                 ), drifterId = drifter.gameId
             )
             Spacer(Modifier.size(16.dp))
             GearStylizedTextTitle(text = drifter.name)
-            if (onCompactClick != null) {
-                Spacer(Modifier.weight(1f))
-                Switch(
-                    checked = isCompact, onCheckedChange = {
-                        onCompactClick(it)
-                    },
-                    modifier = Modifier.padding(end = 8.dp)
-                )
-            }
         }
         Divider(
             modifier = Modifier.fillMaxWidth()
@@ -92,12 +82,10 @@ private fun DrifterCardContent(
         SpellCardContent(
             spell = drifter.spell,
             isCompact = isCompact,
-            onCompactClick = onCompactClick
         )
         SpellCardContent(
             spell = drifter.passive,
             isCompact = isCompact,
-            onCompactClick = onCompactClick
         )
     }
 }

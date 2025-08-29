@@ -45,6 +45,8 @@ actual fun MainContent(
     val loadoutType = remember { mutableStateOf(LoadoutType.DRIFTER) }
     val loadoutState = screenModel.loadout.collectAsState()
     val scrollableState = rememberScrollState()
+    val isDescCompact = remember { mutableStateOf(true) }
+
 
     Box(modifier = Modifier.fillMaxSize()){
 
@@ -185,9 +187,13 @@ actual fun MainContent(
                         LoadoutType.MOD_BOOTS -> screenModel.updateModBoots(mod)
                         else -> {}
                     }
+                },
+                isDescCompact = isDescCompact.value,
+                onCompactClick = {
+                    isDescCompact.value = it
                 }
             )
-            DescriptionColumn(gear.value)
+            DescriptionColumn(gear.value, isDescCompact = isDescCompact.value)
         }
     }
 }

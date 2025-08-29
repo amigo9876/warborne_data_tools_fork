@@ -104,14 +104,14 @@ actual fun PatchScreenCommon(state: MainScreenModel.BuildScreenState.Success) {
                                 spell = it,
                                 onSpellClick = {},
                                 isCompact = false,
-                                onCompactClick = null
                             )
                         }
 
                         is Drifter -> {
                             DrifterCard(
                                 drifter = it,
-                                onDrifterClick = {}
+                                onDrifterClick = {},
+                                isCompact = false,
                             )
                         }
 
