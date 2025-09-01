@@ -1,6 +1,6 @@
-package com.elkite.warborn.domain.entities.gear.mods
+package com.elkite.warborn.domain.entities.old.mods
 
-import com.elkite.warborn.domain.entities.gear.Gear
+import com.elkite.warborn.domain.entities.old.Gear
 import com.elkite.warborn.presentation.widgets.patch_balance.Balance
 
 data class Mod(

@@ -1,6 +1,6 @@
 package com.elkite.warborn.util
 
-import com.elkite.warborn.domain.entities.gear.GearType
+import com.elkite.warborn.domain.entities.old.GearType
 import com.elkite.warborn.resources.Res
 import com.elkite.warborn.resources.SpecImage_ARMOR1
 import com.elkite.warborn.resources.SpecImage_ARMOR2

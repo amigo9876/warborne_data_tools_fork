@@ -1,4 +1,4 @@
-package com.elkite.warborn.domain.entities.gear
+package com.elkite.warborn.domain.entities.old
 
 import com.elkite.warborn.presentation.widgets.patch_balance.Balance
 import kotlinx.serialization.Serializable

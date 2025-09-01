@@ -18,7 +18,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.elkite.warborn.domain.entities.gear.mods.Mod
+import com.elkite.warborn.domain.entities.old.mods.Mod
 import com.elkite.warborn.presentation.theme.WarborneColorTheme
 import com.elkite.warborn.presentation.theme.spellBorder
 import com.elkite.warborn.presentation.widgets.balance.BalanceIcon

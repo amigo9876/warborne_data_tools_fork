@@ -1,4 +1,4 @@
-package com.elkite.warborn.domain.entities.gear.spell
+package com.elkite.warborn.domain.entities.old.spell
 
 data class Stats(
     val bonusDamage: String? = null,

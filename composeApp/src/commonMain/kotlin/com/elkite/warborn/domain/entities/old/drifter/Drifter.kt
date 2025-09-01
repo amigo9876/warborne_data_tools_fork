@@ -1,8 +1,8 @@
-package com.elkite.warborn.domain.entities.gear.drifter
+package com.elkite.warborn.domain.entities.old.drifter
 
-import com.elkite.warborn.domain.entities.gear.Gear
-import com.elkite.warborn.domain.entities.gear.GearStats
-import com.elkite.warborn.domain.entities.gear.spell.Spell
+import com.elkite.warborn.domain.entities.old.Gear
+import com.elkite.warborn.domain.entities.old.GearStats
+import com.elkite.warborn.domain.entities.old.spell.Spell
 import com.elkite.warborn.presentation.widgets.patch_balance.Balance
 
 data class Drifter(

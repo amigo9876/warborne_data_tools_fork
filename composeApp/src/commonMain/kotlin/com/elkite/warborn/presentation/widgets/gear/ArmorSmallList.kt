@@ -30,10 +30,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
-import com.elkite.warborn.domain.entities.gear.GearStats
-import com.elkite.warborn.domain.entities.gear.GearType
-import com.elkite.warborn.domain.entities.gear.LoadoutType
-import com.elkite.warborn.domain.entities.gear.spell.Spell
+import com.elkite.warborn.domain.entities.old.GearStats
+import com.elkite.warborn.domain.entities.old.GearType
+import com.elkite.warborn.domain.entities.old.LoadoutType
+import com.elkite.warborn.domain.entities.old.spell.Spell
 import com.elkite.warborn.presentation.theme.WarborneColorTheme
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedText
 import com.elkite.warborn.presentation.widgets.utils.isCompact

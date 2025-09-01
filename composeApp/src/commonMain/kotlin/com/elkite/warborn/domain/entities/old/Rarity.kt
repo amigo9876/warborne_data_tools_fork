@@ -1,4 +1,4 @@
-package com.elkite.warborn.domain.entities.gear
+package com.elkite.warborn.domain.entities.old
 
 enum class Rarity(val value: Int) {
     RARE(1),

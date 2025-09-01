@@ -10,8 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import com.elkite.warborn.domain.entities.gear.GearType
-import com.elkite.warborn.domain.entities.gear.Rarity
+import com.elkite.warborn.domain.entities.old.GearType
+import com.elkite.warborn.domain.entities.old.Rarity
 import com.elkite.warborn.presentation.theme.WarborneColorTheme
 import com.elkite.warborn.util.GearIconMap
 import org.jetbrains.compose.resources.painterResource

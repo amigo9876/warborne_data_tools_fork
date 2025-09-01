@@ -5,8 +5,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.elkite.warborn.domain.entities.gear.GearType
-import com.elkite.warborn.domain.entities.gear.spell.SpellType
+import com.elkite.warborn.domain.entities.old.GearType
+import com.elkite.warborn.domain.entities.old.spell.SpellType
 import com.elkite.warborn.util.IconMap
 import org.jetbrains.compose.resources.painterResource
 

@@ -23,10 +23,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.elkite.warborn.domain.entities.gear.Gear
-import com.elkite.warborn.domain.entities.gear.drifter.Drifter
-import com.elkite.warborn.domain.entities.gear.mods.Mod
-import com.elkite.warborn.domain.entities.gear.spell.Spell
+import com.elkite.warborn.domain.entities.old.Gear
+import com.elkite.warborn.domain.entities.old.drifter.Drifter
+import com.elkite.warborn.domain.entities.old.mods.Mod
+import com.elkite.warborn.domain.entities.old.spell.Spell
 import com.elkite.warborn.presentation.screen.main.MainScreenModel
 import com.elkite.warborn.presentation.theme.WarborneColorTheme
 import com.elkite.warborn.presentation.theme.onHover

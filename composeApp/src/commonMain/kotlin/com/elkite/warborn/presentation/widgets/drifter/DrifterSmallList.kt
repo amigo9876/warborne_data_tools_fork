@@ -14,7 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.elkite.warborn.domain.entities.gear.drifter.Drifter
+import com.elkite.warborn.domain.entities.old.drifter.Drifter
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedCard
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedTextTitle
 import com.elkite.warborn.presentation.widgets.utils.isCompact

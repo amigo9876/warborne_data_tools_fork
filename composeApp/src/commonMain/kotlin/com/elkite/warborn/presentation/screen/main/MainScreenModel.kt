@@ -2,14 +2,16 @@ package com.elkite.warborn.presentation.screen.main
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import com.elkite.warborn.data.repository.DataRepository
-import com.elkite.warborn.domain.entities.gear.GearStats
-import com.elkite.warborn.domain.entities.gear.GearType
-import com.elkite.warborn.domain.entities.gear.Loadout
-import com.elkite.warborn.domain.entities.gear.LoadoutType
-import com.elkite.warborn.domain.entities.gear.drifter.Drifter
-import com.elkite.warborn.domain.entities.gear.mods.Mod
-import com.elkite.warborn.domain.entities.gear.spell.Spell
-import com.elkite.warborn.domain.entities.gear.spell.SpellType
+import com.elkite.warborn.data.repository.DataaRespository
+import com.elkite.warborn.domain.entities.data.Data
+import com.elkite.warborn.domain.entities.old.GearStats
+import com.elkite.warborn.domain.entities.old.GearType
+import com.elkite.warborn.domain.entities.old.Loadout
+import com.elkite.warborn.domain.entities.old.LoadoutType
+import com.elkite.warborn.domain.entities.old.drifter.Drifter
+import com.elkite.warborn.domain.entities.old.mods.Mod
+import com.elkite.warborn.domain.entities.old.spell.Spell
+import com.elkite.warborn.domain.entities.old.spell.SpellType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -102,10 +104,12 @@ class MainScreenModel : ScreenModel {
         coroutineScope.launch {
             try {
                 val data = DataRepository.getData()
+                val newData = DataaRespository.getData()
 
                 _screenState.update {
                     BuildScreenState.Success(
                         lastDataUpdate = data.lastUpdate,
+                        newData = newData,
                         head = HashMap(
                             mapOf(
                                 GearStats.STR to data.spells.filter { it.associatedGearType == GearType.HEAD && it.gearStats == GearStats.STR },
@@ -194,7 +198,8 @@ class MainScreenModel : ScreenModel {
             val boots: HashMap<GearStats, List<Spell>>,
             val weapons: HashMap<GearType, List<Spell>>,
             val drifters: List<Drifter>,
-            val mods: List<Mod>
+            val mods: List<Mod>,
+            val newData: Data
         ) : BuildScreenState()
 
         data class Error(val message: String) : BuildScreenState()

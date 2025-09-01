@@ -1,4 +1,4 @@
-package com.elkite.warborn.domain.entities.gear
+package com.elkite.warborn.domain.entities.old
 
 import kotlinx.serialization.Serializable
 
@@ -45,4 +45,20 @@ enum class LoadoutType {
     MOD_HEAD,
     MOD_CHEST,
     MOD_BOOTS,
+}
+
+@Serializable
+enum class WeaponType {
+    sword,
+    gun,
+    axe,
+    mace,
+    bow,
+    spear,
+    dagger,
+    nature,
+    fire,
+    frost,
+    curse,
+    holy
 }

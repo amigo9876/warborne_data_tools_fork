@@ -1,4 +1,4 @@
-package com.elkite.warborn.domain.entities.gear.spell
+package com.elkite.warborn.domain.entities.old.spell
 
 import kotlinx.serialization.Serializable
 

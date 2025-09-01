@@ -14,8 +14,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
-import com.elkite.warborn.domain.entities.gear.LoadoutType
-import com.elkite.warborn.domain.entities.gear.drifter.Drifter
+import com.elkite.warborn.domain.entities.old.LoadoutType
+import com.elkite.warborn.domain.entities.old.drifter.Drifter
 import com.elkite.warborn.presentation.theme.WarborneColorTheme
 import com.elkite.warborn.presentation.widgets.drifter.DrifterIcon
 import com.elkite.warborn.resources.ParagonPortrait_None

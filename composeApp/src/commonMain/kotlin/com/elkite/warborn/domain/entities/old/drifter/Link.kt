@@ -1,4 +1,4 @@
-package com.elkite.warborn.domain.entities.gear.drifter
+package com.elkite.warborn.domain.entities.old.drifter
 
 data class Link(
     val name: String,

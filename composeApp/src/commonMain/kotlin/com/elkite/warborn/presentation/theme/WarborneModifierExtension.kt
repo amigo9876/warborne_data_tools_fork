@@ -13,7 +13,7 @@ import androidx.compose.ui.input.pointer.PointerEventType
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.elkite.warborn.domain.entities.gear.Gear
+import com.elkite.warborn.domain.entities.old.Gear
 import com.elkite.warborn.presentation.theme.WarborneColorTheme.borderSkillColor
 import com.elkite.warborn.presentation.theme.WarborneColorTheme.legendaryBrush
 

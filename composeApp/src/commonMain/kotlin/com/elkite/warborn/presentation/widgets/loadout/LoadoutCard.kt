@@ -25,8 +25,8 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.elkite.warborn.domain.entities.gear.Loadout
-import com.elkite.warborn.domain.entities.gear.LoadoutType
+import com.elkite.warborn.domain.entities.old.Loadout
+import com.elkite.warborn.domain.entities.old.LoadoutType
 import com.elkite.warborn.presentation.theme.WarborneColorTheme
 import com.elkite.warborn.presentation.widgets.tooltip.GearTooltip
 import com.elkite.warborn.presentation.widgets.tooltip.TooltipState

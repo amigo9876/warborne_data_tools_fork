@@ -19,9 +19,9 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.elkite.warborn.domain.entities.gear.GearType
-import com.elkite.warborn.domain.entities.gear.spell.Spell
-import com.elkite.warborn.domain.entities.gear.spell.Stats
+import com.elkite.warborn.domain.entities.old.GearType
+import com.elkite.warborn.domain.entities.old.spell.Spell
+import com.elkite.warborn.domain.entities.old.spell.Stats
 import com.elkite.warborn.presentation.theme.WarborneColorTheme
 import com.elkite.warborn.presentation.widgets.balance.BalanceIcon
 import com.elkite.warborn.presentation.widgets.gear.ArmorImage
@@ -29,7 +29,6 @@ import com.elkite.warborn.presentation.widgets.utils.AttributeList
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedCard
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedText
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedTextTitle
-import com.elkite.warborn.presentation.widgets.utils.MoreDetails
 import com.elkite.warborn.presentation.widgets.utils.MultiPatternHighlightedText
 
 

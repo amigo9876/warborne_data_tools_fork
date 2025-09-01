@@ -12,22 +12,20 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Switch
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.elkite.warborn.domain.entities.gear.drifter.Drifter
-import com.elkite.warborn.domain.entities.gear.drifter.DrifterStats
+import com.elkite.warborn.domain.entities.old.drifter.Drifter
+import com.elkite.warborn.domain.entities.old.drifter.DrifterStats
 import com.elkite.warborn.presentation.theme.WarborneColorTheme
 import com.elkite.warborn.presentation.widgets.spell.SpellCardContent
 import com.elkite.warborn.presentation.widgets.utils.AttributeList
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedCard
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedText
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedTextTitle
-import com.elkite.warborn.presentation.widgets.utils.MoreDetails
 
 
 @Composable

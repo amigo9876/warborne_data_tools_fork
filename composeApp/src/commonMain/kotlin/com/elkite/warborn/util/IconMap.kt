@@ -1,7 +1,7 @@
 package com.elkite.warborn.util
 
-import com.elkite.warborn.domain.entities.gear.GearType
-import com.elkite.warborn.domain.entities.gear.drifter.Drifter
+import com.elkite.warborn.domain.entities.old.GearType
+import com.elkite.warborn.domain.entities.old.drifter.Drifter
 import com.elkite.warborn.resources.ArmorEpic1
 import com.elkite.warborn.resources.ArmorEpic2
 import com.elkite.warborn.resources.ArmorEpic3

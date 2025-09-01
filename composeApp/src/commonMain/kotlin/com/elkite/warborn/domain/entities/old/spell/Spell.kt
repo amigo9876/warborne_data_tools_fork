@@ -1,11 +1,11 @@
-package com.elkite.warborn.domain.entities.gear.spell
+package com.elkite.warborn.domain.entities.old.spell
 
-import com.elkite.warborn.domain.entities.gear.Gear
-import com.elkite.warborn.domain.entities.gear.GearLevel
-import com.elkite.warborn.domain.entities.gear.GearStats
-import com.elkite.warborn.domain.entities.gear.GearType
-import com.elkite.warborn.domain.entities.gear.LoadoutType
-import com.elkite.warborn.domain.entities.gear.Rarity
+import com.elkite.warborn.domain.entities.old.Gear
+import com.elkite.warborn.domain.entities.old.GearLevel
+import com.elkite.warborn.domain.entities.old.GearStats
+import com.elkite.warborn.domain.entities.old.GearType
+import com.elkite.warborn.domain.entities.old.LoadoutType
+import com.elkite.warborn.domain.entities.old.Rarity
 import com.elkite.warborn.presentation.widgets.patch_balance.Balance
 
 data class Spell(

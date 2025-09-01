@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.elkite.warborn.domain.entities.gear.mods.Mod
+import com.elkite.warborn.domain.entities.old.mods.Mod
 import com.elkite.warborn.util.IconMap
 import org.jetbrains.compose.resources.painterResource
 

@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.elkite.warborn.domain.entities.gear.mods.Mod
+import com.elkite.warborn.domain.entities.old.mods.Mod
 import com.elkite.warborn.presentation.theme.WarborneColorTheme
 import com.elkite.warborn.presentation.widgets.tooltip.TooltipBox
 import com.elkite.warborn.presentation.widgets.tooltip.TooltipState

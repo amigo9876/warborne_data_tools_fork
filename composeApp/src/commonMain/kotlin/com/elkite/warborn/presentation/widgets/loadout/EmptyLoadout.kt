@@ -15,7 +15,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
-import com.elkite.warborn.domain.entities.gear.LoadoutType
+import com.elkite.warborn.domain.entities.old.LoadoutType
 import com.elkite.warborn.presentation.theme.WarborneColorTheme.borderSkillColor
 import com.elkite.warborn.presentation.theme.WarborneColorTheme.legendaryBrush
 import com.elkite.warborn.resources.Com_Clothes_Armor

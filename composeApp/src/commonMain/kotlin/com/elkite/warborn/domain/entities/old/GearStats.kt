@@ -1,4 +1,4 @@
-package com.elkite.warborn.domain.entities.gear
+package com.elkite.warborn.domain.entities.old
 
 enum class GearStats(val naming: String) {
     STR("Strength"),
