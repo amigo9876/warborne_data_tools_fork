@@ -9,20 +9,34 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.input.pointer.PointerEventType
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.elkite.warborn.domain.entities.old.Gear
+import com.elkite.warborn.domain.entities.common.Rarity
 import com.elkite.warborn.presentation.theme.WarborneColorTheme.borderSkillColor
-import com.elkite.warborn.presentation.theme.WarborneColorTheme.legendaryBrush
+import com.elkite.warborn.presentation.theme.WarborneColorTheme.selectionBrush
+
+@Composable
+fun Modifier.getRarityBorder(
+    width: Dp = 3.dp,
+    rarity: Rarity
+) = this.border(
+    width = width,
+    brush = when (rarity) {
+        Rarity.common -> WarborneColorTheme.commonBrush
+        Rarity.uncommon -> WarborneColorTheme.uncommonBrush
+        Rarity.rare -> WarborneColorTheme.rareBrush
+        Rarity.epic -> WarborneColorTheme.epicBrush
+        Rarity.legendary -> WarborneColorTheme.legendaryBrush
+    },
+    shape = RectangleShape
+)
 
 @Composable
 fun Modifier.spellBorderPassive(
     isSelected: Boolean = false,
     borderWidth: Dp = 2.dp,
     borderColor: Color = borderSkillColor,
-    selectedBrush: Brush = legendaryBrush,
+    selectedBrush: Brush = selectionBrush,
     selectedBorderWidth: Dp = 3.dp,
     shape: CutCornerShape = CutCornerShape(12.dp)
 ) = this then (
@@ -47,9 +61,9 @@ fun Modifier.spellBorderPassive(
 @Composable
 fun Modifier.spellBorder(
     isSelected: Boolean = false,
-    borderWidth: Dp = 2.dp,
+    borderWidth: Dp = 1.dp,
     borderColor: Color = borderSkillColor,
-    selectedBrush: Brush = legendaryBrush,
+    selectedBrush: Brush = selectionBrush,
     unSelectedBrush: Brush? = null,
     selectedBorderWidth: Dp = 3.dp,
     shape: Shape = RectangleShape
@@ -80,21 +94,3 @@ fun Modifier.spellBorder(
             }
         )
 
-@Composable
-fun Modifier.onHover(gear: Gear, onHover: (Gear) -> Unit) = Modifier
-    .pointerInput(Unit) {
-        awaitPointerEventScope {
-            while (true) {
-                val event = awaitPointerEvent()
-                when (event.type) {
-                    PointerEventType.Enter -> {
-                        onHover(gear)
-                    }
-                    PointerEventType.Exit -> {
-
-                    }
-                    else -> {}
-                }
-            }
-        }
-    }

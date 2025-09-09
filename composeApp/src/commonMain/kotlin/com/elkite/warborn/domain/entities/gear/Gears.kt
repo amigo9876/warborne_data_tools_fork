@@ -2,6 +2,10 @@ package com.elkite.warborn.domain.entities.gear
 
 import com.elkite.warborn.domain.entities.common.Category
 import com.elkite.warborn.domain.entities.common.Rarity
+import com.elkite.warborn.domain.entities.data.WeaponType
+import com.elkite.warborn.domain.entities.spells.BasicSpell
+import com.elkite.warborn.domain.entities.spells.CommonSpell
+import com.elkite.warborn.domain.entities.spells.PassiveSpell
 import com.elkite.warborn.domain.entities.spells.SpellType
 import com.elkite.warborn.domain.entities.spells.TierUnlock
 import kotlinx.serialization.Serializable
@@ -22,6 +26,12 @@ data class WeaponGear(
     override val rarity: Rarity,
     override val category: Category,
     override val gearSlot: GearSlot = GearSlot.WEAPON,
+    val weaponType: WeaponType,
+    val passiveSpell: PassiveSpell,
+    val basicSpells: List<BasicSpell>,
+    val commonSpells: List<CommonSpell>,
+    val activeBasicSpell: BasicSpell? = null,
+    val activeCommonSpell: CommonSpell? = null,
 ) : IGear
 
 @Serializable

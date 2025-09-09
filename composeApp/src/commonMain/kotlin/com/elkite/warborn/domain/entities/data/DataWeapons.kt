@@ -5,13 +5,12 @@ import com.elkite.warborn.domain.entities.spells.BasicSpell
 import com.elkite.warborn.domain.entities.spells.CommonSpell
 import com.elkite.warborn.domain.entities.spells.PassiveSpell
 
-
 data class DataWeapon(
-    val passive: PassiveSpell,
-    val basic: List<BasicSpell>,
-    val common: List<CommonSpell>,
     val skills: List<WeaponGear>,
-    val weaponType: WeaponType
+    val passiveSpell: PassiveSpell,
+    val commonSpells: List<CommonSpell>,
+    val basicSpells: List<BasicSpell>,
+    val weaponType: WeaponType,
 )
 
 data class DataWeapons(

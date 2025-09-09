@@ -18,145 +18,178 @@ object SpellAndGearParser {
 
     inline fun <reified T : IGear> parseSkillSpells(
         jsonArray: JsonArray?,
+        category: Category,
         noinline factory: (String, String, String, String, String, String, TierUnlock, String, GearStats, Rarity, Category) -> T
     ): List<T> {
-        if (jsonArray == null) return emptyList()
+        if (jsonArray == null) {
+            println("parseSkillSpells: Input JSON array is null.")
+            return emptyList()
+        }
+        println("parseSkillSpells: Parsing ${jsonArray.size} spells.")
         return jsonArray.map { spellJson ->
-            val gameId = spellJson.jsonObject["gameId"]?.jsonPrimitive?.content ?: "error"
-            val skillName = spellJson.jsonObject["skillName"]?.jsonPrimitive?.content ?: "error"
-            val manaCost = spellJson.jsonObject["manaCost"]?.jsonPrimitive?.content ?: "error"
-            val cooldown = spellJson.jsonObject["cooldown"]?.jsonPrimitive?.content ?: "error"
-            val castingRange =
-                spellJson.jsonObject["castingRange"]?.jsonPrimitive?.content ?: "error"
-            val description = spellJson.jsonObject["description"]?.jsonPrimitive?.content ?: "error"
-            val tierUnlock = spellJson.jsonObject["tierUnlock"]?.jsonPrimitive?.content ?: "T0"
-            val rarity = spellJson.jsonObject["rarity"]?.jsonPrimitive?.content ?: "common"
-            val gearName = spellJson.jsonObject["gearName"]?.jsonPrimitive?.content ?: "error"
-            val category = spellJson.jsonObject["category"]?.jsonPrimitive?.content ?: "consumable"
-            val gearStats = spellJson.jsonObject["gearStats"]?.jsonObject ?: JsonObject(emptyMap())
+            try {
+                val gameId = spellJson.jsonObject["gameId"]?.jsonPrimitive?.content ?: "error"
+                val skillName = spellJson.jsonObject["skillName"]?.jsonPrimitive?.content ?: "error"
+                val manaCost = spellJson.jsonObject["manaCost"]?.jsonPrimitive?.content ?: "error"
+                val cooldown = spellJson.jsonObject["cooldown"]?.jsonPrimitive?.content ?: "error"
+                val castingRange = spellJson.jsonObject["castingRange"]?.jsonPrimitive?.content ?: "error"
+                val description = spellJson.jsonObject["description"]?.jsonPrimitive?.content ?: "error"
+                val tierUnlock = spellJson.jsonObject["tierUnlock"]?.jsonPrimitive?.content ?: "T0"
+                val rarity = spellJson.jsonObject["rarity"]?.jsonPrimitive?.content ?: "common"
+                val gearName = spellJson.jsonObject["gearName"]?.jsonPrimitive?.content ?: "error"
+                val gearStats = spellJson.jsonObject["stats"]?.jsonObject ?: JsonObject(emptyMap())
 
-            factory(
-                gameId,
-                skillName,
-                manaCost,
-                cooldown,
-                castingRange,
-                description,
-                TierUnlock.valueOf(tierUnlock),
-                gearName,
-                parseGearStats(gearStats),
-                Rarity.valueOf(rarity),
-                Category.valueOf(category)
-            )
+                println("parseSkillSpells: Successfully parsed spell with gameId: $gameId")
+                factory(
+                    gameId,
+                    skillName,
+                    manaCost,
+                    cooldown,
+                    castingRange,
+                    description,
+                    TierUnlock.entries.find { it.tier == tierUnlock } ?: TierUnlock.T0,
+                    gearName,
+                    parseGearStats(gearStats),
+                    when (rarity.lowercase()) {
+                        "common" -> Rarity.common
+                        "uncommon" -> Rarity.uncommon
+                        "rare" -> Rarity.rare
+                        "epic" -> Rarity.epic
+                        "legendary" -> Rarity.legendary
+                        else -> Rarity.common
+                    },
+                    category
+                )
+            } catch (e: Exception) {
+                println("parseSkillSpells: Error parsing spell: ${e.message}")
+                throw e
+            }
         }
     }
 
-     fun parseGearStats(json: JsonObject): GearStats {
-        val bonusDamage = json["dmgBonus"]?.jsonPrimitive?.content
-        val hp = json["hp"]?.jsonPrimitive?.content
-        val tenacity = json["tenacity"]?.jsonPrimitive?.content
-        val mpRecovery = json["mpRecovery"]?.jsonPrimitive?.content
-        val ms = json["ms"]?.jsonPrimitive?.content
-        val attackSpeed = json["as"]?.jsonPrimitive?.content
-        val armor = json["armor"]?.jsonPrimitive?.content
-        val magicResist = json["magicResi"]?.jsonPrimitive?.content
-        val attackPower = json["attackPower"]?.jsonPrimitive?.content
-
+    fun parseGearStats(json: JsonObject): GearStats {
+        println("parseGearStats: Parsing gear stats.")
         return GearStats(
-            bonusDamage = bonusDamage,
-            hp = hp,
-            tenacity = tenacity,
-            mpRecovery = mpRecovery,
-            ms = ms,
-            attackSpeed = attackSpeed,
-            armor = armor,
-            magicResist = magicResist,
-            attackPower = attackPower
-        )
+            bonusDamage = json["dmgBonus"]?.jsonPrimitive?.content,
+            hp = json["hp"]?.jsonPrimitive?.content,
+            tenacity = json["tenacity"]?.jsonPrimitive?.content,
+            mpRecovery = json["mpRecovery"]?.jsonPrimitive?.content,
+            ms = json["ms"]?.jsonPrimitive?.content,
+            attackSpeed = json["as"]?.jsonPrimitive?.content,
+            armor = json["armor"]?.jsonPrimitive?.content,
+            magicResist = json["magicResi"]?.jsonPrimitive?.content,
+            attackPower = json["attackPower"]?.jsonPrimitive?.content
+        ).also { println("parseGearStats: Parsed gear stats: $it") }
     }
 
-     fun parseBasicSpells(jsonArray: JsonArray): List<BasicSpell> {
+    fun parseBasicSpells(jsonArray: JsonArray): List<BasicSpell> {
+        println("parseBasicSpells: Parsing ${jsonArray.size} basic spells.")
         return jsonArray.map { spellJson ->
-            val gameId = spellJson.jsonObject["gameId"]?.jsonPrimitive?.content ?: "error"
-            val skillName = spellJson.jsonObject["skillName"]?.jsonPrimitive?.content ?: "error"
-            val manaCost = spellJson.jsonObject["manaCost"]?.jsonPrimitive?.content ?: "error"
-            val cooldown = spellJson.jsonObject["cooldown"]?.jsonPrimitive?.content ?: "error"
-            val castingRange =
-                spellJson.jsonObject["castingRange"]?.jsonPrimitive?.content ?: "error"
-            val description = spellJson.jsonObject["description"]?.jsonPrimitive?.content ?: "error"
-            val tierUnlock = spellJson.jsonObject["tierUnlock"]?.jsonPrimitive?.content ?: "T0"
+            try {
+                val gameId = spellJson.jsonObject["gameId"]?.jsonPrimitive?.content ?: "error"
+                val skillName = spellJson.jsonObject["skillName"]?.jsonPrimitive?.content ?: "error"
+                val manaCost = spellJson.jsonObject["manaCost"]?.jsonPrimitive?.content ?: "error"
+                val cooldown = spellJson.jsonObject["cooldown"]?.jsonPrimitive?.content ?: "error"
+                val castingRange = spellJson.jsonObject["castingRange"]?.jsonPrimitive?.content ?: "error"
+                val description = spellJson.jsonObject["description"]?.jsonPrimitive?.content ?: "error"
+                val tierUnlock = spellJson.jsonObject["tierUnlock"]?.jsonPrimitive?.content ?: "0"
 
-            BasicSpell(
+                println("parseBasicSpells: Successfully parsed basic spell with gameId: $gameId")
+                BasicSpell(
+                    spellId = gameId,
+                    spellName = skillName,
+                    manaCost = manaCost,
+                    cooldown = cooldown,
+                    castingRange = castingRange,
+                    description = description,
+                    tierUnlock = TierUnlock.entries.find { it.tier == tierUnlock } ?: TierUnlock.T0,
+                )
+            } catch (e: Exception) {
+                println("parseBasicSpells: Error parsing basic spell: ${e.message}")
+                throw e
+            }
+        }
+    }
+
+    fun parseCommonSpells(jsonArray: JsonArray): List<CommonSpell> {
+        println("parseCommonSpells: Parsing ${jsonArray.size} common spells.")
+        return jsonArray.map { spellJson ->
+            try {
+                val gameId = spellJson.jsonObject["gameId"]?.jsonPrimitive?.content ?: "error"
+                val skillName = spellJson.jsonObject["skillName"]?.jsonPrimitive?.content ?: "error"
+                val manaCost = spellJson.jsonObject["manaCost"]?.jsonPrimitive?.content ?: "error"
+                val cooldown = spellJson.jsonObject["cooldown"]?.jsonPrimitive?.content ?: "error"
+                val castingRange = spellJson.jsonObject["castingRange"]?.jsonPrimitive?.content ?: "error"
+                val description = spellJson.jsonObject["description"]?.jsonPrimitive?.content ?: "error"
+                val tierUnlock = spellJson.jsonObject["tierUnlock"]?.jsonPrimitive?.content ?: "0"
+
+                println("parseCommonSpells: Successfully parsed common spell with gameId: $gameId")
+                CommonSpell(
+                    spellId = gameId,
+                    spellName = skillName,
+                    manaCost = manaCost,
+                    cooldown = cooldown,
+                    castingRange = castingRange,
+                    description = description,
+                    tierUnlock = TierUnlock.entries.find { it.tier == tierUnlock } ?: TierUnlock.T0,
+                )
+            } catch (e: Exception) {
+                println("parseCommonSpells: Error parsing common spell: ${e.message}")
+                throw e
+            }
+        }
+    }
+
+    fun parsePassiveSpell(json: JsonObject): PassiveSpell {
+        println("parsePassiveSpell: Parsing passive spell.")
+        return try {
+            val gameId = json["gameId"]?.jsonPrimitive?.content ?: ""
+            val skillName = json["skillName"]?.jsonPrimitive?.content ?: ""
+            val manaCost = json["manaCost"]?.jsonPrimitive?.content ?: ""
+            val cooldown = json["cooldown"]?.jsonPrimitive?.content ?: ""
+            val castingRange = json["castingRange"]?.jsonPrimitive?.content ?: ""
+            val description = json["description"]?.jsonPrimitive?.content ?: ""
+
+            println("parsePassiveSpell: Successfully parsed passive spell with gameId: $gameId")
+            PassiveSpell(
                 spellId = gameId,
                 spellName = skillName,
                 manaCost = manaCost,
                 cooldown = cooldown,
                 castingRange = castingRange,
                 description = description,
-                tierUnlock = TierUnlock.valueOf(tierUnlock),
+                tierUnlock = TierUnlock.T0
             )
+        } catch (e: Exception) {
+            println("parsePassiveSpell: Error parsing passive spell: ${e.message}")
+            throw e
         }
-    }
-
-     fun parseCommonSpells(jsonArray: JsonArray): List<CommonSpell> {
-        return jsonArray.map { spellJson ->
-            val gameId = spellJson.jsonObject["gameId"]?.jsonPrimitive?.content ?: "error"
-            val skillName = spellJson.jsonObject["skillName"]?.jsonPrimitive?.content ?: "error"
-            val manaCost = spellJson.jsonObject["manaCost"]?.jsonPrimitive?.content ?: "error"
-            val cooldown = spellJson.jsonObject["cooldown"]?.jsonPrimitive?.content ?: "error"
-            val castingRange =
-                spellJson.jsonObject["castingRange"]?.jsonPrimitive?.content ?: "error"
-            val description = spellJson.jsonObject["description"]?.jsonPrimitive?.content ?: "error"
-            val tierUnlock = spellJson.jsonObject["tierUnlock"]?.jsonPrimitive?.content ?: "T0"
-
-            CommonSpell(
-                spellId = gameId,
-                spellName = skillName,
-                manaCost = manaCost,
-                cooldown = cooldown,
-                castingRange = castingRange,
-                description = description,
-                tierUnlock = TierUnlock.valueOf(tierUnlock),
-            )
-        }
-    }
-
-     fun parsePassiveSpell(json: JsonObject): PassiveSpell {
-        val gameId = json["gameId"]?.jsonPrimitive?.content ?: ""
-        val skillName = json["skillName"]?.jsonPrimitive?.content ?: ""
-        val manaCost = json["manaCost"]?.jsonPrimitive?.content ?: ""
-        val cooldown = json["cooldown"]?.jsonPrimitive?.content ?: ""
-        val castingRange = json["castingRange"]?.jsonPrimitive?.content ?: ""
-        val description = json["description"]?.jsonPrimitive?.content ?: ""
-
-        return PassiveSpell(
-            spellId = gameId,
-            spellName = skillName,
-            manaCost = manaCost,
-            cooldown = cooldown,
-            castingRange = castingRange,
-            description = description,
-            tierUnlock = TierUnlock.T0
-        )
     }
 
     fun parseSkillSpellDrifter(json: JsonObject): SkillSpell {
-        val gameId = json["gameId"]?.jsonPrimitive?.content ?: "error"
-        val skillName = json["skillName"]?.jsonPrimitive?.content ?: "error"
-        val manaCost = json["manaCost"]?.jsonPrimitive?.content ?: "error"
-        val cooldown = json["cooldown"]?.jsonPrimitive?.content ?: "error"
-        val castingRange = json["castingRange"]?.jsonPrimitive?.content ?: "error"
-        val description = json["description"]?.jsonPrimitive?.content ?: "error"
-        val tierUnlock = json["tierUnlock"]?.jsonPrimitive?.content ?: "T0"
+        println("parseSkillSpellDrifter: Parsing skill spell for drifter.")
+        return try {
+            val gameId = json["gameId"]?.jsonPrimitive?.content ?: "error"
+            val skillName = json["skillName"]?.jsonPrimitive?.content ?: "error"
+            val manaCost = json["manaCost"]?.jsonPrimitive?.content ?: "error"
+            val cooldown = json["cooldown"]?.jsonPrimitive?.content ?: "error"
+            val castingRange = json["castingRange"]?.jsonPrimitive?.content ?: "error"
+            val description = json["description"]?.jsonPrimitive?.content ?: "error"
+            val tierUnlock = json["tierUnlock"]?.jsonPrimitive?.content ?: "T0"
 
-        return SkillSpell(
-            spellId = gameId,
-            spellName = skillName,
-            manaCost = manaCost,
-            cooldown = cooldown,
-            castingRange = castingRange,
-            description = description,
-            tierUnlock = TierUnlock.valueOf(tierUnlock),
-        )
+            println("parseSkillSpellDrifter: Successfully parsed skill spell with gameId: $gameId")
+            SkillSpell(
+                spellId = gameId,
+                spellName = skillName,
+                manaCost = manaCost,
+                cooldown = cooldown,
+                castingRange = castingRange,
+                description = description,
+                tierUnlock = TierUnlock.entries.find { it.tier == tierUnlock } ?: TierUnlock.T0,
+            )
+        } catch (e: Exception) {
+            println("parseSkillSpellDrifter: Error parsing skill spell: ${e.message}")
+            throw e
+        }
     }
 }

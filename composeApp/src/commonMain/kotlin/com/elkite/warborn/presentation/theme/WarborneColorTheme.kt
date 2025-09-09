@@ -12,14 +12,14 @@ object WarborneColorTheme {
     val legendaryBorderMidColor: Color
         get() = Color(0xFFcd5521)
 
-    private val rareBorderStartColor: Color
+    val rareBorderStartColor: Color
         get() = Color(0xFF304d6c)
     private val rareBorderMidColor: Color
         get() = Color(0xFF597e96)
     private val rareBorderEndColor: Color
         get() = Color(0xFF0d2740)
 
-    private val epicBorderStartColor: Color
+    val epicBorderStartColor: Color
         get() = Color(0xFFb95fe3)
     private val epicBorderMidColor: Color
         get() = Color(0xFF8b00fa)
@@ -75,6 +75,22 @@ object WarborneColorTheme {
         )
     )
 
+    val uncommonBrushBackGround = Brush.linearGradient(
+        colorStops = arrayOf(
+            0.0f to dexterityColor.copy(alpha = 0.5f),
+            0.05f to dexterityColor,
+            0.3f to Color.Black
+        )
+    )
+
+    val commonBrushBackground = Brush.linearGradient(
+        colorStops = arrayOf(
+            0.0f to borderSkillColor.copy(alpha = 0.5f),
+            0.05f to borderSkillColor,
+            0.3f to Color.Black
+        )
+    )
+
     val legendaryBrush = Brush.linearGradient(
         colors = listOf(
             legendaryBorderStartColor,
@@ -84,9 +100,9 @@ object WarborneColorTheme {
     )
     val epicBrush = Brush.linearGradient(
         colors = listOf(
-            epicBorderStartColor,
-            epicBorderMidColor,
-            epicBorderEndColor
+            epicBorderStartColor.copy(alpha = 0.5f),
+            epicBorderMidColor.copy(alpha = 0.5f),
+            epicBorderEndColor.copy(alpha = 0.5f)
         )
     )
     val rareBrush = Brush.linearGradient(
@@ -94,6 +110,26 @@ object WarborneColorTheme {
             rareBorderStartColor,
             rareBorderMidColor,
             rareBorderEndColor
+        )
+    )
+    val selectionBrush = Brush.linearGradient(
+        colors = listOf(
+            Color.White.copy(alpha = 0.4f),
+            legendaryBorderStartColor,
+        )
+    )
+
+    val uncommonBrush = Brush.linearGradient(
+        colors = listOf(
+            dexterityColor,
+            dexterityColor
+        )
+    )
+
+    val commonBrush = Brush.linearGradient(
+        colors = listOf(
+            borderSkillColor,
+            borderSkillColor
         )
     )
     val weaponSpellsCardBrushSelected = Brush.linearGradient(

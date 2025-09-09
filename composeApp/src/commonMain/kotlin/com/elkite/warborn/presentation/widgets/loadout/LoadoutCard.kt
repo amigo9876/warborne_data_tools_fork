@@ -3,13 +3,13 @@ package com.elkite.warborn.presentation.widgets.loadout
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -21,20 +21,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
-import com.elkite.warborn.domain.entities.old.Loadout
-import com.elkite.warborn.domain.entities.old.LoadoutType
+import com.elkite.warborn.domain.entities.data.WeaponType
+import com.elkite.warborn.domain.entities.loadout.Loadout
+import com.elkite.warborn.domain.entities.loadout.SelectedLoadoutType
 import com.elkite.warborn.presentation.theme.WarborneColorTheme
-import com.elkite.warborn.presentation.widgets.tooltip.GearTooltip
-import com.elkite.warborn.presentation.widgets.tooltip.TooltipState
-import com.elkite.warborn.presentation.widgets.tooltip.rememberTooltipState
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedTextTitle
 import com.elkite.warborn.presentation.widgets.utils.isCompact
 import com.elkite.warborn.presentation.widgets.utils.isMedium
-import com.elkite.warborn.util.IconMap
+import com.elkite.warborn.util.DrifterResources
 import org.jetbrains.compose.resources.painterResource
 
 
@@ -42,11 +40,8 @@ import org.jetbrains.compose.resources.painterResource
 fun LoadoutCard(
     modifier: Modifier = Modifier,
     loadout: Loadout,
-    selectedLoadout: LoadoutType,
-    onClick: (LoadoutType) -> Unit,
+    onSelectedLoadoutType: (SelectedLoadoutType) -> Unit,
 ) {
-    val tooltipState = rememberTooltipState()
-
     Column(
         modifier = modifier.wrapContentSize()
             .padding(16.dp)
@@ -62,7 +57,7 @@ fun LoadoutCard(
                         brush = WarborneColorTheme.legendaryBrush,
                         shape = RectangleShape
                     )
-                    .clickable { onClick(LoadoutType.DRIFTER) }
+                    .clickable { onSelectedLoadoutType(SelectedLoadoutType.DRIFTER) }
             ) {
                 Crossfade(
                     targetState = loadout.drifter,
@@ -70,125 +65,89 @@ fun LoadoutCard(
                 ) { drifter ->
                     Image(
                         modifier = Modifier.fillMaxSize(),
-                        painter = painterResource(IconMap.getDrifterCard(drifter = drifter)),
+                        painter = painterResource(DrifterResources.getDrifterCard(drifter = drifter?.gameId)),
                         contentScale = ContentScale.Crop,
                         contentDescription = null
                     )
                 }
                 if (isCompact() || isMedium())
                     ArmorLoadoutWithModColumn(
-                        tooltipState = tooltipState,
-                        selectedLoadout, loadout, onClick
+                        loadout, onSelectedLoadoutType
                     )
                 GearStylizedTextTitle(
                     modifier = Modifier.align(Alignment.BottomEnd).padding(16.dp),
                     text = loadout.drifter?.name ?: "Select drifter"
                 )
-                if (tooltipState.isVisible && tooltipState.gear != null) {
-                    tooltipState.gear?.let {
-                        GearTooltip(
-                            gear = it,
-                            modifier =
-                                if (isCompact() || isMedium())
-                                    Modifier.fillMaxSize().padding(end = 64.dp).zIndex(1000f)
-                                else
-                                    Modifier.fillMaxSize()
-                                        .zIndex(1000f)
-                        )
-                    }
-                }
             }
             if (!isCompact() && !isMedium()) {
                 Spacer(modifier = Modifier.width(16.dp))
                 ArmorLoadoutWithModColumn(
-                    tooltipState = tooltipState,
-                    selectedLoadout, loadout, onClick
+                    loadout, onSelectedLoadoutType
                 )
             }
         }
         Spacer(modifier = Modifier.size(16.dp))
         Row(modifier = Modifier.wrapContentSize()) {
-            LoadoutSpellIconWithTooltip(
-                tooltipState = tooltipState,
-                isSelected = selectedLoadout == LoadoutType.BASIC_ATTACK,
-                loadoutType = LoadoutType.BASIC_ATTACK,
-                spell = loadout.basicAttack,
-                onClick = { onClick(LoadoutType.BASIC_ATTACK) },
-                modifier = Modifier.size(48.dp)
+            LoadoutWeaponBasicIcon(
+                basicSpell = loadout.weapon?.activeBasicSpell
+                    ?: loadout.weapon?.basicSpells?.first(),
+                isSelected = loadout.selectedLoadoutType == SelectedLoadoutType.BASIC_ATTACK,
+                onClick = { onSelectedLoadoutType(SelectedLoadoutType.BASIC_ATTACK) },
+                weaponType = loadout.weapon?.weaponType ?: WeaponType.sword,
             )
             Spacer(modifier = Modifier.size(8.dp))
-            LoadoutSpellIconWithTooltip(
-                tooltipState = tooltipState,
-                isSelected = selectedLoadout == LoadoutType.COMMON_SKILL,
-                loadoutType = LoadoutType.COMMON_SKILL,
-                spell = loadout.commonSkill,
-                onClick = { onClick(LoadoutType.COMMON_SKILL) },
-                modifier = Modifier.size(48.dp)
+            LoadoutWeaponCommonIcon(
+                commonSpell = loadout.weapon?.activeCommonSpell
+                    ?: loadout.weapon?.commonSpells?.first(),
+                isSelected = loadout.selectedLoadoutType == SelectedLoadoutType.COMMON_SKILL,
+                onClick = { onSelectedLoadoutType(SelectedLoadoutType.COMMON_SKILL) },
+                weaponType = loadout.weapon?.weaponType ?: WeaponType.sword,
             )
             Spacer(modifier = Modifier.size(8.dp))
-            LoadoutSpellIconWithTooltip(
-                tooltipState = tooltipState,
-                isSelected = selectedLoadout == LoadoutType.WEAPON,
-                loadoutType = LoadoutType.WEAPON,
+            LoadoutWeaponSkillIcon(
                 spell = loadout.weapon,
-                onClick = { onClick(LoadoutType.WEAPON) },
-                modifier = Modifier.size(48.dp)
+                isSelected = loadout.selectedLoadoutType == SelectedLoadoutType.WEAPON,
+                onClick = { onSelectedLoadoutType(SelectedLoadoutType.WEAPON) },
+                weaponType = loadout.weapon?.weaponType ?: WeaponType.sword,
             )
             Spacer(modifier = Modifier.size(8.dp))
-            LoadoutSpellIconWithTooltip(
-                tooltipState = tooltipState,
-                isSelected = selectedLoadout == LoadoutType.DRIFTER,
-                loadoutType = LoadoutType.DRIFTER,
-                spell = loadout.drifter?.spell,
-                onClick = { onClick(LoadoutType.DRIFTER) },
-                modifier = Modifier.size(48.dp)
+            LoadoutDrifterSkillIcon(
+                drifter = loadout.drifter,
+                isSelected = loadout.selectedLoadoutType == SelectedLoadoutType.DRIFTER,
+                onClick = { onSelectedLoadoutType(SelectedLoadoutType.DRIFTER) },
             )
             Spacer(modifier = Modifier.size(8.dp))
-            LoadoutSpellIconWithTooltip(
-                tooltipState = tooltipState,
-                isSelected = selectedLoadout == LoadoutType.CHEST,
-                loadoutType = LoadoutType.CHEST,
-                spell = loadout.chest,
-                onClick = { onClick(LoadoutType.CHEST) },
-                modifier = Modifier.size(48.dp)
+            LoadoutChestGearSkillIcon(
+                chestGear = loadout.chest,
+                isSelected = loadout.selectedLoadoutType == SelectedLoadoutType.CHEST,
+                onClick = { onSelectedLoadoutType(SelectedLoadoutType.CHEST) },
             )
             Spacer(modifier = Modifier.size(8.dp))
-            LoadoutSpellIconWithTooltip(
-                tooltipState = tooltipState,
-                isSelected = selectedLoadout == LoadoutType.BOOTS,
-                loadoutType = LoadoutType.BOOTS,
-                spell = loadout.boots,
-                onClick = { onClick(LoadoutType.BOOTS) },
-                modifier = Modifier.size(48.dp)
+            LoadoutBootsGearSkillIcon(
+                bootsGear = loadout.boots,
+                isSelected = loadout.selectedLoadoutType == SelectedLoadoutType.BOOTS,
+                onClick = { onSelectedLoadoutType(SelectedLoadoutType.BOOTS) },
             )
         }
         Spacer(modifier = Modifier.size(8.dp))
         Row(modifier = Modifier.wrapContentSize()) {
-            LoadoutSpellIconWithTooltip(
-                tooltipState = tooltipState,
-                isSelected = selectedLoadout == LoadoutType.HEAD,
-                loadoutType = LoadoutType.PASSIVE,
-                spell = loadout.head,
-                onClick = { onClick(LoadoutType.HEAD) },
-                modifier = Modifier.size(48.dp)
+            LoadoutHeadGearSkillIcon(
+                headGear = loadout.head,
+                isSelected = loadout.selectedLoadoutType == SelectedLoadoutType.HEAD,
+                onClick = { onSelectedLoadoutType(SelectedLoadoutType.HEAD) },
             )
             Spacer(modifier = Modifier.size(8.dp))
-            LoadoutSpellIconWithTooltip(
-                tooltipState = tooltipState,
-                isSelected = selectedLoadout == LoadoutType.PASSIVE,
-                loadoutType = LoadoutType.PASSIVE,
-                spell = loadout.passive,
-                onClick = { onClick(LoadoutType.PASSIVE) },
-                modifier = Modifier.size(48.dp)
+            LoadoutDrifterPassiveIcon(
+                drifter = loadout.drifter,
+                isSelected = loadout.selectedLoadoutType == SelectedLoadoutType.DRIFTER,
+                onClick = { onSelectedLoadoutType(SelectedLoadoutType.DRIFTER) },
             )
             Spacer(modifier = Modifier.size(8.dp))
-            LoadoutSpellIconWithTooltip(
-                tooltipState = tooltipState,
-                isSelected = selectedLoadout == LoadoutType.DRIFTER,
-                loadoutType = LoadoutType.PASSIVE,
-                spell = loadout.drifter?.passive,
-                onClick = { onClick(LoadoutType.DRIFTER) },
-                modifier = Modifier.size(48.dp)
+            LoadoutWeaponPassiveIcon(
+                passiveSpell = loadout.weapon?.passiveSpell,
+                isSelected = loadout.selectedLoadoutType == SelectedLoadoutType.PASSIVE,
+                onClick = { onSelectedLoadoutType(SelectedLoadoutType.PASSIVE) },
+                weaponType = loadout.weapon?.weaponType ?: WeaponType.sword,
             )
         }
     }
@@ -196,216 +155,201 @@ fun LoadoutCard(
 
 @Composable
 private fun BoxScope.ArmorLoadoutWithModColumn(
-    tooltipState: TooltipState,
-    selectedLoadout: LoadoutType,
     loadout: Loadout,
-    onClick: (LoadoutType) -> Unit
+    onSelectedLoadoutType: (SelectedLoadoutType) -> Unit
 ) {
     Column(
-        modifier = Modifier.Companion.align(Alignment.TopEnd).padding(top = 16.dp, end = 16.dp)
+        modifier = Modifier.align(Alignment.TopEnd).padding(top = 16.dp, end = 16.dp)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            LoadoutArmorIcon(
-                isSelected = selectedLoadout == LoadoutType.WEAPON,
-                loadoutType = LoadoutType.WEAPON,
-                gearName = loadout.weapon?.gearName,
-                gearType = loadout.weapon?.associatedGearType,
-                rarity = loadout.weapon?.rarity,
+            LoadoutWeaponGearIcon(
+                modifier = Modifier.size(if (isCompact()) 48.dp else 64.dp),
+                weaponGear = loadout.weapon,
                 onClick = {
-                    onClick(LoadoutType.WEAPON)
-                }
+                    onSelectedLoadoutType(SelectedLoadoutType.WEAPON)
+                },
+                isSelected = loadout.selectedLoadoutType == SelectedLoadoutType.WEAPON
             )
             Spacer(modifier = Modifier.size(16.dp))
-            LoadoutModIconWithToolTip(
-                tooltipState = tooltipState,
-                selectedLoadout == LoadoutType.MOD_WEAPON,
-                modifier = Modifier.size(48.dp),
-                mod = loadout.modWeapon,
+            LoadoutWeaponModIcon(
+                mod = loadout.weaponMod,
+                isSelected = loadout.selectedLoadoutType == SelectedLoadoutType.MOD_WEAPON,
                 onClick = {
-                    onClick(LoadoutType.MOD_WEAPON)
-                }
+                    onSelectedLoadoutType(SelectedLoadoutType.MOD_WEAPON)
+                },
+                modifier = Modifier.size(if (isCompact()) 48.dp else 64.dp).background(Color.Black),
             )
         }
         Spacer(modifier = Modifier.size(16.dp))
         Row(
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            LoadoutArmorIcon(
-                isSelected = selectedLoadout == LoadoutType.HEAD,
-                loadoutType = LoadoutType.HEAD,
-                gearName = loadout.head?.gearName,
-                gearType = loadout.head?.associatedGearType,
-                rarity = loadout.head?.rarity,
+            LoadoutHeadGearIcon(
+                modifier = Modifier.size(if (isCompact()) 48.dp else 64.dp),
+                isSelected = loadout.selectedLoadoutType == SelectedLoadoutType.HEAD,
+                headGear = loadout.head,
                 onClick = {
-                    onClick(LoadoutType.HEAD)
+                    onSelectedLoadoutType(SelectedLoadoutType.HEAD)
                 }
             )
             Spacer(modifier = Modifier.size(16.dp))
-            LoadoutModIconWithToolTip(
-                tooltipState = tooltipState,
-                selectedLoadout == LoadoutType.MOD_HEAD,
-                mod = loadout.modHead,
+            LoadoutArmorModIcon(
+                mod = loadout.headMod,
+                isSelected = loadout.selectedLoadoutType == SelectedLoadoutType.MOD_HEAD,
                 onClick = {
-                    onClick(LoadoutType.MOD_HEAD)
-                }
+                    onSelectedLoadoutType(SelectedLoadoutType.MOD_HEAD)
+                },
+                modifier = Modifier.size(if (isCompact()) 48.dp else 64.dp),
             )
         }
         Spacer(modifier = Modifier.size(16.dp))
         Row(
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            LoadoutArmorIcon(
-                isSelected = selectedLoadout == LoadoutType.CHEST,
-                loadoutType = LoadoutType.CHEST,
-                gearName = loadout.chest?.gearName,
-                gearType = loadout.chest?.associatedGearType,
-                rarity = loadout.chest?.rarity,
+            LoadoutChestGearIcon(
+                isSelected = loadout.selectedLoadoutType == SelectedLoadoutType.CHEST,
+                chestGear = loadout.chest,
                 onClick = {
-                    onClick(LoadoutType.CHEST)
-                }
-            )
+                    onSelectedLoadoutType(SelectedLoadoutType.CHEST)
+                },
+                modifier = Modifier.size(if (isCompact()) 48.dp else 64.dp),
+
+                )
             Spacer(modifier = Modifier.size(16.dp))
-            LoadoutModIconWithToolTip(
-                tooltipState = tooltipState,
-                selectedLoadout == LoadoutType.MOD_CHEST,
-                mod = loadout.modChest,
+            LoadoutArmorModIcon(
+                mod = loadout.chestMod,
+                isSelected = loadout.selectedLoadoutType == SelectedLoadoutType.MOD_CHEST,
                 onClick = {
-                    onClick(LoadoutType.MOD_CHEST)
-                }
-            )
+                    onSelectedLoadoutType(SelectedLoadoutType.MOD_CHEST)
+                },
+                modifier = Modifier.size(if (isCompact()) 48.dp else 64.dp),
+
+                )
         }
         Spacer(modifier = Modifier.size(16.dp))
         Row(
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            LoadoutArmorIcon(
-                isSelected = selectedLoadout == LoadoutType.BOOTS,
-                loadoutType = LoadoutType.BOOTS,
-                gearName = loadout.boots?.gearName,
-                gearType = loadout.boots?.associatedGearType,
-                rarity = loadout.boots?.rarity,
+            LoadoutBootsGearIcon(
+                isSelected = loadout.selectedLoadoutType == SelectedLoadoutType.BOOTS,
+                bootsGear = loadout.boots,
                 onClick = {
-                    onClick(LoadoutType.BOOTS)
-                }
-            )
+                    onSelectedLoadoutType(SelectedLoadoutType.BOOTS)
+                },
+                modifier = Modifier.size(if (isCompact()) 48.dp else 64.dp),
+
+                )
             Spacer(modifier = Modifier.size(16.dp))
-            LoadoutModIconWithToolTip(
-                tooltipState = tooltipState,
-                selectedLoadout == LoadoutType.MOD_BOOTS,
-                mod = loadout.modBoots,
+            LoadoutArmorModIcon(
+                mod = loadout.bootsMod,
+                isSelected = loadout.selectedLoadoutType == SelectedLoadoutType.MOD_BOOTS,
                 onClick = {
-                    onClick(LoadoutType.MOD_BOOTS)
-                }
-            )
+                    onSelectedLoadoutType(SelectedLoadoutType.MOD_BOOTS)
+                },
+                modifier = Modifier.size(if (isCompact()) 48.dp else 64.dp),
+
+                )
         }
         Spacer(modifier = Modifier.size(16.dp))
     }
 }
 
 @Composable
-private fun RowScope.ArmorLoadoutWithModColumn(
-    tooltipState: TooltipState,
-    selectedLoadout: LoadoutType,
+private fun ArmorLoadoutWithModColumn(
     loadout: Loadout,
-    onClick: (LoadoutType) -> Unit
+    onSelectedLoadoutType: (SelectedLoadoutType) -> Unit
 ) {
     Column(modifier = Modifier) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            LoadoutArmorIcon(
-                isSelected = selectedLoadout == LoadoutType.WEAPON,
-                loadoutType = LoadoutType.WEAPON,
-                gearName = loadout.weapon?.gearName,
-                gearType = loadout.weapon?.associatedGearType,
-                rarity = loadout.weapon?.rarity,
+            LoadoutWeaponGearIcon(
+                modifier = Modifier.size(64.dp),
+                weaponGear = loadout.weapon,
                 onClick = {
-                    onClick(LoadoutType.WEAPON)
-                }
+                    onSelectedLoadoutType(SelectedLoadoutType.WEAPON)
+                },
+                isSelected = loadout.selectedLoadoutType == SelectedLoadoutType.WEAPON
             )
             Spacer(modifier = Modifier.size(16.dp))
-            LoadoutModIconWithToolTip(
-                tooltipState = tooltipState,
-                selectedLoadout == LoadoutType.MOD_WEAPON,
-                modifier = Modifier.size(48.dp),
-                mod = loadout.modWeapon,
+            LoadoutWeaponModIcon(
+                mod = loadout.weaponMod,
+                isSelected = loadout.selectedLoadoutType == SelectedLoadoutType.MOD_WEAPON,
                 onClick = {
-                    onClick(LoadoutType.MOD_WEAPON)
-                }
+                    onSelectedLoadoutType(SelectedLoadoutType.MOD_WEAPON)
+                },
+                modifier = Modifier.size(if (isCompact()) 48.dp else 64.dp),
             )
         }
         Spacer(modifier = Modifier.size(16.dp))
         Row(
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            LoadoutArmorIcon(
-                isSelected = selectedLoadout == LoadoutType.HEAD,
-                loadoutType = LoadoutType.HEAD,
-                gearName = loadout.head?.gearName,
-                gearType = loadout.head?.associatedGearType,
-                rarity = loadout.head?.rarity,
+            LoadoutHeadGearIcon(
+                modifier = Modifier.size(64.dp),
+                isSelected = loadout.selectedLoadoutType == SelectedLoadoutType.HEAD,
+                headGear = loadout.head,
                 onClick = {
-                    onClick(LoadoutType.HEAD)
+                    onSelectedLoadoutType(SelectedLoadoutType.HEAD)
                 }
             )
+
             Spacer(modifier = Modifier.size(16.dp))
-            LoadoutModIconWithToolTip(
-                tooltipState = tooltipState,
-                selectedLoadout == LoadoutType.MOD_HEAD,
-                mod = loadout.modHead,
+            LoadoutArmorModIcon(
+                mod = loadout.headMod,
+                isSelected = loadout.selectedLoadoutType == SelectedLoadoutType.MOD_HEAD,
                 onClick = {
-                    onClick(LoadoutType.MOD_HEAD)
-                }
+                    onSelectedLoadoutType(SelectedLoadoutType.MOD_HEAD)
+                },
+                modifier = Modifier.size(if (isCompact()) 48.dp else 64.dp),
             )
         }
         Spacer(modifier = Modifier.size(16.dp))
         Row(
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            LoadoutArmorIcon(
-                isSelected = selectedLoadout == LoadoutType.CHEST,
-                loadoutType = LoadoutType.CHEST,
-                gearName = loadout.chest?.gearName,
-                gearType = loadout.chest?.associatedGearType,
-                rarity = loadout.chest?.rarity,
+            LoadoutChestGearIcon(
+                modifier = Modifier.size(64.dp),
+
+                isSelected = loadout.selectedLoadoutType == SelectedLoadoutType.CHEST,
+                chestGear = loadout.chest,
                 onClick = {
-                    onClick(LoadoutType.CHEST)
+                    onSelectedLoadoutType(SelectedLoadoutType.CHEST)
                 }
             )
             Spacer(modifier = Modifier.size(16.dp))
-            LoadoutModIconWithToolTip(
-                tooltipState = tooltipState,
-                selectedLoadout == LoadoutType.MOD_CHEST,
-                mod = loadout.modChest,
+            LoadoutArmorModIcon(
+                mod = loadout.chestMod,
+                isSelected = loadout.selectedLoadoutType == SelectedLoadoutType.MOD_CHEST,
                 onClick = {
-                    onClick(LoadoutType.MOD_CHEST)
-                }
+                    onSelectedLoadoutType(SelectedLoadoutType.MOD_CHEST)
+                },
+                modifier = Modifier.size(if (isCompact()) 48.dp else 64.dp),
             )
         }
         Spacer(modifier = Modifier.size(16.dp))
         Row(
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            LoadoutArmorIcon(
-                isSelected = selectedLoadout == LoadoutType.BOOTS,
-                loadoutType = LoadoutType.BOOTS,
-                gearName = loadout.boots?.gearName,
-                gearType = loadout.boots?.associatedGearType,
-                rarity = loadout.boots?.rarity,
+            LoadoutBootsGearIcon(
+                modifier = Modifier.size(64.dp),
+
+                isSelected = loadout.selectedLoadoutType == SelectedLoadoutType.BOOTS,
+                bootsGear = loadout.boots,
                 onClick = {
-                    onClick(LoadoutType.BOOTS)
+                    onSelectedLoadoutType(SelectedLoadoutType.BOOTS)
                 }
             )
             Spacer(modifier = Modifier.size(16.dp))
-            LoadoutModIconWithToolTip(
-                tooltipState = tooltipState,
-                selectedLoadout == LoadoutType.MOD_BOOTS,
-                mod = loadout.modBoots,
+            LoadoutArmorModIcon(
+                mod = loadout.bootsMod,
+                isSelected = loadout.selectedLoadoutType == SelectedLoadoutType.MOD_BOOTS,
                 onClick = {
-                    onClick(LoadoutType.MOD_BOOTS)
-                }
+                    onSelectedLoadoutType(SelectedLoadoutType.MOD_BOOTS)
+                },
+                modifier = Modifier.size(if (isCompact()) 48.dp else 64.dp),
             )
         }
         Spacer(modifier = Modifier.size(16.dp))

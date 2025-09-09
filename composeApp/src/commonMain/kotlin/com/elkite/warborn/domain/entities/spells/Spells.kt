@@ -24,7 +24,7 @@ data class BasicSpell(
     override val castingRange: String,
     override val tierUnlock: TierUnlock,
     override val type: SpellType = SpellType.basic,
-) : ISpell
+    ) : ISpell
 
 @Serializable
 data class CommonSpell(

@@ -14,7 +14,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.elkite.warborn.domain.entities.old.drifter.Drifter
+import com.elkite.warborn.domain.entities.drifter.Drifter
+import com.elkite.warborn.presentation.widgets.icons.DrifterIcon
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedCard
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedTextTitle
 import com.elkite.warborn.presentation.widgets.utils.isCompact
@@ -63,7 +64,7 @@ private fun DrifterSmallListItem(
                         drifterId = drifter.gameId,
                     )
                     GearStylizedTextTitle(
-                        text = drifter.name.capitalize(),
+                        text = drifter.name.lowercase().capitalize(),
                         style = MaterialTheme.typography.body1,
                     )
                     Spacer(modifier = Modifier.size(8.dp))

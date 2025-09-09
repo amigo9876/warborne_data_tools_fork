@@ -13,16 +13,6 @@ interface IMod {
     val slot: ModSlot
 }
 
-interface IWeaponMod : IMod {
-    override val type: ModType
-        get() = ModType.WEAPON
-}
-
-interface IArmorMod : IMod {
-    override val type: ModType
-        get() = ModType.ARMOR
-}
-
 @Serializable
 enum class ModSlot {
     UNIVERSAL,

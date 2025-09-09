@@ -28,13 +28,8 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.elkite.warborn.domain.entities.old.Gear
-import com.elkite.warborn.domain.entities.old.drifter.Drifter
-import com.elkite.warborn.domain.entities.old.mods.Mod
-import com.elkite.warborn.domain.entities.old.spell.Spell
+import com.elkite.warborn.domain.entities.spells.ISpell
 import com.elkite.warborn.presentation.theme.WarborneColorTheme
-import com.elkite.warborn.presentation.widgets.mod.formatDescription
-import com.elkite.warborn.presentation.widgets.utils.GearStylizedText
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedTextTitle
 import com.elkite.warborn.presentation.widgets.utils.MultiPatternHighlightedText
 
@@ -44,11 +39,11 @@ fun rememberTooltipState() = remember { TooltipState() }
 
 class TooltipState {
     var isVisible by mutableStateOf(false)
-    var gear: Gear? by mutableStateOf(null)
+    var spell: ISpell? by mutableStateOf(null)
     var position by mutableStateOf(Offset.Zero)
 
-    fun show(gear: Gear, position: Offset) {
-        this.gear = gear
+    fun show(spell: ISpell, position: Offset) {
+        this.spell = spell
         this.position = position
         this.isVisible = true
     }
@@ -60,7 +55,7 @@ class TooltipState {
 
 @Composable
 fun TooltipBox(
-    gear: Gear,
+    spell: ISpell,
     tooltipState: TooltipState,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
@@ -72,13 +67,13 @@ fun TooltipBox(
             .onGloballyPositioned { coordinates ->
                 componentPosition = coordinates.positionInRoot()
             }
-            .pointerInput(gear) {
+            .pointerInput(spell) {
                 awaitPointerEventScope {
                     while (true) {
                         val event = awaitPointerEvent()
                         when (event.type) {
                             PointerEventType.Enter -> {
-                                tooltipState.show(gear, componentPosition)
+                                tooltipState.show(spell, componentPosition)
                             }
 
                             PointerEventType.Exit -> {
@@ -95,7 +90,7 @@ fun TooltipBox(
 
 @Composable
 fun GearTooltip(
-    gear: Gear,
+    spell: ISpell,
     modifier: Modifier = Modifier
 ) {
     val scrollState = rememberScrollState()
@@ -114,30 +109,31 @@ fun GearTooltip(
         ) {
             GearStylizedTextTitle(
                 style = MaterialTheme.typography.h6,
-                text = gear.name,
+                text = spell.spellName,
             )
-            when (gear) {
-                is Spell -> {
-                    gear.gearName?.let {
-                        GearStylizedText(
-                            text = it,
-                            style = MaterialTheme.typography.caption.copy(
-                                fontWeight = FontWeight.ExtraLight,
-                            ),
-                        )
-                    } ?: GearStylizedText(
-                        text = gear.associatedGearType.name.lowercase().capitalize(),
-                        style = MaterialTheme.typography.caption.copy(
-                            fontWeight = FontWeight.ExtraLight,
-                        ),
-                    )
+            when (spell) {
+                is ISpell -> {
+//                    spell.gearName?.let {
+//                        GearStylizedText(
+//                            text = it,
+//                            style = MaterialTheme.typography.caption.copy(
+//                                fontWeight = FontWeight.ExtraLight,
+//                            ),
+//                        )
+//                    } ?:
+//                    GearStylizedText(
+//                        text = gear.associatedGearType.name.lowercase().lowercase().capitalize(),
+//                        style = MaterialTheme.typography.caption.copy(
+//                            fontWeight = FontWeight.ExtraLight,
+//                        ),
+//                    )
                     Spacer(modifier = Modifier.height(4.dp))
                     MultiPatternHighlightedText(
                         baseTextStyle = MaterialTheme.typography.body2.copy(color = WarborneColorTheme.textDescriptionColor)
                             .copy(
                                 fontFamily = FontFamily.Monospace
                             ),
-                        text = gear.description,
+                        text = spell.description,
                         patternsWithStyles = listOf(
                             Regex("""\[Damage Rate: [^\]]+]""") to SpanStyle(
                                 color = WarborneColorTheme.textDamageColor,
@@ -155,43 +151,43 @@ fun GearTooltip(
                     )
                 }
 
-                is Drifter -> {
-                    GearStylizedText(text = gear.spell.description, maxLines = Int.MAX_VALUE)
-                }
-
-                is Mod -> {
-                    val description =
-                        formatDescription(
-                            description = gear.description,
-                            arguments = gear.arguments
-                        )
-                    MultiPatternHighlightedText(
-                        baseTextStyle = MaterialTheme.typography.body2.copy(color = WarborneColorTheme.textDescriptionColor)
-                            .copy(
-                                fontFamily = FontFamily.Monospace
-                            ),
-                        text = description,
-                        patternsWithStyles = listOf(
-                            Regex("""\[Damage Rate: [^\]]+]]""") to SpanStyle(
-                                color = WarborneColorTheme.textDamageColor,
-                                fontWeight = FontWeight.Bold
-                            ),
-                            Regex("""\[Healing Rate: [^\]]+]]""") to SpanStyle(
-                                color = WarborneColorTheme.textHealColor,
-                                fontWeight = FontWeight.Bold
-                            ),
-                            Regex("""\[Target-based Max HP [^\]]+]]""") to SpanStyle(
-                                color = WarborneColorTheme.textShieldColor,
-                                fontWeight = FontWeight.Bold
-                            ),
-                            Regex("""\[\s*[^a-zA-Z\]]*](?!])""") to SpanStyle(
-                                fontWeight = FontWeight.Bold,
-                                color = WarborneColorTheme.legendaryBorderMidColor
-                            )
-
-                        )
-                    )
-                }
+//                is Drifter -> {
+//                    GearStylizedText(text = gear.spell.description, maxLines = Int.MAX_VALUE)
+//                }
+//
+//                is Mod -> {
+//                    val description =
+//                        formatDescription(
+//                            description = gear.description,
+//                            arguments = gear.arguments
+//                        )
+//                    MultiPatternHighlightedText(
+//                        baseTextStyle = MaterialTheme.typography.body2.copy(color = WarborneColorTheme.textDescriptionColor)
+//                            .copy(
+//                                fontFamily = FontFamily.Monospace
+//                            ),
+//                        text = description,
+//                        patternsWithStyles = listOf(
+//                            Regex("""\[Damage Rate: [^\]]+]]""") to SpanStyle(
+//                                color = WarborneColorTheme.textDamageColor,
+//                                fontWeight = FontWeight.Bold
+//                            ),
+//                            Regex("""\[Healing Rate: [^\]]+]]""") to SpanStyle(
+//                                color = WarborneColorTheme.textHealColor,
+//                                fontWeight = FontWeight.Bold
+//                            ),
+//                            Regex("""\[Target-based Max HP [^\]]+]]""") to SpanStyle(
+//                                color = WarborneColorTheme.textShieldColor,
+//                                fontWeight = FontWeight.Bold
+//                            ),
+//                            Regex("""\[\s*[^a-zA-Z\]]*](?!])""") to SpanStyle(
+//                                fontWeight = FontWeight.Bold,
+//                                color = WarborneColorTheme.legendaryBorderMidColor
+//                            )
+//
+//                        )
+//                    )
+//                }
             }
         }
     }

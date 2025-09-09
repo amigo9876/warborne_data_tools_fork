@@ -5,7 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.elkite.warborn.domain.entities.old.Loadout
+import com.elkite.warborn.domain.entities.loadout.Loadout
 import kotlinx.browser.window
 
 @Composable

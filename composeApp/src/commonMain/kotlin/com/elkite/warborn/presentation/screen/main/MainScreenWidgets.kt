@@ -6,14 +6,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRowScope
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.SegmentedButton
@@ -29,29 +27,34 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
-import com.elkite.warborn.domain.entities.old.Gear
-import com.elkite.warborn.domain.entities.old.GearMainCategory
-import com.elkite.warborn.domain.entities.old.GearType
-import com.elkite.warborn.domain.entities.old.Loadout
-import com.elkite.warborn.domain.entities.old.LoadoutType
-import com.elkite.warborn.domain.entities.old.drifter.Drifter
-import com.elkite.warborn.domain.entities.old.mods.Mod
-import com.elkite.warborn.domain.entities.old.spell.Spell
+import com.elkite.warborn.domain.entities.common.GearCategory
+import com.elkite.warborn.domain.entities.common.ModCategory
+import com.elkite.warborn.domain.entities.drifter.Drifter
+import com.elkite.warborn.domain.entities.gear.ArmorSlot
+import com.elkite.warborn.domain.entities.gear.BootsGear
+import com.elkite.warborn.domain.entities.gear.ChestGear
+import com.elkite.warborn.domain.entities.gear.HeadGear
+import com.elkite.warborn.domain.entities.gear.WeaponGear
+import com.elkite.warborn.domain.entities.loadout.Loadout
+import com.elkite.warborn.domain.entities.loadout.SelectedLoadoutType
+import com.elkite.warborn.domain.entities.mod.ArmorMod
+import com.elkite.warborn.domain.entities.mod.WeaponMod
 import com.elkite.warborn.presentation.theme.WarborneColorTheme
-import com.elkite.warborn.presentation.widgets.drifter.DrifterCard
+import com.elkite.warborn.presentation.widgets.card.ArmorCard
+import com.elkite.warborn.presentation.widgets.card.DrifterCard
+import com.elkite.warborn.presentation.widgets.card.ModCard
+import com.elkite.warborn.presentation.widgets.card.WeaponCard
+import com.elkite.warborn.presentation.widgets.card.common.CardContainer
 import com.elkite.warborn.presentation.widgets.drifter.DrifterSmallList
 import com.elkite.warborn.presentation.widgets.gear.ArmorSmallList
 import com.elkite.warborn.presentation.widgets.gear.WeaponSmallList
 import com.elkite.warborn.presentation.widgets.loadout.LoadoutCard
 import com.elkite.warborn.presentation.widgets.loadout_from_url.LoadoutFromUrl
-import com.elkite.warborn.presentation.widgets.mod.ModCard
 import com.elkite.warborn.presentation.widgets.mod.ModSmallList
-import com.elkite.warborn.presentation.widgets.spell.SpellCard
 import com.elkite.warborn.presentation.widgets.utils.ClickableText
 import com.elkite.warborn.presentation.widgets.utils.CopyButton
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedCard
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedText
-import com.elkite.warborn.presentation.widgets.utils.MoreDetails
 import com.elkite.warborn.presentation.widgets.utils.isCompact
 import com.elkite.warborn.presentation.widgets.utils.isMedium
 import com.elkite.warborn.resources.Com_Head_Helmet
@@ -64,9 +67,8 @@ import org.jetbrains.compose.resources.painterResource
 @Composable
 fun LoadoutColumn(
     loadout: Loadout,
-    loadoutType: LoadoutType,
     onLoadoutUrlUpdate: (String) -> Unit,
-    onLoadoutClick: (LoadoutType) -> Unit,
+    onSelectedLoadoutType: (SelectedLoadoutType) -> Unit,
 ) {
     LoadoutFromUrl(loadout = loadout, onLoadoutUrlUpdate = onLoadoutUrlUpdate)
 
@@ -74,8 +76,7 @@ fun LoadoutColumn(
         LoadoutCard(
             modifier = Modifier.wrapContentSize(),
             loadout = loadout,
-            selectedLoadout = loadoutType,
-            onClick = onLoadoutClick,
+            onSelectedLoadoutType = onSelectedLoadoutType
         )
         Column(modifier = Modifier.padding(16.dp)) {
             Row {
@@ -97,22 +98,32 @@ fun LoadoutColumn(
 fun FlowRowScope.ItemListColumn(
     state: MainScreenModel.BuildScreenState.Success,
     loadout: Loadout,
-    loadoutType: LoadoutType,
-    selectedGear: Gear,
-    isDescCompact: Boolean,
-    onUpdateGear: (Gear) -> Unit,
-    onUpdateLoadout: (Spell) -> Unit,
+    onUpdateHeadGear: (HeadGear) -> Unit,
+    onUpdateChestGear: (ChestGear) -> Unit,
+    onUpdateBootsGear: (BootsGear) -> Unit,
     onUpdateDrifter: (Drifter) -> Unit,
-    onUpdatePassive: (GearType) -> Unit,
-    onUpdateMod: (Mod, LoadoutType) -> Unit,
-    onCompactClick: (Boolean) -> Unit,
+    onUpdateWeapon: (SelectedLoadoutType, WeaponGear) -> Unit,
+    onUpdateModHead: (ArmorMod) -> Unit,
+    onUpdateModChest: (ArmorMod) -> Unit,
+    onUpdateModBoots: (ArmorMod) -> Unit,
+    onUpdateWeaponMod: (WeaponMod) -> Unit,
 ) {
     val modifier =
         if (isCompact())
-            Modifier.sizeIn(minWidth = 300.dp, maxWidth = 450.dp, minHeight = 700.dp, maxHeight = 1000.dp)
+            Modifier.sizeIn(
+                minWidth = 300.dp,
+                maxWidth = 450.dp,
+                minHeight = 700.dp,
+                maxHeight = 1000.dp
+            )
                 .wrapContentSize()
         else if (isMedium())
-            Modifier.sizeIn(minWidth = 300.dp, maxWidth = 450.dp, minHeight = 700.dp, maxHeight = 1000.dp)
+            Modifier.sizeIn(
+                minWidth = 300.dp,
+                maxWidth = 450.dp,
+                minHeight = 700.dp,
+                maxHeight = 1000.dp
+            )
                 .wrapContentSize()
         else
             Modifier.sizeIn(
@@ -123,18 +134,18 @@ fun FlowRowScope.ItemListColumn(
             ).wrapContentSize()
 
     val categoryOptions = listOf(
-        GearMainCategory.DRIFTER,
-        GearMainCategory.WEAPON,
-        GearMainCategory.ARMOR,
-        GearMainCategory.MOD
+        GearCategory.DRIFTER,
+        GearCategory.WEAPON,
+        GearCategory.ARMOR,
+        GearCategory.MOD
     )
-    val selectedIndex = remember { mutableStateOf(0) }
+    val selectedIndex = remember { mutableStateOf(0)}
 
-    LaunchedEffect(loadoutType) {
-        selectedIndex.value = when (loadoutType) {
-            LoadoutType.MOD_WEAPON, LoadoutType.MOD_HEAD, LoadoutType.MOD_CHEST, LoadoutType.MOD_BOOTS -> 3
-            LoadoutType.HEAD, LoadoutType.CHEST, LoadoutType.BOOTS -> 2
-            LoadoutType.DRIFTER -> 0
+    LaunchedEffect(loadout.selectedLoadoutType) {
+        selectedIndex.value = when (loadout.selectedLoadoutType) {
+            SelectedLoadoutType.MOD_WEAPON, SelectedLoadoutType.MOD_HEAD, SelectedLoadoutType.MOD_CHEST, SelectedLoadoutType.MOD_BOOTS -> 3
+            SelectedLoadoutType.HEAD, SelectedLoadoutType.CHEST, SelectedLoadoutType.BOOTS -> 2
+            SelectedLoadoutType.DRIFTER -> 0
             else -> 1
         }
     }
@@ -148,50 +159,46 @@ fun FlowRowScope.ItemListColumn(
                 modifier = Modifier.padding(16.dp),
                 verticalArrangement = Arrangement.Top
             ) {
-                Row(
+
+                SingleChoiceSegmentedButtonRow(
+                    modifier = Modifier.wrapContentSize().padding(bottom = 8.dp),
                 ) {
-                    SingleChoiceSegmentedButtonRow(
-                        modifier = Modifier.wrapContentSize().padding(bottom = 8.dp),
-                    ) {
-                        categoryOptions.forEachIndexed { index, label ->
-                            SegmentedButton(
-                                onClick = { selectedIndex.value = index },
-                                selected = index == selectedIndex.value,
-                                label = {
-                                    Image(
-                                        painter = painterResource(
-                                            when (label) {
-                                                GearMainCategory.ARMOR -> Res.drawable.Com_Head_Helmet
-                                                GearMainCategory.WEAPON -> Res.drawable.Com_Weapon_Sword
-                                                GearMainCategory.DRIFTER -> Res.drawable.Common_ParagonWarehouse
-                                                GearMainCategory.MOD -> Res.drawable.ItemIcon_MODCore
-                                            }
-                                        ),
-                                        colorFilter = ColorFilter.tint(Color.White),
-                                        contentDescription = null,
-                                        modifier = Modifier.size(32.dp)
-                                    )
-                                },
-                                shape = RectangleShape,
-                                colors = SegmentedButtonColors(
-                                    activeBorderColor = WarborneColorTheme.borderSkillHightlightColor,
-                                    activeContainerColor = WarborneColorTheme.textBackgroundColor,
-                                    activeContentColor = WarborneColorTheme.textDescriptionColor,
-                                    inactiveBorderColor = WarborneColorTheme.borderSkillColor,
-                                    inactiveContainerColor = WarborneColorTheme.textBackgroundColor,
-                                    inactiveContentColor = WarborneColorTheme.borderSkillColor,
-                                    disabledActiveContainerColor = WarborneColorTheme.textBackgroundColor,
-                                    disabledActiveContentColor = WarborneColorTheme.textBackgroundColor,
-                                    disabledActiveBorderColor = WarborneColorTheme.textBackgroundColor,
-                                    disabledInactiveContainerColor = WarborneColorTheme.textBackgroundColor,
-                                    disabledInactiveContentColor = WarborneColorTheme.textBackgroundColor,
-                                    disabledInactiveBorderColor = WarborneColorTheme.textBackgroundColor,
+                    categoryOptions.forEachIndexed { index, label ->
+                        SegmentedButton(
+                            onClick = { selectedIndex.value = index },
+                            selected = index == selectedIndex.value,
+                            label = {
+                                Image(
+                                    painter = painterResource(
+                                        when (label) {
+                                            GearCategory.ARMOR -> Res.drawable.Com_Head_Helmet
+                                            GearCategory.WEAPON -> Res.drawable.Com_Weapon_Sword
+                                            GearCategory.DRIFTER -> Res.drawable.Common_ParagonWarehouse
+                                            GearCategory.MOD -> Res.drawable.ItemIcon_MODCore
+                                        }
+                                    ),
+                                    colorFilter = ColorFilter.tint(Color.White),
+                                    contentDescription = null,
+                                    modifier = Modifier.size(32.dp)
                                 )
+                            },
+                            shape = RectangleShape,
+                            colors = SegmentedButtonColors(
+                                activeBorderColor = WarborneColorTheme.borderSkillHightlightColor,
+                                activeContainerColor = WarborneColorTheme.textBackgroundColor,
+                                activeContentColor = WarborneColorTheme.textDescriptionColor,
+                                inactiveBorderColor = WarborneColorTheme.borderSkillColor,
+                                inactiveContainerColor = WarborneColorTheme.textBackgroundColor,
+                                inactiveContentColor = WarborneColorTheme.borderSkillColor,
+                                disabledActiveContainerColor = WarborneColorTheme.textBackgroundColor,
+                                disabledActiveContentColor = WarborneColorTheme.textBackgroundColor,
+                                disabledActiveBorderColor = WarborneColorTheme.textBackgroundColor,
+                                disabledInactiveContainerColor = WarborneColorTheme.textBackgroundColor,
+                                disabledInactiveContentColor = WarborneColorTheme.textBackgroundColor,
+                                disabledInactiveBorderColor = WarborneColorTheme.textBackgroundColor,
                             )
-                        }
+                        )
                     }
-                    Spacer(modifier = Modifier.width(16.dp))
-                    MoreDetails(isCompact = isDescCompact, onCompactClick = onCompactClick)
                 }
                 Column(
                     modifier = Modifier.fillMaxWidth(),
@@ -199,58 +206,70 @@ fun FlowRowScope.ItemListColumn(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     when (categoryOptions[selectedIndex.value]) {
-                        GearMainCategory.ARMOR -> {
+                        GearCategory.ARMOR -> {
                             Box(Modifier.wrapContentHeight()) {
                                 ArmorSmallList(
-                                    loadoutType = loadoutType,
-                                    spellsHead = state.head,
-                                    spellsChest = state.chest,
-                                    spellsBoots = state.boots,
-                                    onSpellClick = { spell ->
-                                        onUpdateGear(spell)
-                                        onUpdateLoadout(spell)
-                                    }
+                                    modifier = Modifier,
+                                    data = state.data,
+                                    loadout = loadout,
+                                    onUpdateHeadGear = onUpdateHeadGear,
+                                    onUpdateChestGear = onUpdateChestGear,
+                                    onUpdateBootsGear = onUpdateBootsGear,
                                 )
                             }
                         }
 
-                        GearMainCategory.WEAPON -> {
+                        GearCategory.WEAPON -> {
                             WeaponSmallList(
                                 modifier = Modifier,
                                 loadout = loadout,
-                                selectedGear = selectedGear,
-                                spells = state.weapons,
-                                onSpellClick = { spell ->
-                                    onUpdateGear(spell)
-                                    onUpdateLoadout(spell)
-                                },
-                                onCategoryClick = { gearType ->
-                                    state.weapons[gearType]?.first()?.let {
-                                        onUpdateGear(it)
-                                    }
-                                    onUpdatePassive(gearType)
-                                },
+                                data = state.data.weapons,
+                                onUpdateWeapon = onUpdateWeapon,
                             )
                         }
 
-                        GearMainCategory.DRIFTER -> {
+                        GearCategory.DRIFTER -> {
                             DrifterSmallList(
                                 modifier = Modifier,
-                                drifters = state.drifters,
+                                drifters = listOf(
+                                    state.data.drifters.strDrifters,
+                                    state.data.drifters.dexDrifters,
+                                    state.data.drifters.intDrifters
+                                ).flatten(),
                                 onDrifterClick = { drifter: Drifter ->
-                                    onUpdateGear(drifter)
                                     onUpdateDrifter(drifter)
                                 })
                         }
 
-                        GearMainCategory.MOD -> {
+                        GearCategory.MOD -> {
                             ModSmallList(
                                 modifier = Modifier,
-                                loadoutType = loadoutType,
-                                mods = state.mods,
-                                onModClick = { mod, loadoutType ->
-                                    onUpdateGear(mod)
-                                    onUpdateMod(mod, loadoutType)
+                                selectedLoadoutType = loadout.selectedLoadoutType,
+                                data = state.data.mods,
+                                onModClick = { category, mod ->
+                                    when (mod) {
+                                        is ArmorMod -> {
+                                            when (category) {
+                                                ModCategory.HEAD -> {
+                                                    onUpdateModHead(mod)
+                                                }
+
+                                                ModCategory.CHEST -> {
+                                                    onUpdateModChest(mod)
+                                                }
+
+                                                ModCategory.BOOTS -> {
+                                                    onUpdateModBoots(mod)
+                                                }
+
+                                                else -> {}
+                                            }
+                                        }
+
+                                        is WeaponMod -> {
+                                            onUpdateWeaponMod(mod)
+                                        }
+                                    }
                                 }
                             )
                         }
@@ -263,9 +282,7 @@ fun FlowRowScope.ItemListColumn(
 
 @Composable
 fun FlowRowScope.DescriptionColumn(
-    gear: Gear,
-    isDescCompact: Boolean,
-    onLoadoutClick: () -> Unit = {}
+    loadout: Loadout,
 ) {
     val modifier = if (isCompact())
         Modifier.fillMaxSize().padding(16.dp)
@@ -275,33 +292,27 @@ fun FlowRowScope.DescriptionColumn(
         Modifier.sizeIn(
             minWidth = 300.dp,
             maxWidth = 600.dp,
-        ).wrapContentHeight().weight(1f).padding(16.dp)
+        ).wrapContentHeight().weight(1f).padding(top = 12.dp, start = 16.dp, end = 16.dp, bottom = 16.dp)
 
-    if (gear is Spell) {
-        SpellCard(
-            modifier = modifier,
-            spell = gear,
-            onSpellClick = { spell ->
-                onLoadoutClick()
-            },
-            isCompact = isDescCompact,
-        )
-    } else if (gear is Drifter) {
-        DrifterCard(
-            modifier = modifier,
-            drifter = gear,
-            onDrifterClick = { drifter ->
-                onLoadoutClick()
-            },
-            isCompact = isDescCompact,
-        )
-    } else if (gear is Mod) {
-        ModCard(
-            modifier = modifier,
-            mod = gear,
-            onModClick = { mod ->
-                onLoadoutClick()
-            }
-        )
+    CardContainer(modifier = modifier) {
+        when (loadout.selectedLoadoutType) {
+            SelectedLoadoutType.DRIFTER -> DrifterCard(loadout.drifter)
+
+            SelectedLoadoutType.HEAD -> ArmorCard(loadout.head, ArmorSlot.HEAD)
+            SelectedLoadoutType.CHEST -> ArmorCard(loadout.chest, ArmorSlot.CHEST)
+            SelectedLoadoutType.BOOTS -> ArmorCard(loadout.boots, ArmorSlot.BOOTS)
+            SelectedLoadoutType.WEAPON,
+            SelectedLoadoutType.BASIC_ATTACK,
+            SelectedLoadoutType.COMMON_SKILL,
+            SelectedLoadoutType.PASSIVE -> WeaponCard(
+                loadout.weapon,
+                selectedLoadoutType = loadout.selectedLoadoutType
+            )
+
+            SelectedLoadoutType.MOD_WEAPON -> ModCard(mod = loadout.weaponMod)
+            SelectedLoadoutType.MOD_HEAD -> ModCard(mod = loadout.headMod)
+            SelectedLoadoutType.MOD_CHEST -> ModCard(mod = loadout.chestMod)
+            SelectedLoadoutType.MOD_BOOTS -> ModCard(mod = loadout.bootsMod)
+        }
     }
 }

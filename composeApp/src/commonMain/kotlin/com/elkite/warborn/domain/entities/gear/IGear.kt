@@ -7,7 +7,7 @@ import com.elkite.warborn.domain.entities.spells.SpellType
 import com.elkite.warborn.domain.entities.spells.TierUnlock
 import kotlinx.serialization.Serializable
 
-internal interface IGear : ISpell {
+interface IGear : ISpell {
     override val spellId: String
     override val spellName: String
     override val description: String
@@ -44,4 +44,13 @@ enum class GearSlot {
     BOOTS,
     WEAPON,
     CONSUMABLE,
+    MODS,
+    DRIFTER
+}
+
+@Serializable
+enum class ArmorSlot {
+    HEAD,
+    CHEST,
+    BOOTS,
 }

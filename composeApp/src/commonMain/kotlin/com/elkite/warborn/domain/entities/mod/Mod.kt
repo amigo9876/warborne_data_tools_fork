@@ -4,62 +4,26 @@ import com.elkite.warborn.domain.entities.common.Rarity
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class HeadMod(
-    override val name: String,
-    override val iconName: String,
-    override val description: String,
-    override val arguments: List<Pair<String, String>>,
-    override val rarity: Rarity,
-    override val slot: ModSlot = ModSlot.HEAD,
-): IArmorMod
-
-@Serializable
-data class ChestMod(
-    override val name: String,
-    override val iconName: String,
-    override val description: String,
-    override val arguments: List<Pair<String, String>>,
-    override val rarity: Rarity,
-    override val slot: ModSlot = ModSlot.CHEST,
-): IArmorMod
-
-@Serializable
-data class BootsMod(
-    override val name: String,
-    override val iconName: String,
-    override val description: String,
-    override val arguments: List<Pair<String, String>>,
-    override val rarity: Rarity,
-    override val slot: ModSlot = ModSlot.BOOTS,
-): IArmorMod
-
-@Serializable
-data class WeaponMod(
+data class  WeaponMod(
     override val name: String,
     override val iconName: String,
     override val description: String,
     override val arguments: List<Pair<String, String>>,
     override val rarity: Rarity,
     override val slot: ModSlot,
-): IWeaponMod
+) : IMod {
+    override val type: ModType = ModType.WEAPON
+}
 
 @Serializable
-data class UniversalArmorMod(
+data class ArmorMod(
     override val name: String,
     override val iconName: String,
     override val description: String,
     override val arguments: List<Pair<String, String>>,
     override val rarity: Rarity,
-    override val slot: ModSlot = ModSlot.UNIVERSAL,
-): IArmorMod
-
-@Serializable
-data class UniversalWeaponMod(
-    override val name: String,
-    override val iconName: String,
-    override val description: String,
-    override val arguments: List<Pair<String, String>>,
-    override val rarity: Rarity,
-    override val slot: ModSlot = ModSlot.UNIVERSAL,
-): IWeaponMod
+    override val slot: ModSlot,
+) : IMod {
+    override val type: ModType = ModType.ARMOR
+}
 

@@ -1,6 +1,7 @@
 package com.elkite.warborn.presentation.widgets.mod
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
@@ -11,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Divider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonColors
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
@@ -24,13 +24,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
-import com.elkite.warborn.domain.entities.old.GearType
-import com.elkite.warborn.domain.entities.old.LoadoutType
-import com.elkite.warborn.domain.entities.old.mods.Mod
-import com.elkite.warborn.domain.entities.old.mods.ModSlot
-import com.elkite.warborn.domain.entities.old.mods.ModType
+import com.elkite.warborn.domain.entities.common.ModCategory
+import com.elkite.warborn.domain.entities.data.DataMods
+import com.elkite.warborn.domain.entities.data.WeaponType
+import com.elkite.warborn.domain.entities.loadout.SelectedLoadoutType
+import com.elkite.warborn.domain.entities.mod.IMod
+import com.elkite.warborn.domain.entities.mod.ModSlot
+import com.elkite.warborn.domain.entities.mod.ModType
+import com.elkite.warborn.domain.entities.mod.WeaponMod
 import com.elkite.warborn.presentation.theme.WarborneColorTheme
-import com.elkite.warborn.presentation.widgets.gear.WeaponImage
+import com.elkite.warborn.presentation.widgets.icons.ModIcon
+import com.elkite.warborn.presentation.widgets.icons.WeaponSlotIcon
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedText
 import com.elkite.warborn.presentation.widgets.utils.isCompact
 import com.elkite.warborn.presentation.widgets.utils.isMedium
@@ -39,44 +43,41 @@ import com.elkite.warborn.resources.Com_Head_Helmet
 import com.elkite.warborn.resources.Com_Shoes_Boots
 import com.elkite.warborn.resources.Com_Weapon_Sword
 import com.elkite.warborn.resources.Res
-import com.elkite.warborn.resources.error_emoji
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun ModSmallList(
     modifier: Modifier = Modifier,
-    loadoutType: LoadoutType,
-    mods: List<Mod>,
-    onModClick: (Mod, LoadoutType) -> Unit,
+    selectedLoadoutType: SelectedLoadoutType,
+    data: DataMods,
+    onModClick: (ModCategory, IMod) -> Unit,
 ) {
     val subcategoryOptions = listOf(
-        LoadoutType.MOD_WEAPON,
-        LoadoutType.MOD_HEAD,
-        LoadoutType.MOD_CHEST,
-        LoadoutType.MOD_BOOTS
+        ModCategory.WEAPON,
+        ModCategory.HEAD,
+        ModCategory.CHEST,
+        ModCategory.BOOTS,
     )
     val selectedIndex = remember { mutableStateOf(0) }
     val currentMods = derivedStateOf {
         when (subcategoryOptions[selectedIndex.value]) {
-            LoadoutType.MOD_WEAPON -> mods.filter { it.type == ModType.WEAPON }
-            LoadoutType.MOD_HEAD -> mods.filter { it.type == ModType.ARMOR && it.slot == ModSlot.ALL }
-            LoadoutType.MOD_CHEST -> mods.filter { it.type == ModType.ARMOR && it.slot != ModSlot.BOOTS }
-            LoadoutType.MOD_BOOTS -> mods.filter { it.type == ModType.ARMOR && it.slot != ModSlot.CHEST }
-            else -> emptyList()
+           ModCategory.WEAPON -> data.weapons
+           ModCategory.HEAD-> data.armors.filter { it.slot == ModSlot.HEAD || it.slot == ModSlot.UNIVERSAL }
+           ModCategory.CHEST -> data.armors.filter { it.slot == ModSlot.CHEST || it.slot == ModSlot.UNIVERSAL }
+           ModCategory.BOOTS -> data.armors.filter { it.slot == ModSlot.BOOTS || it.slot == ModSlot.UNIVERSAL }
         }
     }
-    val modsAll = currentMods.value.filter { it.slot == ModSlot.ALL }
-    val rest = currentMods.value.filter { it.slot != ModSlot.ALL }
+    val modsAll = currentMods.value.filter { it.slot == ModSlot.UNIVERSAL }
+    val rest = currentMods.value.filter { it.slot != ModSlot.UNIVERSAL }
 
-    LaunchedEffect(loadoutType) {
-        selectedIndex.value = when (loadoutType) {
-            LoadoutType.MOD_HEAD -> 1
-            LoadoutType.MOD_CHEST -> 2
-            LoadoutType.MOD_BOOTS -> 3
+    LaunchedEffect(selectedLoadoutType) {
+        selectedIndex.value = when (selectedLoadoutType) {
+            SelectedLoadoutType.MOD_HEAD -> 1
+            SelectedLoadoutType.MOD_CHEST -> 2
+            SelectedLoadoutType.MOD_BOOTS -> 3
             else -> 0
         }
     }
-
 
     Column(modifier = modifier.fillMaxWidth()) {
         SingleChoiceSegmentedButtonRow(
@@ -88,39 +89,30 @@ fun ModSmallList(
                     selected = index == selectedIndex.value,
                     label = {
                         when (label) {
-                            LoadoutType.MOD_WEAPON -> Image(
+                            ModCategory.WEAPON -> Image(
                                 modifier = Modifier.size(32.dp),
                                 painter = painterResource(Res.drawable.Com_Weapon_Sword),
                                 contentDescription = null,
 
                                 )
-
-                            LoadoutType.MOD_HEAD -> Image(
+                            ModCategory.HEAD -> Image(
                                 modifier = Modifier.size(32.dp),
                                 painter = painterResource(Res.drawable.Com_Head_Helmet),
                                 contentDescription = null,
 
                                 )
-
-                            LoadoutType.MOD_CHEST -> Image(
+                            ModCategory.CHEST -> Image(
                                 modifier = Modifier.size(32.dp),
                                 painter = painterResource(Res.drawable.Com_Clothes_Armor),
                                 contentDescription = null,
 
                                 )
-
-                            LoadoutType.MOD_BOOTS -> Image(
+                            ModCategory.BOOTS -> Image(
                                 modifier = Modifier.size(32.dp),
                                 painter = painterResource(Res.drawable.Com_Shoes_Boots),
                                 contentDescription = null,
 
                                 )
-
-                            else -> Icon(
-                                modifier = Modifier.size(32.dp),
-                                painter = painterResource(Res.drawable.error_emoji),
-                                contentDescription = null,
-                            )
                         }
                     },
                     shape = RectangleShape,
@@ -149,7 +141,7 @@ fun ModSmallList(
         ) {
             item {
                 GearStylizedText(
-                    text = ModSlot.ALL.name.lowercase().capitalize(),
+                    text = ModSlot.UNIVERSAL.name.lowercase().lowercase().capitalize(),
                 )
                 Divider(
                     modifier = Modifier.fillMaxWidth()
@@ -165,11 +157,12 @@ fun ModSmallList(
                     maxItemsInEachRow = if (isCompact() || isMedium()) 5 else 7
                 ) {
                     modsAll.map {
-                        ModImage(
-                            mod = it,
-                            onClick = {
-                                onModClick(it, subcategoryOptions[selectedIndex.value])
-                            }
+                        ModIcon(
+                            modGameId = it.iconName,
+                            modifier = Modifier.size(64.dp).clickable {
+                                onModClick(subcategoryOptions[selectedIndex.value], it)
+                            },
+                            modType = it.type
                         )
                     }
 
@@ -179,7 +172,7 @@ fun ModSmallList(
                 item {
                     Spacer(modifier = Modifier.size(16.dp))
                     GearStylizedText(
-                        text = "Others",
+                        text = subcategoryOptions[selectedIndex.value].name.lowercase().capitalize()
                     )
                     Divider(
                         modifier = Modifier.fillMaxWidth()
@@ -195,15 +188,16 @@ fun ModSmallList(
                     ) {
                         rest.map {
                             if (it.type == ModType.ARMOR)
-                                ModImage(
-                                    mod = it,
-                                    onClick = {
-                                        onModClick(it, subcategoryOptions[selectedIndex.value])
-                                    }
+                                ModIcon(
+                                    modGameId = it.iconName,
+                                    modifier = Modifier.size(64.dp).clickable {
+                                        onModClick(subcategoryOptions[selectedIndex.value], it)
+                                    },
+                                    modType = it.type
                                 )
                             else
                                 WeaponExclusiveMod(
-                                    it,
+                                    it as WeaponMod,
                                     onModClick,
                                     subcategoryOptions,
                                     selectedIndex
@@ -218,35 +212,36 @@ fun ModSmallList(
 
 @Composable
 private fun WeaponExclusiveMod(
-    it: Mod,
-    onModClick: (Mod, LoadoutType) -> Unit,
-    subcategoryOptions: List<LoadoutType>,
+    it: WeaponMod,
+    onModClick: (ModCategory, IMod) -> Unit,
+    subcategoryOptions: List<ModCategory>,
     selectedIndex: MutableState<Int>
 ) {
     Row {
-        WeaponImage(
-            gearType = when (it.slot) {
-                ModSlot.AXE -> GearType.AXE
-                ModSlot.GUN -> GearType.GUN
-                ModSlot.SWORD -> GearType.SWORD
-                ModSlot.MACE -> GearType.MACE
-                ModSlot.BOW -> GearType.BOW
-                ModSlot.DAGGER -> GearType.DAGGER
-                ModSlot.SPEAR -> GearType.SPEAR
-                ModSlot.NATURE -> GearType.NATURE
-                ModSlot.FIRE -> GearType.FIRE
-                ModSlot.ICE -> GearType.FROST
-                ModSlot.CURSE -> GearType.CURSE
-                ModSlot.HOLY -> GearType.HOLY
-                else -> GearType.SWORD
+        WeaponSlotIcon(
+            weaponType = when (it.slot) {
+                ModSlot.AXE -> WeaponType.axe
+                ModSlot.GUN -> WeaponType.gun
+                ModSlot.SWORD -> WeaponType.sword
+                ModSlot.MACE -> WeaponType.mace
+                ModSlot.BOW -> WeaponType.bow
+                ModSlot.DAGGER -> WeaponType.dagger
+                ModSlot.SPEAR -> WeaponType.spear
+                ModSlot.NATURE -> WeaponType.nature
+                ModSlot.FIRE -> WeaponType.fire
+                ModSlot.ICE -> WeaponType.frost
+                ModSlot.CURSE -> WeaponType.curse
+                ModSlot.HOLY -> WeaponType.holy
+                else -> WeaponType.sword
             }
         )
         Spacer(Modifier.size(8.dp))
-        ModImage(
-            mod = it,
-            onClick = {
-                onModClick(it, subcategoryOptions[selectedIndex.value])
-            }
+        ModIcon(
+            modGameId = it.iconName,
+            modifier = Modifier.size(64.dp).clickable {
+                onModClick(subcategoryOptions[selectedIndex.value], it)
+            },
+            modType = it.type
         )
     }
 }

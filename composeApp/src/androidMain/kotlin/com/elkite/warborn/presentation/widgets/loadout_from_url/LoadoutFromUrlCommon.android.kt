@@ -1,8 +1,7 @@
 package com.elkite.warborn.presentation.widgets.loadout_from_url
 
 import androidx.compose.runtime.Composable
-import com.elkite.warborn.domain.entities.old.Loadout
-
+import com.elkite.warborn.domain.entities.loadout.Loadout
 
 @Composable
 actual fun LoadoutFromUrl(

@@ -8,7 +8,6 @@ import com.elkite.warborn.domain.entities.drifter.Link
 import com.elkite.warborn.domain.entities.drifter.SupportStationBonus
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 
@@ -41,36 +40,14 @@ object DrifterParser {
 
                     println("Processing drifter: $name ($gameId)")
 
-                    val spells = obj["spells"]?.jsonArray
-                    if (spells == null) {
-                        println("No spells array for drifter: $gameId")
-                        continue
-                    }
-
-                    if (spells.isEmpty()) {
-                        println("Empty spells array for drifter: $gameId")
-                        continue
-                    }
-
-                    if (spells.size < 2) {
-                        println("Drifter $gameId has insufficient spells: ${spells.size}")
-                        continue
-                    }
-
                     val strBonus = obj["strBonus"]?.jsonPrimitive?.content ?: ""
                     val dexBonus = obj["dexBonus"]?.jsonPrimitive?.content ?: ""
                     val intBonus = obj["intBonus"]?.jsonPrimitive?.content ?: ""
-                    val supportBonus = obj["supportBonus"]?.jsonPrimitive?.content ?: ""
-                    val supportMalus = obj["supportMalus"]?.jsonPrimitive?.content ?: ""
-                    val supportBonusValue = obj["supportBonusValue"]?.jsonPrimitive?.content ?: ""
-                    val supportMalusValue = obj["supportMalusValue"]?.jsonPrimitive?.content ?: ""
-
 
                     println("Parsing active spell for $gameId...")
-                    val activeSpell =
-                        SpellAndGearParser.parseSkillSpellDrifter(spells[0].jsonObject)
+                    val activeSpell = SpellAndGearParser.parseSkillSpellDrifter(obj["skill"]!!.jsonObject)
                     println("Parsing passive spell for $gameId...")
-                    val passiveSpell = SpellAndGearParser.parsePassiveSpell(spells[1].jsonObject)
+                    val passiveSpell = SpellAndGearParser.parsePassiveSpell(obj["passive"]!!.jsonObject)
 
                     val matchedLinks = links.filter { link -> gameId in link.driftersId }
 
@@ -85,12 +62,7 @@ object DrifterParser {
                                 dexBonus = dexBonus,
                                 intBonus = intBonus
                             ),
-                            bonus = SupportStationBonus(
-                                supportBonus = supportBonus,
-                                supportMalus = supportMalus,
-                                supportBonusValue = supportBonusValue,
-                                supportMalusValue = supportMalusValue
-                            ),
+                            bonus = parseSupportBonus(obj),
                             links = matchedLinks,
                             stats = parseDrifterStats(obj),
                             category = category
@@ -108,6 +80,21 @@ object DrifterParser {
         }
 
         return drifters
+    }
+
+    private fun parseSupportBonus(json: JsonObject): SupportStationBonus {
+        val obj = json["supportStationBonus"]?.jsonObject ?: return SupportStationBonus(
+            supportBonus = "",
+            supportMalus = "",
+            supportBonusValue = "",
+            supportMalusValue = ""
+        )
+        return SupportStationBonus(
+            supportBonus = obj["supportBonus"]?.jsonPrimitive?.content ?: "",
+            supportMalus = obj["supportMalus"]?.jsonPrimitive?.content ?: "",
+            supportBonusValue = obj["supportBonusValue"]?.jsonPrimitive?.content ?: "",
+            supportMalusValue = obj["supportMalusValue"]?.jsonPrimitive?.content ?: ""
+        )
     }
 
     private fun parseDrifterStats(json: JsonObject): DrifterStats {

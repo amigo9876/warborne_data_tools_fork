@@ -21,8 +21,6 @@ actual fun InformationScreenCommon(state: MainScreenModel.BuildScreenState.Succe
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
-            GearStylizedText(text = "Last data update: ${state.lastDataUpdate}")
-            Spacer(Modifier.size(16.dp))
             GearStylizedText(text = "Feel free to report any issue or suggestion on the following links:")
             Row {
                 GearStylizedText(text = "Discord : ")
