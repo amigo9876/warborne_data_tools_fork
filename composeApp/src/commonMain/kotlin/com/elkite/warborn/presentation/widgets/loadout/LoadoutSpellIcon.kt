@@ -63,13 +63,13 @@ fun LoadoutChestGearSkillIcon(
             .let {
                 if (isSelected) {
                     it.border(
-                        width = 3.dp,
+                        width = 2.dp,
                         brush = WarborneColorTheme.selectionBrush,
                         shape = RectangleShape
                     )
                 } else {
                     it.border(
-                        width = 2.dp,
+                        width = 1.dp,
                         color = borderSkillColor,
                     )
                 }
@@ -95,13 +95,13 @@ fun LoadoutBootsGearSkillIcon(
             .let {
                 if (isSelected) {
                     it.border(
-                        width = 3.dp,
+                        width = 2.dp,
                         brush = WarborneColorTheme.selectionBrush,
                         shape = RectangleShape
                     )
                 } else {
                     it.border(
-                        width = 2.dp,
+                        width = 1.dp,
                         color = borderSkillColor,
                     )
                 }
@@ -149,13 +149,13 @@ fun LoadoutWeaponBasicIcon(
             .let {
                 if (isSelected) {
                     it.border(
-                        width = 3.dp,
+                        width = 2.dp,
                         brush = WarborneColorTheme.selectionBrush,
                         shape = RectangleShape
                     )
                 } else {
                     it.border(
-                        width = 2.dp,
+                        width = 1.dp,
                         color = borderSkillColor,
                     )
                 }
@@ -182,13 +182,13 @@ fun LoadoutWeaponCommonIcon(
             .let {
                 if (isSelected) {
                     it.border(
-                        width = 3.dp,
+                        width = 2.dp,
                         brush = WarborneColorTheme.selectionBrush,
                         shape = RectangleShape
                     )
                 } else {
                     it.border(
-                        width = 2.dp,
+                        width = 1.dp,
                         color = borderSkillColor,
                     )
                 }
@@ -215,13 +215,13 @@ fun LoadoutWeaponSkillIcon(
             .let {
                 if (isSelected) {
                     it.border(
-                        width = 3.dp,
+                        width = 2.dp,
                         brush = WarborneColorTheme.selectionBrush,
                         shape = RectangleShape
                     )
                 } else {
                     it.border(
-                        width = 2.dp,
+                        width = 1.dp,
                         color = borderSkillColor,
                     )
                 }
@@ -247,13 +247,13 @@ fun LoadoutDrifterSkillIcon(
             .let {
                 if (isSelected) {
                     it.border(
-                        width = 3.dp,
+                        width = 2.dp,
                         brush = WarborneColorTheme.selectionBrush,
                         shape = RectangleShape
                     )
                 } else {
                     it.border(
-                        width = 2.dp,
+                        width = 1.dp,
                         color = borderSkillColor,
                     )
                 }

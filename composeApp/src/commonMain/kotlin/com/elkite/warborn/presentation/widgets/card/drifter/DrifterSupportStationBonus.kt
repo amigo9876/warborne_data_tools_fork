@@ -23,8 +23,8 @@ fun DrifterSupportStationBonus(bonus: SupportStationBonus) {
         WarborneColorTheme.textDamageColor,
     )
 
-    Column(modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth()) {
-        GearStylizedTextTitle(text = "Support")
+    Column(modifier = Modifier.fillMaxWidth()) {
+        GearStylizedTextTitle(text = "Support station bonus")
         Divider(
             modifier = Modifier.fillMaxWidth()
                 .padding(top = 8.dp, bottom = 16.dp),

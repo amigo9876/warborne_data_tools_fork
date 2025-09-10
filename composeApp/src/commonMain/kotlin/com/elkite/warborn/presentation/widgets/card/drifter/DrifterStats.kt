@@ -71,7 +71,7 @@ fun DrifterStats(stats: DrifterStats) {
 
 
     if (attributes.isNotEmpty())
-        Column(modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth()) {
+        Column(modifier = Modifier.fillMaxWidth()) {
             Spacer(Modifier.size(16.dp))
             Row(
                 verticalAlignment = Alignment.Bottom

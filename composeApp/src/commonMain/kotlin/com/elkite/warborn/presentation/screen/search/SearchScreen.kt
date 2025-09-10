@@ -1,4 +1,4 @@
-package com.elkite.warborn.presentation.screen
+package com.elkite.warborn.presentation.screen.search
 
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
@@ -6,8 +6,8 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.elkite.warborn.presentation.screen.common.CommonScreenState
-import com.elkite.warborn.presentation.screen.information.common.InformationScreenCommon
 import com.elkite.warborn.presentation.screen.main.MainScreenModel
+import com.elkite.warborn.presentation.screen.search.common.SearchScreenCommon
 
 class SearchScreen : Screen {
 
@@ -19,8 +19,9 @@ class SearchScreen : Screen {
         CommonScreenState(
             screenModel = screenModel,
             content = { successState ->
-                InformationScreenCommon(
-                    successState
+                SearchScreenCommon(
+                    successState,
+                    searchScreenModel = SearchScreenModel(successState.data),
                 )
             }
         )

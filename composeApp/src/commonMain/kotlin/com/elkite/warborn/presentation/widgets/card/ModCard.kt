@@ -57,9 +57,6 @@ fun ColumnScope.ModCard(
                 color = WarborneColorTheme.legendaryBorderMidColor
             )
         ))
-//        Description(
-//            description = mod.formatDescription()
-//        )
     }
 
 

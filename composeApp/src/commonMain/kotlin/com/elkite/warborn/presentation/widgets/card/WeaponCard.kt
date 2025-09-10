@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -18,6 +16,7 @@ import com.elkite.warborn.presentation.widgets.card.common.Description
 import com.elkite.warborn.presentation.widgets.card.common.GearAttributes
 import com.elkite.warborn.presentation.widgets.card.common.HeaderCard
 import com.elkite.warborn.presentation.widgets.card.common.SpellAttributes
+import com.elkite.warborn.presentation.widgets.card.common.SwitchContainer
 import com.elkite.warborn.presentation.widgets.icons.WeaponGearIcon
 import com.elkite.warborn.presentation.widgets.icons.WeaponSkillIcon
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedText
@@ -27,7 +26,6 @@ fun ColumnScope.WeaponCard(
     weaponGear: WeaponGear?,
     selectedLoadoutType: SelectedLoadoutType
 ) {
-    val compact = remember { mutableStateOf(true) }
 
     if (weaponGear == null) return
 
@@ -36,23 +34,20 @@ fun ColumnScope.WeaponCard(
         subtitle = weaponGear.weaponType.name.lowercase().capitalize(),
         icon = {
             WeaponGearIcon(
-                modifier = Modifier.getRarityBorder(weaponGear.rarity).size(64.dp),
+                modifier = Modifier.getRarityBorder(rarity = weaponGear.rarity).size(64.dp),
                 weaponGear = weaponGear
             )
         }
     )
-    if (!compact.value) {
-        GearAttributes(
-            weaponGear.gearStats
-        )
-        Spacer(Modifier.size(32.dp))
-    }
-
     val currentSpell = when (selectedLoadoutType) {
         SelectedLoadoutType.WEAPON -> weaponGear
         SelectedLoadoutType.PASSIVE -> weaponGear.passiveSpell
-        SelectedLoadoutType.BASIC_ATTACK -> weaponGear.activeBasicSpell ?: weaponGear.basicSpells.first()
-        SelectedLoadoutType.COMMON_SKILL -> weaponGear.activeCommonSpell ?: weaponGear.commonSpells.first()
+        SelectedLoadoutType.BASIC_ATTACK -> weaponGear.activeBasicSpell
+            ?: weaponGear.basicSpells.first()
+
+        SelectedLoadoutType.COMMON_SKILL -> weaponGear.activeCommonSpell
+            ?: weaponGear.commonSpells.first()
+
         else -> weaponGear
     }
 
@@ -72,15 +67,22 @@ fun ColumnScope.WeaponCard(
         cooldown = currentSpell.cooldown,
         range = currentSpell.castingRange,
     )
-    Spacer(Modifier.size(32.dp))
+    Spacer(Modifier.size(16.dp))
     Description(currentSpell.description)
     Spacer(Modifier.size(16.dp))
-    if (!compact.value)
-        GearStylizedText(
-            text = "Skill available at ${currentSpell.tierUnlock.name} and above.",
-            maxLines = 2,
-            style = MaterialTheme.typography.caption.copy(
-                fontWeight = FontWeight.ExtraLight,
-            ),
+    GearStylizedText(
+        text = "Skill available at ${currentSpell.tierUnlock.name} and above.",
+        maxLines = 2,
+        style = MaterialTheme.typography.caption.copy(
+            fontWeight = FontWeight.ExtraLight,
+        ),
+    )
+    SwitchContainer(
+        title = "Weapon's details",
+    ) {
+        GearAttributes(
+            weaponGear.gearStats
         )
+        Spacer(Modifier.size(32.dp))
+    }
 }

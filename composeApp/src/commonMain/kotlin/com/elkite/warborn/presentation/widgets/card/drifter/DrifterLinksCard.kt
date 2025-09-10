@@ -20,7 +20,7 @@ import com.elkite.warborn.presentation.widgets.utils.GearStylizedTextTitle
 
 @Composable
 fun DrifterLinksCard(links: List<Link> ) {
-    Column(modifier = Modifier.fillMaxWidth().padding(top = 16.dp, start = 16.dp, end = 16.dp)) {
+    Column(modifier = Modifier.fillMaxWidth().padding(top = 16.dp)) {
         GearStylizedTextTitle(text = "Links")
         Divider(
             modifier = Modifier.fillMaxWidth()

@@ -17,7 +17,7 @@ import com.elkite.warborn.presentation.theme.WarborneColorTheme.selectionBrush
 
 @Composable
 fun Modifier.getRarityBorder(
-    width: Dp = 3.dp,
+    width: Dp = 1.dp,
     rarity: Rarity
 ) = this.border(
     width = width,

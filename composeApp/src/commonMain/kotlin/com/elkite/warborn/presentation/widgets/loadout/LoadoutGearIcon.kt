@@ -92,7 +92,7 @@ fun LoadoutWeaponModIcon(
 ) {
     val borderModifier = if (mod == null) {
         modifier.border(
-            width = 3.dp,
+            width = 1.dp,
             brush = if (isSelected) WarborneColorTheme.selectionBrush else WarborneColorTheme.commonBrush,
             shape = RoundedCornerShape(16.dp)
         ).background(Color.Black, shape = RoundedCornerShape(16.dp)).clickable { onClick() }
@@ -118,7 +118,7 @@ fun LoadoutArmorModIcon(
 ) {
     val borderModifier = if (mod == null) {
         modifier.border(
-            width = 3.dp,
+            width = 1.dp,
             brush = if (isSelected) WarborneColorTheme.selectionBrush else WarborneColorTheme.commonBrush,
             shape = RoundedCornerShape(16.dp)
         ).background(Color.Black, shape = RoundedCornerShape(16.dp)).clickable { onClick() }
@@ -145,12 +145,12 @@ fun Modifier.getModifierForRarity(
             brush = gear.getRarityBackground(),
             shape = RectangleShape
         ).border(
-            width = 3.dp,
+            width = if (isSelected) 2.dp else 1.dp,
             brush = gear.getRarityBrush(isSelected),
             shape = RectangleShape
         ).clickable { onClick() }
     } ?: this.background(Color.Black).border(
-        width = 3.dp,
+        width = 2.dp,
         brush = gear.getRarityBrush(isSelected),
         shape = RectangleShape
     ).clickable { onClick() }

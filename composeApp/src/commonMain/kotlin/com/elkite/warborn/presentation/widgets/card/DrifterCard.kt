@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.drifter.Drifter
@@ -17,6 +15,7 @@ import com.elkite.warborn.presentation.theme.spellBorder
 import com.elkite.warborn.presentation.widgets.card.common.Description
 import com.elkite.warborn.presentation.widgets.card.common.HeaderCard
 import com.elkite.warborn.presentation.widgets.card.common.SpellAttributes
+import com.elkite.warborn.presentation.widgets.card.common.SwitchContainer
 import com.elkite.warborn.presentation.widgets.card.drifter.DrifterLinksCard
 import com.elkite.warborn.presentation.widgets.card.drifter.DrifterMainStatsMultiplier
 import com.elkite.warborn.presentation.widgets.card.drifter.DrifterStats
@@ -29,8 +28,6 @@ import com.elkite.warborn.presentation.widgets.icons.DrifterSpellIcon
 fun ColumnScope.DrifterCard(
     drifter: Drifter?
 ) {
-    val compact = remember { mutableStateOf(true) }
-
     if (drifter == null) return
     HeaderCard(
         title = drifter.name,
@@ -39,17 +36,20 @@ fun ColumnScope.DrifterCard(
             DrifterIcon(
                 modifier = Modifier.spellBorder(
                     isSelected = true,
-                    selectedBrush = WarborneColorTheme.legendaryBrush
+                    selectedBrush = WarborneColorTheme.legendaryBrush,
+                    selectedBorderWidth = 1.dp
                 ).size(64.dp),
                 drifterId = drifter.gameId
             )
         }
     )
-    if (!compact.value) {
+    SwitchContainer(
+        title = "Drifter's details",
+    ) {
         DrifterMainStatsMultiplier(drifter.statsMultiplier)
-        DrifterStats(drifter.stats)
         DrifterLinksCard(drifter.links)
         DrifterSupportStationBonus(drifter.bonus)
+        DrifterStats(drifter.stats)
     }
     DrifterSpell(
         spell = drifter.spell,
@@ -59,6 +59,7 @@ fun ColumnScope.DrifterCard(
         spell = drifter.passive,
         drifter = drifter,
     )
+
 }
 
 @Composable
@@ -87,7 +88,7 @@ private fun ColumnScope.DrifterSpell(
         cooldown = spell.cooldown,
         range = spell.castingRange,
     )
-    Spacer(Modifier.size(32.dp))
+    Spacer(Modifier.size(16.dp))
     Description(spell.description)
     Spacer(Modifier.size(16.dp))
 }

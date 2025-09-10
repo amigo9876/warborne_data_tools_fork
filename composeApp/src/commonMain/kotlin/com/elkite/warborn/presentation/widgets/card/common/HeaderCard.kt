@@ -19,7 +19,7 @@ import com.elkite.warborn.presentation.widgets.utils.GearStylizedTextTitle
 fun ColumnScope.HeaderCard(
     title: String,
     subtitle: String? = null,
-    icon: @Composable () -> Unit
+    icon: @Composable () -> Unit,
 ) {
     Row(
         verticalAlignment = Alignment.Bottom,
