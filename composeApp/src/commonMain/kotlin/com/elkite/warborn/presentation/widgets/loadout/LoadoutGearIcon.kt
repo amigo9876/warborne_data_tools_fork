@@ -14,7 +14,6 @@ import com.elkite.warborn.domain.entities.common.Rarity
 import com.elkite.warborn.domain.entities.gear.BootsGear
 import com.elkite.warborn.domain.entities.gear.ChestGear
 import com.elkite.warborn.domain.entities.gear.HeadGear
-import com.elkite.warborn.domain.entities.gear.IGear
 import com.elkite.warborn.domain.entities.gear.WeaponGear
 import com.elkite.warborn.domain.entities.mod.IMod
 import com.elkite.warborn.domain.entities.mod.ModType
@@ -35,7 +34,7 @@ fun LoadoutHeadGearIcon(
     modifier: Modifier = Modifier,
 ) {
     HeadGearIcon(
-        modifier = modifier.getModifierForRarity(headGear, isSelected, onClick),
+        modifier = modifier.getModifierForRarity(headGear?.rarity, isSelected, onClick),
         headGear = headGear,
         iconType = IconType.ARMOR
     )
@@ -50,7 +49,7 @@ fun LoadoutChestGearIcon(
 ) {
 
     ChestGearIcon(
-        modifier = modifier.getModifierForRarity(chestGear, isSelected, onClick),
+        modifier = modifier.getModifierForRarity(chestGear?.rarity, isSelected, onClick),
         chestGear = chestGear,
         iconType = IconType.ARMOR
     )
@@ -64,7 +63,7 @@ fun LoadoutBootsGearIcon(
     modifier: Modifier = Modifier,
 ) {
     BootsGearIcon(
-        modifier = modifier.getModifierForRarity(bootsGear, isSelected, onClick),
+        modifier = modifier.getModifierForRarity(bootsGear?.rarity, isSelected, onClick),
         bootsGear = bootsGear,
         iconType = IconType.ARMOR
     )
@@ -78,7 +77,7 @@ fun LoadoutWeaponGearIcon(
     modifier: Modifier = Modifier,
 ) {
     WeaponGearIcon(
-        modifier = modifier.getModifierForRarity(weaponGear, isSelected, onClick),
+        modifier = modifier.getModifierForRarity(weaponGear?.rarity, isSelected, onClick),
         weaponGear = weaponGear
     )
 }
@@ -98,7 +97,7 @@ fun LoadoutWeaponModIcon(
         ).background(Color.Black, shape = RoundedCornerShape(16.dp)).clickable { onClick() }
     } else modifier.border(
         width = 1.dp,
-        brush = mod.getRarityBrush(isSelected) ,
+        brush = mod.rarity.getRarityBorder(isSelected) ,
         shape = RoundedCornerShape(16.dp)
     ).clickable { onClick() }
 
@@ -124,7 +123,7 @@ fun LoadoutArmorModIcon(
         ).background(Color.Black, shape = RoundedCornerShape(16.dp)).clickable { onClick() }
     } else modifier.border(
         width = 1.dp,
-        brush = mod.getRarityBrush(isSelected) ,
+        brush = mod.rarity.getRarityBorder(isSelected) ,
         shape = RoundedCornerShape(16.dp)
     ).clickable { onClick() }
 
@@ -136,29 +135,28 @@ fun LoadoutArmorModIcon(
 }
 
 fun Modifier.getModifierForRarity(
-    gear: IGear?,
+    rarity: Rarity?,
     isSelected: Boolean = false,
     onClick: () -> Unit = {}
 ): Modifier {
-    return gear?.let {
+    return rarity?.let {
         this.background(
-            brush = gear.getRarityBackground(),
+            brush = rarity.getRarityBackground(),
             shape = RectangleShape
         ).border(
             width = if (isSelected) 2.dp else 1.dp,
-            brush = gear.getRarityBrush(isSelected),
+            brush = rarity.getRarityBorder(isSelected),
             shape = RectangleShape
         ).clickable { onClick() }
     } ?: this.background(Color.Black).border(
         width = 2.dp,
-        brush = gear.getRarityBrush(isSelected),
+        brush = rarity.getRarityBorder(isSelected),
         shape = RectangleShape
     ).clickable { onClick() }
 }
 
-
-fun IGear?.getRarityBackground(): Brush {
-    return when (this?.rarity) {
+fun Rarity?.getRarityBackground(): Brush {
+    return when (this) {
         Rarity.legendary -> WarborneColorTheme.legendaryBrushBackground
         Rarity.epic -> WarborneColorTheme.epicBrushBackground
         Rarity.rare -> WarborneColorTheme.rareBrushBackground
@@ -167,9 +165,9 @@ fun IGear?.getRarityBackground(): Brush {
     }
 }
 
-fun IGear?.getRarityBrush(isSelected: Boolean) =
-    if (isSelected) WarborneColorTheme.selectionBrush else {
-        when (this?.rarity) {
+fun Rarity?.getRarityBorder(isSelected: Boolean): Brush {
+    return if (isSelected) WarborneColorTheme.selectionBrush else {
+        when (this) {
             Rarity.legendary -> WarborneColorTheme.legendaryBrush
             Rarity.epic -> WarborneColorTheme.epicBrush
             Rarity.rare -> WarborneColorTheme.rareBrush
@@ -177,14 +175,4 @@ fun IGear?.getRarityBrush(isSelected: Boolean) =
             Rarity.common, null -> WarborneColorTheme.commonBrush
         }
     }
-
-fun IMod?.getRarityBrush(isSelected: Boolean) =
-    if (isSelected) WarborneColorTheme.selectionBrush else {
-        when (this?.rarity) {
-            Rarity.legendary -> WarborneColorTheme.legendaryBrush
-            Rarity.epic -> WarborneColorTheme.epicBrush
-            Rarity.rare -> WarborneColorTheme.rareBrush
-            Rarity.uncommon -> WarborneColorTheme.uncommonBrush
-            Rarity.common, null -> WarborneColorTheme.commonBrush
-        }
-    }
+}

@@ -112,6 +112,10 @@ actual fun MainContent(
                     screenModel.updateWeaponMod(it)
                     screenModel.updateSelectedLoadout(SelectedLoadoutType.MOD_WEAPON)
                 },
+                onUpdateConsumable = {
+                    screenModel.updateConsumable(it)
+                    screenModel.updateSelectedLoadout(SelectedLoadoutType.CONSUMABLE)
+                }
             )
 
             DescriptionColumn(

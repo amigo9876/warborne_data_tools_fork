@@ -39,7 +39,7 @@ fun ColumnScope.ArmorCard(
             when (armorSlot) {
                 ArmorSlot.HEAD -> {
                     HeadGearIcon(
-                        modifier = Modifier.getModifierForRarity(gear).size(64.dp),
+                        modifier = Modifier.getModifierForRarity(gear.rarity).size(64.dp),
                         headGear = gear as HeadGear,
                         iconType = IconType.ARMOR
                     )
@@ -47,7 +47,7 @@ fun ColumnScope.ArmorCard(
 
                 ArmorSlot.CHEST -> {
                     ChestGearIcon(
-                        modifier = Modifier.getModifierForRarity(gear).size(64.dp),
+                        modifier = Modifier.getModifierForRarity(gear.rarity).size(64.dp),
                         chestGear = gear as ChestGear,
                         iconType = IconType.ARMOR
                     )
@@ -55,7 +55,7 @@ fun ColumnScope.ArmorCard(
 
                 ArmorSlot.BOOTS -> {
                     BootsGearIcon(
-                        modifier = Modifier.getModifierForRarity(gear).size(64.dp),
+                        modifier = Modifier.getModifierForRarity(gear.rarity).size(64.dp),
                         bootsGear = gear as BootsGear,
                         iconType = IconType.ARMOR
                     )

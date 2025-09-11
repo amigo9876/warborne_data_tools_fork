@@ -253,6 +253,7 @@ private fun BoxScope.ArmorLoadoutWithModColumn(
                 )
         }
         Spacer(modifier = Modifier.size(16.dp))
+
     }
 }
 

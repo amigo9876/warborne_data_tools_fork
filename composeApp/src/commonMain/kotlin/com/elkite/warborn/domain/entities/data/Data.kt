@@ -5,5 +5,6 @@ data class Data(
     val weapons: DataWeapons,
     val drifters: DataDrifters,
     val mods: DataMods,
-    val stats: DataStats
+    val stats: DataStats,
+    val consumables: DataConsumables
 )

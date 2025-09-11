@@ -6,10 +6,12 @@ import com.elkite.warborn.data.repository.SpellAndGearParser.parseCommonSpells
 import com.elkite.warborn.data.repository.SpellAndGearParser.parsePassiveSpell
 import com.elkite.warborn.data.repository.SpellAndGearParser.parseSkillSpells
 import com.elkite.warborn.domain.entities.common.Category
+import com.elkite.warborn.domain.entities.consumable.ConsumableCategory
 import com.elkite.warborn.domain.entities.data.Boots
 import com.elkite.warborn.domain.entities.data.Chest
 import com.elkite.warborn.domain.entities.data.Data
 import com.elkite.warborn.domain.entities.data.DataArmors
+import com.elkite.warborn.domain.entities.data.DataConsumables
 import com.elkite.warborn.domain.entities.data.DataDrifters
 import com.elkite.warborn.domain.entities.data.DataMods
 import com.elkite.warborn.domain.entities.data.DataStats
@@ -66,6 +68,11 @@ object DataRepository {
 
     private const val stats = "${url}/stats.json"
 
+    private const val potions = "${url}/consumable/potions.json"
+    private const val food = "${url}/consumable/food.json"
+    private const val utility = "${url}/consumable/utility.json"
+    private const val poisons = "${url}/consumable/poison.json"
+
     suspend fun getData(): Data {
         try {
             println("Starting data fetch...")
@@ -78,15 +85,21 @@ object DataRepository {
             val links = parseLinks()
             println("Parse drifters...")
             val drifters = loadDrifters(links)
+            println("Parse consumables...")
+            val consumables = parseConsumables()
             println("Parsing done")
-
 
             return Data(
                 weapons = weaponData,
                 armors = armors,
                 drifters = drifters,
                 mods = loadMods(),
-                stats = parseStats(Json.parseToJsonElement(httpClient.get(stats).bodyAsText()).jsonObject)
+                stats = parseStats(
+                    Json.parseToJsonElement(
+                        httpClient.get(stats).bodyAsText()
+                    ).jsonObject
+                ),
+                consumables = consumables
             )
         } catch (e: Exception) {
             println("Error in getData(): ${e.message}")
@@ -98,7 +111,7 @@ object DataRepository {
     private fun parseStats(json: JsonObject): DataStats {
         val obj = json["stats"]?.jsonObject ?: return DataStats()
         return DataStats(
-            bonusDamage =  obj["dmgBonus"]?.jsonPrimitive?.content,
+            bonusDamage = obj["dmgBonus"]?.jsonPrimitive?.content,
             hp = obj["hp"]?.jsonPrimitive?.content,
             tenacity = obj["tenacity"]?.jsonPrimitive?.content,
             mpRecovery = obj["mpRecovery"]?.jsonPrimitive?.content,
@@ -110,7 +123,7 @@ object DataRepository {
         )
     }
 
-    private suspend fun loadMods() : DataMods {
+    private suspend fun loadMods(): DataMods {
         val armorMods = ModParser.parseArmorMods(httpClient.get(mod_armor).bodyAsText())
         val weaponMods = ModParser.parseWeaponMods(httpClient.get(mod_weapon).bodyAsText())
 
@@ -123,19 +136,55 @@ object DataRepository {
     private suspend fun loadArmors(): DataArmors {
         return DataArmors(
             boots = Boots(
-                dexBoots = parseBoots((httpClient.get(dex_boots).bodyAsText()), "boots_dexterity", category = Category.AGI),
-                    intBoots = parseBoots(httpClient.get(int_boots).bodyAsText(), "boots_intelligence", category = Category.INT),
-                    strBoots = parseBoots(httpClient.get(str_boots).bodyAsText(), "boots_strength", category = Category.STR)
+                dexBoots = parseBoots(
+                    (httpClient.get(dex_boots).bodyAsText()),
+                    "boots_dexterity",
+                    category = Category.AGI
+                ),
+                intBoots = parseBoots(
+                    httpClient.get(int_boots).bodyAsText(),
+                    "boots_intelligence",
+                    category = Category.INT
+                ),
+                strBoots = parseBoots(
+                    httpClient.get(str_boots).bodyAsText(),
+                    "boots_strength",
+                    category = Category.STR
+                )
             ),
             chest = Chest(
-                strChest = parseChest(httpClient.get(str_chest).bodyAsText(), "chest_strength", category = Category.STR),
-                intChest = parseChest(httpClient.get(int_chest).bodyAsText(), "chest_intelligence", category = Category.INT),
-                dexChest = parseChest(httpClient.get(dex_chest).bodyAsText(), "chest_dexterity", category = Category.AGI)
+                strChest = parseChest(
+                    httpClient.get(str_chest).bodyAsText(),
+                    "chest_strength",
+                    category = Category.STR
+                ),
+                intChest = parseChest(
+                    httpClient.get(int_chest).bodyAsText(),
+                    "chest_intelligence",
+                    category = Category.INT
+                ),
+                dexChest = parseChest(
+                    httpClient.get(dex_chest).bodyAsText(),
+                    "chest_dexterity",
+                    category = Category.AGI
+                )
             ),
             head = Head(
-                strHead = parseHead(httpClient.get(str_head).bodyAsText(), "head_strength", category = Category.STR),
-                intHead = parseHead(httpClient.get(int_head).bodyAsText(), "head_intelligence", category = Category.INT),
-                dexHead = parseHead(httpClient.get(dex_head).bodyAsText(), "head_dexterity", category = Category.AGI)
+                strHead = parseHead(
+                    httpClient.get(str_head).bodyAsText(),
+                    "head_strength",
+                    category = Category.STR
+                ),
+                intHead = parseHead(
+                    httpClient.get(int_head).bodyAsText(),
+                    "head_intelligence",
+                    category = Category.INT
+                ),
+                dexHead = parseHead(
+                    httpClient.get(dex_head).bodyAsText(),
+                    "head_dexterity",
+                    category = Category.AGI
+                )
             )
         )
     }
@@ -157,12 +206,28 @@ object DataRepository {
         )
     }
 
-    private suspend fun loadDrifters(links: List<Link>) : DataDrifters {
+    private suspend fun loadDrifters(links: List<Link>): DataDrifters {
         return DataDrifters(
-            strDrifters = DrifterParser.parseDrifters(links, httpClient.get(str_drifter).bodyAsText(), Category.STR),
-            intDrifters = DrifterParser.parseDrifters(links,httpClient.get(int_drifter).bodyAsText(), Category.INT),
-            dexDrifters = DrifterParser.parseDrifters(links,httpClient.get(dex_drifter).bodyAsText(), Category.AGI),
-//            gatherDrifters = emptyList()
+            strDrifters = DrifterParser.parseDrifters(
+                links,
+                httpClient.get(str_drifter).bodyAsText(),
+                Category.STR
+            ),
+            intDrifters = DrifterParser.parseDrifters(
+                links,
+                httpClient.get(int_drifter).bodyAsText(),
+                Category.INT
+            ),
+            dexDrifters = DrifterParser.parseDrifters(
+                links,
+                httpClient.get(dex_drifter).bodyAsText(),
+                Category.AGI
+            ),
+            gathers = DrifterParser.parseDrifters(
+                links,
+                httpClient.get(gather_drifter).bodyAsText(),
+                Category.AGI
+            )
         )
     }
 
@@ -171,7 +236,10 @@ object DataRepository {
         val array = Json.parseToJsonElement(json).jsonObject[key]?.jsonArray
             ?: throw IllegalArgumentException("Key $key not found or is not a JSON array")
 
-        return parseSkillSpells(array, category) { gameId, skillName, manaCost, cooldown, castingRange, description, tierUnlock, gearName, gearStats, rarity, category ->
+        return parseSkillSpells(
+            array,
+            category
+        ) { gameId, skillName, manaCost, cooldown, castingRange, description, tierUnlock, gearName, gearStats, rarity, category ->
             BootsGear(
                 spellId = gameId,
                 spellName = skillName,
@@ -192,7 +260,10 @@ object DataRepository {
         val array = Json.parseToJsonElement(json).jsonObject[key]?.jsonArray
             ?: throw IllegalArgumentException("Key $key not found or is not a JSON array")
 
-        return parseSkillSpells(array, category) { gameId, skillName, manaCost, cooldown, castingRange, description, tierUnlock, gearName, gearStats, rarity, category ->
+        return parseSkillSpells(
+            array,
+            category
+        ) { gameId, skillName, manaCost, cooldown, castingRange, description, tierUnlock, gearName, gearStats, rarity, category ->
             ChestGear(
                 spellId = gameId,
                 spellName = skillName,
@@ -213,7 +284,10 @@ object DataRepository {
         val array = Json.parseToJsonElement(json).jsonObject[key]?.jsonArray
             ?: throw IllegalArgumentException("Key $key not found or is not a JSON array")
 
-        return parseSkillSpells(array, category) { gameId, skillName, manaCost, cooldown, castingRange, description, tierUnlock, gearName, gearStats, rarity, category ->
+        return parseSkillSpells(
+            array,
+            category
+        ) { gameId, skillName, manaCost, cooldown, castingRange, description, tierUnlock, gearName, gearStats, rarity, category ->
             HeadGear(
                 spellId = gameId,
                 spellName = skillName,
@@ -249,11 +323,13 @@ object DataRepository {
 
         println("parseWeapon: Parsing weapon gears...")
         val weaponGears: List<WeaponGear> =
-            parseSkillSpells(jsonElement.jsonObject["skills"]!!.jsonArray, when (weaponType) {
-                WeaponType.sword, WeaponType.axe, WeaponType.mace, WeaponType.gun -> Category.STR
-                WeaponType.bow, WeaponType.dagger, WeaponType.spear, WeaponType.nature -> Category.AGI
-                WeaponType.fire, WeaponType.frost, WeaponType.holy, WeaponType.curse -> Category.INT
-            }) { gameId, skillName, manaCost, cooldown, castingRange, description, tierUnlock, gearName, gearStats, rarity, category ->
+            parseSkillSpells(
+                jsonElement.jsonObject["skills"]!!.jsonArray, when (weaponType) {
+                    WeaponType.sword, WeaponType.axe, WeaponType.mace, WeaponType.gun -> Category.STR
+                    WeaponType.bow, WeaponType.dagger, WeaponType.spear, WeaponType.nature -> Category.AGI
+                    WeaponType.fire, WeaponType.frost, WeaponType.holy, WeaponType.curse -> Category.INT
+                }
+            ) { gameId, skillName, manaCost, cooldown, castingRange, description, tierUnlock, gearName, gearStats, rarity, category ->
                 println("parseWeapon: Parsing weapon gear with gameId: $gameId")
                 WeaponGear(
                     spellId = gameId,
@@ -291,7 +367,7 @@ object DataRepository {
         return dataWeapon
     }
 
-    private suspend fun parseLinks() : List<Link> {
+    private suspend fun parseLinks(): List<Link> {
         val jsonElement = Json.parseToJsonElement(httpClient.get(links).bodyAsText())
         val linksArray = jsonElement.jsonObject["links"]?.jsonArray ?: return emptyList()
 
@@ -300,7 +376,8 @@ object DataRepository {
                 val obj = linkJson.jsonObject
                 val linkName = obj["linkName"]?.jsonPrimitive?.content ?: return@mapNotNull null
                 val linkBonus = obj["linkBonus"]?.jsonPrimitive?.content ?: return@mapNotNull null
-                val driftersNeeded = obj["driftersNeeded"]?.jsonPrimitive?.content?.toIntOrNull() ?: return@mapNotNull null
+                val driftersNeeded = obj["driftersNeeded"]?.jsonPrimitive?.content?.toIntOrNull()
+                    ?: return@mapNotNull null
                 val driftersId = obj["drifters"]?.jsonArray?.mapNotNull { drifterEntry ->
                     drifterEntry.jsonObject["drifterId"]?.jsonPrimitive?.content
                 } ?: emptyList()
@@ -318,6 +395,35 @@ object DataRepository {
         }
     }
 
+    private suspend fun parseConsumables(): DataConsumables {
+        val potionsJson = httpClient.get(potions).bodyAsText()
+        val foodJson = httpClient.get(food).bodyAsText()
+        val utilityJson = httpClient.get(utility).bodyAsText()
+        val poisonsJson = httpClient.get(poisons).bodyAsText()
+
+        return DataConsumables(
+            potions = ConsumableParser.parseConsumables(
+                potionsJson,
+                "potions",
+                ConsumableCategory.POTION
+            ),
+            food = ConsumableParser.parseConsumables(
+                foodJson,
+                "food",
+                ConsumableCategory.FOOD
+            ),
+            utilities = ConsumableParser.parseConsumables(
+                utilityJson,
+                "utility",
+                ConsumableCategory.UTILITY
+            ),
+            poisons = ConsumableParser.parseConsumables(
+                poisonsJson,
+                "poison",
+                ConsumableCategory.POISON
+            )
+        )
+    }
 
 }
 

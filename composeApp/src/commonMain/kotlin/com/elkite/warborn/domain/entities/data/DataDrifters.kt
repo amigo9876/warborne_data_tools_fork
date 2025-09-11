@@ -5,5 +5,6 @@ import com.elkite.warborn.domain.entities.drifter.Drifter
 data class DataDrifters(
     val dexDrifters: List<Drifter>,
     val strDrifters: List<Drifter>,
-    val intDrifters: List<Drifter>
+    val intDrifters: List<Drifter>,
+    val gathers: List<Drifter>,
 )

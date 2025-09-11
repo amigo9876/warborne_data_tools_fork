@@ -29,6 +29,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.common.GearCategory
 import com.elkite.warborn.domain.entities.common.ModCategory
+import com.elkite.warborn.domain.entities.consumable.Consumable
 import com.elkite.warborn.domain.entities.drifter.Drifter
 import com.elkite.warborn.domain.entities.gear.ArmorSlot
 import com.elkite.warborn.domain.entities.gear.BootsGear
@@ -107,6 +108,7 @@ fun FlowRowScope.ItemListColumn(
     onUpdateModChest: (ArmorMod) -> Unit,
     onUpdateModBoots: (ArmorMod) -> Unit,
     onUpdateWeaponMod: (WeaponMod) -> Unit,
+    onUpdateConsumable: (Consumable) -> Unit,
 ) {
     val modifier =
         if (isCompact())
@@ -234,7 +236,8 @@ fun FlowRowScope.ItemListColumn(
                                 drifters = listOf(
                                     state.data.drifters.strDrifters,
                                     state.data.drifters.dexDrifters,
-                                    state.data.drifters.intDrifters
+                                    state.data.drifters.intDrifters,
+                                    state.data.drifters.gathers
                                 ).flatten(),
                                 onDrifterClick = { drifter: Drifter ->
                                     onUpdateDrifter(drifter)
@@ -313,6 +316,7 @@ fun FlowRowScope.DescriptionColumn(
             SelectedLoadoutType.MOD_HEAD -> ModCard(mod = loadout.headMod)
             SelectedLoadoutType.MOD_CHEST -> ModCard(mod = loadout.chestMod)
             SelectedLoadoutType.MOD_BOOTS -> ModCard(mod = loadout.bootsMod)
+            SelectedLoadoutType.CONSUMABLE -> Box {  }
         }
     }
 }

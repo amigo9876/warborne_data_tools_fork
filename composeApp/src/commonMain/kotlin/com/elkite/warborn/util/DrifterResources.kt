@@ -1,5 +1,10 @@
 package com.elkite.warborn.util
 
+import com.elkite.warborn.resources.Avatar_Skill_Gather_1
+import com.elkite.warborn.resources.Avatar_Skill_Gather_1_Passive
+import com.elkite.warborn.resources.Avatar_Skill_Gather_Engineer_Passive
+import com.elkite.warborn.resources.Avatar_Skill_Gather_Engineer_Shield
+import com.elkite.warborn.resources.Avatar_Skill_Gather_Scout_StunTrap
 import com.elkite.warborn.resources.ParagonCard_Dex_1
 import com.elkite.warborn.resources.ParagonCard_Dex_2
 import com.elkite.warborn.resources.ParagonCard_Dex_3
@@ -29,6 +34,7 @@ import com.elkite.warborn.resources.ParagonCard_Str_6
 import com.elkite.warborn.resources.ParagonCard_Str_7
 import com.elkite.warborn.resources.ParagonCard_Str_8
 import com.elkite.warborn.resources.ParagonCard_Str_9
+import com.elkite.warborn.resources.ParagonCard_Str_HELA
 import com.elkite.warborn.resources.ParagonFullBodyBg_Dex_1
 import com.elkite.warborn.resources.ParagonFullBodyBg_Dex_2
 import com.elkite.warborn.resources.ParagonFullBodyBg_Dex_3
@@ -38,6 +44,9 @@ import com.elkite.warborn.resources.ParagonFullBodyBg_Dex_6
 import com.elkite.warborn.resources.ParagonFullBodyBg_Dex_7
 import com.elkite.warborn.resources.ParagonFullBodyBg_Dex_8
 import com.elkite.warborn.resources.ParagonFullBodyBg_Dex_9
+import com.elkite.warborn.resources.ParagonFullBodyBg_Gather_1
+import com.elkite.warborn.resources.ParagonFullBodyBg_Gather_3
+import com.elkite.warborn.resources.ParagonFullBodyBg_Gather_4
 import com.elkite.warborn.resources.ParagonFullBodyBg_Int_1
 import com.elkite.warborn.resources.ParagonFullBodyBg_Int_10
 import com.elkite.warborn.resources.ParagonFullBodyBg_Int_11
@@ -67,6 +76,9 @@ import com.elkite.warborn.resources.ParagonFullBody_Dex_6
 import com.elkite.warborn.resources.ParagonFullBody_Dex_7
 import com.elkite.warborn.resources.ParagonFullBody_Dex_8
 import com.elkite.warborn.resources.ParagonFullBody_Dex_9
+import com.elkite.warborn.resources.ParagonFullBody_Gather_1
+import com.elkite.warborn.resources.ParagonFullBody_Gather_3
+import com.elkite.warborn.resources.ParagonFullBody_Gather_4
 import com.elkite.warborn.resources.ParagonFullBody_Int_1
 import com.elkite.warborn.resources.ParagonFullBody_Int_10
 import com.elkite.warborn.resources.ParagonFullBody_Int_11
@@ -79,6 +91,7 @@ import com.elkite.warborn.resources.ParagonFullBody_Int_7
 import com.elkite.warborn.resources.ParagonFullBody_Int_9
 import com.elkite.warborn.resources.ParagonFullBody_None
 import com.elkite.warborn.resources.ParagonFullBody_Str_1
+import com.elkite.warborn.resources.ParagonFullBody_Str_10
 import com.elkite.warborn.resources.ParagonFullBody_Str_2
 import com.elkite.warborn.resources.ParagonFullBody_Str_3
 import com.elkite.warborn.resources.ParagonFullBody_Str_4
@@ -244,6 +257,9 @@ object DrifterResources {
             "paragon_dex_7" -> Res.drawable.ParagonFullBodyBg_Dex_7
             "paragon_dex_8" -> Res.drawable.ParagonFullBodyBg_Dex_8
             "paragon_dex_9" -> Res.drawable.ParagonFullBodyBg_Dex_9
+            "paragon_gather_1" -> Res.drawable.ParagonFullBodyBg_Gather_1
+            "paragon_gather_4" -> Res.drawable.ParagonFullBodyBg_Gather_4
+            "paragon_gather_3" -> Res.drawable.ParagonFullBodyBg_Gather_3
             null -> Res.drawable.ParagonFullBodyBg_None
             else -> Res.drawable.error_emoji
         }
@@ -260,6 +276,7 @@ object DrifterResources {
             "paragon_str_7" -> Res.drawable.ParagonFullBody_Str_7
             "paragon_str_8" -> Res.drawable.ParagonFullBody_Str_8
             "paragon_str_9" -> Res.drawable.ParagonFullBody_Str_9
+            "paragon_str_10" -> Res.drawable.ParagonFullBody_Str_10
             "paragon_int_1" -> Res.drawable.ParagonFullBody_Int_1
             "paragon_int_2" -> Res.drawable.ParagonFullBody_Int_2
             "paragon_int_3" -> Res.drawable.ParagonFullBody_Int_3
@@ -279,6 +296,9 @@ object DrifterResources {
             "paragon_dex_7" -> Res.drawable.ParagonFullBody_Dex_7
             "paragon_dex_8" -> Res.drawable.ParagonFullBody_Dex_8
             "paragon_dex_9" -> Res.drawable.ParagonFullBody_Dex_9
+            "paragon_gather_1" -> Res.drawable.ParagonFullBody_Gather_1
+            "paragon_gather_4" -> Res.drawable.ParagonFullBody_Gather_4
+            "paragon_gather_3" -> Res.drawable.ParagonFullBody_Gather_3
             null -> Res.drawable.ParagonFullBody_None
             else -> Res.drawable.error_emoji
         }
@@ -295,6 +315,7 @@ object DrifterResources {
             "paragon_str_7" -> Res.drawable.ParagonCard_Str_7
             "paragon_str_8" -> Res.drawable.ParagonCard_Str_8
             "paragon_str_9" -> Res.drawable.ParagonCard_Str_9
+            "paragon_str_10" -> Res.drawable.ParagonCard_Str_HELA
             "paragon_int_1" -> Res.drawable.ParagonCard_Int_1
             "paragon_int_2" -> Res.drawable.ParagonCard_Int_2
             "paragon_int_3" -> Res.drawable.ParagonCard_Int_3
@@ -330,6 +351,7 @@ object DrifterResources {
             "Paragon_Skill_Str_7" -> Res.drawable.Paragon_Skill_Str_7
             "Paragon_Skill_Str_8" -> Res.drawable.Paragon_Skill_Str_8
             "Paragon_Skill_Str_9" -> Res.drawable.Paragon_Skill_Str_9
+            "Paragon_Skill_Str_10" -> Res.drawable.error_emoji
             "Paragon_Skill_Dex_1" -> Res.drawable.Paragon_Skill_Dex_1
             "Paragon_Skill_Dex_2" -> Res.drawable.Paragon_Skill_Dex_2
             "Paragon_Skill_Dex_3" -> Res.drawable.Paragon_Skill_Dex_3
@@ -349,6 +371,9 @@ object DrifterResources {
             "Paragon_Skill_Int_7" -> Res.drawable.Paragon_Skill_Int_7
             "Paragon_Skill_Int_11" -> Res.drawable.Paragon_Skill_Int_11
             "Paragon_Skill_Int_9" -> Res.drawable.Paragon_Skill_Int_9
+            "Avatar_Skill_Gather_Scout_StunTrap" -> Res.drawable.Avatar_Skill_Gather_Scout_StunTrap
+            "Avatar_Skill_Gather_Engineer_Shield" -> Res.drawable.Avatar_Skill_Gather_Engineer_Shield
+            "Avatar_Skill_Gather_1" -> Res.drawable.Avatar_Skill_Gather_1
             else -> Res.drawable.error_emoji
         }
     }
@@ -364,6 +389,7 @@ object DrifterResources {
             "Paragon_Skill_Str_7_Passive" -> Res.drawable.Paragon_Skill_Str_7_Passive
             "Paragon_Skill_Str_8_Passive" -> Res.drawable.Paragon_Skill_Str_8_Passive
             "Paragon_Skill_Str_9_Passive" -> Res.drawable.Paragon_Skill_Str_9_Passive
+            "Paragon_Skill_Str_10_Passive" -> Res.drawable.error_emoji
             "Paragon_Skill_Dex_1_Passive" -> Res.drawable.Paragon_Skill_Dex_1_Passive
             "Paragon_Skill_Dex_2_Passive" -> Res.drawable.Paragon_Skill_Dex_2_Passive
             "Paragon_Skill_Dex_3_Passive" -> Res.drawable.Paragon_Skill_Dex_3_Passive
@@ -383,6 +409,9 @@ object DrifterResources {
             "Paragon_Skill_Int_7_Passive" -> Res.drawable.Paragon_Skill_Int_7_Passive
             "Paragon_Skill_Int_11_Passive" -> Res.drawable.Paragon_Skill_Int_11_Passive
             "Paragon_Skill_Int_9_Passive" -> Res.drawable.Paragon_Skill_Int_9_Passive
+            "Avatar_Skill_Gather_Scout_Passive" -> Res.drawable.Avatar_Skill_Gather_Scout_StunTrap
+            "Avatar_Skill_Gather_Engineer_Passive" -> Res.drawable.Avatar_Skill_Gather_Engineer_Passive
+            "Avatar_Skill_Gather_1_Passive" -> Res.drawable.Avatar_Skill_Gather_1_Passive
             else -> Res.drawable.error_emoji
         }
     }

@@ -44,6 +44,7 @@ data class Loadout(
             headMod?.let { "modHead=${it.iconName}" },
             chestMod?.let { "modChest=${it.iconName}" },
             bootsMod?.let { "modBoots=${it.iconName}" },
+            consumable?.let { "consumable=${it.gameId}" }
         ).joinToString("&")
     }
 

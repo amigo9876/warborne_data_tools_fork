@@ -13,4 +13,5 @@ enum class SelectedLoadoutType {
     MOD_HEAD,
     MOD_CHEST,
     MOD_BOOTS,
+    CONSUMABLE,
 }

@@ -17,7 +17,8 @@ class SearchScreenModel(data: Data) : ScreenModel {
     private val drifters: List<Drifter> = listOf(
         data.drifters.dexDrifters,
         data.drifters.strDrifters,
-        data.drifters.intDrifters
+        data.drifters.intDrifters,
+        data.drifters.gathers
     ).flatten()
 
     private val weapons: List<WeaponGear> = listOf(
@@ -87,7 +88,20 @@ class SearchScreenModel(data: Data) : ScreenModel {
 
     fun filterWeapons(query: String) {
         if (query.isEmpty()) {
-            _weaponResults.value = weapons.map { it.weaponType to it }
+            val skills: MutableList<Pair<WeaponType, ISpell>> = mutableListOf()
+            skills.addAll(
+                weapons.map { it.weaponType to it }
+            )
+            val tmp = weapons.first()
+            skills.add(tmp.weaponType to tmp.passiveSpell)
+            tmp.commonSpells.forEach { commonSpell ->
+                    skills.add(tmp.weaponType to commonSpell)
+            }
+            tmp.basicSpells.forEach { basicSpell ->
+                    skills.add(tmp.weaponType to basicSpell)
+            }
+
+            _weaponResults.value = skills
         } else {
             val skills: MutableList<Pair<WeaponType, ISpell>> = mutableListOf()
             weapons.map {

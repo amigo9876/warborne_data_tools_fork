@@ -93,5 +93,6 @@ fun DrifterStats(stats: DrifterStats) {
                 thickness = 1.dp
             )
             AttributeList(attributes = attributes)
+            Spacer(Modifier.size(16.dp))
         }
 }

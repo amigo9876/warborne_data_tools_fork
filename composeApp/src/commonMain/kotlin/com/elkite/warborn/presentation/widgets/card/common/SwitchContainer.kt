@@ -11,7 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.elkite.warborn.presentation.widgets.utils.GearStylizedTextTitle
+import com.elkite.warborn.presentation.widgets.utils.GearStylizedText
 
 @Composable
 fun ColumnScope.SwitchContainer(
@@ -22,7 +22,7 @@ fun ColumnScope.SwitchContainer(
     Row(
         verticalAlignment = Alignment.Bottom
     ) {
-        GearStylizedTextTitle(text = title)
+        GearStylizedText(text = title)
         Spacer(modifier = Modifier.weight(1f) )
         Switch(checked = checked, onCheckedChange = {
             checked = it

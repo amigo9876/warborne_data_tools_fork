@@ -2,6 +2,7 @@ package com.elkite.warborn.presentation.screen.main
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import com.elkite.warborn.data.repository.DataRepository
+import com.elkite.warborn.domain.entities.consumable.Consumable
 import com.elkite.warborn.domain.entities.data.Data
 import com.elkite.warborn.domain.entities.drifter.Drifter
 import com.elkite.warborn.domain.entities.gear.BootsGear
@@ -83,6 +84,10 @@ class MainScreenModel : ScreenModel {
 
     fun updateBoots(boots: BootsGear) {
         _loadout.value = _loadout.value.copy(boots = boots)
+    }
+
+    fun updateConsumable(consumable: Consumable) {
+        _loadout.value = _loadout.value.copy(consumable = consumable)
     }
 
     private fun loadSpells() {
@@ -167,8 +172,18 @@ class MainScreenModel : ScreenModel {
                 drifters.addAll(state.data.drifters.dexDrifters)
                 drifters.addAll(state.data.drifters.strDrifters)
                 drifters.addAll(state.data.drifters.intDrifters)
+                drifters.addAll(state.data.drifters.gathers)
 
                 drifters.find { it.gameId == gameId }
+            },
+            consumable = queryParams["consumable"]?.let { gameId ->
+                val consumable = mutableListOf<Consumable>()
+                consumable.addAll(state.data.consumables.food)
+                consumable.addAll(state.data.consumables.potions)
+                consumable.addAll(state.data.consumables.poisons)
+                consumable.addAll(state.data.consumables.utilities)
+
+                consumable.find { it.gameId == gameId }
             },
             selectedLoadoutType = _loadout.value.selectedLoadoutType
         )
