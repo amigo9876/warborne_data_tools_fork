@@ -14,6 +14,9 @@ import com.elkite.warborn.resources.ParagonCard_Dex_6
 import com.elkite.warborn.resources.ParagonCard_Dex_7
 import com.elkite.warborn.resources.ParagonCard_Dex_8
 import com.elkite.warborn.resources.ParagonCard_Dex_9
+import com.elkite.warborn.resources.ParagonCard_Gather_1
+import com.elkite.warborn.resources.ParagonCard_Gather_3
+import com.elkite.warborn.resources.ParagonCard_Gather_4
 import com.elkite.warborn.resources.ParagonCard_Int_1
 import com.elkite.warborn.resources.ParagonCard_Int_10
 import com.elkite.warborn.resources.ParagonCard_Int_11
@@ -109,6 +112,9 @@ import com.elkite.warborn.resources.ParagonPortrait_Dex_6
 import com.elkite.warborn.resources.ParagonPortrait_Dex_7
 import com.elkite.warborn.resources.ParagonPortrait_Dex_8
 import com.elkite.warborn.resources.ParagonPortrait_Dex_9
+import com.elkite.warborn.resources.ParagonPortrait_Gather_1
+import com.elkite.warborn.resources.ParagonPortrait_Gather_3
+import com.elkite.warborn.resources.ParagonPortrait_Gather_4
 import com.elkite.warborn.resources.ParagonPortrait_Int_1
 import com.elkite.warborn.resources.ParagonPortrait_Int_10
 import com.elkite.warborn.resources.ParagonPortrait_Int_11
@@ -121,6 +127,7 @@ import com.elkite.warborn.resources.ParagonPortrait_Int_7
 import com.elkite.warborn.resources.ParagonPortrait_Int_9
 import com.elkite.warborn.resources.ParagonPortrait_None
 import com.elkite.warborn.resources.ParagonPortrait_Str_1
+import com.elkite.warborn.resources.ParagonPortrait_Str_10
 import com.elkite.warborn.resources.ParagonPortrait_Str_2
 import com.elkite.warborn.resources.ParagonPortrait_Str_3
 import com.elkite.warborn.resources.ParagonPortrait_Str_4
@@ -203,6 +210,7 @@ object DrifterResources {
             "paragon_str_7" -> Res.drawable.ParagonPortrait_Str_7
             "paragon_str_8" -> Res.drawable.ParagonPortrait_Str_8
             "paragon_str_9" -> Res.drawable.ParagonPortrait_Str_9
+            "paragon_str_10" -> Res.drawable.ParagonPortrait_Str_10
             "paragon_int_1" -> Res.drawable.ParagonPortrait_Int_1
             "paragon_int_2" -> Res.drawable.ParagonPortrait_Int_2
             "paragon_int_3" -> Res.drawable.ParagonPortrait_Int_3
@@ -222,6 +230,9 @@ object DrifterResources {
             "paragon_dex_7" -> Res.drawable.ParagonPortrait_Dex_7
             "paragon_dex_8" -> Res.drawable.ParagonPortrait_Dex_8
             "paragon_dex_9" -> Res.drawable.ParagonPortrait_Dex_9
+            "paragon_gather_1" -> Res.drawable.ParagonPortrait_Gather_1
+            "paragon_gather_4" -> Res.drawable.ParagonPortrait_Gather_4
+            "paragon_gather_3" -> Res.drawable.ParagonPortrait_Gather_3
             null -> Res.drawable.ParagonPortrait_None
             else -> Res.drawable.error_emoji
         }
@@ -335,6 +346,9 @@ object DrifterResources {
             "paragon_dex_7" -> Res.drawable.ParagonCard_Dex_7
             "paragon_dex_8" -> Res.drawable.ParagonCard_Dex_8
             "paragon_dex_9" -> Res.drawable.ParagonCard_Dex_9
+            "paragon_gather_1" -> Res.drawable.ParagonCard_Gather_1
+            "paragon_gather_4" -> Res.drawable.ParagonCard_Gather_4
+            "paragon_gather_3" -> Res.drawable.ParagonCard_Gather_3
             null -> Res.drawable.ParagonCard_Nonepng
             else -> Res.drawable.error_emoji
         }
