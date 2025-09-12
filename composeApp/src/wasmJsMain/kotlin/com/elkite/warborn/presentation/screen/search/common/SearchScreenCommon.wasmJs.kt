@@ -191,8 +191,11 @@ fun Filters(
             backgroundColor =  WarborneColorTheme.textBackgroundColor,
             contentColor = WarborneColorTheme.textDescriptionColor,
             leadingIconColor = WarborneColorTheme.textDescriptionColor,
-            selectedContentColor = WarborneColorTheme.legendaryBorderStartColor,
-            selectedBackgroundColor = WarborneColorTheme.legendaryBorderStartColor
+            selectedContentColor = WarborneColorTheme.textBackgroundColor,
+            selectedBackgroundColor = WarborneColorTheme.legendaryBorderStartColor,
+            selectedLeadingIconColor = WarborneColorTheme.textBackgroundColor,
+            disabledContentColor = WarborneColorTheme.textDescriptionColor,
+            disabledBackgroundColor = WarborneColorTheme.textBackgroundColor,
         ),
         onClick = {onClick(filter.key)},
         selected = filter.value,
