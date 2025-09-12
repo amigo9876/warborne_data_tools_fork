@@ -14,6 +14,7 @@ import com.elkite.warborn.resources.Mace_Common_Skill_5
 import com.elkite.warborn.resources.Mace_Common_Skill_6
 import com.elkite.warborn.resources.Mace_DualMace
 import com.elkite.warborn.resources.Mace_Hook
+import com.elkite.warborn.resources.Mace_Paladin_Shield
 import com.elkite.warborn.resources.Mace_Passive
 import com.elkite.warborn.resources.Mace_ShieldMace_2
 import com.elkite.warborn.resources.Mace_ThunderMace
@@ -25,6 +26,7 @@ import com.elkite.warborn.resources.SpecImage_MACE4
 import com.elkite.warborn.resources.SpecImage_MACE5
 import com.elkite.warborn.resources.SpecImage_MACE6
 import com.elkite.warborn.resources.SpecImage_MACE7
+import com.elkite.warborn.resources.SpecImage_MACE8
 import com.elkite.warborn.resources.error_emoji
 import org.jetbrains.compose.resources.DrawableResource
 
@@ -38,6 +40,7 @@ object MaceResources {
             "Bulwark Core" -> Res.drawable.SpecImage_MACE6
             "Abyssal Conduit" -> Res.drawable.SpecImage_MACE5
             "Thunderlord's Wrath" -> Res.drawable.SpecImage_MACE7
+            "Paladin's Mace" -> Res.drawable.SpecImage_MACE8
             else -> Res.drawable.error_emoji
         }
     }
@@ -60,6 +63,7 @@ object MaceResources {
             "Mace_ShieldMace_2" -> Res.drawable.Mace_ShieldMace_2
             "Mace_CamlannMace" -> Res.drawable.Mace_CamlannMace
             "Mace_ThunderMace" -> Res.drawable.Mace_ThunderMace
+            "Mace_Paladin_Shield" -> Res.drawable.Mace_Paladin_Shield
             else -> Res.drawable.error_emoji
         }
     }

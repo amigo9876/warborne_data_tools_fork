@@ -9,6 +9,7 @@ import com.elkite.warborn.resources.Cloth_Dex_5
 import com.elkite.warborn.resources.Cloth_Dex_6
 import com.elkite.warborn.resources.Cloth_Dex_7
 import com.elkite.warborn.resources.Cloth_Int_1
+import com.elkite.warborn.resources.Cloth_Int_10
 import com.elkite.warborn.resources.Cloth_Int_2
 import com.elkite.warborn.resources.Cloth_Int_3
 import com.elkite.warborn.resources.Cloth_Int_5
@@ -21,6 +22,7 @@ import com.elkite.warborn.resources.Cloth_Str_4
 import com.elkite.warborn.resources.Cloth_Str_5
 import com.elkite.warborn.resources.Cloth_Str_6
 import com.elkite.warborn.resources.Cloth_Str_8
+import com.elkite.warborn.resources.Cloth_Str_9
 import com.elkite.warborn.resources.Com_Clothes_Armor
 import com.elkite.warborn.resources.Res
 import com.elkite.warborn.resources.SpecImage_ARMOR1
@@ -30,6 +32,7 @@ import com.elkite.warborn.resources.SpecImage_ARMOR4
 import com.elkite.warborn.resources.SpecImage_ARMOR5
 import com.elkite.warborn.resources.SpecImage_ARMOR6
 import com.elkite.warborn.resources.SpecImage_ARMOR7
+import com.elkite.warborn.resources.SpecImage_ARMOR8
 import com.elkite.warborn.resources.SpecImage_JACKET1
 import com.elkite.warborn.resources.SpecImage_JACKET2
 import com.elkite.warborn.resources.SpecImage_JACKET3
@@ -44,6 +47,7 @@ import com.elkite.warborn.resources.SpecImage_ROBE4
 import com.elkite.warborn.resources.SpecImage_ROBE5
 import com.elkite.warborn.resources.SpecImage_ROBE6
 import com.elkite.warborn.resources.SpecImage_ROBE7
+import com.elkite.warborn.resources.SpecImage_ROBE8
 import com.elkite.warborn.resources.error_emoji
 import org.jetbrains.compose.resources.DrawableResource
 
@@ -77,6 +81,7 @@ object ChestResources {
             "Cloth_Str_3" -> Res.drawable.Cloth_Str_3
             "Cloth_Str_2" -> Res.drawable.Cloth_Str_2
             "Cloth_Str_1" -> Res.drawable.Cloth_Str_1
+            "Cloth_Str_9" -> Res.drawable.Cloth_Str_9
             else -> Res.drawable.error_emoji
         }
     }
@@ -90,6 +95,8 @@ object ChestResources {
             "Cloth_Int_3" -> Res.drawable.Cloth_Int_3
             "Cloth_Int_2" -> Res.drawable.Cloth_Int_2
             "Cloth_Int_1" -> Res.drawable.Cloth_Int_1
+            "Cloth_Int_8" -> Res.drawable.Cloth_Int_8
+            "Cloth_Int_10" -> Res.drawable.Cloth_Int_10
             else -> Res.drawable.error_emoji
         }
     }
@@ -129,6 +136,7 @@ object ChestResources {
             "Dreadcloak" -> Res.drawable.SpecImage_ROBE5
             "Exorcist's Robe" -> Res.drawable.SpecImage_ROBE6
             "Warding Shroud" -> Res.drawable.SpecImage_ROBE7
+            "Cloth_Int_10" -> Res.drawable.SpecImage_ROBE8
             else -> Res.drawable.error_emoji
         }
     }
@@ -142,6 +150,7 @@ object ChestResources {
             "Tangle Guard" -> Res.drawable.SpecImage_ARMOR7
             "Warden's Shell" -> Res.drawable.SpecImage_ARMOR3
             "Magsurge Armor" -> Res.drawable.SpecImage_ARMOR5
+            "Cloth_Str_9" -> Res.drawable.SpecImage_ARMOR8
             else -> Res.drawable.error_emoji
         }
     }

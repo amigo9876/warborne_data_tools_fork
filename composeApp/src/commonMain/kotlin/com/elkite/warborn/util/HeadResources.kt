@@ -78,6 +78,7 @@ object HeadResources {
             "Helm_Str_4" -> Res.drawable.Helm_Str_4
             "Helm_Str_3" -> Res.drawable.Helm_Str_3
             "Helm_Str_1" -> Res.drawable.Helm_Str_1
+            "Helm_Str_9" -> Res.drawable.Helm_Str_9
             else -> Res.drawable.error_emoji
         }
     }
@@ -104,6 +105,7 @@ object HeadResources {
             "Helm_Dex_4" -> Res.drawable.Helm_Dex_4
             "Helm_Dex_3" -> Res.drawable.Helm_Dex_3
             "Helm_Dex_1" -> Res.drawable.Helm_Dex_1
+            "Helm_Dex_9" -> Res.drawable.Helm_Dex_9
             else -> Res.drawable.error_emoji
 
         }
@@ -118,6 +120,7 @@ object HeadResources {
             "Purifier's Shroud" -> Res.drawable.SpecImage_HOOD7
             "Ironwill veil" -> Res.drawable.SpecImage_HOOD3
             "Folly Helm" -> Res.drawable.SpecImage_HOOD4
+            "Helm_Dex_9" -> Res.drawable.SpecImage_HOOD8
             else -> Res.drawable.error_emoji
         }
 
@@ -145,6 +148,7 @@ object HeadResources {
             "Savage Helm" -> Res.drawable.SpecImage_HELMET1
             "Stormveil Mask" -> Res.drawable.SpecImage_HELMET5
             "Warden's Gaze" -> Res.drawable.SpecImage_HELMET7
+            "Helm_Str_9" -> Res.drawable.SpecImage_HELMET8
             else -> Res.drawable.error_emoji
         }
     }

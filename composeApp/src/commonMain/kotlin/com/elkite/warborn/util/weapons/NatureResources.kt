@@ -13,6 +13,7 @@ import com.elkite.warborn.resources.Nature_GodTree
 import com.elkite.warborn.resources.Nature_HealRain
 import com.elkite.warborn.resources.Nature_HolyDeer
 import com.elkite.warborn.resources.Nature_MoonFire
+import com.elkite.warborn.resources.Nature_NatureToxin
 import com.elkite.warborn.resources.Nature_Passive
 import com.elkite.warborn.resources.Nature_Tranquility
 import com.elkite.warborn.resources.Nature_TreeSkin
@@ -25,6 +26,7 @@ import com.elkite.warborn.resources.SpecImage_NATURE4
 import com.elkite.warborn.resources.SpecImage_NATURE5
 import com.elkite.warborn.resources.SpecImage_NATURE6
 import com.elkite.warborn.resources.SpecImage_NATURE7
+import com.elkite.warborn.resources.SpecImage_NATURE8
 import com.elkite.warborn.resources.error_emoji
 import org.jetbrains.compose.resources.DrawableResource
 
@@ -38,6 +40,7 @@ object NatureResources {
             "Tendril's Grasp" -> Res.drawable.SpecImage_NATURE6
             "Spirit's Call" -> Res.drawable.SpecImage_NATURE5
             "Sanctuary of Growth" -> Res.drawable.SpecImage_NATURE7
+            "Viper's Staff" -> Res.drawable.SpecImage_NATURE8
             else -> Res.drawable.error_emoji
         }
     }
@@ -60,6 +63,7 @@ object NatureResources {
             "Nature_TwineSeed" -> Res.drawable.Nature_TwineSeed
             "Nature_HolyDeer" -> Res.drawable.Nature_HolyDeer
             "Nature_GodTree" -> Res.drawable.Nature_GodTree
+            "Nature_NatureToxin" -> Res.drawable.Nature_NatureToxin
             else -> Res.drawable.error_emoji
         }
     }

@@ -9,9 +9,11 @@ import com.elkite.warborn.resources.SpecImage_SWORD4
 import com.elkite.warborn.resources.SpecImage_SWORD5
 import com.elkite.warborn.resources.SpecImage_SWORD6
 import com.elkite.warborn.resources.SpecImage_SWORD7
+import com.elkite.warborn.resources.SpecImage_SWORD8
 import com.elkite.warborn.resources.SwordAttack_1
 import com.elkite.warborn.resources.SwordAttack_2
 import com.elkite.warborn.resources.SwordAttack_3
+import com.elkite.warborn.resources.Sword_BloodSword_skill
 import com.elkite.warborn.resources.Sword_Carving
 import com.elkite.warborn.resources.Sword_Clarent
 import com.elkite.warborn.resources.Sword_Claymore
@@ -38,6 +40,7 @@ object SwordResources {
             "Titan's Spineblade" -> Res.drawable.SpecImage_SWORD6
             "Judicator" -> Res.drawable.SpecImage_SWORD2
             "Sovereign's Radiance" -> Res.drawable.SpecImage_SWORD7
+            "Blood Sword" -> Res.drawable.SpecImage_SWORD8
             else -> Res.drawable.error_emoji
         }
     }
@@ -60,6 +63,7 @@ object SwordResources {
             "Sword_Knight" -> Res.drawable.Sword_Knight
             "Sword_Carving" -> Res.drawable.Sword_Carving
             "Sword_ThousandBlade" -> Res.drawable.Sword_ThousandBlade
+            "Sword_BloodSword_skill" -> Res.drawable.Sword_BloodSword_skill
             else -> Res.drawable.error_emoji
         }
     }

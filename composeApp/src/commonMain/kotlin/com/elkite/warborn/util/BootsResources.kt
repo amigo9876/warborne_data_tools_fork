@@ -10,6 +10,7 @@ import com.elkite.warborn.resources.Shoes_Dex_4
 import com.elkite.warborn.resources.Shoes_Dex_5
 import com.elkite.warborn.resources.Shoes_Dex_7
 import com.elkite.warborn.resources.Shoes_Dex_8
+import com.elkite.warborn.resources.Shoes_Dex_9
 import com.elkite.warborn.resources.Shoes_Int_1
 import com.elkite.warborn.resources.Shoes_Int_2
 import com.elkite.warborn.resources.Shoes_Int_3
@@ -17,6 +18,7 @@ import com.elkite.warborn.resources.Shoes_Int_4
 import com.elkite.warborn.resources.Shoes_Int_5
 import com.elkite.warborn.resources.Shoes_Int_6
 import com.elkite.warborn.resources.Shoes_Int_7
+import com.elkite.warborn.resources.Shoes_Int_8
 import com.elkite.warborn.resources.Shoes_Str_1
 import com.elkite.warborn.resources.Shoes_Str_2
 import com.elkite.warborn.resources.Shoes_Str_3
@@ -38,6 +40,7 @@ import com.elkite.warborn.resources.SpecImage_SANDALS4
 import com.elkite.warborn.resources.SpecImage_SANDALS5
 import com.elkite.warborn.resources.SpecImage_SANDALS6
 import com.elkite.warborn.resources.SpecImage_SANDALS7
+import com.elkite.warborn.resources.SpecImage_SANDALS8
 import com.elkite.warborn.resources.SpecImage_SHOES1
 import com.elkite.warborn.resources.SpecImage_SHOES2
 import com.elkite.warborn.resources.SpecImage_SHOES3
@@ -45,6 +48,7 @@ import com.elkite.warborn.resources.SpecImage_SHOES4
 import com.elkite.warborn.resources.SpecImage_SHOES5
 import com.elkite.warborn.resources.SpecImage_SHOES6
 import com.elkite.warborn.resources.SpecImage_SHOES7
+import com.elkite.warborn.resources.SpecImage_SHOES8
 import com.elkite.warborn.resources.error_emoji
 import org.jetbrains.compose.resources.DrawableResource
 
@@ -91,6 +95,7 @@ object BootsResources {
             "Shoes_Int_3" -> Res.drawable.Shoes_Int_3
             "Shoes_Int_2" -> Res.drawable.Shoes_Int_2
             "Shoes_Int_1" -> Res.drawable.Shoes_Int_1
+            "Shoes_Int_8" -> Res.drawable.Shoes_Int_8
             else -> Res.drawable.error_emoji
         }
     }
@@ -104,6 +109,7 @@ object BootsResources {
             "Shoes_Dex_3" -> Res.drawable.Shoes_Dex_3
             "Shoes_Dex_2" -> Res.drawable.Shoes_Dex_2
             "Shoes_Dex_1" -> Res.drawable.Shoes_Dex_1
+            "Shoes_Dex_9" -> Res.drawable.Shoes_Dex_9
             else -> Res.drawable.error_emoji
         }
     }
@@ -130,6 +136,7 @@ object BootsResources {
             "Miasma Stompers" -> Res.drawable.SpecImage_SANDALS5
             "Shifter's Strides" -> Res.drawable.SpecImage_SANDALS6
             "Phantomstep Boots" -> Res.drawable.SpecImage_SANDALS7
+            "Shoes_Int_8" -> Res.drawable.SpecImage_SANDALS8
             else -> Res.drawable.error_emoji
         }
     }
@@ -143,6 +150,7 @@ object BootsResources {
             "Rallystep Boots" -> Res.drawable.SpecImage_SHOES5
             "Shadeveil Slippers" -> Res.drawable.SpecImage_SHOES6
             "Exodrift Slippers" -> Res.drawable.SpecImage_SHOES7
+            "Shoes_Dex_9" -> Res.drawable.SpecImage_SHOES8
             else -> Res.drawable.error_emoji
         }
     }

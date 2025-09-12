@@ -14,6 +14,7 @@ import com.elkite.warborn.resources.Gun_Flashbang
 import com.elkite.warborn.resources.Gun_GatlinGun
 import com.elkite.warborn.resources.Gun_Grenade
 import com.elkite.warborn.resources.Gun_PrismGun
+import com.elkite.warborn.resources.Gun_RayGun
 import com.elkite.warborn.resources.Gun_RifleGun
 import com.elkite.warborn.resources.Gun_ShotGun
 import com.elkite.warborn.resources.Gun_ThreeGun
@@ -25,6 +26,7 @@ import com.elkite.warborn.resources.SpecImage_GUN4
 import com.elkite.warborn.resources.SpecImage_GUN5
 import com.elkite.warborn.resources.SpecImage_GUN6
 import com.elkite.warborn.resources.SpecImage_GUN7
+import com.elkite.warborn.resources.SpecImage_GUN8
 import com.elkite.warborn.resources.error_emoji
 import org.jetbrains.compose.resources.DrawableResource
 
@@ -38,6 +40,7 @@ object GunResources {
             "Luminet Cannon" -> Res.drawable.SpecImage_GUN6
             "Voideye" -> Res.drawable.SpecImage_GUN5
             "Prism Cloak" -> Res.drawable.SpecImage_GUN7
+            "RayGun" -> Res.drawable.SpecImage_GUN8
             else -> Res.drawable.error_emoji
         }
     }
@@ -60,6 +63,7 @@ object GunResources {
             "Gun_Common_Skill_5" -> Res.drawable.Gun_Common_Skill_5
             "Gun_RifleGun" -> Res.drawable.Gun_RifleGun
             "Gun_PrismGun" -> Res.drawable.Gun_PrismGun
+            "Gun_RayGun" -> Res.drawable.Gun_RayGun
             else -> Res.drawable.error_emoji
         }
     }
