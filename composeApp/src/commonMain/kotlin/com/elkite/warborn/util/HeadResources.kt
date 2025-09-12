@@ -9,6 +9,7 @@ import com.elkite.warborn.resources.Helm_Dex_4
 import com.elkite.warborn.resources.Helm_Dex_5
 import com.elkite.warborn.resources.Helm_Dex_7
 import com.elkite.warborn.resources.Helm_Dex_8
+import com.elkite.warborn.resources.Helm_Dex_9
 import com.elkite.warborn.resources.Helm_Int_1
 import com.elkite.warborn.resources.Helm_Int_2
 import com.elkite.warborn.resources.Helm_Int_3
@@ -23,6 +24,7 @@ import com.elkite.warborn.resources.Helm_Str_5
 import com.elkite.warborn.resources.Helm_Str_6
 import com.elkite.warborn.resources.Helm_Str_7
 import com.elkite.warborn.resources.Helm_Str_8
+import com.elkite.warborn.resources.Helm_Str_9
 import com.elkite.warborn.resources.Res
 import com.elkite.warborn.resources.SpecImage_COWL1
 import com.elkite.warborn.resources.SpecImage_COWL2
@@ -38,6 +40,7 @@ import com.elkite.warborn.resources.SpecImage_HELMET4
 import com.elkite.warborn.resources.SpecImage_HELMET5
 import com.elkite.warborn.resources.SpecImage_HELMET6
 import com.elkite.warborn.resources.SpecImage_HELMET7
+import com.elkite.warborn.resources.SpecImage_HELMET8
 import com.elkite.warborn.resources.SpecImage_HOOD1
 import com.elkite.warborn.resources.SpecImage_HOOD2
 import com.elkite.warborn.resources.SpecImage_HOOD3
@@ -45,6 +48,7 @@ import com.elkite.warborn.resources.SpecImage_HOOD4
 import com.elkite.warborn.resources.SpecImage_HOOD5
 import com.elkite.warborn.resources.SpecImage_HOOD6
 import com.elkite.warborn.resources.SpecImage_HOOD7
+import com.elkite.warborn.resources.SpecImage_HOOD8
 import com.elkite.warborn.resources.error_emoji
 import org.jetbrains.compose.resources.DrawableResource
 
