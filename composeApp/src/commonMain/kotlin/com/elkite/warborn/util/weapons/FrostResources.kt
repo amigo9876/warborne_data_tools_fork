@@ -14,6 +14,7 @@ import com.elkite.warborn.resources.IceStaff_Frost
 import com.elkite.warborn.resources.IceStaff_GreatFrost
 import com.elkite.warborn.resources.IceStaff_IceAvatar
 import com.elkite.warborn.resources.IceStaff_IcePhase
+import com.elkite.warborn.resources.IceStaff_IceSliver
 import com.elkite.warborn.resources.IceStaff_Icicle
 import com.elkite.warborn.resources.IceStaff_Passive
 import com.elkite.warborn.resources.IceStaff_Permafrost
@@ -25,6 +26,7 @@ import com.elkite.warborn.resources.SpecImage_FROST4
 import com.elkite.warborn.resources.SpecImage_FROST5
 import com.elkite.warborn.resources.SpecImage_FROST6
 import com.elkite.warborn.resources.SpecImage_FROST7
+import com.elkite.warborn.resources.SpecImage_FROST8
 import com.elkite.warborn.resources.error_emoji
 import org.jetbrains.compose.resources.DrawableResource
 
@@ -38,6 +40,7 @@ object FrostResources {
             "Iceshard Comet" -> Res.drawable.SpecImage_FROST5
             "Frozen Conduit" -> Res.drawable.SpecImage_FROST6
             "Frost's Caller" -> Res.drawable.SpecImage_FROST7
+            "Shard of Fractured Ice" -> Res.drawable.SpecImage_FROST8
             else -> Res.drawable.error_emoji
         }
     }
@@ -60,6 +63,7 @@ object FrostResources {
             "IceStaff_IcePhase" -> Res.drawable.IceStaff_IcePhase
             "IceStaff_Permafrost" -> Res.drawable.IceStaff_Permafrost
             "IceStaff_IceAvatar" -> Res.drawable.IceStaff_IceAvatar
+            "IceStaff_IceSliver" -> Res.drawable.IceStaff_IceSliver
             else -> Res.drawable.error_emoji
         }
     }

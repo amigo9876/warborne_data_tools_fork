@@ -152,7 +152,7 @@ object HeadResources {
             "Savage Helm" -> Res.drawable.SpecImage_HELMET1
             "Stormveil Mask" -> Res.drawable.SpecImage_HELMET5
             "Warden's Gaze" -> Res.drawable.SpecImage_HELMET7
-            "Helm_Str_9" -> Res.drawable.SpecImage_HELMET8
+            "Riposte Helm" -> Res.drawable.SpecImage_HELMET8
             else -> Res.drawable.error_emoji
         }
     }

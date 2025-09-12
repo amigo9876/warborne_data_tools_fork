@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
+import androidx.compose.material.ChipDefaults
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FilterChip
 import androidx.compose.material.Icon
@@ -186,6 +187,13 @@ fun Filters(
     filter: Map.Entry<GearSlot, Boolean>, onClick: (GearSlot) -> Unit
 ) {
     FilterChip(
+        colors = ChipDefaults.filterChipColors(
+            backgroundColor =  WarborneColorTheme.textBackgroundColor,
+            contentColor = WarborneColorTheme.textDescriptionColor,
+            leadingIconColor = WarborneColorTheme.textDescriptionColor,
+            selectedContentColor = WarborneColorTheme.legendaryBorderStartColor,
+            selectedBackgroundColor = WarborneColorTheme.legendaryBorderStartColor
+        ),
         onClick = {onClick(filter.key)},
         selected = filter.value,
         modifier = Modifier.padding(8.dp),

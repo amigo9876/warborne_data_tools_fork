@@ -136,7 +136,7 @@ object ChestResources {
             "Dreadcloak" -> Res.drawable.SpecImage_ROBE5
             "Exorcist's Robe" -> Res.drawable.SpecImage_ROBE6
             "Warding Shroud" -> Res.drawable.SpecImage_ROBE7
-            "Cloth_Int_10" -> Res.drawable.SpecImage_ROBE8
+            "Aegis Robe" -> Res.drawable.SpecImage_ROBE8
             else -> Res.drawable.error_emoji
         }
     }

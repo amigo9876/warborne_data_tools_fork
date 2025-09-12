@@ -40,7 +40,7 @@ object GunResources {
             "Luminet Cannon" -> Res.drawable.SpecImage_GUN6
             "Voideye" -> Res.drawable.SpecImage_GUN5
             "Prism Cloak" -> Res.drawable.SpecImage_GUN7
-            "RayGun" -> Res.drawable.SpecImage_GUN8
+            "Photonic Rifle" -> Res.drawable.SpecImage_GUN8
             else -> Res.drawable.error_emoji
         }
     }

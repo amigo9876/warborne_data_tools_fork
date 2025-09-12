@@ -40,7 +40,7 @@ object NatureResources {
             "Tendril's Grasp" -> Res.drawable.SpecImage_NATURE6
             "Spirit's Call" -> Res.drawable.SpecImage_NATURE5
             "Sanctuary of Growth" -> Res.drawable.SpecImage_NATURE7
-            "Viper's Staff" -> Res.drawable.SpecImage_NATURE8
+            "VenomStave" -> Res.drawable.SpecImage_NATURE8
             else -> Res.drawable.error_emoji
         }
     }

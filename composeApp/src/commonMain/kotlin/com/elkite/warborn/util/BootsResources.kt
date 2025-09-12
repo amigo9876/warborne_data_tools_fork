@@ -150,7 +150,7 @@ object BootsResources {
             "Rallystep Boots" -> Res.drawable.SpecImage_SHOES5
             "Shadeveil Slippers" -> Res.drawable.SpecImage_SHOES6
             "Exodrift Slippers" -> Res.drawable.SpecImage_SHOES7
-            "Shoes_Dex_9" -> Res.drawable.SpecImage_SHOES8
+            "Whirlwind Boots" -> Res.drawable.SpecImage_SHOES8
             else -> Res.drawable.error_emoji
         }
     }
