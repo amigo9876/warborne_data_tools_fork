@@ -21,8 +21,10 @@ import com.elkite.warborn.domain.entities.spells.ISpell
 import com.elkite.warborn.resources.ArmorEpic1
 import com.elkite.warborn.resources.Res
 import com.elkite.warborn.resources.WeaponEpic1
+import com.elkite.warborn.resources.equip_medicine_3_3
 import com.elkite.warborn.util.BootsResources
 import com.elkite.warborn.util.ChestResources
+import com.elkite.warborn.util.ConsumableResources
 import com.elkite.warborn.util.DrifterResources
 import com.elkite.warborn.util.HeadResources
 import com.elkite.warborn.util.ModResources
@@ -287,6 +289,22 @@ fun ModIcon(
         ModResources.getModIcon(modGameId)
     },
         colorFilter = if (modGameId == null) ColorFilter.tint(Color.White) else null
+    )
+}
+
+@Composable
+fun ConsumableIcon(
+    modifier: Modifier = Modifier.size(48.dp),
+    consumableGameId: String?,
+) {
+    Icon(
+        modifier = if (consumableGameId != null) modifier else modifier.padding(8.dp),
+        drawableResource = if (consumableGameId == null) {
+            Res.drawable.equip_medicine_3_3
+        } else {
+            ConsumableResources.getConsumable(consumableGameId)
+        },
+        colorFilter = if (consumableGameId == null) ColorFilter.tint(Color.White) else null
     )
 }
 

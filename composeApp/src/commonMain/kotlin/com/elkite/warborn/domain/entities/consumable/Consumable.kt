@@ -8,6 +8,7 @@ import kotlinx.serialization.Serializable
 data class Consumable(
     val gameId: String,
     val name: String,
+    val iconName: String,
     val description: String,
     val rarity: Rarity,
     val category: ConsumableCategory,

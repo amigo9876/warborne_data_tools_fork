@@ -35,6 +35,7 @@ fun ColumnScope.ArmorCard(
     HeaderCard(
         title = gear.gearName,
         subtitle = gear.gearSlot.name.lowercase().capitalize(),
+        rarity = gear.rarity,
         icon = {
             when (armorSlot) {
                 ArmorSlot.HEAD -> {

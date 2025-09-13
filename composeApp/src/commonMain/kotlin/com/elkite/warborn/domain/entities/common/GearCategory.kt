@@ -5,6 +5,7 @@ enum class GearCategory {
     ARMOR,
     DRIFTER,
     MOD,
+    CONSUMABLE
 }
 
 enum class ModCategory {

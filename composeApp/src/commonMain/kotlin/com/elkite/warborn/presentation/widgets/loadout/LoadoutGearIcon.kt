@@ -11,6 +11,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.common.Rarity
+import com.elkite.warborn.domain.entities.consumable.Consumable
 import com.elkite.warborn.domain.entities.gear.BootsGear
 import com.elkite.warborn.domain.entities.gear.ChestGear
 import com.elkite.warborn.domain.entities.gear.HeadGear
@@ -21,6 +22,7 @@ import com.elkite.warborn.domain.entities.mod.WeaponMod
 import com.elkite.warborn.presentation.theme.WarborneColorTheme
 import com.elkite.warborn.presentation.widgets.icons.BootsGearIcon
 import com.elkite.warborn.presentation.widgets.icons.ChestGearIcon
+import com.elkite.warborn.presentation.widgets.icons.ConsumableIcon
 import com.elkite.warborn.presentation.widgets.icons.HeadGearIcon
 import com.elkite.warborn.presentation.widgets.icons.IconType
 import com.elkite.warborn.presentation.widgets.icons.ModIcon
@@ -131,6 +133,19 @@ fun LoadoutArmorModIcon(
         modifier = borderModifier,
         modGameId = mod?.iconName,
         modType = ModType.ARMOR,
+    )
+}
+
+@Composable
+fun LoadoutConsumableIcon(
+    consumable: Consumable?,
+    onClick: () -> Unit,
+    isSelected: Boolean,
+    modifier: Modifier = Modifier,
+) {
+    ConsumableIcon(
+        modifier = modifier.getModifierForRarity(consumable?.rarity, isSelected, onClick),
+        consumableGameId = consumable?.iconName
     )
 }
 

@@ -1,6 +1,9 @@
 package com.elkite.warborn.util
 
 import com.elkite.warborn.resources.ArmorEpic1
+import com.elkite.warborn.resources.ArmorEpic10
+import com.elkite.warborn.resources.ArmorEpic11
+import com.elkite.warborn.resources.ArmorEpic12
 import com.elkite.warborn.resources.ArmorEpic2
 import com.elkite.warborn.resources.ArmorEpic3
 import com.elkite.warborn.resources.ArmorEpic4
@@ -18,12 +21,17 @@ import com.elkite.warborn.resources.ArmorExclusiveLgdr6
 import com.elkite.warborn.resources.ArmorLgdr1
 import com.elkite.warborn.resources.ArmorLgdr2
 import com.elkite.warborn.resources.ArmorLgdr3
+import com.elkite.warborn.resources.ArmorLgdr4
+import com.elkite.warborn.resources.ArmorLgdr5
 import com.elkite.warborn.resources.ArmorRare1
 import com.elkite.warborn.resources.ArmorRare2
 import com.elkite.warborn.resources.ArmorRare3
 import com.elkite.warborn.resources.ArmorRare4
 import com.elkite.warborn.resources.Res
 import com.elkite.warborn.resources.WeaponEpic1
+import com.elkite.warborn.resources.WeaponEpic10
+import com.elkite.warborn.resources.WeaponEpic11
+import com.elkite.warborn.resources.WeaponEpic12
 import com.elkite.warborn.resources.WeaponEpic2
 import com.elkite.warborn.resources.WeaponEpic3
 import com.elkite.warborn.resources.WeaponEpic4
@@ -47,6 +55,8 @@ import com.elkite.warborn.resources.WeaponExclusiveLgdr9
 import com.elkite.warborn.resources.WeaponLgdr1
 import com.elkite.warborn.resources.WeaponLgdr2
 import com.elkite.warborn.resources.WeaponLgdr3
+import com.elkite.warborn.resources.WeaponLgdr4
+import com.elkite.warborn.resources.WeaponLgdr5
 import com.elkite.warborn.resources.WeaponRare1
 import com.elkite.warborn.resources.WeaponRare2
 import com.elkite.warborn.resources.error_emoji
@@ -70,9 +80,14 @@ object ModResources {
             "ArmorEpic7" -> Res.drawable.ArmorEpic7
             "ArmorEpic8" -> Res.drawable.ArmorEpic8
             "ArmorEpic9" -> Res.drawable.ArmorEpic9
+            "ArmorEpic10" -> Res.drawable.ArmorEpic10
+            "ArmorEpic11" -> Res.drawable.ArmorEpic11
+            "ArmorEpic12" -> Res.drawable.ArmorEpic12
             "ArmorLgdr1" -> Res.drawable.ArmorLgdr1
             "ArmorLgdr2" -> Res.drawable.ArmorLgdr2
             "ArmorLgdr3" -> Res.drawable.ArmorLgdr3
+            "ArmorLgdr4" -> Res.drawable.ArmorLgdr4
+            "ArmorLgdr5" -> Res.drawable.ArmorLgdr5
             "ArmorExclusiveLgdr1" -> Res.drawable.ArmorExclusiveLgdr1
             "ArmorExclusiveLgdr2" -> Res.drawable.ArmorExclusiveLgdr2
             "ArmorExclusiveLgdr3" -> Res.drawable.ArmorExclusiveLgdr3
@@ -88,6 +103,9 @@ object ModResources {
             "WeaponEpic7" -> Res.drawable.WeaponEpic7
             "WeaponEpic8" -> Res.drawable.WeaponEpic8
             "WeaponEpic9" -> Res.drawable.WeaponEpic9
+            "WeaponEpic10" -> Res.drawable.WeaponEpic10
+            "WeaponEpic11" -> Res.drawable.WeaponEpic11
+            "WeaponEpic12" -> Res.drawable.WeaponEpic12
             "WeaponExclusiveLgdr1" -> Res.drawable.WeaponExclusiveLgdr1
             "WeaponExclusiveLgdr2" -> Res.drawable.WeaponExclusiveLgdr2
             "WeaponExclusiveLgdr3" -> Res.drawable.WeaponExclusiveLgdr3
@@ -103,6 +121,8 @@ object ModResources {
             "WeaponLgdr1" -> Res.drawable.WeaponLgdr1
             "WeaponLgdr2" -> Res.drawable.WeaponLgdr2
             "WeaponLgdr3" -> Res.drawable.WeaponLgdr3
+            "WeaponLgdr4" -> Res.drawable.WeaponLgdr4
+            "WeaponLgdr5" -> Res.drawable.WeaponLgdr5
             else -> Res.drawable.error_emoji
         }
     }

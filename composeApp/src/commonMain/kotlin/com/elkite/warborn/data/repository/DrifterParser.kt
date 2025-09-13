@@ -21,11 +21,9 @@ object DrifterParser {
                 return emptyList()
             }
 
-            println("Found ${drifterSection.size} drifters to parse")
 
             for ((key, drifterJson) in drifterSection) {
                 try {
-                    println("Parsing drifter: $key")
                     val obj = drifterJson.jsonObject
                     val gameId = obj["gameId"]?.jsonPrimitive?.content
                     if (gameId == null) {
@@ -38,15 +36,12 @@ object DrifterParser {
                         continue
                     }
 
-                    println("Processing drifter: $name ($gameId)")
 
                     val strBonus = obj["strBonus"]?.jsonPrimitive?.content ?: ""
                     val dexBonus = obj["dexBonus"]?.jsonPrimitive?.content ?: ""
                     val intBonus = obj["intBonus"]?.jsonPrimitive?.content ?: ""
 
-                    println("Parsing active spell for $gameId...")
                     val activeSpell = SpellAndGearParser.parseSkillSpellDrifter(obj["skill"]!!.jsonObject)
-                    println("Parsing passive spell for $gameId...")
                     val passiveSpell = SpellAndGearParser.parsePassiveSpell(obj["passive"]!!.jsonObject)
 
                     val matchedLinks = links.filter { link -> gameId in link.driftersId }
@@ -68,7 +63,6 @@ object DrifterParser {
                             category = category
                         )
                     )
-                    println("Successfully parsed drifter: $name")
                 } catch (e: Exception) {
                     println("Error parsing drifter $key: ${e.message}")
                     e.printStackTrace()

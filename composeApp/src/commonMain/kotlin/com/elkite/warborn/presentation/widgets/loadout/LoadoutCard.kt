@@ -253,7 +253,12 @@ private fun BoxScope.ArmorLoadoutWithModColumn(
                 )
         }
         Spacer(modifier = Modifier.size(16.dp))
-
+        LoadoutConsumableIcon(
+            consumable = loadout.consumable,
+            isSelected = loadout.selectedLoadoutType == SelectedLoadoutType.CONSUMABLE,
+            onClick = { onSelectedLoadoutType(SelectedLoadoutType.CONSUMABLE) },
+            modifier = Modifier.size(if (isCompact()) 48.dp else 64.dp),
+        )
     }
 }
 
@@ -354,5 +359,11 @@ private fun ArmorLoadoutWithModColumn(
             )
         }
         Spacer(modifier = Modifier.size(16.dp))
+        LoadoutConsumableIcon(
+            consumable = loadout.consumable,
+            isSelected = loadout.selectedLoadoutType == SelectedLoadoutType.CONSUMABLE,
+            onClick = { onSelectedLoadoutType(SelectedLoadoutType.CONSUMABLE) },
+            modifier = Modifier.size(if (isCompact()) 48.dp else 64.dp),
+        )
     }
 }

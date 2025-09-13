@@ -17,7 +17,7 @@ fun ColumnScope.GearAttributes(stats: GearStats) {
     val attributes = mutableListOf<Pair<String, String>>()
 
     if (!stats.bonusDamage.isNullOrEmpty()) {
-        attributes.add("Damage & Heal bonus: " to "${stats.bonusDamage}%")
+        attributes.add("Damage & Heal bonus: " to "${stats.bonusDamage}")
     }
     if (!stats.attackPower.isNullOrEmpty()) {
         attributes.add("Attack Power: " to stats.attackPower)

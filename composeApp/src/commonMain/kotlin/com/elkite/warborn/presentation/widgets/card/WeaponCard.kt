@@ -10,7 +10,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.gear.WeaponGear
 import com.elkite.warborn.domain.entities.loadout.SelectedLoadoutType
-import com.elkite.warborn.presentation.theme.getRarityBorder
 import com.elkite.warborn.presentation.theme.spellBorder
 import com.elkite.warborn.presentation.widgets.card.common.Description
 import com.elkite.warborn.presentation.widgets.card.common.GearAttributes
@@ -19,6 +18,7 @@ import com.elkite.warborn.presentation.widgets.card.common.SpellAttributes
 import com.elkite.warborn.presentation.widgets.card.common.SwitchContainer
 import com.elkite.warborn.presentation.widgets.icons.WeaponGearIcon
 import com.elkite.warborn.presentation.widgets.icons.WeaponSkillIcon
+import com.elkite.warborn.presentation.widgets.loadout.getModifierForRarity
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedText
 
 @Composable
@@ -32,9 +32,10 @@ fun ColumnScope.WeaponCard(
     HeaderCard(
         title = weaponGear.gearName,
         subtitle = weaponGear.weaponType.name.lowercase().capitalize(),
+        rarity = weaponGear.rarity,
         icon = {
             WeaponGearIcon(
-                modifier = Modifier.getRarityBorder(rarity = weaponGear.rarity).size(64.dp),
+                modifier = Modifier.getModifierForRarity(rarity = weaponGear.rarity).size(64.dp),
                 weaponGear = weaponGear
             )
         }

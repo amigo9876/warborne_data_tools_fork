@@ -10,18 +10,20 @@ import kotlinx.serialization.json.jsonPrimitive
 
 object ConsumableParser {
     fun parseConsumables(json: String, key: String, consumableCategory: ConsumableCategory): List<Consumable> {
-        val jsonObject =  Json.parseToJsonElement(json).jsonObject
+        val jsonObject = Json.parseToJsonElement(json).jsonObject
+
         val consumablesArray = jsonObject[key]?.jsonArray ?: return emptyList()
 
-        println("parseConsumables: ${consumableCategory.name}")
         return consumablesArray.mapNotNull { jsonElement ->
             try {
                 val consumableObject = jsonElement.jsonObject
-                val rarity = consumableObject.jsonObject["rarity"]?.jsonPrimitive?.content ?: "common"
+
+                val rarity = consumableObject["rarity"]?.jsonPrimitive?.content ?: "common"
 
                 Consumable(
-                    gameId = consumableObject["gameId"]?.jsonPrimitive?.content ?: return@mapNotNull null,
+                    gameId = consumableObject["id"]?.jsonPrimitive?.content ?: return@mapNotNull null,
                     name = consumableObject["name"]?.jsonPrimitive?.content ?: return@mapNotNull null,
+                    iconName = consumableObject["iconName"]?.jsonPrimitive?.content ?: "",
                     description = consumableObject["description"]?.jsonPrimitive?.content ?: "",
                     rarity = when (rarity.lowercase()) {
                         "common" -> Rarity.common
@@ -34,6 +36,7 @@ object ConsumableParser {
                     category = consumableCategory
                 )
             } catch (e: Exception) {
+                println("Error parsing consumable: ${e.message}")
                 null
             }
         }

@@ -42,10 +42,12 @@ import com.elkite.warborn.domain.entities.mod.ArmorMod
 import com.elkite.warborn.domain.entities.mod.WeaponMod
 import com.elkite.warborn.presentation.theme.WarborneColorTheme
 import com.elkite.warborn.presentation.widgets.card.ArmorCard
+import com.elkite.warborn.presentation.widgets.card.ConsumableCard
 import com.elkite.warborn.presentation.widgets.card.DrifterCard
 import com.elkite.warborn.presentation.widgets.card.ModCard
 import com.elkite.warborn.presentation.widgets.card.WeaponCard
 import com.elkite.warborn.presentation.widgets.card.common.CardContainer
+import com.elkite.warborn.presentation.widgets.consumable.ConsumableSmallList
 import com.elkite.warborn.presentation.widgets.drifter.DrifterSmallList
 import com.elkite.warborn.presentation.widgets.gear.ArmorSmallList
 import com.elkite.warborn.presentation.widgets.gear.WeaponSmallList
@@ -63,6 +65,7 @@ import com.elkite.warborn.resources.Com_Weapon_Sword
 import com.elkite.warborn.resources.Common_ParagonWarehouse
 import com.elkite.warborn.resources.ItemIcon_MODCore
 import com.elkite.warborn.resources.Res
+import com.elkite.warborn.resources.equip_medicine_4_3
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
@@ -139,7 +142,8 @@ fun FlowRowScope.ItemListColumn(
         GearCategory.DRIFTER,
         GearCategory.WEAPON,
         GearCategory.ARMOR,
-        GearCategory.MOD
+        GearCategory.MOD,
+        GearCategory.CONSUMABLE
     )
     val selectedIndex = remember { mutableStateOf(0)}
 
@@ -148,6 +152,7 @@ fun FlowRowScope.ItemListColumn(
             SelectedLoadoutType.MOD_WEAPON, SelectedLoadoutType.MOD_HEAD, SelectedLoadoutType.MOD_CHEST, SelectedLoadoutType.MOD_BOOTS -> 3
             SelectedLoadoutType.HEAD, SelectedLoadoutType.CHEST, SelectedLoadoutType.BOOTS -> 2
             SelectedLoadoutType.DRIFTER -> 0
+            SelectedLoadoutType.CONSUMABLE -> 4
             else -> 1
         }
     }
@@ -177,6 +182,7 @@ fun FlowRowScope.ItemListColumn(
                                             GearCategory.WEAPON -> Res.drawable.Com_Weapon_Sword
                                             GearCategory.DRIFTER -> Res.drawable.Common_ParagonWarehouse
                                             GearCategory.MOD -> Res.drawable.ItemIcon_MODCore
+                                            GearCategory.CONSUMABLE -> Res.drawable.equip_medicine_4_3
                                         }
                                     ),
                                     colorFilter = ColorFilter.tint(Color.White),
@@ -242,6 +248,22 @@ fun FlowRowScope.ItemListColumn(
                                 onDrifterClick = { drifter: Drifter ->
                                     onUpdateDrifter(drifter)
                                 })
+                        }
+
+
+                        GearCategory.CONSUMABLE -> {
+                            ConsumableSmallList(
+                                modifier = Modifier,
+                                consumables = listOf(
+                                    state.data.consumables.potions,
+                                    state.data.consumables.food,
+                                    state.data.consumables.poisons,
+                                    state.data.consumables.utilities
+                                ).flatten(),
+                                onConsumableClick = { consumable: Consumable ->
+                                    onUpdateConsumable(consumable)
+                                }
+                            )
                         }
 
                         GearCategory.MOD -> {
@@ -316,7 +338,7 @@ fun FlowRowScope.DescriptionColumn(
             SelectedLoadoutType.MOD_HEAD -> ModCard(mod = loadout.headMod)
             SelectedLoadoutType.MOD_CHEST -> ModCard(mod = loadout.chestMod)
             SelectedLoadoutType.MOD_BOOTS -> ModCard(mod = loadout.bootsMod)
-            SelectedLoadoutType.CONSUMABLE -> Box {  }
+            SelectedLoadoutType.CONSUMABLE -> ConsumableCard(consumable = loadout.consumable)
         }
     }
 }

@@ -305,23 +305,11 @@ object DataRepository {
     }
 
     private fun parseWeapon(json: String, weaponType: WeaponType): DataWeapon {
-        println("parseWeapon: Starting to parse weapon of type: $weaponType")
         val jsonElement = Json.parseToJsonElement(json)
-        println("parseWeapon: JSON successfully parsed into JsonElement.")
-
-        println("parseWeapon: Parsing passive spell...")
         val passiveSpell = parsePassiveSpell(jsonElement.jsonObject["passive"]!!.jsonObject)
-        println("parseWeapon: Passive spell parsed successfully: $passiveSpell")
-
-        println("parseWeapon: Parsing basic attacks...")
         val basicAttacks = parseBasicSpells(jsonElement.jsonObject["basicAttacks"]!!.jsonArray)
-        println("parseWeapon: Basic attacks parsed successfully: $basicAttacks")
-
-        println("parseWeapon: Parsing common skills...")
         val commonSkills = parseCommonSpells(jsonElement.jsonObject["commonSkills"]!!.jsonArray)
-        println("parseWeapon: Common skills parsed successfully: $commonSkills")
 
-        println("parseWeapon: Parsing weapon gears...")
         val weaponGears: List<WeaponGear> =
             parseSkillSpells(
                 jsonElement.jsonObject["skills"]!!.jsonArray, when (weaponType) {
@@ -330,7 +318,6 @@ object DataRepository {
                     WeaponType.fire, WeaponType.frost, WeaponType.holy, WeaponType.curse -> Category.INT
                 }
             ) { gameId, skillName, manaCost, cooldown, castingRange, description, tierUnlock, gearName, gearStats, rarity, category ->
-                println("parseWeapon: Parsing weapon gear with gameId: $gameId")
                 WeaponGear(
                     spellId = gameId,
                     spellName = skillName,
@@ -351,10 +338,8 @@ object DataRepository {
                     passiveSpell = passiveSpell,
                     basicSpells = basicAttacks,
                     commonSpells = commonSkills
-                ).also { println("parseWeapon: Weapon gear parsed successfully: $it") }
+                )
             }
-        println("parseWeapon: Weapon gears parsed successfully: $weaponGears")
-
         val dataWeapon = DataWeapon(
             skills = weaponGears,
             weaponType = weaponType,
@@ -362,7 +347,6 @@ object DataRepository {
             basicSpells = basicAttacks,
             commonSpells = commonSkills
         )
-        println("parseWeapon: DataWeapon created successfully: $dataWeapon")
 
         return dataWeapon
     }

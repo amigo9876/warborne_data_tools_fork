@@ -24,6 +24,7 @@ fun ColumnScope.ModCard(
         HeaderCard(
             title = mod.name,
             subtitle = mod.slot.name.lowercase().capitalize(),
+            rarity = mod.rarity,
             icon = {
                 ModIcon(
                     modGameId = mod.iconName,

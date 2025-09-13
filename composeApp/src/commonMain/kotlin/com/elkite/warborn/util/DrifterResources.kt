@@ -62,6 +62,7 @@ import com.elkite.warborn.resources.ParagonFullBodyBg_Int_7
 import com.elkite.warborn.resources.ParagonFullBodyBg_Int_9
 import com.elkite.warborn.resources.ParagonFullBodyBg_None
 import com.elkite.warborn.resources.ParagonFullBodyBg_Str_1
+import com.elkite.warborn.resources.ParagonFullBodyBg_Str_10
 import com.elkite.warborn.resources.ParagonFullBodyBg_Str_2
 import com.elkite.warborn.resources.ParagonFullBodyBg_Str_3
 import com.elkite.warborn.resources.ParagonFullBodyBg_Str_4
@@ -249,6 +250,7 @@ object DrifterResources {
             "paragon_str_7" -> Res.drawable.ParagonFullBodyBg_Str_7
             "paragon_str_8" -> Res.drawable.ParagonFullBodyBg_Str_8
             "paragon_str_9" -> Res.drawable.ParagonFullBodyBg_Str_9
+            "paragon_str_10" -> Res.drawable.ParagonFullBodyBg_Str_10
             "paragon_int_1" -> Res.drawable.ParagonFullBodyBg_Int_1
             "paragon_int_2" -> Res.drawable.ParagonFullBodyBg_Int_2
             "paragon_int_3" -> Res.drawable.ParagonFullBodyBg_Int_3
