@@ -11,6 +11,7 @@ import com.elkite.warborn.domain.entities.spells.SkillSpell
 import com.elkite.warborn.domain.entities.spells.TierUnlock
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.boolean
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 
@@ -25,8 +26,10 @@ object SpellAndGearParser {
             println("parseSkillSpells: Input JSON array is null.")
             return emptyList()
         }
-        return jsonArray.map { spellJson ->
+        return jsonArray.mapNotNull { spellJson ->
             try {
+                val isActive = spellJson.jsonObject["isActive"]?.jsonPrimitive?.boolean ?: true
+                if (!isActive) return@mapNotNull null
                 val gameId = spellJson.jsonObject["gameId"]?.jsonPrimitive?.content ?: "error"
                 val skillName = spellJson.jsonObject["skillName"]?.jsonPrimitive?.content ?: "error"
                 val manaCost = spellJson.jsonObject["manaCost"]?.jsonPrimitive?.content ?: "error"

@@ -8,6 +8,7 @@ import com.elkite.warborn.domain.entities.drifter.Link
 import com.elkite.warborn.domain.entities.drifter.SupportStationBonus
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.boolean
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 
@@ -25,6 +26,8 @@ object DrifterParser {
             for ((key, drifterJson) in drifterSection) {
                 try {
                     val obj = drifterJson.jsonObject
+                    val isActive = obj["isActive"]?.jsonPrimitive?.boolean ?: true
+                    if (!isActive) continue
                     val gameId = obj["gameId"]?.jsonPrimitive?.content
                     if (gameId == null) {
                         println("Missing gameId for drifter: $key")
