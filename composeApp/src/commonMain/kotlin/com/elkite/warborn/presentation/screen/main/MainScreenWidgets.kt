@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRowScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,6 +15,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonColors
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
@@ -27,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
+import com.elkite.warborn.domain.entities.Translation
 import com.elkite.warborn.domain.entities.common.GearCategory
 import com.elkite.warborn.domain.entities.common.ModCategory
 import com.elkite.warborn.domain.entities.consumable.Consumable
@@ -67,6 +71,51 @@ import com.elkite.warborn.resources.ItemIcon_MODCore
 import com.elkite.warborn.resources.Res
 import com.elkite.warborn.resources.equip_medicine_4_3
 import org.jetbrains.compose.resources.painterResource
+
+@Composable
+fun TranslationColumn(
+    modifier: Modifier,
+    translation: Translation,
+    onLanguageSelected: (Translation) -> Unit
+) {
+    Column {
+        GearStylizedText(text = "Traductions other than EN are community\ndriven and may be incomplete or outdated.")
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            RadioButton(
+                selected = translation == Translation.EN,
+                onClick = { onLanguageSelected(Translation.EN) },
+                modifier = modifier.padding(bottom = 8.dp),
+                colors = RadioButtonDefaults.colors(
+                    selectedColor = WarborneColorTheme.borderSkillHightlightColor,
+                    unselectedColor = WarborneColorTheme.borderSkillColor,
+                    disabledSelectedColor = WarborneColorTheme.textBackgroundColor,
+                    disabledUnselectedColor = WarborneColorTheme.textBackgroundColor,
+                )
+            )
+            Spacer(Modifier.size(8.dp))
+            GearStylizedText(text = "EN")
+        }
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            RadioButton(
+                selected = translation == Translation.RU,
+                onClick = { onLanguageSelected(Translation.RU) },
+                modifier = modifier.padding(bottom = 8.dp),
+                colors = RadioButtonDefaults.colors(
+                    selectedColor = WarborneColorTheme.borderSkillHightlightColor,
+                    unselectedColor = WarborneColorTheme.borderSkillColor,
+                    disabledSelectedColor = WarborneColorTheme.textBackgroundColor,
+                    disabledUnselectedColor = WarborneColorTheme.textBackgroundColor,
+                )
+            )
+            Spacer(Modifier.size(8.dp))
+            GearStylizedText(text = "RU")
+        }
+    }
+}
 
 @Composable
 fun LoadoutColumn(

@@ -5,6 +5,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -22,6 +23,7 @@ import com.elkite.warborn.presentation.screen.main.DescriptionColumn
 import com.elkite.warborn.presentation.screen.main.ItemListColumn
 import com.elkite.warborn.presentation.screen.main.LoadoutColumn
 import com.elkite.warborn.presentation.screen.main.MainScreenModel
+import com.elkite.warborn.presentation.screen.main.TranslationColumn
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedText
 import com.elkite.warborn.presentation.widgets.utils.isMediumOrCompact
 import com.elkite.warborn.util.DrifterResources
@@ -63,15 +65,24 @@ actual fun MainContent(
             horizontalArrangement = if (isMediumOrCompact()) Arrangement.SpaceAround else Arrangement.Start,
             maxItemsInEachRow = 3
         ) {
-            LoadoutColumn(
-                loadout = loadoutState.value,
-                onLoadoutUrlUpdate = { url ->
-                    screenModel.updateLoadoutFromUrl(url, state)
-                },
-                onSelectedLoadoutType = { type ->
-                    screenModel.updateSelectedLoadout(type)
-                }
-            )
+            Column {
+                LoadoutColumn(
+                    loadout = loadoutState.value,
+                    onLoadoutUrlUpdate = { url ->
+                        screenModel.updateLoadoutFromUrl(url, state)
+                    },
+                    onSelectedLoadoutType = { type ->
+                        screenModel.updateSelectedLoadout(type)
+                    }
+                )
+                TranslationColumn(
+                    modifier = Modifier.padding(top = 8.dp),
+                    translation = screenModel.translation.collectAsState().value,
+                    onLanguageSelected = { lang ->
+                        screenModel.updateTranslation(lang)
+                    }
+                )
+            }
 
             ItemListColumn(
                 state = state,

@@ -2,6 +2,7 @@ package com.elkite.warborn.presentation.screen.main
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import com.elkite.warborn.data.repository.DataRepository
+import com.elkite.warborn.domain.entities.Translation
 import com.elkite.warborn.domain.entities.consumable.Consumable
 import com.elkite.warborn.domain.entities.data.Data
 import com.elkite.warborn.domain.entities.drifter.Drifter
@@ -30,8 +31,18 @@ class MainScreenModel : ScreenModel {
 
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
+    private val _translation = MutableStateFlow(Translation.EN)
+    val translation: StateFlow<Translation> = _translation
+
     init {
         loadSpells()
+    }
+
+    fun updateTranslation(translation: Translation) {
+        if (translation != _translation.value) {
+            _translation.value = translation
+            loadSpells()
+        }
     }
 
     fun updateSelectedLoadout(selectedLoadoutType: SelectedLoadoutType) {
@@ -93,7 +104,7 @@ class MainScreenModel : ScreenModel {
     private fun loadSpells() {
         coroutineScope.launch {
             try {
-                val data = DataRepository.getData()
+                val data = DataRepository.getData(_translation.value)
                 _screenState.update {
                     BuildScreenState.Success(
                         data = data,

@@ -35,10 +35,10 @@ object GunResources {
         return when (id) {
             "Shattercoil" -> Res.drawable.SpecImage_GUN1
             "Sentinel Barrage" -> Res.drawable.SpecImage_GUN2
-            "Spectral Assault" -> Res.drawable.SpecImage_GUN3
+            "Burstfire Rifle" -> Res.drawable.SpecImage_GUN3
             "Blightspitter" -> Res.drawable.SpecImage_GUN4
-            "Luminet Cannon" -> Res.drawable.SpecImage_GUN6
             "Voideye" -> Res.drawable.SpecImage_GUN5
+            "Shadowhunter Rifle" -> Res.drawable.SpecImage_GUN6
             "Prism Cloak" -> Res.drawable.SpecImage_GUN7
             "Photonic Rifle" -> Res.drawable.SpecImage_GUN8
             else -> Res.drawable.error_emoji

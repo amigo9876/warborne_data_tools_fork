@@ -5,6 +5,7 @@ import com.elkite.warborn.data.repository.SpellAndGearParser.parseBasicSpells
 import com.elkite.warborn.data.repository.SpellAndGearParser.parseCommonSpells
 import com.elkite.warborn.data.repository.SpellAndGearParser.parsePassiveSpell
 import com.elkite.warborn.data.repository.SpellAndGearParser.parseSkillSpells
+import com.elkite.warborn.domain.entities.Translation
 import com.elkite.warborn.domain.entities.common.Category
 import com.elkite.warborn.domain.entities.consumable.ConsumableCategory
 import com.elkite.warborn.domain.entities.data.Boots
@@ -34,69 +35,71 @@ import kotlinx.serialization.json.jsonPrimitive
 
 object DataRepository {
     private const val url = "https://elkite.github.io/warborne-data-json/"
-    private const val dex_boots = "${url}/armors/dex_boots.json"
-    private const val int_boots = "${url}/armors/int_boots.json"
-    private const val str_boots = "${url}/armors/str_boots.json"
-    private const val dex_chest = "${url}/armors/dex_chest.json"
-    private const val int_chest = "${url}/armors/int_chest.json"
-    private const val str_chest = "${url}/armors/str_chest.json"
-    private const val dex_head = "${url}/armors/dex_head.json"
-    private const val int_head = "${url}/armors/int_head.json"
-    private const val str_head = "${url}/armors/str_head.json"
+    private const val dex_boots = "/armors/dex_boots.json"
+    private const val int_boots = "/armors/int_boots.json"
+    private const val str_boots = "/armors/str_boots.json"
+    private const val dex_chest = "/armors/dex_chest.json"
+    private const val int_chest = "/armors/int_chest.json"
+    private const val str_chest = "/armors/str_chest.json"
+    private const val dex_head = "/armors/dex_head.json"
+    private const val int_head = "/armors/int_head.json"
+    private const val str_head = "/armors/str_head.json"
 
-    private const val dex_drifter = "${url}/drifters/dex_drifter.json"
-    private const val int_drifter = "${url}/drifters/int_drifter.json"
-    private const val str_drifter = "${url}/drifters/str_drifter.json"
-    private const val gather_drifter = "${url}/drifters/gather_drifter.json"
-    private const val links = "${url}/drifters/links.json"
+    private const val dex_drifter = "/drifters/dex_drifter.json"
+    private const val int_drifter = "/drifters/int_drifter.json"
+    private const val str_drifter = "/drifters/str_drifter.json"
+    private const val gather_drifter = "/drifters/gather_drifter.json"
+    private const val links = "/drifters/links.json"
 
-    private const val mod_armor = "${url}/mods/mod_armor.json"
-    private const val mod_weapon = "${url}/mods/mod_weapon.json"
+    private const val mod_armor = "/mods/mod_armor.json"
+    private const val mod_weapon = "/mods/mod_weapon.json"
 
-    private const val sword = "${url}/weapons/str_sword.json"
-    private const val axe = "${url}/weapons/str_axe.json"
-    private const val mace = "${url}/weapons/str_mace.json"
-    private const val gun = "${url}/weapons/str_gun.json"
-    private const val bow = "${url}/weapons/dex_bow.json"
-    private const val dagger = "${url}/weapons/dex_dagger.json"
-    private const val spear = "${url}/weapons/dex_spear.json"
-    private const val nature = "${url}/weapons/dex_nature.json"
-    private const val fire = "${url}/weapons/int_fire.json"
-    private const val frost = "${url}/weapons/int_frost.json"
-    private const val holy = "${url}/weapons/int_holy.json"
-    private const val curse = "${url}/weapons/int_curse.json"
+    private const val sword = "/weapons/str_sword.json"
+    private const val axe = "/weapons/str_axe.json"
+    private const val mace = "/weapons/str_mace.json"
+    private const val gun = "/weapons/str_gun.json"
+    private const val bow = "/weapons/dex_bow.json"
+    private const val dagger = "/weapons/dex_dagger.json"
+    private const val spear = "/weapons/dex_spear.json"
+    private const val nature = "/weapons/dex_nature.json"
+    private const val fire = "/weapons/int_fire.json"
+    private const val frost = "/weapons/int_frost.json"
+    private const val holy = "/weapons/int_holy.json"
+    private const val curse = "/weapons/int_curse.json"
 
-    private const val stats = "${url}/stats.json"
+    private const val stats = "/stats.json"
 
-    private const val potions = "${url}/consumable/potions.json"
-    private const val food = "${url}/consumable/food.json"
-    private const val utility = "${url}/consumable/utility.json"
-    private const val poisons = "${url}/consumable/poison.json"
+    private const val potions = "/consumable/potions.json"
+    private const val food = "/consumable/food.json"
+    private const val utility = "/consumable/utility.json"
+    private const val poisons = "/consumable/poison.json"
 
-    suspend fun getData(): Data {
+    suspend fun getData(
+        translation: Translation
+    ): Data {
         try {
             println("Starting data fetch...")
 
             println("Parse weapons...")
-            val weaponData = loadWeapons()
+            val weaponData = loadWeapons(translation)
             println("Parse armors...")
-            val armors = loadArmors()
+            val armors = loadArmors(translation)
             println("Parse Links...")
-            val links = parseLinks()
+            val links = parseLinks(translation)
             println("Parse drifters...")
-            val drifters = loadDrifters(links)
+            val drifters = loadDrifters(translation, links)
             println("Parse consumables...")
-            val consumables = parseConsumables()
+            val consumables = parseConsumables(translation)
             println("Parsing done")
 
             return Data(
                 weapons = weaponData,
                 armors = armors,
                 drifters = drifters,
-                mods = loadMods(),
+                mods = loadMods(translation),
                 stats = parseStats(
                     Json.parseToJsonElement(
-                        httpClient.get(stats).bodyAsText()
+                        httpClient.get(handleTranslationUrl(translation, stats)).bodyAsText()
                     ).jsonObject
                 ),
                 consumables = consumables
@@ -123,9 +126,9 @@ object DataRepository {
         )
     }
 
-    private suspend fun loadMods(): DataMods {
-        val armorMods = ModParser.parseArmorMods(httpClient.get(mod_armor).bodyAsText())
-        val weaponMods = ModParser.parseWeaponMods(httpClient.get(mod_weapon).bodyAsText())
+    private suspend fun loadMods(translation: Translation): DataMods {
+        val armorMods = ModParser.parseArmorMods(httpClient.get(handleTranslationUrl(translation,mod_armor)).bodyAsText())
+        val weaponMods = ModParser.parseWeaponMods(httpClient.get(handleTranslationUrl(translation,mod_weapon)).bodyAsText())
 
         return DataMods(
             armors = armorMods,
@@ -133,55 +136,55 @@ object DataRepository {
         )
     }
 
-    private suspend fun loadArmors(): DataArmors {
+    private suspend fun loadArmors(translation: Translation): DataArmors {
         return DataArmors(
             boots = Boots(
                 dexBoots = parseBoots(
-                    (httpClient.get(dex_boots).bodyAsText()),
+                    (httpClient.get(handleTranslationUrl(translation,dex_boots)).bodyAsText()),
                     "boots_dexterity",
                     category = Category.AGI
                 ),
                 intBoots = parseBoots(
-                    httpClient.get(int_boots).bodyAsText(),
+                    httpClient.get(handleTranslationUrl(translation,int_boots)).bodyAsText(),
                     "boots_intelligence",
                     category = Category.INT
                 ),
                 strBoots = parseBoots(
-                    httpClient.get(str_boots).bodyAsText(),
+                    httpClient.get(handleTranslationUrl(translation,str_boots)).bodyAsText(),
                     "boots_strength",
                     category = Category.STR
                 )
             ),
             chest = Chest(
                 strChest = parseChest(
-                    httpClient.get(str_chest).bodyAsText(),
+                    httpClient.get(handleTranslationUrl(translation,str_chest)).bodyAsText(),
                     "chest_strength",
                     category = Category.STR
                 ),
                 intChest = parseChest(
-                    httpClient.get(int_chest).bodyAsText(),
+                    httpClient.get(handleTranslationUrl(translation,int_chest)).bodyAsText(),
                     "chest_intelligence",
                     category = Category.INT
                 ),
                 dexChest = parseChest(
-                    httpClient.get(dex_chest).bodyAsText(),
+                    httpClient.get(handleTranslationUrl(translation,dex_chest)).bodyAsText(),
                     "chest_dexterity",
                     category = Category.AGI
                 )
             ),
             head = Head(
                 strHead = parseHead(
-                    httpClient.get(str_head).bodyAsText(),
+                    httpClient.get(handleTranslationUrl(translation,str_head)).bodyAsText(),
                     "head_strength",
                     category = Category.STR
                 ),
                 intHead = parseHead(
-                    httpClient.get(int_head).bodyAsText(),
+                    httpClient.get(handleTranslationUrl(translation,int_head)).bodyAsText(),
                     "head_intelligence",
                     category = Category.INT
                 ),
                 dexHead = parseHead(
-                    httpClient.get(dex_head).bodyAsText(),
+                    httpClient.get(handleTranslationUrl(translation,dex_head)).bodyAsText(),
                     "head_dexterity",
                     category = Category.AGI
                 )
@@ -189,43 +192,43 @@ object DataRepository {
         )
     }
 
-    private suspend fun loadWeapons(): DataWeapons {
+    private suspend fun loadWeapons(translation: Translation): DataWeapons {
         return DataWeapons(
-            sword = parseWeapon(httpClient.get(sword).bodyAsText(), WeaponType.sword),
-            axe = parseWeapon(httpClient.get(axe).bodyAsText(), WeaponType.axe),
-            mace = parseWeapon(httpClient.get(mace).bodyAsText(), WeaponType.mace),
-            gun = parseWeapon(httpClient.get(gun).bodyAsText(), WeaponType.gun),
-            bow = parseWeapon(httpClient.get(bow).bodyAsText(), WeaponType.bow),
-            dagger = parseWeapon(httpClient.get(dagger).bodyAsText(), WeaponType.dagger),
-            spear = parseWeapon(httpClient.get(spear).bodyAsText(), WeaponType.spear),
-            nature = parseWeapon(httpClient.get(nature).bodyAsText(), WeaponType.nature),
-            fire = parseWeapon(httpClient.get(fire).bodyAsText(), WeaponType.fire),
-            frost = parseWeapon(httpClient.get(frost).bodyAsText(), WeaponType.frost),
-            holy = parseWeapon(httpClient.get(holy).bodyAsText(), WeaponType.holy),
-            curse = parseWeapon(httpClient.get(curse).bodyAsText(), WeaponType.curse)
+            sword = parseWeapon(httpClient.get(handleTranslationUrl(translation,sword)).bodyAsText(), WeaponType.sword),
+            axe = parseWeapon(httpClient.get(handleTranslationUrl(translation,axe)).bodyAsText(), WeaponType.axe),
+            mace = parseWeapon(httpClient.get(handleTranslationUrl(translation,mace)).bodyAsText(), WeaponType.mace),
+            gun = parseWeapon(httpClient.get(handleTranslationUrl(translation,gun)).bodyAsText(), WeaponType.gun),
+            bow = parseWeapon(httpClient.get(handleTranslationUrl(translation,bow)).bodyAsText(), WeaponType.bow),
+            dagger = parseWeapon(httpClient.get(handleTranslationUrl(translation,dagger)).bodyAsText(), WeaponType.dagger),
+            spear = parseWeapon(httpClient.get(handleTranslationUrl(translation,spear)).bodyAsText(), WeaponType.spear),
+            nature = parseWeapon(httpClient.get(handleTranslationUrl(translation,nature)).bodyAsText(), WeaponType.nature),
+            fire = parseWeapon(httpClient.get(handleTranslationUrl(translation,fire)).bodyAsText(), WeaponType.fire),
+            frost = parseWeapon(httpClient.get(handleTranslationUrl(translation,frost)).bodyAsText(), WeaponType.frost),
+            holy = parseWeapon(httpClient.get(handleTranslationUrl(translation,holy)).bodyAsText(), WeaponType.holy),
+            curse = parseWeapon(httpClient.get(handleTranslationUrl(translation,curse)).bodyAsText(), WeaponType.curse)
         )
     }
 
-    private suspend fun loadDrifters(links: List<Link>): DataDrifters {
+    private suspend fun loadDrifters(translation: Translation, links: List<Link>): DataDrifters {
         return DataDrifters(
             strDrifters = DrifterParser.parseDrifters(
                 links,
-                httpClient.get(str_drifter).bodyAsText(),
+                httpClient.get(handleTranslationUrl(translation,str_drifter)).bodyAsText(),
                 Category.STR
             ),
             intDrifters = DrifterParser.parseDrifters(
                 links,
-                httpClient.get(int_drifter).bodyAsText(),
+                httpClient.get(handleTranslationUrl(translation,int_drifter)).bodyAsText(),
                 Category.INT
             ),
             dexDrifters = DrifterParser.parseDrifters(
                 links,
-                httpClient.get(dex_drifter).bodyAsText(),
+                httpClient.get(handleTranslationUrl(translation,dex_drifter)).bodyAsText(),
                 Category.AGI
             ),
             gathers = DrifterParser.parseDrifters(
                 links,
-                httpClient.get(gather_drifter).bodyAsText(),
+                httpClient.get(handleTranslationUrl(translation,gather_drifter)).bodyAsText(),
                 Category.AGI
             )
         )
@@ -351,8 +354,8 @@ object DataRepository {
         return dataWeapon
     }
 
-    private suspend fun parseLinks(): List<Link> {
-        val jsonElement = Json.parseToJsonElement(httpClient.get(links).bodyAsText())
+    private suspend fun parseLinks(translation: Translation): List<Link> {
+        val jsonElement = Json.parseToJsonElement(httpClient.get(handleTranslationUrl(translation,links)).bodyAsText())
         val linksArray = jsonElement.jsonObject["links"]?.jsonArray ?: return emptyList()
 
         return linksArray.mapNotNull { linkJson ->
@@ -379,11 +382,11 @@ object DataRepository {
         }
     }
 
-    private suspend fun parseConsumables(): DataConsumables {
-        val potionsJson = httpClient.get(potions).bodyAsText()
-        val foodJson = httpClient.get(food).bodyAsText()
-        val utilityJson = httpClient.get(utility).bodyAsText()
-        val poisonsJson = httpClient.get(poisons).bodyAsText()
+    private suspend fun parseConsumables(translation: Translation): DataConsumables {
+        val potionsJson = httpClient.get(handleTranslationUrl(translation,potions)).bodyAsText()
+        val foodJson = httpClient.get(handleTranslationUrl(translation,food)).bodyAsText()
+        val utilityJson = httpClient.get(handleTranslationUrl(translation,utility)).bodyAsText()
+        val poisonsJson = httpClient.get(handleTranslationUrl(translation,poisons)).bodyAsText()
 
         return DataConsumables(
             potions = ConsumableParser.parseConsumables(
@@ -409,5 +412,14 @@ object DataRepository {
         )
     }
 
+
+    private fun handleTranslationUrl(translation: Translation, endpoint: String): String {
+        val tmp =  when (translation) {
+            Translation.EN -> "$url$endpoint"
+            Translation.RU -> "${url}translation/russian$endpoint"
+        }
+        println(tmp)
+        return tmp
+    }
 }
 

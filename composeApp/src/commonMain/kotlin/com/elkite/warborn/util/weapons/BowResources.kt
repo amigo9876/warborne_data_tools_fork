@@ -32,8 +32,8 @@ object BowResources {
     fun getBowWeaponIcon(id: String): DrawableResource {
         return when (id) {
             "Hailfire" -> Res.drawable.SpecImage_BOW4
-            "Kinetic Arc" -> Res.drawable.SpecImage_BOW1
-            "Predator's Splitbow" -> Res.drawable.SpecImage_BOW2
+            "Kinetic Arc" -> Res.drawable.SpecImage_BOW2
+            "Predator's Splitbow" -> Res.drawable.SpecImage_BOW1
             "Thunderstrike" -> Res.drawable.SpecImage_BOW5
             "Windbreaker" -> Res.drawable.SpecImage_BOW6
             "Mender's Ruin" -> Res.drawable.SpecImage_BOW3
@@ -54,8 +54,8 @@ object BowResources {
             "Bow_Common_Skill_4" -> Res.drawable.Bow_Common_Skill_4
             "Bow_ArrowRain" -> Res.drawable.Bow_ArrowRain
             "Bow_Passive" -> Res.drawable.Bow_Passive
-            "Bow_Eighteen" -> Res.drawable.Bow_Eighteen
-            "Bow_War" -> Res.drawable.Bow_War
+            "Bow_Eighteen" -> Res.drawable.Bow_War
+            "Bow_War" -> Res.drawable.Bow_Eighteen
             "Bow_Thunder" -> Res.drawable.Bow_Thunder
             "Bow_WindArrow" -> Res.drawable.Bow_WindArrow
             "Bow_Light" -> Res.drawable.Bow_Light
