@@ -79,7 +79,7 @@ fun TranslationColumn(
     onLanguageSelected: (Translation) -> Unit
 ) {
     Column {
-        GearStylizedText(text = "Traductions other than EN are community\ndriven and may be incomplete or outdated.")
+        GearStylizedText(text = "Traductions other than EN are community driven and may be incomplete or outdated.")
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
