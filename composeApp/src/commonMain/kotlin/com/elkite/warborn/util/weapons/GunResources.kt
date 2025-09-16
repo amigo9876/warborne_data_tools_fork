@@ -33,14 +33,14 @@ import org.jetbrains.compose.resources.DrawableResource
 object GunResources {
     fun getGunWeaponIcon(id: String): DrawableResource {
         return when (id) {
-            "Shattercoil" -> Res.drawable.SpecImage_GUN1
-            "Sentinel Barrage" -> Res.drawable.SpecImage_GUN2
-            "Burstfire Rifle" -> Res.drawable.SpecImage_GUN3
-            "Blightspitter" -> Res.drawable.SpecImage_GUN4
-            "Voideye" -> Res.drawable.SpecImage_GUN5
-            "Shadowhunter Rifle" -> Res.drawable.SpecImage_GUN6
-            "Prism Cloak" -> Res.drawable.SpecImage_GUN7
-            "Photonic Rifle" -> Res.drawable.SpecImage_GUN8
+            "SpecImage_GUN1" -> Res.drawable.SpecImage_GUN1
+            "SpecImage_GUN2" -> Res.drawable.SpecImage_GUN2
+            "SpecImage_GUN3" -> Res.drawable.SpecImage_GUN3
+            "SpecImage_GUN4" -> Res.drawable.SpecImage_GUN4
+            "SpecImage_GUN5" -> Res.drawable.SpecImage_GUN5
+            "SpecImage_GUN6" -> Res.drawable.SpecImage_GUN6
+            "SpecImage_GUN7" -> Res.drawable.SpecImage_GUN7
+            "SpecImage_GUN8" -> Res.drawable.SpecImage_GUN8
             else -> Res.drawable.error_emoji
         }
     }

@@ -31,13 +31,13 @@ import org.jetbrains.compose.resources.DrawableResource
 object BowResources {
     fun getBowWeaponIcon(id: String): DrawableResource {
         return when (id) {
-            "Hailfire" -> Res.drawable.SpecImage_BOW4
-            "Kinetic Arc" -> Res.drawable.SpecImage_BOW2
-            "Predator's Splitbow" -> Res.drawable.SpecImage_BOW1
-            "Thunderstrike" -> Res.drawable.SpecImage_BOW5
-            "Windbreaker" -> Res.drawable.SpecImage_BOW6
-            "Mender's Ruin" -> Res.drawable.SpecImage_BOW3
-            "Eclypse Bow" -> Res.drawable.SpecImage_BOW7
+            "SpecImage_BOW4" -> Res.drawable.SpecImage_BOW4
+            "SpecImage_BOW2" -> Res.drawable.SpecImage_BOW2
+            "SpecImage_BOW1" -> Res.drawable.SpecImage_BOW1
+            "SpecImage_BOW5" -> Res.drawable.SpecImage_BOW5
+            "SpecImage_BOW6" -> Res.drawable.SpecImage_BOW6
+            "SpecImage_BOW3" -> Res.drawable.SpecImage_BOW3
+            "SpecImage_BOW7" -> Res.drawable.SpecImage_BOW7
             else -> Res.drawable.error_emoji
         }
     }

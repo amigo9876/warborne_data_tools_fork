@@ -33,14 +33,14 @@ import org.jetbrains.compose.resources.DrawableResource
 object FrostResources {
     fun getFrostWeaponIcon(id: String): DrawableResource {
         return when (id) {
-            "Glacier Prism" -> Res.drawable.SpecImage_FROST1
-            "Frost Matrix" -> Res.drawable.SpecImage_FROST2
-            "Glacier Spark" -> Res.drawable.SpecImage_FROST3
-            "Cryoshard Mask" -> Res.drawable.SpecImage_FROST4
-            "Iceshard Comet" -> Res.drawable.SpecImage_FROST5
-            "Frozen Conduit" -> Res.drawable.SpecImage_FROST6
-            "Frost's Caller" -> Res.drawable.SpecImage_FROST7
-            "Shard of Fractured Ice" -> Res.drawable.SpecImage_FROST8
+            "SpecImage_FROST1" -> Res.drawable.SpecImage_FROST1
+            "SpecImage_FROST2" -> Res.drawable.SpecImage_FROST2
+            "SpecImage_FROST3" -> Res.drawable.SpecImage_FROST3
+            "SpecImage_FROST4" -> Res.drawable.SpecImage_FROST4
+            "SpecImage_FROST5" -> Res.drawable.SpecImage_FROST5
+            "SpecImage_FROST6" -> Res.drawable.SpecImage_FROST6
+            "SpecImage_FROST7" -> Res.drawable.SpecImage_FROST7
+            "SpecImage_FROST8" -> Res.drawable.SpecImage_FROST8
             else -> Res.drawable.error_emoji
         }
     }

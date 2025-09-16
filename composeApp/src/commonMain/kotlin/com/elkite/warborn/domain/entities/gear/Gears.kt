@@ -22,6 +22,7 @@ data class WeaponGear(
     override val tierUnlock: TierUnlock,
 
     override val gearName: String,
+    override val gearIcon: String,
     override val gearStats: GearStats,
     override val rarity: Rarity,
     override val category: Category,
@@ -46,6 +47,7 @@ data class HeadGear(
     override val tierUnlock: TierUnlock,
 
     override val gearName: String,
+    override val gearIcon: String,
     override val gearStats: GearStats,
     override val rarity: Rarity,
     override val category: Category,
@@ -64,6 +66,7 @@ data class ChestGear(
     override val tierUnlock: TierUnlock,
 
     override val gearName: String,
+    override val gearIcon: String,
     override val gearStats: GearStats,
     override val rarity: Rarity,
     override val category: Category,
@@ -82,6 +85,7 @@ data class BootsGear(
     override val tierUnlock: TierUnlock,
 
     override val gearName: String,
+    override val gearIcon: String,
     override val gearStats: GearStats,
     override val rarity: Rarity,
     override val category: Category,

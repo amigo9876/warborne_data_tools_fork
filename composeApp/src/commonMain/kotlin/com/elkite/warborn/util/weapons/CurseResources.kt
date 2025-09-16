@@ -31,13 +31,13 @@ import org.jetbrains.compose.resources.DrawableResource
 object CurseResources {
     fun getCurseWeaponIcon(id: String): DrawableResource {
         return when (id) {
-            "Rotten Breath" -> Res.drawable.SpecImage_CURSE1
-            "Hexlock" -> Res.drawable.SpecImage_CURSE2
-            "Plaguespread" -> Res.drawable.SpecImage_CURSE3
-            "Infestor's Staff" -> Res.drawable.SpecImage_CURSE4
-            "Necromist" -> Res.drawable.SpecImage_CURSE5
-            "Nihilstaff" -> Res.drawable.SpecImage_CURSE6
-            "Withermaul" -> Res.drawable.SpecImage_CURSE7
+            "SpecImage_CURSE1" -> Res.drawable.SpecImage_CURSE1
+            "SpecImage_CURSE2" -> Res.drawable.SpecImage_CURSE2
+            "SpecImage_CURSE3" -> Res.drawable.SpecImage_CURSE3
+            "SpecImage_CURSE4" -> Res.drawable.SpecImage_CURSE4
+            "SpecImage_CURSE5" -> Res.drawable.SpecImage_CURSE5
+            "SpecImage_CURSE6" -> Res.drawable.SpecImage_CURSE6
+            "SpecImage_CURSE7" -> Res.drawable.SpecImage_CURSE7
             else -> Res.drawable.error_emoji
         }
     }

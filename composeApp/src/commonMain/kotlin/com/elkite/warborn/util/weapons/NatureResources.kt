@@ -33,14 +33,14 @@ import org.jetbrains.compose.resources.DrawableResource
 object NatureResources {
     fun getNatureWeaponIcon(id: String): DrawableResource {
         return when (id) {
-            "Eclipse Conduit" -> Res.drawable.SpecImage_NATURE1
-            "Thornward Staff" -> Res.drawable.SpecImage_NATURE2
-            "Harmony's Staff" -> Res.drawable.SpecImage_NATURE3
-            "Verdant Embrace" -> Res.drawable.SpecImage_NATURE4
-            "Tendril's Grasp" -> Res.drawable.SpecImage_NATURE6
-            "Spirit's Call" -> Res.drawable.SpecImage_NATURE5
-            "Sanctuary of Growth" -> Res.drawable.SpecImage_NATURE7
-            "VenomStave" -> Res.drawable.SpecImage_NATURE8
+            "SpecImage_NATURE1" -> Res.drawable.SpecImage_NATURE1
+            "SpecImage_NATURE2" -> Res.drawable.SpecImage_NATURE2
+            "SpecImage_NATURE3" -> Res.drawable.SpecImage_NATURE3
+            "SpecImage_NATURE4" -> Res.drawable.SpecImage_NATURE4
+            "SpecImage_NATURE6" -> Res.drawable.SpecImage_NATURE6
+            "SpecImage_NATURE5" -> Res.drawable.SpecImage_NATURE5
+            "SpecImage_NATURE7" -> Res.drawable.SpecImage_NATURE7
+            "SpecImage_NATURE8" -> Res.drawable.SpecImage_NATURE8
             else -> Res.drawable.error_emoji
         }
     }

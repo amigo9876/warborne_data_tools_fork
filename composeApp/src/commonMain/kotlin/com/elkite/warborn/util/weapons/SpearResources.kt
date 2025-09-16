@@ -31,13 +31,13 @@ import org.jetbrains.compose.resources.DrawableResource
 object SpearResources {
     fun getSpearWeaponIcon(id: String): DrawableResource {
         return when (id) {
-            "Sharspike" -> Res.drawable.SpecImage_SPEAR6
-            "Sentinel's Lance" -> Res.drawable.SpecImage_SPEAR3
-            "Stormfang Lance" -> Res.drawable.SpecImage_SPEAR1
-            "Storm Spear" -> Res.drawable.SpecImage_SPEAR7
-            "Drakespike" -> Res.drawable.SpecImage_SPEAR8
-            "Corrosive Piercer" -> Res.drawable.SpecImage_SPEAR4
-            "Phantom Spear" -> Res.drawable.SpecImage_SPEAR2
+            "SpecImage_SPEAR6" -> Res.drawable.SpecImage_SPEAR6
+            "SpecImage_SPEAR3" -> Res.drawable.SpecImage_SPEAR3
+            "SpecImage_SPEAR1" -> Res.drawable.SpecImage_SPEAR1
+            "SpecImage_SPEAR7" -> Res.drawable.SpecImage_SPEAR7
+            "SpecImage_SPEAR8" -> Res.drawable.SpecImage_SPEAR8
+            "SpecImage_SPEAR4" -> Res.drawable.SpecImage_SPEAR4
+            "SpecImage_SPEAR2" -> Res.drawable.SpecImage_SPEAR2
             else -> Res.drawable.error_emoji
         }
     }

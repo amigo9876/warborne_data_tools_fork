@@ -33,14 +33,14 @@ import org.jetbrains.compose.resources.DrawableResource
 object SwordResources {
     fun getSwordWeaponIcon(id: String): DrawableResource {
         return when (id) {
-            "Storm Cleaver" -> Res.drawable.SpecImage_SWORD4
-            "Hellcore Cleaver" -> Res.drawable.SpecImage_SWORD1
-            "Voidblade" -> Res.drawable.SpecImage_SWORD3
-            "Lordbreaker" -> Res.drawable.SpecImage_SWORD5
-            "Titan's Spineblade" -> Res.drawable.SpecImage_SWORD6
-            "Judicator" -> Res.drawable.SpecImage_SWORD2
-            "Sovereign's Radiance" -> Res.drawable.SpecImage_SWORD7
-            "Blood Sword" -> Res.drawable.SpecImage_SWORD8
+            "SpecImage_SWORD4" -> Res.drawable.SpecImage_SWORD4
+            "SpecImage_SWORD1" -> Res.drawable.SpecImage_SWORD1
+            "SpecImage_SWORD3" -> Res.drawable.SpecImage_SWORD3
+            "SpecImage_SWORD5" -> Res.drawable.SpecImage_SWORD5
+            "SpecImage_SWORD6" -> Res.drawable.SpecImage_SWORD6
+            "SpecImage_SWORD2" -> Res.drawable.SpecImage_SWORD2
+            "SpecImage_SWORD7" -> Res.drawable.SpecImage_SWORD7
+            "SpecImage_SWORD8" -> Res.drawable.SpecImage_SWORD8
             else -> Res.drawable.error_emoji
         }
     }

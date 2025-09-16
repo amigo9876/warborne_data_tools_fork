@@ -58,7 +58,7 @@ fun HeadGearIcon(
         else -> {
             when (iconType) {
                 IconType.ARMOR -> HeadResources.getHeadArmorIcon(
-                    headGear.gearName,
+                    headGear.gearIcon,
                     headGear.category
                 )
 
@@ -91,7 +91,7 @@ fun ChestGearIcon(
         else -> {
             when (iconType) {
                 IconType.ARMOR -> ChestResources.getChestArmorIcon(
-                    chestGear.gearName,
+                    chestGear.gearIcon,
                     chestGear.category
                 )
 
@@ -123,7 +123,7 @@ fun BootsGearIcon(
         else -> {
             when (iconType) {
                 IconType.ARMOR -> BootsResources.getBootsArmorIcon(
-                    bootsGear.gearName,
+                    bootsGear.gearIcon,
                     bootsGear.category
                 )
 
@@ -231,18 +231,18 @@ fun WeaponGearIcon(
         Icon(
             modifier = modifier,
             drawableResource = when (weaponGear.weaponType) {
-                WeaponType.bow -> BowResources.getBowWeaponIcon(weaponGear.gearName)
-                WeaponType.sword -> SwordResources.getSwordWeaponIcon(weaponGear.gearName)
-                WeaponType.axe -> AxeResources.getAxeWeaponIcon(weaponGear.gearName)
-                WeaponType.mace -> MaceResources.getMaceWeaponIcon(weaponGear.gearName)
-                WeaponType.gun -> GunResources.getGunWeaponIcon(weaponGear.gearName)
-                WeaponType.spear -> SpearResources.getSpearWeaponIcon(weaponGear.gearName)
-                WeaponType.dagger -> DaggerResources.getDaggerWeaponIcon(weaponGear.gearName)
-                WeaponType.nature -> NatureResources.getNatureWeaponIcon(weaponGear.gearName)
-                WeaponType.fire -> FireResources.getFireWeaponIcon(weaponGear.gearName)
-                WeaponType.frost -> FrostResources.getFrostWeaponIcon(weaponGear.gearName)
-                WeaponType.curse -> CurseResources.getCurseWeaponIcon(weaponGear.gearName)
-                WeaponType.holy -> HolyResources.getHolyWeaponIcon(weaponGear.gearName)
+                WeaponType.bow -> BowResources.getBowWeaponIcon(weaponGear.gearIcon)
+                WeaponType.sword -> SwordResources.getSwordWeaponIcon(weaponGear.gearIcon)
+                WeaponType.axe -> AxeResources.getAxeWeaponIcon(weaponGear.gearIcon)
+                WeaponType.mace -> MaceResources.getMaceWeaponIcon(weaponGear.gearIcon)
+                WeaponType.gun -> GunResources.getGunWeaponIcon(weaponGear.gearIcon)
+                WeaponType.spear -> SpearResources.getSpearWeaponIcon(weaponGear.gearIcon)
+                WeaponType.dagger -> DaggerResources.getDaggerWeaponIcon(weaponGear.gearIcon)
+                WeaponType.nature -> NatureResources.getNatureWeaponIcon(weaponGear.gearIcon)
+                WeaponType.fire -> FireResources.getFireWeaponIcon(weaponGear.gearIcon)
+                WeaponType.frost -> FrostResources.getFrostWeaponIcon(weaponGear.gearIcon)
+                WeaponType.curse -> CurseResources.getCurseWeaponIcon(weaponGear.gearIcon)
+                WeaponType.holy -> HolyResources.getHolyWeaponIcon(weaponGear.gearIcon)
             }
         )
     }

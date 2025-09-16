@@ -31,13 +31,13 @@ import org.jetbrains.compose.resources.DrawableResource
 object FireResources {
     fun getFireWeaponIcon(id: String): DrawableResource {
         return when (id) {
-            "Flame Maw" -> Res.drawable.SpecImage_FIRE1
-            "Blazing Catalyst" -> Res.drawable.SpecImage_FIRE2
-            "Doomfire" -> Res.drawable.SpecImage_FIRE3
-            "Inferno Core" -> Res.drawable.SpecImage_FIRE4
-            "Solarflare" -> Res.drawable.SpecImage_FIRE5
-            "Blazruptor" -> Res.drawable.SpecImage_FIRE6
-            "Molten Mortar" -> Res.drawable.SpecImage_FIRE7
+            "SpecImage_FIRE1" -> Res.drawable.SpecImage_FIRE1
+            "SpecImage_FIRE2" -> Res.drawable.SpecImage_FIRE2
+            "SpecImage_FIRE3" -> Res.drawable.SpecImage_FIRE3
+            "SpecImage_FIRE4" -> Res.drawable.SpecImage_FIRE4
+            "SpecImage_FIRE5" -> Res.drawable.SpecImage_FIRE5
+            "SpecImage_FIRE6" -> Res.drawable.SpecImage_FIRE6
+            "SpecImage_FIRE7" -> Res.drawable.SpecImage_FIRE7
             else -> Res.drawable.error_emoji
         }
     }

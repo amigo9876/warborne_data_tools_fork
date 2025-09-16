@@ -116,41 +116,41 @@ object ChestResources {
 
     private fun getChestArmorIconDex(id: String): DrawableResource {
         return when (id) {
-            "Ranger's Hide" -> Res.drawable.SpecImage_JACKET1
-            "Beastcaller's Coat" -> Res.drawable.SpecImage_JACKET2
-            "Deathmantle" -> Res.drawable.SpecImage_JACKET3
-            "Retaliation Coat" -> Res.drawable.SpecImage_JACKET4
-            "Hero's Embrace" -> Res.drawable.SpecImage_JACKET5
-            "Recovery Vest" -> Res.drawable.SpecImage_JACKET6
-            "Mistshroud" -> Res.drawable.SpecImage_JACKET7
+            "SpecImage_JACKET1" -> Res.drawable.SpecImage_JACKET1
+            "SpecImage_JACKET2" -> Res.drawable.SpecImage_JACKET2
+            "SpecImage_JACKET3" -> Res.drawable.SpecImage_JACKET3
+            "SpecImage_JACKET4" -> Res.drawable.SpecImage_JACKET4
+            "SpecImage_JACKET5" -> Res.drawable.SpecImage_JACKET5
+            "SpecImage_JACKET6" -> Res.drawable.SpecImage_JACKET6
+            "SpecImage_JACKET7" -> Res.drawable.SpecImage_JACKET7
             else -> Res.drawable.error_emoji
         }
     }
 
     private fun getChestArmorIconInt(id: String): DrawableResource {
         return when (id) {
-            "Cleansing Robe" -> Res.drawable.SpecImage_ROBE1
-            "Repulsor Mantle" -> Res.drawable.SpecImage_ROBE2
-            "Vigorcloak" -> Res.drawable.SpecImage_ROBE3
-            "Archaneweaver" -> Res.drawable.SpecImage_ROBE4
-            "Dreadcloak" -> Res.drawable.SpecImage_ROBE5
-            "Exorcist's Robe" -> Res.drawable.SpecImage_ROBE6
-            "Warding Shroud" -> Res.drawable.SpecImage_ROBE7
-            "Aegis Robe" -> Res.drawable.SpecImage_ROBE8
+            "SpecImage_ROBE1" -> Res.drawable.SpecImage_ROBE1
+            "SpecImage_ROBE2" -> Res.drawable.SpecImage_ROBE2
+            "SpecImage_ROBE3" -> Res.drawable.SpecImage_ROBE3
+            "SpecImage_ROBE4" -> Res.drawable.SpecImage_ROBE4
+            "SpecImage_ROBE5" -> Res.drawable.SpecImage_ROBE5
+            "SpecImage_ROBE6" -> Res.drawable.SpecImage_ROBE6
+            "SpecImage_ROBE7" -> Res.drawable.SpecImage_ROBE7
+            "SpecImage_ROBE8" -> Res.drawable.SpecImage_ROBE8
             else -> Res.drawable.error_emoji
         }
     }
 
     private fun getChestArmorIconStr(id: String): DrawableResource {
         return when (id) {
-            "Guardian's Blessing" -> Res.drawable.SpecImage_ARMOR4
-            "Aegis Plate" -> Res.drawable.SpecImage_ARMOR1
-            "Dazzling Guard" -> Res.drawable.SpecImage_ARMOR2
-            "Tempest Charge" -> Res.drawable.SpecImage_ARMOR6
-            "Tangle Guard" -> Res.drawable.SpecImage_ARMOR7
-            "Warden's Shell" -> Res.drawable.SpecImage_ARMOR3
-            "Magsurge Armor" -> Res.drawable.SpecImage_ARMOR5
-            "Cloth_Str_9" -> Res.drawable.SpecImage_ARMOR8
+            "SpecImage_ARMOR4" -> Res.drawable.SpecImage_ARMOR4
+            "SpecImage_ARMOR1" -> Res.drawable.SpecImage_ARMOR1
+            "SpecImage_ARMOR2" -> Res.drawable.SpecImage_ARMOR2
+            "SpecImage_ARMOR6" -> Res.drawable.SpecImage_ARMOR6
+            "SpecImage_ARMOR7" -> Res.drawable.SpecImage_ARMOR7
+            "SpecImage_ARMOR3" -> Res.drawable.SpecImage_ARMOR3
+            "SpecImage_ARMOR5" -> Res.drawable.SpecImage_ARMOR5
+            "SpecImage_ARMOR8" -> Res.drawable.SpecImage_ARMOR8
             else -> Res.drawable.error_emoji
         }
     }

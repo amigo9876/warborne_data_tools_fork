@@ -31,13 +31,13 @@ import org.jetbrains.compose.resources.DrawableResource
 object DaggerResources {
     fun getDaggerWeaponIcon(id: String): DrawableResource {
         return when (id) {
-            "Hemoblades" -> Res.drawable.SpecImage_DAGGER7
-            "Twilight Blades" -> Res.drawable.SpecImage_DAGGER1
-            "Soulfangs" -> Res.drawable.SpecImage_DAGGER2
-            "Bloodpiercers" -> Res.drawable.SpecImage_DAGGER5
-            "Bloodfury Blades" -> Res.drawable.SpecImage_DAGGER4
-            "Bloodthirst" -> Res.drawable.SpecImage_DAGGER6
-            "Scarlet Hunger" -> Res.drawable.SpecImage_DAGGER3
+            "SpecImage_DAGGER7" -> Res.drawable.SpecImage_DAGGER7
+            "SpecImage_DAGGER1" -> Res.drawable.SpecImage_DAGGER1
+            "SpecImage_DAGGER2" -> Res.drawable.SpecImage_DAGGER2
+            "SpecImage_DAGGER5" -> Res.drawable.SpecImage_DAGGER5
+            "SpecImage_DAGGER4" -> Res.drawable.SpecImage_DAGGER4
+            "SpecImage_DAGGER6" -> Res.drawable.SpecImage_DAGGER6
+            "SpecImage_DAGGER3" -> Res.drawable.SpecImage_DAGGER3
             else -> Res.drawable.error_emoji
         }
     }

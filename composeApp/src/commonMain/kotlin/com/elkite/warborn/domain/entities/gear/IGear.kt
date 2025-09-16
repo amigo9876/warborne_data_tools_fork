@@ -18,6 +18,7 @@ interface IGear : ISpell {
     override val tierUnlock: TierUnlock
 
     val gearName: String
+    val gearIcon: String
     val gearStats: GearStats
     val gearSlot: GearSlot
     val rarity: Rarity

@@ -242,7 +242,7 @@ object DataRepository {
         return parseSkillSpells(
             array,
             category
-        ) { gameId, skillName, manaCost, cooldown, castingRange, description, tierUnlock, gearName, gearStats, rarity, category ->
+        ) { gameId, skillName, manaCost, cooldown, castingRange, description, tierUnlock, gearName, gearStats, rarity, gearIcon, category ->
             BootsGear(
                 spellId = gameId,
                 spellName = skillName,
@@ -254,7 +254,8 @@ object DataRepository {
                 gearName = gearName,
                 gearStats = gearStats,
                 rarity = rarity,
-                category = category
+                category = category,
+                gearIcon = gearIcon
             )
         }
     }
@@ -266,7 +267,7 @@ object DataRepository {
         return parseSkillSpells(
             array,
             category
-        ) { gameId, skillName, manaCost, cooldown, castingRange, description, tierUnlock, gearName, gearStats, rarity, category ->
+        ) { gameId, skillName, manaCost, cooldown, castingRange, description, tierUnlock, gearName, gearStats, rarity, gearIcon, category ->
             ChestGear(
                 spellId = gameId,
                 spellName = skillName,
@@ -278,7 +279,8 @@ object DataRepository {
                 gearName = gearName,
                 gearStats = gearStats,
                 rarity = rarity,
-                category = category
+                category = category,
+                gearIcon = gearIcon
             )
         }
     }
@@ -290,7 +292,7 @@ object DataRepository {
         return parseSkillSpells(
             array,
             category
-        ) { gameId, skillName, manaCost, cooldown, castingRange, description, tierUnlock, gearName, gearStats, rarity, category ->
+        ) { gameId, skillName, manaCost, cooldown, castingRange, description, tierUnlock, gearName, gearStats, rarity, gearIcon, category ->
             HeadGear(
                 spellId = gameId,
                 spellName = skillName,
@@ -302,7 +304,8 @@ object DataRepository {
                 gearName = gearName,
                 gearStats = gearStats,
                 rarity = rarity,
-                category = category
+                category = category,
+                gearIcon = gearIcon
             )
         }
     }
@@ -320,7 +323,7 @@ object DataRepository {
                     WeaponType.bow, WeaponType.dagger, WeaponType.spear, WeaponType.nature -> Category.AGI
                     WeaponType.fire, WeaponType.frost, WeaponType.holy, WeaponType.curse -> Category.INT
                 }
-            ) { gameId, skillName, manaCost, cooldown, castingRange, description, tierUnlock, gearName, gearStats, rarity, category ->
+            ) { gameId, skillName, manaCost, cooldown, castingRange, description, tierUnlock, gearName, gearStats, rarity, gearIcon, category ->
                 WeaponGear(
                     spellId = gameId,
                     spellName = skillName,
@@ -340,7 +343,8 @@ object DataRepository {
                     weaponType = weaponType,
                     passiveSpell = passiveSpell,
                     basicSpells = basicAttacks,
-                    commonSpells = commonSkills
+                    commonSpells = commonSkills,
+                    gearIcon = gearIcon
                 )
             }
         val dataWeapon = DataWeapon(

@@ -31,13 +31,13 @@ import org.jetbrains.compose.resources.DrawableResource
 object AxeResources {
     fun getAxeWeaponIcon(id: String): DrawableResource {
         return when (id) {
-            "Berserker's Fury" -> Res.drawable.SpecImage_AXE2
-            "Emerald Edge" -> Res.drawable.SpecImage_AXE1
-            "Ravager's Cleave" -> Res.drawable.SpecImage_AXE6
-            "Bonefang Reaper" -> Res.drawable.SpecImage_AXE7
-            "Cyclone Cleave" -> Res.drawable.SpecImage_AXE4
-            "Wreckingsaw" -> Res.drawable.SpecImage_AXE5
-            "Wingblade" -> Res.drawable.SpecImage_AXE3
+            "SpecImage_AXE2" -> Res.drawable.SpecImage_AXE2
+            "SpecImage_AXE1" -> Res.drawable.SpecImage_AXE1
+            "SpecImage_AXE6" -> Res.drawable.SpecImage_AXE6
+            "SpecImage_AXE7" -> Res.drawable.SpecImage_AXE7
+            "SpecImage_AXE4" -> Res.drawable.SpecImage_AXE4
+            "SpecImage_AXE5" -> Res.drawable.SpecImage_AXE5
+            "SpecImage_AXE3" -> Res.drawable.SpecImage_AXE3
             else -> Res.drawable.error_emoji
         }
     }

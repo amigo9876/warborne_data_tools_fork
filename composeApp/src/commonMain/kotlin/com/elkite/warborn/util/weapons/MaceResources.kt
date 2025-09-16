@@ -33,14 +33,14 @@ import org.jetbrains.compose.resources.DrawableResource
 object MaceResources {
     fun getMaceWeaponIcon(id: String): DrawableResource {
         return when (id) {
-            "Breaker's Resolve" -> Res.drawable.SpecImage_MACE1
-            "Gravity Hammer" -> Res.drawable.SpecImage_MACE2
-            "Voidbreaker" -> Res.drawable.SpecImage_MACE3
-            "Ripper's Grasp" -> Res.drawable.SpecImage_MACE4
-            "Bulwark Core" -> Res.drawable.SpecImage_MACE6
-            "Abyssal Conduit" -> Res.drawable.SpecImage_MACE5
-            "Thunderlord's Wrath" -> Res.drawable.SpecImage_MACE7
-            "Paladin's Mace" -> Res.drawable.SpecImage_MACE8
+            "SpecImage_MACE1" -> Res.drawable.SpecImage_MACE1
+            "SpecImage_MACE2" -> Res.drawable.SpecImage_MACE2
+            "SpecImage_MACE3" -> Res.drawable.SpecImage_MACE3
+            "SpecImage_MACE4" -> Res.drawable.SpecImage_MACE4
+            "SpecImage_MACE6" -> Res.drawable.SpecImage_MACE6
+            "SpecImage_MACE5" -> Res.drawable.SpecImage_MACE5
+            "SpecImage_MACE7" -> Res.drawable.SpecImage_MACE7
+            "SpecImage_MACE8" -> Res.drawable.SpecImage_MACE8
             else -> Res.drawable.error_emoji
         }
     }

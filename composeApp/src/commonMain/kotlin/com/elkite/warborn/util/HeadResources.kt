@@ -117,14 +117,14 @@ object HeadResources {
 
     private fun getHeadArmorIconDex(id: String): DrawableResource {
         return when (id) {
-            "Vital Mantle" -> Res.drawable.SpecImage_HOOD2
-            "Stormcaller's Hood" -> Res.drawable.SpecImage_HOOD1
-            "Shadeveil Mask" -> Res.drawable.SpecImage_HOOD5
-            "Wrathveil Shade" -> Res.drawable.SpecImage_HOOD6
-            "Purifier's Shroud" -> Res.drawable.SpecImage_HOOD7
-            "Ironwill veil" -> Res.drawable.SpecImage_HOOD3
-            "Folly Helm" -> Res.drawable.SpecImage_HOOD4
-            "Helm_Dex_9" -> Res.drawable.SpecImage_HOOD8
+            "SpecImage_HOOD2" -> Res.drawable.SpecImage_HOOD2
+            "SpecImage_HOOD1" -> Res.drawable.SpecImage_HOOD1
+            "SpecImage_HOOD5" -> Res.drawable.SpecImage_HOOD5
+            "SpecImage_HOOD6" -> Res.drawable.SpecImage_HOOD6
+            "SpecImage_HOOD7" -> Res.drawable.SpecImage_HOOD7
+            "SpecImage_HOOD3" -> Res.drawable.SpecImage_HOOD3
+            "SpecImage_HOOD4" -> Res.drawable.SpecImage_HOOD4
+            "SpecImage_HOOD8" -> Res.drawable.SpecImage_HOOD8
             else -> Res.drawable.error_emoji
         }
 
@@ -132,27 +132,27 @@ object HeadResources {
 
     private fun getHeadArmorIconInt(id: String): DrawableResource {
         return when (id) {
-            "Breezeweaver" -> Res.drawable.SpecImage_COWL1
-            "Healer's Hood" -> Res.drawable.SpecImage_COWL3
-            "Mystic Surge" -> Res.drawable.SpecImage_COWL2
-            "Earth Vein Hood" -> Res.drawable.SpecImage_COWL5
-            "Crimson Breeze" -> Res.drawable.SpecImage_COWL6
-            "Twilight Mantle" -> Res.drawable.SpecImage_COWL7
-            "Sanctum Shroud" -> Res.drawable.SpecImage_COWL4
+            "SpecImage_COWL1" -> Res.drawable.SpecImage_COWL1
+            "SpecImage_COWL3" -> Res.drawable.SpecImage_COWL3
+            "SpecImage_COWL2" -> Res.drawable.SpecImage_COWL2
+            "SpecImage_COWL5" -> Res.drawable.SpecImage_COWL5
+            "SpecImage_COWL6" -> Res.drawable.SpecImage_COWL6
+            "SpecImage_COWL7" -> Res.drawable.SpecImage_COWL7
+            "SpecImage_COWL4" -> Res.drawable.SpecImage_COWL4
             else -> Res.drawable.error_emoji
         }
     }
 
     private fun getHeadArmorIconStr(id: String): DrawableResource {
         return when (id) {
-            "Furor's Helm" -> Res.drawable.SpecImage_HELMET3
-            "Ironclad Helm" -> Res.drawable.SpecImage_HELMET6
-            "Hellfire Visor" -> Res.drawable.SpecImage_HELMET2
-            "Reptilian Helm" -> Res.drawable.SpecImage_HELMET4
-            "Savage Helm" -> Res.drawable.SpecImage_HELMET1
-            "Stormveil Mask" -> Res.drawable.SpecImage_HELMET5
-            "Warden's Gaze" -> Res.drawable.SpecImage_HELMET7
-            "Riposte Helm" -> Res.drawable.SpecImage_HELMET8
+            "SpecImage_HELMET3" -> Res.drawable.SpecImage_HELMET3
+            "SpecImage_HELMET6" -> Res.drawable.SpecImage_HELMET6
+            "SpecImage_HELMET2" -> Res.drawable.SpecImage_HELMET2
+            "SpecImage_HELMET4" -> Res.drawable.SpecImage_HELMET4
+            "SpecImage_HELMET1" -> Res.drawable.SpecImage_HELMET1
+            "SpecImage_HELMET5" -> Res.drawable.SpecImage_HELMET5
+            "SpecImage_HELMET7" -> Res.drawable.SpecImage_HELMET7
+            "SpecImage_HELMET8" -> Res.drawable.SpecImage_HELMET8
             else -> Res.drawable.error_emoji
         }
     }

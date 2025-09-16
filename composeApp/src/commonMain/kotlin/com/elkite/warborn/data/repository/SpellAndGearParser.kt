@@ -20,7 +20,7 @@ object SpellAndGearParser {
     inline fun <reified T : IGear> parseSkillSpells(
         jsonArray: JsonArray?,
         category: Category,
-        noinline factory: (String, String, String, String, String, String, TierUnlock, String, GearStats, Rarity, Category) -> T
+        noinline factory: (String, String, String, String, String, String, TierUnlock, String, GearStats, Rarity, String, Category) -> T
     ): List<T> {
         if (jsonArray == null) {
             println("parseSkillSpells: Input JSON array is null.")
@@ -39,6 +39,7 @@ object SpellAndGearParser {
                 val tierUnlock = spellJson.jsonObject["tierUnlock"]?.jsonPrimitive?.content ?: "T0"
                 val rarity = spellJson.jsonObject["rarity"]?.jsonPrimitive?.content ?: "common"
                 val gearName = spellJson.jsonObject["gearName"]?.jsonPrimitive?.content ?: "error"
+                val gearIcon = spellJson.jsonObject["gearIcon"]?.jsonPrimitive?.content ?: "error"
                 val gearStats = spellJson.jsonObject["stats"]?.jsonObject ?: JsonObject(emptyMap())
                 factory(
                     gameId,
@@ -58,6 +59,7 @@ object SpellAndGearParser {
                         "legendary" -> Rarity.legendary
                         else -> Rarity.common
                     },
+                    gearIcon,
                     category
                 )
             } catch (e: Exception) {

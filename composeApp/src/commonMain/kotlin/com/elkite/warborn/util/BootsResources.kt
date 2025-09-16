@@ -116,41 +116,41 @@ object BootsResources {
 
     private fun getBootsArmorIconStr(id: String): DrawableResource {
         return when (id) {
-            "Energizer Boots" -> Res.drawable.SpecImage_BOOTS4
-            "Wrathstep" -> Res.drawable.SpecImage_BOOTS5
-            "Bulwark Striders" -> Res.drawable.SpecImage_BOOTS1
-            "Titan Walkers" -> Res.drawable.SpecImage_BOOTS2
-            "Vanguard's March" -> Res.drawable.SpecImage_BOOTS6
-            "Impact Heavy Boots" -> Res.drawable.SpecImage_BOOTS3
-            "Avalanche Boots" -> Res.drawable.SpecImage_BOOTS7
+            "SpecImage_BOOTS4" -> Res.drawable.SpecImage_BOOTS4
+            "SpecImage_BOOTS5" -> Res.drawable.SpecImage_BOOTS5
+            "SpecImage_BOOTS1" -> Res.drawable.SpecImage_BOOTS1
+            "SpecImage_BOOTS2" -> Res.drawable.SpecImage_BOOTS2
+            "SpecImage_BOOTS6" -> Res.drawable.SpecImage_BOOTS6
+            "SpecImage_BOOTS3" -> Res.drawable.SpecImage_BOOTS3
+            "SpecImage_BOOTS7" -> Res.drawable.SpecImage_BOOTS7
             else -> Res.drawable.error_emoji
         }
     }
 
     private fun getBootsArmorIconInt(id: String): DrawableResource {
         return when (id) {
-            "Blinkstep Boots" -> Res.drawable.SpecImage_SANDALS1
-            "Arcaneflow Boots" -> Res.drawable.SpecImage_SANDALS2
-            "Savagefoot Boots" -> Res.drawable.SpecImage_SANDALS3
-            "Frostwalker Boots" -> Res.drawable.SpecImage_SANDALS4
-            "Miasma Stompers" -> Res.drawable.SpecImage_SANDALS5
-            "Shifter's Strides" -> Res.drawable.SpecImage_SANDALS6
-            "Phantomstep Boots" -> Res.drawable.SpecImage_SANDALS7
-            "Shoes_Int_8" -> Res.drawable.SpecImage_SANDALS8
+            "SpecImage_SANDALS1" -> Res.drawable.SpecImage_SANDALS1
+            "SpecImage_SANDALS2" -> Res.drawable.SpecImage_SANDALS2
+            "SpecImage_SANDALS3" -> Res.drawable.SpecImage_SANDALS3
+            "SpecImage_SANDALS4" -> Res.drawable.SpecImage_SANDALS4
+            "SpecImage_SANDALS5" -> Res.drawable.SpecImage_SANDALS5
+            "SpecImage_SANDALS6" -> Res.drawable.SpecImage_SANDALS6
+            "SpecImage_SANDALS7" -> Res.drawable.SpecImage_SANDALS7
+            "SpecImage_SANDALS8" -> Res.drawable.SpecImage_SANDALS8
             else -> Res.drawable.error_emoji
         }
     }
 
     private fun getBootsArmorIconDex(id: String): DrawableResource {
         return when (id) {
-            "Fleeting Steps" -> Res.drawable.SpecImage_SHOES1
-            "Swiftstride Boots" -> Res.drawable.SpecImage_SHOES2
-            "Deathwalker Boots" -> Res.drawable.SpecImage_SHOES3
-            "Evasion Striders" -> Res.drawable.SpecImage_SHOES4
-            "Rallystep Boots" -> Res.drawable.SpecImage_SHOES5
-            "Shadeveil Slippers" -> Res.drawable.SpecImage_SHOES6
-            "Exodrift Slippers" -> Res.drawable.SpecImage_SHOES7
-            "Whirlwind Boots" -> Res.drawable.SpecImage_SHOES8
+            "SpecImage_SHOES1" -> Res.drawable.SpecImage_SHOES1
+            "SpecImage_SHOES2" -> Res.drawable.SpecImage_SHOES2
+            "SpecImage_SHOES3" -> Res.drawable.SpecImage_SHOES3
+            "SpecImage_SHOES4" -> Res.drawable.SpecImage_SHOES4
+            "SpecImage_SHOES5" -> Res.drawable.SpecImage_SHOES5
+            "SpecImage_SHOES6" -> Res.drawable.SpecImage_SHOES6
+            "SpecImage_SHOES7" -> Res.drawable.SpecImage_SHOES7
+            "SpecImage_SHOES8" -> Res.drawable.SpecImage_SHOES8
             else -> Res.drawable.error_emoji
         }
     }

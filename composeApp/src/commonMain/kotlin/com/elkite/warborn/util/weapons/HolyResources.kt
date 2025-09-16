@@ -33,14 +33,14 @@ import org.jetbrains.compose.resources.DrawableResource
 object HolyResources {
     fun getHolyWeaponIcon(id: String): DrawableResource {
         return when (id) {
-            "Guardian's Embrace" -> Res.drawable.SpecImage_STAFF1
-            "Celestial Redeemer" -> Res.drawable.SpecImage_STAFF2
-            "Luminous Ward" -> Res.drawable.SpecImage_STAFF3
-            "Judgement's Staff" -> Res.drawable.SpecImage_STAFF4
-            "Divine Resonator" -> Res.drawable.SpecImage_STAFF5
-            "Radiant Nova" -> Res.drawable.SpecImage_STAFF6
-            "Sol Protector" -> Res.drawable.SpecImage_STAFF7
-            "Fulgent Staff" -> Res.drawable.SpecImage_STAFF8
+            "SpecImage_STAFF1" -> Res.drawable.SpecImage_STAFF1
+            "SpecImage_STAFF2" -> Res.drawable.SpecImage_STAFF2
+            "SpecImage_STAFF3" -> Res.drawable.SpecImage_STAFF3
+            "SpecImage_STAFF4" -> Res.drawable.SpecImage_STAFF4
+            "SpecImage_STAFF5" -> Res.drawable.SpecImage_STAFF5
+            "SpecImage_STAFF6" -> Res.drawable.SpecImage_STAFF6
+            "SpecImage_STAFF7" -> Res.drawable.SpecImage_STAFF7
+            "SpecImage_STAFF8" -> Res.drawable.SpecImage_STAFF8
             else -> Res.drawable.error_emoji
         }
     }
