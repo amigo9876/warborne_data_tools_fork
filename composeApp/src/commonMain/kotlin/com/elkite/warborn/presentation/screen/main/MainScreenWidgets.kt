@@ -114,6 +114,23 @@ fun TranslationColumn(
             Spacer(Modifier.size(8.dp))
             GearStylizedText(text = "RU")
         }
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            RadioButton(
+                selected = translation == Translation.ES,
+                onClick = { onLanguageSelected(Translation.ES) },
+                modifier = modifier.padding(bottom = 8.dp),
+                colors = RadioButtonDefaults.colors(
+                    selectedColor = WarborneColorTheme.borderSkillHightlightColor,
+                    unselectedColor = WarborneColorTheme.borderSkillColor,
+                    disabledSelectedColor = WarborneColorTheme.textBackgroundColor,
+                    disabledUnselectedColor = WarborneColorTheme.textBackgroundColor,
+                )
+            )
+            Spacer(Modifier.size(8.dp))
+            GearStylizedText(text = "ES")
+        }
     }
 }
 
