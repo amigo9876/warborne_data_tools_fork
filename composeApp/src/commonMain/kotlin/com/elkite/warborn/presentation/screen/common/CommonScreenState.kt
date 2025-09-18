@@ -1,11 +1,13 @@
 package com.elkite.warborn.presentation.screen.common
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.elkite.warborn.presentation.screen.main.MainScreenModel
+import com.elkite.warborn.presentation.widgets.utils.ClickableText
 import com.elkite.warborn.presentation.widgets.utils.GearStylizedText
 import io.github.aakira.napier.Napier
 
@@ -19,6 +21,7 @@ fun CommonScreenState(
     when (pageState) {
         is MainScreenModel.BuildScreenState.Loading -> {
             Column {
+                GearStylizedText(text = "Fetching data...")
                 CircularProgressIndicator()
             }
         }
@@ -31,7 +34,13 @@ fun CommonScreenState(
             val errorMessage = (pageState as MainScreenModel.BuildScreenState.Error).message
             Napier.e { errorMessage }
             Column {
+                GearStylizedText(text = "I probably broke something, you can send me a msg here:")
+                Row {
+                    GearStylizedText(text = "Discord : ")
+                    ClickableText("https://discord.gg/xQHwDzRh67")
+                }
                 GearStylizedText(text = errorMessage)
+
             }
         }
     }
