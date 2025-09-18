@@ -1,6 +1,7 @@
 package com.elkite.warborn.data.repository
 
 import com.elkite.warborn.domain.entities.common.Category
+import com.elkite.warborn.domain.entities.drifter.BaseStats
 import com.elkite.warborn.domain.entities.drifter.Drifter
 import com.elkite.warborn.domain.entities.drifter.DrifterMainStatsMultiplier
 import com.elkite.warborn.domain.entities.drifter.DrifterStats
@@ -43,6 +44,9 @@ object DrifterParser {
                     val strBonus = obj["strBonus"]?.jsonPrimitive?.content ?: ""
                     val dexBonus = obj["dexBonus"]?.jsonPrimitive?.content ?: ""
                     val intBonus = obj["intBonus"]?.jsonPrimitive?.content ?: ""
+                    val strBase = obj["baseStr"]?.jsonPrimitive?.content ?: ""
+                    val dexBase = obj["baseDex"]?.jsonPrimitive?.content ?: ""
+                    val intBase = obj["baseInt"]?.jsonPrimitive?.content ?: ""
 
                     val activeSpell = SpellAndGearParser.parseSkillSpellDrifter(obj["skill"]!!.jsonObject)
                     val passiveSpell = SpellAndGearParser.parsePassiveSpell(obj["passive"]!!.jsonObject)
@@ -63,7 +67,12 @@ object DrifterParser {
                             bonus = parseSupportBonus(obj),
                             links = matchedLinks,
                             stats = parseDrifterStats(obj),
-                            category = category
+                            category = category,
+                            baseStats = BaseStats(
+                                str = strBase,
+                                dex = dexBase,
+                                int = intBase
+                            )
                         )
                     )
                 } catch (e: Exception) {

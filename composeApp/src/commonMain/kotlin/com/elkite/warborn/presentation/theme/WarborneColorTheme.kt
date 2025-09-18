@@ -112,13 +112,6 @@ object WarborneColorTheme {
             rareBorderEndColor
         )
     )
-    val selectionBrush = Brush.linearGradient(
-        colors = listOf(
-            Color.White.copy(alpha = 0.4f),
-            legendaryBorderStartColor,
-        )
-    )
-
     val uncommonBrush = Brush.linearGradient(
         colors = listOf(
             dexterityColor,
@@ -132,6 +125,15 @@ object WarborneColorTheme {
             borderSkillColor
         )
     )
+
+    val selectionBrush = Brush.linearGradient(
+        colors = listOf(
+            Color.White.copy(alpha = 0.4f),
+            legendaryBorderStartColor,
+        )
+    )
+
+
     val weaponSpellsCardBrushSelected = Brush.linearGradient(
         colorStops = arrayOf(
             0.0f to legendaryBorderMidColor.copy(alpha = 1f),

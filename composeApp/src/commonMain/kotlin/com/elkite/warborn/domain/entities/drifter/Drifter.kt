@@ -13,9 +13,17 @@ data class Drifter(
     val spell: SkillSpell,
     val links: List<Link>,
     val stats: DrifterStats,
+    val baseStats: BaseStats,
     val statsMultiplier: DrifterMainStatsMultiplier,
     val bonus: SupportStationBonus,
     val category: Category,
+)
+
+@Serializable
+data class BaseStats(
+    val str: String,
+    val dex: String,
+    val int: String,
 )
 
 @Serializable

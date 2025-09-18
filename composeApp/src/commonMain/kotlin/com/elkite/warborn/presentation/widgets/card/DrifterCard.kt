@@ -16,6 +16,7 @@ import com.elkite.warborn.presentation.widgets.card.common.Description
 import com.elkite.warborn.presentation.widgets.card.common.HeaderCard
 import com.elkite.warborn.presentation.widgets.card.common.SpellAttributes
 import com.elkite.warborn.presentation.widgets.card.common.SwitchContainer
+import com.elkite.warborn.presentation.widgets.card.drifter.DrifterBaseStats
 import com.elkite.warborn.presentation.widgets.card.drifter.DrifterLinksCard
 import com.elkite.warborn.presentation.widgets.card.drifter.DrifterMainStatsMultiplier
 import com.elkite.warborn.presentation.widgets.card.drifter.DrifterStats
@@ -46,6 +47,7 @@ fun ColumnScope.DrifterCard(
     SwitchContainer(
         title = "Drifter's details",
     ) {
+        DrifterBaseStats(drifter.baseStats)
         DrifterMainStatsMultiplier(drifter.statsMultiplier)
         DrifterLinksCard(drifter.links)
         DrifterSupportStationBonus(drifter.bonus)
