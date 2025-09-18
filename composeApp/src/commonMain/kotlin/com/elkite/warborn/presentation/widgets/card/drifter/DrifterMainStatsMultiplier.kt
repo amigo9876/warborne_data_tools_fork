@@ -1,9 +1,12 @@
 package com.elkite.warborn.presentation.widgets.card.drifter
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.elkite.warborn.domain.entities.drifter.BaseStats
 import com.elkite.warborn.domain.entities.drifter.Drifter
 import com.elkite.warborn.domain.entities.drifter.DrifterMainStatsMultiplier
@@ -26,6 +29,7 @@ fun DrifterMainStatsMultiplier(drifter: DrifterMainStatsMultiplier) {
     )
 
     Column(modifier = Modifier.fillMaxWidth()) {
+        Spacer(Modifier.height(16.dp))
         GearStylizedTextTitle(text = "Stats multiplier")
         CardDivider()
         AttributeList(attributes = attributes, colors = colors)
