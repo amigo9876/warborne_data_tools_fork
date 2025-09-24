@@ -12,9 +12,12 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.NavigationRail
 import androidx.compose.material.NavigationRailItem
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
@@ -23,13 +26,18 @@ import cafe.adriel.voyager.navigator.tab.TabNavigator
 import com.elkite.warborn.presentation.tab.HomeTab
 import com.elkite.warborn.presentation.tab.SecondTab
 import com.elkite.warborn.presentation.tab.ThirdTab
+import com.elkite.warborn.presentation.theme.TekoTypography
 import com.elkite.warborn.presentation.theme.WarborneColorTheme
 import com.elkite.warborn.presentation.widgets.utils.isCompact
 import com.elkite.warborn.presentation.widgets.utils.isMedium
 import com.elkite.warborn.resources.Enhancement_img_bg_2
+import com.elkite.warborn.resources.NanumGothic_Bold
+import com.elkite.warborn.resources.NanumGothic_ExtraBold
+import com.elkite.warborn.resources.NanumGothic_Regular
 import com.elkite.warborn.resources.Res
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
+import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -38,7 +46,9 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 fun App() {
     Napier.base(DebugAntilog())
 
-    MaterialTheme {
+    MaterialTheme(
+        typography = TekoTypography()
+    ) {
         TabNavigator(
             HomeTab,
             tabDisposable = {

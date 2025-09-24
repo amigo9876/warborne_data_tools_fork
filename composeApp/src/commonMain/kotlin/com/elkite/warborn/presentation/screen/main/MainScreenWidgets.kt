@@ -79,7 +79,8 @@ fun TranslationColumn(
     onLanguageSelected: (Translation) -> Unit
 ) {
     Column {
-        GearStylizedText(text = "Traductions other than EN are community driven and may be incomplete or outdated.")
+        GearStylizedText(text = "Translations other than EN are community ")
+        GearStylizedText(text = "driven and may be incomplete or outdated.")
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -94,7 +95,6 @@ fun TranslationColumn(
                     disabledUnselectedColor = WarborneColorTheme.textBackgroundColor,
                 )
             )
-            Spacer(Modifier.size(8.dp))
             GearStylizedText(text = "EN")
         }
         Row(
@@ -111,8 +111,23 @@ fun TranslationColumn(
                     disabledUnselectedColor = WarborneColorTheme.textBackgroundColor,
                 )
             )
-            Spacer(Modifier.size(8.dp))
             GearStylizedText(text = "RU")
+        }
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            RadioButton(
+                selected = translation == Translation.KR,
+                onClick = { onLanguageSelected(Translation.KR) },
+                modifier = modifier.padding(bottom = 8.dp),
+                colors = RadioButtonDefaults.colors(
+                    selectedColor = WarborneColorTheme.borderSkillHightlightColor,
+                    unselectedColor = WarborneColorTheme.borderSkillColor,
+                    disabledSelectedColor = WarborneColorTheme.textBackgroundColor,
+                    disabledUnselectedColor = WarborneColorTheme.textBackgroundColor,
+                )
+            )
+            GearStylizedText(text = "KR")
         }
         Row(
             verticalAlignment = Alignment.CenterVertically
@@ -128,7 +143,6 @@ fun TranslationColumn(
                     disabledUnselectedColor = WarborneColorTheme.textBackgroundColor,
                 )
             )
-            Spacer(Modifier.size(8.dp))
             GearStylizedText(text = "ES")
         }
     }

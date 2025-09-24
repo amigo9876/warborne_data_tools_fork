@@ -8,11 +8,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.elkite.warborn.presentation.theme.WarborneColorTheme
+import com.elkite.warborn.resources.NanumGothic_Regular
+import com.elkite.warborn.resources.Res
 
 @Composable
 fun GearStylizedCard(
@@ -47,7 +50,7 @@ fun GearStylizedText(
         text = text,
         color = color,
         style = style.copy(
-            fontFamily = FontFamily.Monospace
+            fontFamily = FontFamily.Default
         ),
         maxLines = maxLines,
         overflow = TextOverflow.Ellipsis,
@@ -65,8 +68,7 @@ fun GearStylizedTextTitle(
         text = text,
         color = WarborneColorTheme.textDescriptionColor,
         style = style.copy(
-            fontFamily = FontFamily.SansSerif,
-            fontWeight = FontWeight.Bold
+            fontFamily = FontFamily.Default
         ),
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
