@@ -40,5 +40,5 @@ jobs:
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
           local-dir: composeApp/build/dist/wasmJs/productionExecutable/
-          server-dir: public_html/   # <- поменяй при необходимости
-          protocol: ftps             # если нужен обычный ftp, замени на "ftp"
+          server-dir: build/   # <- поменяй при необходимости
+          protocol: ftp             # если нужен обычный ftp, замени на "ftp"
