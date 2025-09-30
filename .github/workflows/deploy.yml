@@ -42,3 +42,5 @@ jobs:
           local-dir: composeApp/build/dist/wasmJs/productionExecutable/
           server-dir: build/
           protocol: ftp             # если нужен обычный ftp, замени на "ftp"
+          port: 21
+          timeout: 600000
