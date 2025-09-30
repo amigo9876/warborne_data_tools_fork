@@ -1,0 +1,44 @@
+name: Build & FTP Deploy (Web only)
+
+on:
+  push:
+    branches: [ "main" ]  # запускать при любом пуше в ветку main
+  workflow_dispatch:        # кнопка "Run workflow" вручную на вкладке Actions
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+      # Нужен Java 17 только на runner'е, на твоём хостинге Java не нужна
+      # Сборка делает GitHub, а не твой сервер
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Build Web (Wasm)
+        run: ./gradlew :composeApp:wasmJsBrowserDistribution
+
+      - name: FTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASS }}
+          local-dir: composeApp/build/dist/wasmJs/productionExecutable/
+          server-dir: public_html/   # <- поменяй при необходимости
+          protocol: ftps             # если нужен обычный ftp, замени на "ftp"
